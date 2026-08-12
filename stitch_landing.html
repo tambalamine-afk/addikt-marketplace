@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Addikt - Trouve tes pépites</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* Custom Font Imports - Approximations for the requested specific fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;600;700&family=Syne:wght@400;700;800&display=swap');
+
+        /* Simulating the requested fonts using Google Fonts approximations */
+        :root {
+            --font-monument: 'Syne', sans-serif; /* Approximation for Monument Extended */
+            --font-flatit: 'Space Grotesk', sans-serif; /* Approximation for Flatit Quiet Sans */
+            --font-zalando: 'Inter', sans-serif; /* Approximation for Zalando Sans Expanded */
+            --font-google-sans: 'Inter', sans-serif; /* Approximation for Google Sans */
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-low": "#f3f3f3",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-background": "#1b1b1b",
+                        "primary": "#000000",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-container": "#616363",
+                        "inverse-surface": "#303030",
+                        "surface-tint": "#5e5e5e",
+                        "surface-container": "#eeeeee",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "secondary-container": "#dfe0e0",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "accent-orange": "#FF4D00",
+                        "on-tertiary-container": "#848484",
+                        "tertiary": "#000000",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary": "#ffffff",
+                        "accent-purple": "#BF80FF",
+                        "accent-blue": "#0099FF",
+                        "accent-rose": "#FF6B8B",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-surface": "#1b1b1b",
+                        "on-primary-fixed": "#1b1b1b",
+                        "trust-grey": "#F2F2F2",
+                        "surface": "#f9f9f9",
+                        "primary-container": "#1b1b1b",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-primary-fixed-variant": "#474747",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "accent-yellow": "#FFD700",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-bright": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#e2e2e2",
+                        "secondary": "#5d5f5f",
+                        "tertiary-container": "#1b1b1b",
+                        "tertiary-fixed": "#e2e2e2",
+                        "inverse-primary": "#c6c6c6",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "surface-dim": "#dadada",
+                        "outline-variant": "#cfc4c5",
+                        "on-primary-container": "#848484",
+                        "on-surface-variant": "#4c4546",
+                        "outline": "#7e7576",
+                        "brand-black": "#111111",
+                        "footer-bg": "#EFEBE3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "4xl": "2rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-margin": "24px",
+                        "trust-band-padding": "40px",
+                        "section-gap": "80px",
+                        "grid-gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["var(--font-flatit)"],
+                        "headline-md": ["var(--font-monument)"],
+                        "headline-lg-mobile": ["var(--font-monument)"],
+                        "body-sm": ["var(--font-zalando)"],
+                        "body-lg": ["var(--font-zalando)"],
+                        "headline-lg": ["var(--font-monument)"],
+                        "headline-xl": ["var(--font-monument)"],
+                        "button-text": ["var(--font-google-sans)"],
+                        "nav-link": ["var(--font-google-sans)"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "body-sm": ["14px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "headline-xl": ["80px", {"lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+                        "button-text": ["14px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                        "nav-link": ["16px", {"lineHeight": "normal", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-lg overflow-x-hidden">
+<!-- 1. HEADER -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant w-full">
+<div class="flex justify-between items-center px-container-margin py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<div class="h-10 md:h-12 w-auto">
+<svg class="h-full w-auto" viewbox="0 0 352.87 130.21" xmlns="http://www.w3.org/2000/svg">
+<defs><style>.cls-logo-1 { fill: #1b1b1b; } .cls-logo-2 { fill: #FF4D00; }</style></defs>
+<g>
+<g>
+<path class="cls-logo-2" d="M107.61,0l-2.17,48.88c-.05.94.84,1.66,1.75,1.41l29.02-9.7-17.89,30.33c-.66.56-.65,1.58.02,2.12l20.92,30.23-37.64-8.27c-.78-.11-1.49.45-1.57,1.24l-4.68,33.96-18-22.57c-.37-.83-1.41-1.08-2.12-.52l-40.92,19.51,19.77-36.29c.42-.82-.07-1.82-.98-2L0,80.14l58.67-18.39c.76-.24,1.16-1.08.87-1.82l-9.64-34.91,29.54,21.63c.67.49,1.62.29,2.03-.43L107.61,0Z"></path>
+<path class="cls-logo-1" d="M79.07,79.15c-2.79,11.2-8.89,19.63-13.61,18.81s-6.29-10.55-3.49-21.76c2.79-11.2,8.89-19.63,13.61-18.81,4.72.81,6.29,10.55,3.49,21.76Z"></path>
+<path class="cls-logo-1" d="M101.01,78.36c-3.46,12.05-10.56,20.92-15.86,19.8s-6.79-11.79-3.33-23.85c3.46-12.05,10.56-20.92,15.86-19.8,5.3,1.12,6.79,11.79,3.33,23.85Z"></path>
+</g>
+<g>
+<path class="cls-logo-1" d="M157.42,97.43h14.13l-20.17-41.87h-15.36l-20.23,41.87h13.08l3.69-8.09h21.2l3.67,8.09ZM136.82,79.96l6.34-13.92,6.32,13.92h-12.66Z"></path>
+<path class="cls-logo-1" d="M200.28,55.56v15.38c-.53-.52-1.13-1.02-1.82-1.51-1.25-.88-2.82-1.59-4.69-2.14-1.88-.55-4.09-.82-6.63-.82-1.64,0-3.25.21-4.81.62-1.56.41-3.02,1.03-4.37,1.85s-2.54,1.86-3.58,3.11c-1.04,1.25-1.84,2.74-2.4,4.46-.57,1.72-.85,3.66-.85,5.81,0,3.6.76,6.58,2.29,8.94,1.52,2.37,3.51,4.13,5.95,5.28s5.03,1.73,7.77,1.73c2.15,0,4.14-.22,5.98-.67,1.84-.45,3.46-1.1,4.87-1.96.87-.53,1.63-1.14,2.29-1.81v3.63h12.49v-41.87h-12.49ZM199.11,86.55c-.43.61-.98,1.14-1.64,1.61-.67.47-1.44.83-2.32,1.08-.88.25-1.87.38-2.96.38-1.84,0-3.38-.34-4.63-1.03-1.25-.68-2.18-1.58-2.79-2.7-.61-1.11-.91-2.3-.91-3.55,0-.78.11-1.53.32-2.23.21-.7.55-1.36,1-1.96.45-.61,1.01-1.14,1.67-1.61.66-.47,1.45-.83,2.35-1.08.9-.25,1.9-.38,2.99-.38,1.84,0,3.36.34,4.57,1.03,1.21.68,2.12,1.57,2.73,2.67.61,1.09.91,2.29.91,3.58,0,.74-.11,1.48-.32,2.2s-.54,1.39-.97,1.99Z"></path>
+<path class="cls-logo-1" d="M245.97,55.56v15.38c-.53-.52-1.13-1.02-1.82-1.51-1.25-.88-2.82-1.59-4.69-2.14-1.88-.55-4.09-.82-6.63-.82-1.64,0-3.25.21-4.81.62-1.56.41-3.02,1.03-4.37,1.85s-2.54,1.86-3.58,3.11c-1.04,1.25-1.84,2.74-2.4,4.46-.57,1.72-.85,3.66-.85,5.81,0,3.6.76,6.58,2.29,8.94,1.52,2.37,3.51,4.13,5.95,5.28s5.03,1.73,7.77,1.73c2.15,0,4.14-.22,5.98-.67,1.84-.45,3.46-1.1,4.87-1.96.87-.53,1.63-1.14,2.29-1.81v3.63h12.49v-41.87h-12.49ZM244.79,86.55c-.43.61-.98,1.14-1.64,1.61-.67.47-1.44.83-2.32,1.08-.88.25-1.87.38-2.96.38-1.84,0-3.38-.34-4.63-1.03-1.25-.68-2.18-1.58-2.79-2.7-.61-1.11-.91-2.3-.91-3.55,0-.78.11-1.53.32-2.23.21-.7.55-1.36,1-1.96.45-.61,1.01-1.14,1.67-1.61.66-.47,1.45-.83,2.35-1.08.9-.25,1.9-.38,2.99-.38,1.84,0,3.36.34,4.57,1.03,1.21.68,2.12,1.57,2.73,2.67.61,1.09.91,2.29.91,3.58,0,.74-.11,1.48-.32,2.2s-.54,1.39-.97,1.99Z"></path>
+<path class="cls-logo-1" d="M264.44,97.43v-30.14h12.49v30.14h-12.49ZM264.5,64.3v-8.74h12.43v8.74h-12.43Z"></path>
+<path class="cls-logo-1" d="M309.33,81.36c-.76-.74-1.73-1.37-2.9-1.88l16.07-12.2h-12.67l-16.35,12.82,4.33-24.55h-10.73l-7.39,41.87h10.73l1.18-6.58,4.8-3.57c1.02-.74,2.1-1.1,3.25-1.08,1.15.02,2.06.66,2.73,1.91l5.34,9.32h11.9l-7.86-12.73c-.86-1.49-1.67-2.6-2.43-3.34Z"></path>
+<path class="cls-logo-1" d="M352.87,75.15v-7.86h-10.38v-8.15h-12.49v8.15h-6.92v7.86h6.92v11.96c0,3.25.98,5.78,2.93,7.59,1.96,1.82,4.57,2.73,7.86,2.73h12.08v-8.03h-6.04c-1.52,0-2.63-.39-3.31-1.17-.68-.78-1.03-1.86-1.03-3.23v-9.85h10.38Z"></path>
+</g>
+</g>
+</svg>
+</div>
+<nav class="hidden md:flex items-center gap-6 ml-4">
+<a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#">Femmes</a>
+<a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#">Hommes</a>
+<a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#">Enfants</a>
+<a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#">Marques</a>
+<a class="font-nav-link text-nav-link text-accent-orange hover:opacity-70 transition-opacity" href="#">Vendre</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Shopping Bag" class="hover:text-accent-orange transition-colors">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+</button>
+<button class="bg-primary text-on-primary font-button-text text-button-text px-6 py-2 rounded-full hover:bg-accent-blue transition-colors hidden sm:block">
+                    Se connecter
+                </button>
+<button class="bg-surface-container text-primary font-button-text text-button-text px-6 py-2 rounded-full hover:bg-surface-variant transition-colors hidden sm:block">
+                    S'inscrire
+                </button>
+</div>
+</div>
+</header>
+<main>
+<!-- 2. HERO SECTION -->
+<section class="bg-accent-orange w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-16 rounded-b-[40px] md:rounded-b-[80px] mx-auto max-w-[98%] mt-4">
+<!-- Background Sparkles -->
+<svg class="absolute top-10 left-10 text-on-primary opacity-50 w-12 h-12" fill="currentColor" viewbox="0 0 100 100">
+<path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path>
+</svg>
+<svg class="absolute bottom-20 right-20 text-accent-yellow opacity-80 w-16 h-16" fill="currentColor" viewbox="0 0 100 100">
+<path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path>
+</svg>
+<div class="max-w-7xl mx-auto w-full px-container-margin grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+<div class="flex flex-col justify-center items-start pt-8 md:pt-0">
+<h1 class="text-headline-xl text-on-primary leading-[0.9] mb-8 font-headline-xl">Trouve tes <br/><span class="text-accent-yellow">pépites</span></h1>
+<div class="bg-surface-container/20 backdrop-blur-sm rounded-full flex items-center p-1.5 border border-on-primary/20">
+<button class="bg-on-primary text-primary font-button-text text-button-text px-8 py-2.5 rounded-full hover:bg-accent-yellow transition-colors">
+                            Acheter
+                        </button>
+<button class="text-on-primary font-button-text text-button-text px-8 py-2.5 rounded-full hover:bg-surface-container/20 transition-colors">
+                            Vendre
+                        </button>
+</div>
+</div>
+<div class="relative h-[350px] flex justify-center items-center">
+<div class="absolute w-56 h-72 bg-accent-blue rounded-2xl shadow-2xl transform -rotate-12 -translate-x-20 overflow-hidden border-4 border-on-primary">
+<div class="w-full h-full bg-cover bg-center opacity-80 mix-blend-multiply" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDrtOZZrcLJ88H9CAFedgcPP-HR_CYHp3MlUX7ulYVb-H2LoD34uD-mKJ5AQGIrfBqLM9eXPEKd7Zy6Luit3X64WSYHjaspojlQHAfuiiqA1CXbH9-ICOURvHf_aldbvwn51GH6lYvzzalJ1WdeHxqLm2mfipmykaMxr2kQCwKzvMCtb1l8kx5xYxYOMpTPdULzvRqONrOrfRKOi6q6MPIJXAv6Uhhu_27inUWh8-0-1hXzMuk5idQ2');"></div>
+</div>
+<div class="absolute w-56 h-72 bg-accent-yellow rounded-2xl shadow-2xl transform rotate-6 z-10 translate-y-6 overflow-hidden border-4 border-on-primary"></div>
+<div class="absolute w-56 h-72 bg-accent-purple rounded-2xl shadow-2xl transform rotate-[20deg] translate-x-24 -translate-y-4 overflow-hidden border-4 border-on-primary"></div>
+</div>
+</div>
+</section>
+<!-- 3. TRUST BAND -->
+<section class="w-full px-container-margin py-8">
+<div class="max-w-7xl mx-auto bg-surface-container-low border border-outline-variant/30 rounded-[40px] px-8 flex flex-col md:flex-row justify-between items-center gap-12 py-6">
+<div class="flex items-center gap-6">
+<div class="flex items-center justify-center h-16 w-16 bg-accent-yellow rounded-full shadow-sm text-primary">
+<span class="material-symbols-outlined text-3xl">verified</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-xl text-primary" style="font-family: var(--font-zalando); font-weight: 900;">Qualité Garantie</span>
+<span class="font-body-sm text-on-surface-variant">Des vêtements soigneusement sélectionnés</span>
+</div>
+</div>
+<div class="flex items-center gap-8 md:gap-16 flex-wrap justify-center">
+<div class="md:w-32 md:h-32 bg-accent-blue h-20 w-20 shadow-inner" style="border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;"></div>
+<div class="md:w-32 md:h-32 bg-accent-purple h-20 w-20 shadow-inner" style="border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: rotate(45deg);"></div>
+<div class="w-20 h-32 md:w-28 md:h-40 bg-accent-rose shadow-inner" style="border-radius: 40% / 20%; transform: scaleY(1.1) scaleX(0.8);"></div>
+</div>
+</div>
+</section>
+<!-- 4. SUGGÉRÉ POUR TOI -->
+<section class="w-full max-w-7xl mx-auto px-container-margin relative py-12">
+<div class="flex items-center justify-between mb-10 relative z-10">
+<h2 class="text-headline-lg text-primary" style="font-family: var(--font-zalando); font-weight: 900;">Suggéré pour toi</h2>
+<button class="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors">Tout voir</button>
+</div>
+<div class="absolute right-10 top-0 text-accent-yellow z-0 hidden lg:block opacity-90 w-32 h-32">
+<svg fill="currentColor" viewbox="0 0 100 100"><path d="M50 0 L55 35 L90 10 L65 42.5 L100 50 L65 57.5 L90 90 L57.5 65 L50 100 L42.5 65 L10 90 L35 57.5 L0 50 L35 42.5 L10 10 L42.5 35 L50 0 Z"></path></svg>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
+<!-- Product Cards -->
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 flex gap-1">
+<div class="w-3 h-3 rounded-full bg-accent-blue"></div>
+<div class="w-3 h-3 rounded-full bg-accent-purple"></div>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-bold text-[18px] text-primary" style="font-family: var(--font-zalando);">Chemise Été</span>
+<span class="font-body-sm text-accent-orange font-bold">5000 F</span>
+</div>
+<span class="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">XS</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 flex gap-1">
+<div class="w-3 h-3 rounded-full bg-accent-yellow"></div>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-bold text-[18px] text-primary" style="font-family: var(--font-zalando);">Veste Jean</span>
+<span class="font-body-sm text-accent-orange font-bold">8500 F</span>
+</div>
+<span class="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">M</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 flex gap-1">
+<div class="w-3 h-3 rounded-full bg-accent-rose"></div>
+<div class="w-3 h-3 rounded-full bg-accent-blue"></div>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-bold text-[18px] text-primary" style="font-family: var(--font-zalando);">Robe Fleur</span>
+<span class="font-body-sm text-accent-orange font-bold">12000 F</span>
+</div>
+<span class="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">L</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative"></div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-bold text-[18px] text-primary" style="font-family: var(--font-zalando);">Pantalon</span>
+<span class="font-body-sm text-accent-orange font-bold">6000 F</span>
+</div>
+<span class="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">XL</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 flex gap-1">
+<div class="w-3 h-3 rounded-full bg-accent-orange"></div>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-bold text-[18px] text-primary" style="font-family: var(--font-zalando);">T-shirt</span>
+<span class="font-body-sm text-accent-orange font-bold">3000 F</span>
+</div>
+<span class="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">S</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. TOP BOUTIQUES -->
+<section class="w-full max-w-7xl mx-auto px-container-margin py-12">
+<div class="flex items-center gap-4 mb-10">
+<h2 class="text-headline-lg text-primary" style="font-family: var(--font-zalando); font-weight: 900;">Top Boutiques</h2>
+<svg class="text-accent-purple animate-pulse" fill="currentColor" height="48" viewbox="0 0 100 100" width="48">
+<path d="M50 0 L55 25 L80 15 L70 40 L95 50 L70 60 L80 85 L55 75 L50 100 L45 75 L20 85 L30 60 L5 50 L30 40 L20 15 L45 25 Z"></path>
+<circle cx="50" cy="50" fill="none" r="15" stroke="white" stroke-dasharray="8 4" stroke-width="5"></circle>
+</svg>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+<div class="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden">
+<div class="aspect-square bg-accent-rose/20 flex-1"></div>
+<div class="aspect-square bg-accent-blue/20 flex-1"></div>
+<div class="aspect-square bg-accent-yellow/20 flex-1"></div>
+<div class="aspect-square bg-accent-orange/20 flex-1"></div>
+</div>
+<div class="flex justify-between items-center w-full px-2">
+<span class="text-xl text-primary font-bold" style="font-family: var(--font-zalando);">@VintageDakar</span>
+<button class="bg-primary text-on-primary font-button-text px-4 py-2 rounded-full hover:bg-accent-purple transition-colors">Visiter</button>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+<div class="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden">
+<div class="aspect-square bg-accent-blue/20 flex-1"></div>
+<div class="aspect-square bg-accent-purple/20 flex-1"></div>
+<div class="aspect-square bg-accent-orange/20 flex-1"></div>
+<div class="aspect-square bg-accent-rose/20 flex-1"></div>
+</div>
+<div class="flex justify-between items-center w-full px-2">
+<span class="text-xl text-primary font-bold" style="font-family: var(--font-zalando);">@StyleRetro</span>
+<button class="bg-primary text-on-primary font-button-text px-4 py-2 rounded-full hover:bg-accent-blue transition-colors">Visiter</button>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+<div class="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden">
+<div class="aspect-square bg-accent-yellow/20 flex-1"></div>
+<div class="aspect-square bg-accent-rose/20 flex-1"></div>
+<div class="aspect-square bg-accent-purple/20 flex-1"></div>
+<div class="aspect-square bg-accent-blue/20 flex-1"></div>
+</div>
+<div class="flex justify-between items-center w-full px-2">
+<span class="text-xl text-primary font-bold" style="font-family: var(--font-zalando);">@PopThrift</span>
+<button class="bg-primary text-on-primary font-button-text px-4 py-2 rounded-full hover:bg-accent-yellow transition-colors text-primary hover:text-primary">Visiter</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. NEW DROP -->
+<section class="w-full max-w-[98%] mx-auto bg-accent-purple rounded-[40px] px-container-margin py-16 relative overflow-hidden my-12">
+<svg class="absolute top-0 right-0 text-on-primary opacity-20 w-64 h-64 transform translate-x-1/2 -translate-y-1/2" fill="currentColor" viewbox="0 0 100 100">
+<path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path>
+</svg>
+<div class="max-w-7xl mx-auto relative z-10">
+<div class="flex items-center justify-between gap-4 mb-10">
+<div class="flex items-center gap-4">
+<h2 class="text-headline-lg text-on-primary" style="font-family: var(--font-zalando); font-weight: 900;">New DROP</h2>
+<svg class="text-accent-yellow" fill="currentColor" height="40" viewbox="0 0 100 100" width="40">
+<path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path>
+</svg>
+</div>
+<button class="bg-on-primary text-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-yellow transition-colors hidden sm:block">Explore</button>
+</div>
+<div class="flex gap-6 overflow-x-auto pb-8 snap-x relative hide-scrollbar">
+<div class="min-w-[280px] w-full max-w-[300px] aspect-[4/5] bg-surface-container rounded-3xl snap-start shrink-0 relative overflow-hidden group cursor-pointer border-4 border-transparent hover:border-accent-yellow transition-colors">
+<div class="absolute bottom-4 left-4 right-4 bg-surface/90 backdrop-blur rounded-2xl p-4 flex justify-between items-center transform translate-y-2 group-hover:translate-y-0 transition-transform">
+<span class="font-bold text-lg" style="font-family: var(--font-zalando);">Look 1</span>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center"><span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+</div>
+<div class="min-w-[280px] w-full max-w-[300px] aspect-[4/5] bg-surface-container rounded-3xl snap-start shrink-0 relative overflow-hidden group cursor-pointer border-4 border-transparent hover:border-accent-blue transition-colors">
+<div class="absolute bottom-4 left-4 right-4 bg-surface/90 backdrop-blur rounded-2xl p-4 flex justify-between items-center transform translate-y-2 group-hover:translate-y-0 transition-transform">
+<span class="font-bold text-lg" style="font-family: var(--font-zalando);">Look 2</span>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center"><span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+</div>
+<div class="min-w-[280px] w-full max-w-[300px] aspect-[4/5] bg-surface-container rounded-3xl snap-start shrink-0 relative overflow-hidden group cursor-pointer border-4 border-transparent hover:border-accent-rose transition-colors">
+<div class="absolute bottom-4 left-4 right-4 bg-surface/90 backdrop-blur rounded-2xl p-4 flex justify-between items-center transform translate-y-2 group-hover:translate-y-0 transition-transform">
+<span class="font-bold text-lg" style="font-family: var(--font-zalando);">Look 3</span>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center"><span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+</div>
+<div class="min-w-[280px] w-full max-w-[300px] aspect-[4/5] bg-surface-container rounded-3xl snap-start shrink-0 relative overflow-hidden group cursor-pointer border-4 border-transparent hover:border-accent-orange transition-colors">
+<div class="absolute bottom-4 left-4 right-4 bg-surface/90 backdrop-blur rounded-2xl p-4 flex justify-between items-center transform translate-y-2 group-hover:translate-y-0 transition-transform">
+<span class="font-bold text-lg" style="font-family: var(--font-zalando);">Look 4</span>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center"><span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. CATÉGORIES -->
+<section class="w-full py-16 flex flex-col items-center justify-center overflow-hidden min-h-[700px] bg-surface">
+<h2 class="text-primary text-center mb-16 relative z-20" style="font-size: clamp(3rem, 8vw, 6rem); font-family: var(--font-zalando); font-weight: 900;">Catégories</h2>
+<div class="relative w-full max-w-7xl flex flex-col items-center">
+<div class="w-full max-w-5xl h-[450px] relative">
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        {{DATA:DOCUMENT:DOCUMENT_3}}
+                    </div>
+<div class="absolute inset-0 z-30">
+<div class="w-full h-full relative">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 transition-transform">
+<span class="text-primary text-2xl bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl font-bold" style="font-family: var(--font-zalando);">Accessoires</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- 8. FOOTER -->
+<footer class="bg-footer-bg text-primary w-full mt-12 pt-16 pb-8 border-t border-outline-variant/20">
+<div class="max-w-7xl mx-auto px-container-margin">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+<div class="flex flex-col gap-6">
+<div class="h-16 w-auto overflow-hidden">
+<svg class="h-full w-auto" viewbox="0 0 352.87 130.21" xmlns="http://www.w3.org/2000/svg">
+<defs><style>.cls-f-1 { fill: #1b1b1b; } .cls-f-2 { fill: #FF4D00; }</style></defs>
+<g>
+<g>
+<path class="cls-f-2" d="M107.61,0l-2.17,48.88c-.05.94.84,1.66,1.75,1.41l29.02-9.7-17.89,30.33c-.66.56-.65,1.58.02,2.12l20.92,30.23-37.64-8.27c-.78-.11-1.49.45-1.57,1.24l-4.68,33.96-18-22.57c-.37-.83-1.41-1.08-2.12-.52l-40.92,19.51,19.77-36.29c.42-.82-.07-1.82-.98-2L0,80.14l58.67-18.39c.76-.24,1.16-1.08.87-1.82l-9.64-34.91,29.54,21.63c.67.49,1.62.29,2.03-.43L107.61,0Z"></path>
+<path class="cls-f-1" d="M79.07,79.15c-2.79,11.2-8.89,19.63-13.61,18.81s-6.29-10.55-3.49-21.76c2.79-11.2,8.89-19.63,13.61-18.81,4.72.81,6.29,10.55,3.49,21.76Z"></path>
+<path class="cls-f-1" d="M101.01,78.36c-3.46,12.05-10.56,20.92-15.86,19.8s-6.79-11.79-3.33-23.85c3.46-12.05,10.56-20.92,15.86-19.8,5.3,1.12,6.79,11.79,3.33,23.85Z"></path>
+</g>
+<g>
+<path class="cls-f-1" d="M157.42,97.43h14.13l-20.17-41.87h-15.36l-20.23,41.87h13.08l3.69-8.09h21.2l3.67,8.09ZM136.82,79.96l6.34-13.92,6.32,13.92h-12.66Z"></path>
+<path class="cls-f-1" d="M200.28,55.56v15.38c-.53-.52-1.13-1.02-1.82-1.51-1.25-.88-2.82-1.59-4.69-2.14-1.88-.55-4.09-.82-6.63-.82-1.64,0-3.25.21-4.81.62-1.56.41-3.02,1.03-4.37,1.85s-2.54,1.86-3.58,3.11c-1.04,1.25-1.84,2.74-2.4,4.46-.57,1.72-.85,3.66-.85,5.81,0,3.6.76,6.58,2.29,8.94,1.52,2.37,3.51,4.13,5.95,5.28s5.03,1.73,7.77,1.73c2.15,0,4.14-.22,5.98-.67,1.84-.45,3.46-1.1,4.87-1.96.87-.53,1.63-1.14,2.29-1.81v3.63h12.49v-41.87h-12.49ZM199.11,86.55c-.43.61-.98,1.14-1.64,1.61-.67.47-1.44.83-2.32,1.08-.88.25-1.87.38-2.96.38-1.84,0-3.38-.34-4.63-1.03-1.25-.68-2.18-1.58-2.79-2.7-.61-1.11-.91-2.3-.91-3.55,0-.78.11-1.53.32-2.23.21-.7.55-1.36,1-1.96.45-.61,1.01-1.14,1.67-1.61.66-.47,1.45-.83,2.35-1.08.9-.25,1.9-.38,2.99-.38,1.84,0,3.36.34,4.57,1.03,1.21.68,2.12,1.57,2.73,2.67.61,1.09.91,2.29.91,3.58,0,.74-.11,1.48-.32,2.2s-.54,1.39-.97,1.99Z"></path>
+<path class="cls-f-1" d="M245.97,55.56v15.38c-.53-.52-1.13-1.02-1.82-1.51-1.25-.88-2.82-1.59-4.69-2.14-1.88-.55-4.09-.82-6.63-.82-1.64,0-3.25.21-4.81.62-1.56.41-3.02,1.03-4.37,1.85s-2.54,1.86-3.58,3.11c-1.04,1.25-1.84,2.74-2.4,4.46-.57,1.72-.85,3.66-.85,5.81,0,3.6.76,6.58,2.29,8.94,1.52,2.37,3.51,4.13,5.95,5.28s5.03,1.73,7.77,1.73c2.15,0,4.14-.22,5.98-.67,1.84-.45,3.46-1.1,4.87-1.96.87-.53,1.63-1.14,2.29-1.81v3.63h12.49v-41.87h-12.49ZM244.79,86.55c-.43.61-.98,1.14-1.64,1.61-.67.47-1.44.83-2.32,1.08-.88.25-1.87.38-2.96.38-1.84,0-3.38-.34-4.63-1.03-1.25-.68-2.18-1.58-2.79-2.7-.61-1.11-.91-2.3-.91-3.55,0-.78.11-1.53.32-2.23.21-.7.55-1.36,1-1.96.45-.61,1.01-1.14,1.67-1.61.66-.47,1.45-.83,2.35-1.08.9-.25,1.9-.38,2.99-.38,1.84,0,3.36.34,4.57,1.03,1.21.68,2.12,1.57,2.73,2.67.61,1.09.91,2.29.91,3.58,0,.74-.11,1.48-.32,2.2s-.54,1.39-.97,1.99Z"></path>
+<path class="cls-f-1" d="M264.44,97.43v-30.14h12.49v30.14h-12.49ZM264.5,64.3v-8.74h12.43v8.74h-12.43Z"></path>
+<path class="cls-f-1" d="M309.33,81.36c-.76-.74-1.73-1.37-2.9-1.88l16.07-12.2h-12.67l-16.35,12.82,4.33-24.55h-10.73l-7.39,41.87h10.73l1.18-6.58,4.8-3.57c1.02-.74,2.1-1.1,3.25-1.08,1.15.02,2.06.66,2.73,1.91l5.34,9.32h11.9l-7.86-12.73c-.86-1.49-1.67-2.6-2.43-3.34Z"></path>
+<path class="cls-f-1" d="M352.87,75.15v-7.86h-10.38v-8.15h-12.49v8.15h-6.92v7.86h6.92v11.96c0,3.25.98,5.78,2.93,7.59,1.96,1.82,4.57,2.73,7.86,2.73h12.08v-8.03h-6.04c-1.52,0-2.63-.39-3.31-1.17-.68-.78-1.03-1.86-1.03-3.23v-9.85h10.38Z"></path>
+</g>
+</g>
+</svg>
+</div>
+<p class="font-body-sm text-on-surface-variant leading-relaxed">
+                        Addikt Dakar, votre marketplace de mode circulaire et vintage. Une sélection unique pour trouver vos pépites.
+                    </p>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-bold text-lg text-primary" style="font-family: var(--font-zalando);">Navigation</h3>
+<ul class="flex flex-col gap-2 font-body-sm text-on-surface-variant">
+<li><a class="hover:text-accent-orange transition-colors" href="#">Femmes</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Hommes</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Enfants</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Marques</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Vendre</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-bold text-lg text-primary" style="font-family: var(--font-zalando);">Support</h3>
+<ul class="flex flex-col gap-2 font-body-sm text-on-surface-variant">
+<li><a class="hover:text-accent-orange transition-colors" href="#">FAQ</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Contact</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Livraison</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Retours</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-bold text-lg text-primary" style="font-family: var(--font-zalando);">Légal</h3>
+<ul class="flex flex-col gap-2 font-body-sm text-on-surface-variant">
+<li><a class="hover:text-accent-orange transition-colors" href="#">Mentions légales</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Confidentialité</a></li>
+<li><a class="hover:text-accent-orange transition-colors" href="#">Cookies</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-outline-variant/30 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-sm text-on-surface-variant">© 2024 Addikt. Tous droits réservés.</p>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<a aria-label="Facebook" class="hover:text-accent-orange transition-colors" href="#"><svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg></a>
+<a aria-label="Instagram" class="hover:text-accent-orange transition-colors" href="#"><svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058z" fill-rule="evenodd"></path></svg></a>
+<a aria-label="Twitter" class="hover:text-accent-orange transition-colors" href="#"><svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg></a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Final Black Band -->
+<section class="bg-primary w-full py-6 flex justify-center items-center">
+<div class="max-w-7xl mx-auto px-container-margin w-full">
+<img alt="Social and Legal Information" class="w-full h-auto max-w-5xl mx-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDRO-0U_hPuLKUa2_a4oMJJu2cobfK7fk_gjzo4q0ubVdtc0BDr3qDRwYbo2z7LAavzDqr17YitVoAQuxBCLZq0fWQXIj_gz_hXmxI5woMbGSUPk7ffX11u5mCwbVvLFdrJ92nkdBlhjUElg-_DLxSuyjMTJBoZMR0xfqxylJ05mvGE2H7bkrrnSQj2VkYu8EuTwUfJol8d1hOqeoksR2-ZairCT504g748W2AORr0_Letj3z5e31CpBW4Cf2kgE8psA"/>
+</div>
+</section>
+</body></html>

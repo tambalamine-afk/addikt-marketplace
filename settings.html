@@ -1,0 +1,372 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Paramètres du Compte - Addikt Dakar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#c6c6c6",
+                      "on-primary-fixed-variant": "#474747",
+                      "on-secondary": "#ffffff",
+                      "trust-grey": "#F2F2F2",
+                      "surface-variant": "#e2e2e2",
+                      "on-tertiary-container": "#848484",
+                      "tertiary-container": "#1b1b1b",
+                      "secondary-fixed-dim": "#c6c6c7",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#5d5f5f",
+                      "surface-container-low": "#f3f3f3",
+                      "surface-container-highest": "#e2e2e2",
+                      "on-secondary-container": "#616363",
+                      "on-surface": "#1b1b1b",
+                      "surface-dim": "#dadada",
+                      "on-surface-variant": "#4c4546",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "primary-container": "#1b1b1b",
+                      "outline-variant": "#cfc4c5",
+                      "error-container": "#ffdad6",
+                      "outline": "#7e7576",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "primary-fixed": "#e2e2e2",
+                      "surface-tint": "#5e5e5e",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-secondary-fixed-variant": "#454747",
+                      "on-primary-fixed": "#1b1b1b",
+                      "surface": "#f9f9f9",
+                      "error": "#ba1a1a",
+                      "accent-orange": "#FF4D00",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#f9f9f9",
+                      "primary": "#000000",
+                      "background": "#f9f9f9",
+                      "tertiary": "#000000",
+                      "on-primary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-container": "#dfe0e0",
+                      "inverse-surface": "#303030",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "accent-yellow": "#FFD700",
+                      "accent-rose": "#FF6B8B",
+                      "inverse-primary": "#c6c6c6",
+                      "accent-blue": "#0099FF",
+                      "inverse-on-surface": "#f1f1f1",
+                      "surface-container-high": "#e8e8e8",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#eeeeee",
+                      "accent-purple": "#BF80FF",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "on-primary-container": "#848484",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-background": "#1b1b1b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-margin": "24px",
+                      "section-gap": "80px",
+                      "trust-band-padding": "40px",
+                      "grid-gutter": "16px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "Flatit Quiet Sans"
+                      ],
+                      "nav-link": [
+                              "Flatit Quiet Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Monument Extended"
+                      ],
+                      "button-text": [
+                              "Flatit Quiet Sans"
+                      ],
+                      "headline-md": [
+                              "Monument Extended"
+                      ],
+                      "body-lg": [
+                              "Zalando Sans Expanded"
+                      ],
+                      "body-sm": [
+                              "Zalando Sans Expanded"
+                      ],
+                      "headline-xl": [
+                              "Monument Extended"
+                      ],
+                      "headline-lg": [
+                              "Monument Extended"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "nav-link": [
+                              "16px",
+                              {
+                                      "lineHeight": "normal",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "button-text": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "80px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "900"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        /* Hide side nav on mobile, hide bottom nav on desktop */
+        @media (max-width: 767px) {
+            .side-nav-desktop { display: none !important; }
+        }
+        @media (min-width: 768px) {
+            .bottom-nav-mobile { display: none !important; }
+            .main-content-area { margin-left: 16rem; /* 64 * 0.25rem = 16rem (w-64) */ }
+        }
+        
+        /* Brutalist Toggle Styles */
+        .brutalist-toggle {
+            appearance: none;
+            width: 48px;
+            height: 24px;
+            background-color: theme('colors.surface-variant');
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+        .brutalist-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: theme('colors.primary');
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        .brutalist-toggle:checked {
+            background-color: theme('colors.accent-orange');
+        }
+        .brutalist-toggle:checked::after {
+            transform: translateX(24px);
+            background-color: theme('colors.on-primary');
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen font-sans">
+<!-- Desktop SideNav -->
+<nav class="side-nav-desktop h-screen w-64 fixed left-0 top-0 bg-white border-r border-surface-variant flex flex-col p-6 space-y-8 z-40">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">star</span>
+<span class="font-headline-md text-headline-md text-primary italic font-black">Addikt</span>
+</div>
+<div class="flex flex-col items-center py-6 border-b border-surface-variant">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-3 border-2 border-primary">
+<img alt="Photo de profil utilisateur" class="w-full h-full object-cover" data-alt="A high-contrast black and white portrait of a young Senegalese streetwear enthusiast with edgy styling, harsh lighting, and a confident expression. Brutalist, trendy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6Kj16Pg16KFHOygVXnq3JYVbRVPnfnF6L_5qszOG-8llAjMQJiGoguZLEKc0p7_lorijoQCsYMUS-CjSc7tSu2CKNaIlTXMKNNJD_eiE_BviVjL8eHFgTCkUBC2xY5FsOmZGovVbFOZaq3DaswUY7Lgn_iuG5iG-8oxmvKEKk6lmRVHZlNd3NbJ6oErgPbtgPj7GermrnLp0J9cFm3PvFnE4QhdPOh9p0MPJASMIPFribonCXH5l1">
+</div>
+<h3 class="font-headline-md text-headline-md text-primary text-center">Dakar Streetwear</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Membre depuis 2024</p>
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 bg-primary text-on-primary rounded-full px-4 py-2 font-label-caps text-label-caps translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+                Mon Profil
+            </a>
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 font-label-caps text-label-caps hover:bg-trust-grey transition-all rounded-full" href="#">
+<span class="material-symbols-outlined">package</span>
+                Commandes
+            </a>
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 font-label-caps text-label-caps hover:bg-trust-grey transition-all rounded-full" href="#">
+<span class="material-symbols-outlined">favorite</span>
+                Favoris
+            </a>
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 font-label-caps text-label-caps hover:bg-trust-grey transition-all rounded-full" href="#">
+<span class="material-symbols-outlined">payments</span>
+                Paiements
+            </a>
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 font-label-caps text-label-caps hover:bg-trust-grey transition-all rounded-full" href="#">
+<span class="material-symbols-outlined">shield</span>
+                Sécurité
+            </a>
+</div>
+<button class="w-full bg-trust-grey text-primary rounded-full py-3 font-button-text text-button-text hover:bg-surface-variant transition-colors">
+            Vendre un article
+        </button>
+<div class="pt-4 border-t border-surface-variant space-y-2">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 font-label-caps text-label-caps hover:bg-trust-grey transition-all rounded-full" href="#">
+<span class="material-symbols-outlined">help</span>
+                Aide
+            </a>
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 font-label-caps text-label-caps hover:bg-trust-grey transition-all rounded-full" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Déconnexion
+            </a>
+</div>
+</nav>
+<!-- Mobile Top App Bar (Replaces SideNav on mobile) -->
+<header class="md:hidden flex justify-between items-center px-container-margin py-4 w-full bg-surface border-b border-surface-variant sticky top-0 z-40">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-xl">star</span>
+<span class="font-headline-md text-headline-md font-black text-primary italic">Addikt</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="main-content-area pb-32 md:pb-12 pt-6 md:pt-12 px-container-margin max-w-3xl mx-auto">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-12 uppercase tracking-tighter">Paramètres</h1>
+<form class="space-y-12">
+<!-- Profile Photo -->
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary group cursor-pointer">
+<img alt="Photo de profil actuelle" class="w-full h-full object-cover group-hover:opacity-75 transition-opacity" data-alt="Close up portrait of a young adult looking directly at the camera with a neutral, confident expression. High contrast black and white lighting, brutalist urban style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmhtCtgWvp3IqdRxDDDWj-Hvs53uOGc6GLPTQHhu7rBWZRjMgK1iRC32E6gG0jMQIVqfS9GnGReYQ_4APGkqtUiXxoZscS1avE_nqvb4hS9YzWpUE3a0AdkKY-r5tONPJrTgZI62jnaIj7Fuk5zdjcVoKti9Avp2D0Qtz5tuSIgWhVL1h2Exkxcr0WV8my-RPecKe0Moebp_J7jBYGfkB_-k4dsF4ErhiGXm3MtOO2Ca2b88C0rqFc">
+<div class="absolute inset-0 bg-primary/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+</div>
+</div>
+<button class="font-button-text text-button-text text-primary border-b-2 border-primary pb-1 hover:text-accent-orange hover:border-accent-orange transition-colors uppercase tracking-widest" type="button">Modifier la photo</button>
+</div>
+<!-- Basic Info Form -->
+<div class="space-y-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider" for="fullName">Nom complet</label>
+<input class="w-full bg-transparent border-0 border-b-2 border-primary rounded-none px-0 py-3 font-body-lg text-body-lg text-primary focus:ring-0 focus:border-accent-orange transition-colors placeholder:text-secondary-fixed-dim" id="fullName" type="text" value="Dakar Streetwear">
+</div>
+<div class="flex flex-col gap-2 relative">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider" for="phone">Numéro de téléphone</label>
+<div class="relative">
+<input class="w-full bg-transparent border-0 border-b-2 border-primary rounded-none px-0 py-3 pr-24 font-body-lg text-body-lg text-primary focus:ring-0 focus:border-accent-orange transition-colors" id="phone" type="tel" value="+221 77 123 45 67">
+<div class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1 bg-trust-grey px-3 py-1 rounded-full border border-surface-variant">
+<span class="material-symbols-outlined text-accent-blue text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-caps text-label-caps text-primary text-[10px]">Vérifié</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider" for="quartier">Quartier</label>
+<select class="w-full bg-transparent border-0 border-b-2 border-primary rounded-none px-0 py-3 font-body-lg text-body-lg text-primary focus:ring-0 focus:border-accent-orange transition-colors appearance-none" id="quartier">
+<option value="plateau">Plateau</option>
+<option selected="" value="medina">Médina</option>
+<option value="almadies">Almadies</option>
+<option value="ouakam">Ouakam</option>
+<option value="yoff">Yoff</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider" for="bio">Bio</label>
+<textarea class="w-full bg-surface-container-low border-2 border-surface-variant rounded-lg p-4 font-body-sm text-body-sm text-primary focus:ring-0 focus:border-primary transition-colors resize-none placeholder:text-secondary-fixed-dim" id="bio" rows="4">Passionné de sneakers et de mode urbaine. Je vends principalement du M/L en excellent état.</textarea>
+</div>
+</div>
+<!-- Notifications -->
+<div class="pt-8 border-t-4 border-primary">
+<h2 class="font-headline-md text-headline-md text-primary mb-6 uppercase tracking-tight">Notifications</h2>
+<div class="space-y-4">
+<div class="flex justify-between items-center bg-trust-grey p-4 rounded-lg">
+<span class="font-nav-link text-nav-link text-primary">Nouveaux messages</span>
+<input checked="" class="brutalist-toggle" type="checkbox">
+</div>
+<div class="flex justify-between items-center bg-trust-grey p-4 rounded-lg">
+<span class="font-nav-link text-nav-link text-primary">Offres reçues</span>
+<input checked="" class="brutalist-toggle" type="checkbox">
+</div>
+<div class="flex justify-between items-center bg-trust-grey p-4 rounded-lg">
+<span class="font-nav-link text-nav-link text-primary">Nouvelles annonces (Favoris)</span>
+<input class="brutalist-toggle" type="checkbox">
+</div>
+</div>
+</div>
+<!-- Confidentialité -->
+<div class="pt-8 border-t-4 border-primary">
+<h2 class="font-headline-md text-headline-md text-primary mb-6 uppercase tracking-tight">Confidentialité</h2>
+<div class="flex justify-between items-center bg-surface-container-lowest border-2 border-surface-variant p-4 rounded-lg">
+<div class="flex flex-col">
+<span class="font-nav-link text-nav-link text-primary">Afficher mon quartier précisément</span>
+<span class="font-body-sm text-body-sm text-secondary mt-1">Aide les acheteurs à vous situer sur la carte.</span>
+</div>
+<input checked="" class="brutalist-toggle" type="checkbox">
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-12 flex flex-col items-center gap-6">
+<!-- Sticky Mobile Button / Normal Desktop Button -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-md border-t border-surface-variant md:static md:p-0 md:bg-transparent md:border-t-0 md:backdrop-blur-none z-30">
+<button class="w-full md:w-auto md:min-w-[300px] bg-primary text-on-primary rounded-full py-4 px-8 font-button-text text-button-text uppercase tracking-widest hover:bg-accent-orange transition-colors" type="submit">
+                        Enregistrer les modifications
+                    </button>
+</div>
+<button class="font-body-sm text-body-sm text-outline hover:text-error underline transition-colors mb-20 md:mb-0" type="button">
+                    Supprimer mon compte
+                </button>
+</div>
+</form>
+</main>
+</body></html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html><html class="light" lang="fr" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Mon Profil - Addikt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&amp;f[]=satoshi@400,500,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Flatit+Quiet+Sans:wght@100..900&amp;family=Monument+Extended:wght@100..900&amp;family=Zalando+Sans+Expanded:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        /* Fallback fonts if custom ones fail to load */
+        @font-face {
+            font-family: 'Monument Extended';
+            src: local('Arial Black');
+            font-weight: 800;
+        }
+        @font-face {
+            font-family: 'Zalando Sans Expanded';
+            src: local('Arial');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Flatit Quiet Sans';
+            src: local('Arial');
+            font-weight: 600;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-primary-fixed-variant": "#474747",
+                        "on-secondary": "#ffffff",
+                        "trust-grey": "#F2F2F2",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-container": "#848484",
+                        "tertiary-container": "#1b1b1b",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#5d5f5f",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary-container": "#616363",
+                        "on-surface": "#1b1b1b",
+                        "surface-dim": "#dadada",
+                        "on-surface-variant": "#4c4546",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "primary-container": "#1b1b1b",
+                        "outline-variant": "#cfc4c5",
+                        "error-container": "#ffdad6",
+                        "outline": "#7e7576",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "primary-fixed": "#e2e2e2",
+                        "surface-tint": "#5e5e5e",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-primary-fixed": "#1b1b1b",
+                        "surface": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "accent-orange": "#FF4D00",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "primary": "#000000",
+                        "background": "#f9f9f9",
+                        "tertiary": "#000000",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#dfe0e0",
+                        "inverse-surface": "#303030",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "accent-yellow": "#FFD700",
+                        "accent-rose": "#FF6B8B",
+                        "inverse-primary": "#c6c6c6",
+                        "accent-blue": "#0099FF",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "accent-purple": "#BF80FF",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-primary-container": "#848484",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-background": "#1b1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-margin": "24px",
+                        "section-gap": "80px",
+                        "trust-band-padding": "40px",
+                        "grid-gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Flatit Quiet Sans"],
+                        "nav-link": ["Flatit Quiet Sans"],
+                        "headline-lg-mobile": ["Monument Extended"],
+                        "button-text": ["Flatit Quiet Sans"],
+                        "headline-md": ["Monument Extended"],
+                        "body-lg": ["Zalando Sans Expanded"],
+                        "body-sm": ["Zalando Sans Expanded"],
+                        "headline-xl": ["Monument Extended"],
+                        "headline-lg": ["Monument Extended"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "nav-link": ["16px", { "lineHeight": "normal", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "button-text": ["14px", { "lineHeight": "1.0", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "headline-xl": ["80px", { "lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row">
+<!-- Mobile Top App Bar (Hidden on Desktop) -->
+<header class="md:hidden bg-surface border-b border-surface-variant flex justify-between items-center px-container-margin py-4 w-full sticky top-0 z-50">
+<a class="font-headline-md text-headline-md font-black text-primary italic" href="#">Addikt</a>
+<div class="flex gap-4">
+<button aria-label="shopping_cart">
+<span class="material-symbols-outlined text-primary hover:text-accent-orange transition-colors" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button aria-label="favorite">
+<span class="material-symbols-outlined text-primary hover:text-accent-orange transition-colors" data-icon="favorite">favorite</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-white border-r border-surface-variant p-6 space-y-8 z-40">
+<div class="flex flex-col">
+<a class="font-headline-md text-headline-md text-primary italic mb-2" href="#">Addikt</a>
+<h2 class="font-headline-md text-headline-md text-primary">Dakar Streetwear</h2>
+<p class="font-label-caps text-label-caps text-secondary mt-1">Membre depuis 2024</p>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li class="">
+<a class="flex items-center gap-3 bg-primary text-on-primary rounded-full px-4 py-2 hover:bg-trust-grey transition-all translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">Mon Profil</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="package">package</span>
+<span class="font-label-caps text-label-caps">Commandes</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-label-caps text-label-caps">Favoris</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-caps text-label-caps">Paiements</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+<span class="font-label-caps text-label-caps">Sécurité</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto flex flex-col gap-4">
+<button class="bg-primary text-on-primary font-button-text text-button-text py-3 px-6 rounded-full w-full hover:bg-inverse-surface transition-colors">
+                Vendre un article
+            </button>
+<ul class="flex flex-col gap-2 border-t border-surface-variant pt-4">
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-caps text-label-caps">Aide</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-accent-rose hover:text-error px-4 py-2 hover:bg-error-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-caps text-label-caps">Déconnexion</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 w-full max-w-4xl mx-auto flex flex-col">
+<!-- Top Banner & Profile Header -->
+<div class="relative w-full">
+<div class="h-32 md:h-48 bg-accent-orange w-full relative overflow-hidden">
+<!-- Decorative Graphic -->
+<div class="absolute -bottom-10 -right-10 opacity-20">
+<span class="material-symbols-outlined text-[120px]" data-icon="all_inclusive" style="font-variation-settings: 'FILL' 1;">all_inclusive</span>
+</div>
+</div>
+<div class="px-container-margin relative mb-8 flex flex-col md:flex-row gap-6 items-start md:items-end -mt-10">
+<div class="relative inline-block">
+<img class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-background object-cover bg-surface-variant" data-alt="A close up portrait of a young, stylish urbanite in Dakar wearing minimalist streetwear. The lighting is bright and high-contrast, fitting a modern brutalist UI design. White background, crisp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMwgCBKeBi4VqjSu6tIPJ8U80yA_W16AqOQ2omB13pitrAbUhsfRR0Q4YeZmFtOIYhXYXIfT8GNV2JUUUmJ8vjAWjOYSG_CW1lUiCvOUOr19pl17wlc_5Pq3yPYPw9bQ-e0QF-KLSvKZ07uRiq1efLZCrNrfT2RwYy_Q9IHIpaBnvVU_pFAgFTMKGw9Fejh9cFm88PqEkN-izHuhMr1-J8ckaePIkRe5mmmDdT3KAQb2c1-hePg4GQ">
+<button aria-label="Edit Profile" class="absolute bottom-0 right-0 bg-primary text-on-primary rounded-full p-2 border-2 border-background hover:bg-accent-orange transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="flex-1">
+<h1 class="text-headline-md md:text-headline-lg text-primary font-body-lg font-bold">Ibrahima N.</h1>
+<div class="flex flex-wrap items-center gap-4 mt-2">
+<span class="font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
+                            Dakar Plateau
+                        </span>
+<span class="font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="calendar_month">calendar_month</span>
+                            Membre depuis Janvier 2024
+                        </span>
+<span class="font-body-sm text-body-sm text-primary flex items-center gap-1 bg-accent-yellow px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-caps text-label-caps text-primary">4.8</span>
+</span>
+</div>
+</div>
+<div class="w-full md:w-auto mt-4 md:mt-0">
+<button class="w-full md:w-auto border-2 border-primary text-primary font-button-text text-button-text py-2 px-6 rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+                        Modifier mon profil
+                    </button>
+</div>
+</div>
+</div>
+<!-- Stats Grid (Bento Style) -->
+<div class="px-container-margin mb-12">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-white border border-surface-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-trust-grey transition-colors">
+<span class="font-headline-md text-headline-md text-primary">250</span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Abonnés</span>
+</div>
+<div class="bg-white border border-surface-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-trust-grey transition-colors">
+<span class="font-headline-md text-headline-md text-primary">42</span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Articles vendus</span>
+</div>
+<div class="bg-white border border-surface-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-trust-grey transition-colors">
+<span class="font-headline-md text-headline-md text-primary">95%</span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Taux de réponse</span>
+</div>
+<div class="bg-primary rounded-lg p-6 flex flex-col items-center justify-center shadow-lg transform -rotate-2 hover:rotate-0 transition-transform">
+<span class="font-headline-md text-headline-md text-accent-yellow">0 F</span>
+<span class="font-label-caps text-label-caps text-on-primary mt-1">Solde</span>
+</div>
+</div>
+</div>
+<!-- Vertical Navigation Menu -->
+<div class="px-container-margin pb-24">
+<div class="bg-white border border-surface-variant rounded-lg overflow-hidden flex flex-col">
+<a class="flex items-center justify-between p-4 border-b border-surface-variant hover:bg-trust-grey transition-colors group" href="#">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+</div>
+<span class="font-body-lg text-body-lg text-primary font-bold">Mes annonces</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-body-sm text-body-sm bg-surface-variant px-2 py-1 rounded-full text-secondary">12</span>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<a class="flex items-center justify-between p-4 border-b border-surface-variant hover:bg-trust-grey transition-colors group" href="#">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</div>
+<span class="font-body-lg text-body-lg text-primary font-bold">Mes favoris</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-body-sm text-body-sm bg-surface-variant px-2 py-1 rounded-full text-secondary">8</span>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<a class="flex items-center justify-between p-4 border-b border-surface-variant hover:bg-trust-grey transition-colors group" href="#">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</div>
+<span class="font-body-lg text-body-lg text-primary font-bold">Mes achats</span>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 border-b border-surface-variant hover:bg-trust-grey transition-colors group" href="#">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="star_rate">star_rate</span>
+</div>
+<span class="font-body-lg text-body-lg text-primary font-bold">Avis reçus</span>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 border-b border-surface-variant hover:bg-trust-grey transition-colors group" href="#">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</div>
+<span class="font-body-lg text-body-lg text-primary font-bold">Paramètres du compte</span>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 border-b border-surface-variant hover:bg-trust-grey transition-colors group" href="#">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+</div>
+<span class="font-body-lg text-body-lg text-primary font-bold">Aide et support</span>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Mobile Only Logout (Desktop has it in SideNav) -->
+<a class="md:hidden flex items-center justify-between p-4 bg-error-container hover:bg-error transition-colors group mt-4" href="#">
+<div class="flex items-center gap-4">
+<div class="bg-transparent w-10 h-10 rounded-full flex items-center justify-center text-error group-hover:text-on-error transition-colors">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+</div>
+<span class="font-body-lg text-body-lg text-error group-hover:text-on-error font-bold">Se déconnecter</span>
+</div>
+</a>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation (Visible only on mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-surface-variant flex justify-around items-center h-16 z-50">
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary border-t-2 border-primary w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+</a>
+</nav>
+
+
+</body></html>

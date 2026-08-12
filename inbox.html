@@ -1,0 +1,414 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Messages - Addikt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#e2e2e2",
+                    "tertiary-fixed": "#e2e2e2",
+                    "on-surface": "#1b1b1b",
+                    "surface-dim": "#dadada",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "inverse-primary": "#c6c6c6",
+                    "outline": "#7e7576",
+                    "surface-tint": "#5e5e5e",
+                    "secondary": "#5d5f5f",
+                    "on-primary-fixed": "#1b1b1b",
+                    "accent-yellow": "#FFD700",
+                    "secondary-container": "#dfe0e0",
+                    "primary-container": "#1b1b1b",
+                    "accent-purple": "#BF80FF",
+                    "accent-rose": "#FF6B8B",
+                    "on-primary-container": "#848484",
+                    "error": "#ba1a1a",
+                    "primary": "#000000",
+                    "on-secondary-fixed-variant": "#454747",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-tertiary-container": "#848484",
+                    "on-error": "#ffffff",
+                    "accent-orange": "#FF4D00",
+                    "inverse-on-surface": "#f1f1f1",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-secondary-container": "#616363",
+                    "surface-container-low": "#f3f3f3",
+                    "on-primary-fixed-variant": "#474747",
+                    "surface-container-highest": "#e2e2e2",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "surface-container-lowest": "#ffffff",
+                    "trust-grey": "#F2F2F2",
+                    "surface-variant": "#e2e2e2",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f9f9f9",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "on-secondary": "#ffffff",
+                    "surface-container": "#eeeeee",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1b1b1b",
+                    "on-surface-variant": "#4c4546",
+                    "error-container": "#ffdad6",
+                    "accent-blue": "#0099FF",
+                    "surface-container-high": "#e8e8e8",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "tertiary-container": "#1b1b1b",
+                    "surface": "#f9f9f9",
+                    "inverse-surface": "#303030",
+                    "outline-variant": "#cfc4c5",
+                    "tertiary": "#000000",
+                    "surface-bright": "#f9f9f9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "24px",
+                    "trust-band-padding": "40px",
+                    "grid-gutter": "16px",
+                    "section-gap": "80px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Monument Extended"
+                    ],
+                    "label-caps": [
+                            "Flatit Quiet Sans"
+                    ],
+                    "nav-link": [
+                            "Flatit Quiet Sans"
+                    ],
+                    "headline-xl": [
+                            "Monument Extended"
+                    ],
+                    "body-lg": [
+                            "Zalando Sans Expanded"
+                    ],
+                    "button-text": [
+                            "Flatit Quiet Sans"
+                    ],
+                    "body-sm": [
+                            "Zalando Sans Expanded"
+                    ],
+                    "headline-lg-mobile": [
+                            "Monument Extended"
+                    ],
+                    "headline-lg": [
+                            "Monument Extended"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "nav-link": [
+                            "16px",
+                            {
+                                    "lineHeight": "normal",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-xl": [
+                            "80px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "900"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "button-text": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "fontWeight": "800"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        @font-face {
+            font-family: 'Monument Extended';
+            src: url('https://fonts.cdnfonts.com/s/72228/MonumentExtended-Ultrabold.woff') format('woff');
+            font-weight: 800;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Flatit Quiet Sans';
+            src: url('https://fonts.cdnfonts.com/s/86214/QuietSans-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Zalando Sans Expanded';
+            src: url('https://fonts.cdnfonts.com/s/86214/QuietSans-Regular.woff') format('woff'); /* Fallback */
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        .organic-blob-1 {
+            border-radius: 41% 59% 70% 30% / 32% 40% 60% 68%;
+            animation: blob-morph 8s ease-in-out infinite alternate;
+        }
+        .organic-blob-2 {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: blob-morph-reverse 10s ease-in-out infinite alternate;
+        }
+        @keyframes blob-morph {
+            0% { border-radius: 41% 59% 70% 30% / 32% 40% 60% 68%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        @keyframes blob-morph-reverse {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            100% { border-radius: 41% 59% 70% 30% / 32% 40% 60% 68%; }
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-lg min-h-screen flex flex-col">
+<!-- TopNavBar (Semantic Shell) -->
+<header class="bg-surface-container-lowest hidden md:flex w-full sticky top-0 z-50">
+<div class="flex justify-between items-center px-container-margin py-4 w-full max-w-[1200px] mx-auto">
+<!-- Brand Logo -->
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">stars</span>
+<a class="font-headline-md text-headline-md font-black text-primary italic" href="#">Addikt</a>
+</div>
+<!-- Navigation Links -->
+<nav class="flex gap-8">
+<a class="font-nav-link text-nav-link text-on-surface-variant hover:text-accent-blue transition-colors duration-200" href="#">Femmes</a>
+<a class="font-nav-link text-nav-link text-on-surface-variant hover:text-accent-blue transition-colors duration-200" href="#">Hommes</a>
+<a class="font-nav-link text-nav-link text-on-surface-variant hover:text-accent-blue transition-colors duration-200" href="#">Enfants</a>
+<a class="font-nav-link text-nav-link text-on-surface-variant hover:text-accent-blue transition-colors duration-200" href="#">Marques</a>
+<a class="font-nav-link text-nav-link text-on-surface-variant hover:text-accent-blue transition-colors duration-200" href="#">Vendre</a>
+</nav>
+<!-- Trailing Icons -->
+<div class="flex gap-6">
+<button class="scale-95 active:opacity-80 transition-all text-primary hover:text-accent-blue">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button class="scale-95 active:opacity-80 transition-all text-primary hover:text-accent-blue">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="scale-95 active:opacity-80 transition-all text-primary hover:text-accent-blue">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow w-full max-w-[800px] mx-auto px-container-margin py-12">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">Messages</h1>
+<!-- Search Bar -->
+<div class="relative w-full md:w-64">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-xl">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-outline-variant rounded-full bg-surface-container-low text-on-surface font-body-sm placeholder-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Rechercher..." type="text">
+</div>
+</div>
+<!-- Conversation List -->
+<div class="flex flex-col border-t border-outline-variant" id="conversation-list">
+<!-- Conversation Item 1 (Unread) -->
+<a class="group flex items-center p-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors relative" href="#">
+<!-- Avatar -->
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-surface-container-lowest" data-alt="A close-up portrait of a stylish young urbanite wearing high-end streetwear, shot in high-contrast black and white with a subtle red gel light accent on the edge of the face. Clean, flat brutalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9fv8I1n-4_fRzqCiOFadnpJRGbulRM4dLAEkEEwK_If-eS1LEyJIAK4MqqAeY7kFRPDMFxbEom2KzstSRcozxYVVZRP5fj6KYU6XTpdzaP3BPiYEIvqsJ6_pqKMy_Ml2AVoPl9g3MJPlkSnXdY8WaSUBcVv8cGsuNpBxgZ0kcPHjmK2HWf9waHYo7IxesMOSAl-5wnXvj0TsE5sUGFOV_D2h3YPVF_pojnzRT16aCigQ2tm1YUphg">
+<!-- Online indicator -->
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-accent-yellow border-2 border-surface-container-lowest rounded-full"></span>
+</div>
+<!-- Content -->
+<div class="flex-grow ml-4 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h2 class="font-label-caps text-label-caps text-primary truncate">Aminata D.</h2>
+<span class="text-xs text-primary font-bold ml-2 flex-shrink-0">14:32</span>
+</div>
+<p class="font-body-sm text-body-sm text-primary font-bold truncate">Dispo ce soir pour la remise en main propre ?</p>
+</div>
+<!-- Trailing / Product -->
+<div class="flex items-center ml-4 gap-3 flex-shrink-0">
+<!-- Unread Badge -->
+<div class="w-3 h-3 bg-accent-rose rounded-full"></div>
+<!-- Product Thumbnail -->
+<img class="w-12 h-12 rounded bg-surface-container object-cover border border-outline-variant" data-alt="A small square thumbnail of a vintage designer sneaker resting on a rough concrete block. High contrast lighting, stark shadows, white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJP0WYvYHbjjy9GZ_jB8LCmJb8U6OQRY65sIy61EH5kAk-WpxAj57Ah4EblCPkUerumutoimgIvmP7_gaIqGmxSNWAjXM3SskwG3wxQdfcgCasHaI79gvE4JC-lvAUEkbPBgpUKMwTchV5WlqGiuux8UwyihOT9tNX-lBf0pcOK2TwzTi5AmY45THXBZjdrKB7CtCLkioQ8ghdoo3Fxd_I8oIdXi45N50cWzjXVGduhUv6pL0Ptzx2">
+</div>
+</a>
+<!-- Conversation Item 2 (Read) -->
+<a class="group flex items-center p-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors relative" href="#">
+<!-- Avatar -->
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-surface-container-lowest" data-alt="A portrait of a trendy streetwear enthusiast with sunglasses, bathed in harsh, high-contrast flat lighting typical of zine culture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC64mWMYRwQxWJulZKPappUn5EjYkAFzuJ0bERGFD9waoIz-QOJCWP-a-C1qXJuYs6ZOkPJpIVCmahtBmbmY0ce_D-wdrT1p8leHC8wVy62Q66r5iT5UYFy4azTJYOF5frfE6RfNsOe0Vk0tvFnxX7o_t_62FD38jWA_YhSI9IETiNuBbzS7V5DEKASkkfmaJkizccQ0RZAOwbYTBnM3Oq5cQblXUFSEPeHmR0sjM4bjXKWA1jQJx9X">
+<!-- Offline indicator (no dot) -->
+</div>
+<!-- Content -->
+<div class="flex-grow ml-4 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h2 class="font-label-caps text-label-caps text-primary truncate">SneakerHead_221</h2>
+<span class="text-xs text-on-surface-variant ml-2 flex-shrink-0">Hier</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">C'est parfait, je te confirme ça demain.</p>
+</div>
+<!-- Trailing / Product -->
+<div class="flex items-center ml-4 gap-3 flex-shrink-0">
+<!-- Unread Badge (Hidden/Empty space) -->
+<div class="w-3 h-3"></div>
+<!-- Product Thumbnail -->
+<img class="w-12 h-12 rounded bg-surface-container object-cover border border-outline-variant" data-alt="A small square thumbnail of an oversized vintage denim jacket hanging against a stark white studio wall, casting a sharp shadow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsurcIpbcG5_ubyJ7GyO7wI0t593S9zDi6ia0xu-IN3_YUKUl_l-i5alGLOW5iYLINjhnJ1tI2kW93fHe1eCoOQPPMsPuKAl9KlgJuToNQT7gZJRIrFvfur7Al4cZtTiZOcI-Y8id1Oj4VUcJgZwbytFfP2Rhf1xWB8i29a1weWZ8Q8-g2EEaGeSkAymvc73VVdGG2PklqGFK0mngnrYqTkuGYnsJOQi8SPN-6CS8OAcIOCFIsCdVJ">
+</div>
+</a>
+<!-- Conversation Item 3 (Read) -->
+<a class="group flex items-center p-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors relative" href="#">
+<!-- Avatar -->
+<div class="relative flex-shrink-0">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-md text-headline-md border-2 border-surface-container-lowest">
+                        V
+                    </div>
+<!-- Online indicator -->
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-accent-yellow border-2 border-surface-container-lowest rounded-full"></span>
+</div>
+<!-- Content -->
+<div class="flex-grow ml-4 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h2 class="font-label-caps text-label-caps text-primary truncate">VintageDakar</h2>
+<span class="text-xs text-on-surface-variant ml-2 flex-shrink-0">Lun.</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Merci pour l'achat ! Le colis part aujourd'hui.</p>
+</div>
+<!-- Trailing / Product -->
+<div class="flex items-center ml-4 gap-3 flex-shrink-0">
+<!-- Unread Badge (Hidden/Empty space) -->
+<div class="w-3 h-3"></div>
+<!-- Product Thumbnail -->
+<img class="w-12 h-12 rounded bg-surface-container object-cover border border-outline-variant" data-alt="A small square thumbnail of a retro graphic tee folded neatly. High contrast, brutalist presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcCRrAbZDHH67Qm00jTYTNmH8Zm6J1HY_Cf5sWDUVR2Qzb1BLEMy-9U0NpLZe_DYNIkViUufgJBk_PFOK21yRcJqygrdubN4GY7d_Y92hsL5dxJY8GlukS9mtASQIkC4WI_mnrvmL4hYgpL1Kz3CKXwJU5thOLVR-RZfbCJ_lrEZ4A5mC7wZ9r_NftLvudnys4IZmdIxupRq1lfTPfFfBKUuQ5YPSXXSkNkzhRjyC4omgfhsLx-wH6">
+</div>
+</a>
+</div>
+<!-- Empty State (Hidden by default, shown via JS if list is empty) -->
+<div class="hidden flex-col items-center justify-center py-20 relative overflow-hidden" id="empty-state">
+<!-- Organic Blobs Background -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+<div class="w-64 h-64 bg-accent-purple organic-blob-1 absolute blur-2xl"></div>
+<div class="w-48 h-48 bg-accent-blue organic-blob-2 absolute blur-xl transform translate-x-10 translate-y-10"></div>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center space-y-6">
+<span class="material-symbols-outlined text-6xl text-primary" style="font-variation-settings: 'FILL' 0;">chat_bubble_outline</span>
+<h3 class="font-headline-md text-headline-md text-primary">Aucun message pour le moment</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">Dès que vous commencerez à discuter avec des acheteurs ou des vendeurs, vos conversations apparaîtront ici.</p>
+<button class="mt-4 px-8 py-3 bg-primary text-on-primary rounded-full font-button-text text-button-text uppercase tracking-widest hover:bg-surface-tint transition-colors">
+                    Explorer la boutique
+                </button>
+</div>
+</div>
+</main>
+<!-- Footer (Semantic Shell) -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-grid-gutter px-container-margin py-section-gap w-full max-w-[1200px] mx-auto">
+<!-- Brand Column -->
+<div class="col-span-2 md:col-span-1 mb-8 md:mb-0">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-headline-md text-headline-md italic text-primary">Addikt</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Addikt Dakar. Urban Thrift Culture.</p>
+</div>
+<!-- Links Columns -->
+<div class="flex flex-col gap-4">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline decoration-accent-rose opacity-100 hover:opacity-70 transition-opacity" href="#">À propos</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline decoration-accent-rose opacity-100 hover:opacity-70 transition-opacity" href="#">Livraison</a>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline decoration-accent-rose opacity-100 hover:opacity-70 transition-opacity" href="#">Retours</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline decoration-accent-rose opacity-100 hover:opacity-70 transition-opacity" href="#">Conditions</a>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline decoration-accent-rose opacity-100 hover:opacity-70 transition-opacity" href="#">Contact</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple demo script to toggle empty state for design preview purposes
+        // In a real app, this would be driven by data
+        document.addEventListener('DOMContentLoaded', () => {
+            const list = document.getElementById('conversation-list');
+            const emptyState = document.getElementById('empty-state');
+            const searchInput = document.querySelector('input[type="text"]');
+            const items = list.querySelectorAll('a.group');
+
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const name = item.querySelector('h2').textContent.toLowerCase();
+                    if (name.includes(term)) {
+                        item.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    list.classList.add('hidden');
+                    emptyState.classList.remove('hidden');
+                    emptyState.classList.add('flex');
+                } else {
+                    list.classList.remove('hidden');
+                    emptyState.classList.add('hidden');
+                    emptyState.classList.remove('flex');
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Vérification SMS - Addikt Dakar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Flatit+Quiet+Sans:wght@100..900&amp;family=Monument+Extended:wght@100..900&amp;family=Zalando+Sans+Expanded:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        @font-face {
+            font-family: 'Monument Extended';
+            src: url('https://fonts.cdnfonts.com/s/72221/MonumentExtended-Ultrabold.woff') format('woff');
+            font-weight: 800;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Monument Extended';
+            src: url('https://fonts.cdnfonts.com/s/72221/MonumentExtended-Black.woff') format('woff');
+            font-weight: 900;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Flatit Quiet Sans';
+            src: url('https://fonts.cdnfonts.com/s/115162/QuietSans-SemiBold.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Flatit Quiet Sans';
+            src: url('https://fonts.cdnfonts.com/s/115162/QuietSans-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Zalando Sans Expanded';
+            src: url('https://fonts.cdnfonts.com/s/115162/QuietSans-Regular.woff') format('woff'); /* Fallback for Zalando */
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#000000",
+                        "on-tertiary": "#ffffff",
+                        "accent-yellow": "#FFD700",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-tint": "#5e5e5e",
+                        "surface": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-surface": "#1b1b1b",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-background": "#1b1b1b",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-primary-container": "#848484",
+                        "on-primary": "#ffffff",
+                        "accent-purple": "#BF80FF",
+                        "outline": "#7e7576",
+                        "on-secondary": "#ffffff",
+                        "primary": "#000000",
+                        "accent-rose": "#FF6B8B",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary": "#5d5f5f",
+                        "primary-container": "#1b1b1b",
+                        "surface-container": "#eeeeee",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#dfe0e0",
+                        "on-tertiary-container": "#848484",
+                        "trust-grey": "#F2F2F2",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-bright": "#f9f9f9",
+                        "background": "#f9f9f9",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#303030",
+                        "on-secondary-container": "#616363",
+                        "surface-container-low": "#f3f3f3",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "accent-blue": "#0099FF",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-primary-fixed": "#1b1b1b",
+                        "on-surface-variant": "#4c4546",
+                        "surface-dim": "#dadada",
+                        "primary-fixed": "#e2e2e2",
+                        "accent-orange": "#FF4D00",
+                        "outline-variant": "#cfc4c5",
+                        "tertiary-container": "#1b1b1b",
+                        "inverse-primary": "#c6c6c6",
+                        "surface-variant": "#e2e2e2",
+                        "secondary-fixed": "#e2e2e2",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#474747",
+                        "surface-container-high": "#e8e8e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-gutter": "16px",
+                        "trust-band-padding": "40px",
+                        "container-margin": "24px",
+                        "section-gap": "80px"
+                    },
+                    "fontFamily": {
+                        "nav-link": ["Flatit Quiet Sans"],
+                        "button-text": ["Flatit Quiet Sans"],
+                        "label-caps": ["Flatit Quiet Sans"],
+                        "body-sm": ["Zalando Sans Expanded"],
+                        "headline-lg": ["Monument Extended"],
+                        "headline-lg-mobile": ["Monument Extended"],
+                        "headline-xl": ["Monument Extended"],
+                        "headline-md": ["Monument Extended"],
+                        "body-lg": ["Zalando Sans Expanded"]
+                    },
+                    "fontSize": {
+                        "nav-link": ["16px", { "lineHeight": "normal", "fontWeight": "600" }],
+                        "button-text": ["14px", { "lineHeight": "1.0", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "headline-xl": ["80px", { "lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface h-screen flex flex-col font-body-sm relative overflow-hidden">
+<!-- Top Navigation (Shell suppressed for transactional, but leaving a back button) -->
+<header class="flex justify-between items-center w-full px-grid-gutter py-4 bg-surface dark:bg-surface fixed top-0 z-10">
+<button class="text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<div class="font-headline-md text-headline-md font-black text-primary italic">
+            Addi<span class="italic">k</span>t
+        </div>
+<div class="w-6 h-6"></div> <!-- Spacer for alignment -->
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col justify-center items-center px-container-margin pt-20 pb-10 max-w-md mx-auto w-full relative z-10">
+<div class="w-full mb-10">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary uppercase leading-tight mb-4 tracking-tighter">
+                Entre le code<br>reçu par SMS
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant flex flex-col sm:flex-row sm:items-center gap-2">
+<span>Code envoyé au <span class="font-bold text-primary">+221 77 123 45 67</span></span>
+<a class="text-accent-blue font-bold hover:underline" href="#">Modifier</a>
+</p>
+</div>
+<!-- Verification Code Inputs -->
+<div class="w-full mb-8">
+<form class="flex justify-between gap-2 sm:gap-4" id="otp-form">
+<input autofocus="" class="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors otp-input" inputmode="numeric" maxlength="1" type="text">
+<input class="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors otp-input" inputmode="numeric" maxlength="1" type="text">
+<input class="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors otp-input" inputmode="numeric" maxlength="1" type="text">
+<input class="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors otp-input" inputmode="numeric" maxlength="1" type="text">
+<input class="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors otp-input" inputmode="numeric" maxlength="1" type="text">
+<input class="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors otp-input" inputmode="numeric" maxlength="1" type="text">
+</form>
+</div>
+<!-- Resend and Timer -->
+<div class="w-full flex justify-between items-center mb-12">
+<button class="font-button-text text-button-text text-secondary hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled="" id="resend-btn">
+                Renvoyer le code
+            </button>
+<span class="font-body-sm text-body-sm text-primary font-bold" id="timer">
+                00:30
+            </span>
+</div>
+<!-- Verify Action Button -->
+<div class="w-full mt-auto">
+<button class="w-full py-4 bg-tertiary text-on-tertiary font-button-text text-button-text rounded-full uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all">
+                Vérifier
+            </button>
+</div>
+</main>
+<!-- Background graphic accent (Brutalist sticker style) -->
+<div class="absolute -bottom-20 -right-20 opacity-10 pointer-events-none rotate-12">
+<span class="material-symbols-outlined" style="font-size: 300px; font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<script>
+        // OTP Input Logic
+        const inputs = document.querySelectorAll('.otp-input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1) {
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '') {
+                    if (index > 0) {
+                        inputs[index - 1].focus();
+                        inputs[index - 1].value = '';
+                    }
+                }
+            });
+            
+            // Allow only numbers
+            input.addEventListener('keypress', function(e) {
+                if (isNaN(e.key)) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Timer Logic
+        let timeLeft = 30;
+        const timerElement = document.getElementById('timer');
+        const resendBtn = document.getElementById('resend-btn');
+
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "00:00";
+                timerElement.classList.add('text-secondary');
+                timerElement.classList.remove('text-primary');
+                resendBtn.disabled = false;
+                resendBtn.classList.add('text-primary', 'font-bold');
+                resendBtn.classList.remove('text-secondary');
+            } else {
+                timerElement.textContent = `00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
+                timeLeft -= 1;
+            }
+        }, 1000);
+
+        // Resend button visual hook
+        resendBtn.addEventListener('click', () => {
+            if(!resendBtn.disabled) {
+                alert('Code renvoyé');
+                // Reset logic would go here in prod
+            }
+        });
+    </script>
+</body></html>

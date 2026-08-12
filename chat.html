@@ -1,0 +1,241 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Addikt - Conversation Ouverte</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap'); /* Fallback fonts if custom fonts not loaded */
+        
+        /* Custom Fonts defined in style guidance - assuming they are loaded via some external means in a real environment, using fallbacks here for rendering */
+        @font-face {
+            font-family: 'Monument Extended';
+            src: local('Monument Extended');
+            font-weight: 800;
+        }
+        @font-face {
+            font-family: 'Monument Extended';
+            src: local('Monument Extended');
+            font-weight: 900;
+        }
+        @font-face {
+            font-family: 'Flatit Quiet Sans';
+            src: local('Flatit Quiet Sans');
+            font-weight: 600;
+        }
+         @font-face {
+            font-family: 'Flatit Quiet Sans';
+            src: local('Flatit Quiet Sans');
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: 'Zalando Sans Expanded';
+            src: local('Zalando Sans Expanded');
+            font-weight: 400;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e2e2e2",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-surface": "#1b1b1b",
+                        "surface-dim": "#dadada",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "inverse-primary": "#c6c6c6",
+                        "outline": "#7e7576",
+                        "surface-tint": "#5e5e5e",
+                        "secondary": "#5d5f5f",
+                        "on-primary-fixed": "#1b1b1b",
+                        "accent-yellow": "#FFD700",
+                        "secondary-container": "#dfe0e0",
+                        "primary-container": "#1b1b1b",
+                        "accent-purple": "#BF80FF",
+                        "accent-rose": "#FF6B8B",
+                        "on-primary-container": "#848484",
+                        "error": "#ba1a1a",
+                        "primary": "#000000",
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary-container": "#848484",
+                        "on-error": "#ffffff",
+                        "accent-orange": "#FF4D00",
+                        "inverse-on-surface": "#f1f1f1",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-secondary-container": "#616363",
+                        "surface-container-low": "#f3f3f3",
+                        "on-primary-fixed-variant": "#474747",
+                        "surface-container-highest": "#e2e2e2",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "surface-container-lowest": "#ffffff",
+                        "trust-grey": "#F2F2F2",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1b1b1b",
+                        "on-surface-variant": "#4c4546",
+                        "error-container": "#ffdad6",
+                        "accent-blue": "#0099FF",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "tertiary-container": "#1b1b1b",
+                        "surface": "#f9f9f9",
+                        "inverse-surface": "#303030",
+                        "outline-variant": "#cfc4c5",
+                        "tertiary": "#000000",
+                        "surface-bright": "#f9f9f9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-margin": "24px",
+                        "trust-band-padding": "40px",
+                        "grid-gutter": "16px",
+                        "section-gap": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Monument Extended", "Inter", "sans-serif"],
+                        "label-caps": ["Flatit Quiet Sans", "Inter", "sans-serif"],
+                        "nav-link": ["Flatit Quiet Sans", "Inter", "sans-serif"],
+                        "headline-xl": ["Monument Extended", "Inter", "sans-serif"],
+                        "body-lg": ["Zalando Sans Expanded", "Inter", "sans-serif"],
+                        "button-text": ["Flatit Quiet Sans", "Inter", "sans-serif"],
+                        "body-sm": ["Zalando Sans Expanded", "Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Monument Extended", "Inter", "sans-serif"],
+                        "headline-lg": ["Monument Extended", "Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "label-caps": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "nav-link": ["16px", { "lineHeight": "normal", "fontWeight": "600" }],
+                        "headline-xl": ["80px", { "lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "button-text": ["14px", { "lineHeight": "1.0", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "fontWeight": "800" }]
+                    }
+                },
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-sm h-screen flex flex-col overflow-hidden selection:bg-accent-yellow selection:text-primary">
+<!-- Header Chat -->
+<header class="flex-none bg-surface-container-lowest border-b border-outline-variant py-4 px-container-margin flex items-center justify-between sticky top-0 z-20 shadow-sm">
+<button aria-label="Retour" class="p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="Close up portrait photograph of a young urban fashion designer from Dakar. Light mode style, high contrast, clean white background, sharp focus, vibrant clothing. Edgy streetwear aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9iDWIWIwXFjJHt8LMOQOMi_SVS59y96L42ptkA51tYfjMZ33AbaXNGqRgQF-pk1hHdMGmUv6McdyDs0OtnR2rMBV7ffhdugSM8rhvzDTHf64xTBiVGghf3XaS3bq9s1mKQFLOFVB_fEDFaloB_WK5vbEPhCCAFTFIyoWQ5XBHsOSSTA0NW1A5nqFZXPdZZAOmZopLS3JQBx5j7MC3Ou7ajA0z2WdFxjLZ_HwfJHvgnH4pRwMPVTae">
+</div>
+<div class="flex flex-col">
+<span class="font-button-text text-button-text">@youssouf_d</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-[#22c55e]"></span> En ligne
+                </span>
+</div>
+</div>
+<button aria-label="Options" class="p-2 -mr-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<!-- Pinned Product Fiche -->
+<div class="flex-none bg-trust-grey py-3 px-container-margin flex items-center justify-between border-b border-outline-variant sticky top-[73px] z-10 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded bg-surface-container-lowest overflow-hidden border border-outline-variant shrink-0">
+<img alt="Produit" class="w-full h-full object-cover" data-alt="High quality studio shot of a vintage streetwear jacket on a clean white background. Light mode aesthetic, sharp focus, aggressive styling, raw texture details. High contrast fashion product photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDej3ZCPv6vapdGfrQ3057mOc0IcsTFiMYRQOtp_TTJ8YMZ_zQGGHEFOC3usfkyEA6U45yYfY4F3KID7j9vNUAAMzVlmHb8LuSUZXDJhsg04YuNwsC7yxYsvTeAJrYb_u6zIVyIDKDR45d0Ol_xtkx_Excg_lRhiU8HA-NAMWNoJrUkiEbHWUwAoMY4vhqWsCXNk5fnqcMEz3moW3snrsRB-c14FMoqNaMaIF3z237zxi3Z0VzUUbVV">
+</div>
+<div class="flex flex-col">
+<span class="font-nav-link text-nav-link truncate max-w-[200px]">Veste Vintage Nike 90s</span>
+<span class="font-headline-md text-headline-md text-[18px]">45 000 FCFA</span>
+</div>
+</div>
+<div class="bg-[#dcfce7] text-[#166534] font-label-caps text-label-caps px-2 py-1 rounded-sm uppercase tracking-wide border border-[#bbf7d0]">
+            Disponible
+        </div>
+</div>
+<!-- Message Thread -->
+<main class="flex-1 overflow-y-auto px-container-margin py-6 flex flex-col gap-6 bg-surface-container-lowest">
+<!-- Date divider -->
+<div class="flex justify-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-full">AUJOURD'HUI</span>
+</div>
+<!-- Contact Message (Left) -->
+<div class="flex flex-col items-start gap-1 max-w-[85%]">
+<div class="bg-surface-container-low text-on-surface px-4 py-3 rounded-2xl rounded-tl-sm border border-outline-variant shadow-sm relative group">
+<p class="font-body-sm text-body-sm">Salut ! La veste est toujours dispo ? Je suis très intéressé.</p>
+<span class="text-[10px] text-on-surface-variant absolute -bottom-4 left-1 opacity-0 group-hover:opacity-100 transition-opacity">10:42</span>
+</div>
+</div>
+<!-- User Message (Right) -->
+<div class="flex flex-col items-end gap-1 max-w-[85%] self-end">
+<div class="bg-primary text-on-primary px-4 py-3 rounded-2xl rounded-tr-sm shadow-sm relative group">
+<p class="font-body-sm text-body-sm">Yes bro, toujours là. Propre, pas de défaut majeur.</p>
+<span class="text-[10px] text-on-surface-variant absolute -bottom-4 right-1 opacity-0 group-hover:opacity-100 transition-opacity">10:45</span>
+</div>
+</div>
+<!-- Contact Message (Left) -->
+<div class="flex flex-col items-start gap-1 max-w-[85%]">
+<div class="bg-surface-container-low text-on-surface px-4 py-3 rounded-2xl rounded-tl-sm border border-outline-variant shadow-sm relative group">
+<p class="font-body-sm text-body-sm">Tu ferais un prix si je viens la chercher ce soir aux Almadies ?</p>
+<span class="text-[10px] text-on-surface-variant absolute -bottom-4 left-1 opacity-0 group-hover:opacity-100 transition-opacity">10:48</span>
+</div>
+</div>
+<!-- Offer Card (User Side - just for demo) -->
+<div class="flex flex-col items-end gap-1 max-w-[85%] self-end mt-4">
+<div class="bg-surface-container-lowest border-2 border-accent-rose px-5 py-4 rounded-xl shadow-sm relative w-full sm:w-auto min-w-[250px]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-accent-rose" data-icon="sell" data-weight="fill" style="font-variation-settings: 'FILL' 1;">sell</span>
+<span class="font-label-caps text-label-caps text-accent-rose uppercase">Offre reçue</span>
+</div>
+<p class="font-headline-md text-headline-md mb-4 text-[20px]">40 000 FCFA</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-button-text text-button-text py-2 rounded-full hover:bg-surface-tint transition-colors text-center uppercase tracking-wide">
+                        Accepter
+                    </button>
+<button class="flex-1 bg-surface-container-low text-on-surface font-button-text text-button-text py-2 rounded-full hover:bg-surface-variant transition-colors border border-outline-variant text-center uppercase tracking-wide">
+                        Refuser
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Input Area -->
+<div class="flex-none bg-surface-container-lowest border-t border-outline-variant px-container-margin py-4 flex flex-col gap-3 pb-safe">
+<!-- Quick Action -->
+<div class="flex">
+<button class="border-2 border-primary text-primary font-button-text text-button-text px-4 py-1.5 rounded-full uppercase tracking-wider hover:bg-surface-container-low transition-colors flex items-center gap-2 text-[12px]">
+<span class="material-symbols-outlined text-[16px]" data-icon="local_offer">local_offer</span>
+                Faire une offre
+            </button>
+</div>
+<!-- Text Input -->
+<div class="flex items-end gap-2">
+<button aria-label="Joindre un fichier" class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors shrink-0 mb-1">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<div class="flex-1 bg-surface-container-low rounded-xl border border-outline-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary overflow-hidden min-h-[44px]">
+<textarea class="w-full bg-transparent border-none focus:ring-0 resize-none py-3 px-4 font-body-sm text-body-sm text-on-surface placeholder-on-surface-variant max-h-32" oninput="this.style.height = ''; this.style.height = Math.min(this.scrollHeight, 128) + 'px'" placeholder="Écrire un message..." rows="1" style="min-height: 44px; outline: none;"></textarea>
+</div>
+<button aria-label="Envoyer" class="w-11 h-11 bg-primary text-on-primary rounded-full hover:scale-95 transition-transform flex items-center justify-center shrink-0 mb-0.5">
+<span class="material-symbols-outlined" data-icon="send" data-weight="fill" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</body></html>

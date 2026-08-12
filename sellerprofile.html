@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="fr" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Profil Vendeur - Addikt Dakar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        /* Decorative Blobs */
+        .blob-bg {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.2;
+            filter: blur(40px);
+        }
+        .blob-1 { top: 10%; left: -10%; width: 300px; height: 300px; background-color: #0099FF; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        .blob-2 { top: 40%; right: -5%; width: 250px; height: 250px; background-color: #FF4D00; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        .blob-3 { bottom: 10%; left: 20%; width: 350px; height: 350px; background-color: #BF80FF; border-radius: 50% 50% 30% 70% / 50% 70% 30% 50%; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#f9f9f9",
+                        "surface-container": "#eeeeee",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "secondary": "#5d5f5f",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-secondary-container": "#616363",
+                        "surface-dim": "#dadada",
+                        "tertiary": "#000000",
+                        "outline-variant": "#cfc4c5",
+                        "on-surface": "#1b1b1b",
+                        "secondary-fixed": "#e2e2e2",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9f9",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "outline": "#7e7576",
+                        "primary-fixed": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1b1b1b",
+                        "accent-rose": "#FF6B8B",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-tint": "#5e5e5e",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface-container-high": "#e8e8e8",
+                        "accent-blue": "#0099FF",
+                        "tertiary-fixed": "#e2e2e2",
+                        "inverse-primary": "#c6c6c6",
+                        "on-surface-variant": "#4c4546",
+                        "on-tertiary-container": "#848484",
+                        "primary-container": "#1b1b1b",
+                        "secondary-container": "#dfe0e0",
+                        "tertiary-container": "#1b1b1b",
+                        "trust-grey": "#F2F2F2",
+                        "accent-orange": "#FF4D00",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "on-primary-container": "#848484",
+                        "on-primary-fixed": "#1b1b1b",
+                        "accent-purple": "#BF80FF",
+                        "surface-variant": "#e2e2e2",
+                        "primary": "#000000",
+                        "accent-yellow": "#FFD700",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#303030",
+                        "on-primary-fixed-variant": "#474747",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "secondary-fixed-dim": "#c6c6c7"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "section-gap": "80px",
+                        "grid-gutter": "16px",
+                        "container-margin": "24px",
+                        "trust-band-padding": "40px"
+                    },
+                    fontFamily: {
+                        "label-caps": ["Flatit Quiet Sans"],
+                        "headline-md": ["Monument Extended"],
+                        "body-sm": ["Google Sans", "sans-serif"], 
+                        "body-lg": ["Google Sans", "sans-serif"], 
+                        "headline-xl": ["Monument Extended"],
+                        "button-text": ["Google Sans", "sans-serif"], 
+                        "nav-link": ["Flatit Quiet Sans"],
+                        "headline-lg": ["Monument Extended"],
+                        "headline-lg-mobile": ["Monument Extended"]
+                    },
+                    fontSize: {
+                        "label-caps": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "body-sm": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-xl": ["80px", { "lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "button-text": ["14px", { "lineHeight": "1.0", "fontWeight": "600" }],
+                        "nav-link": ["16px", { "lineHeight": "normal", "fontWeight": "600" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.1", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-on-surface font-body-sm overflow-x-hidden font-semibold bg-surface-container-lowest">
+<!-- Decorative Background Elements -->
+
+
+
+<!-- 1. Header (TopNavBar Component) -->
+<nav class="bg-surface dark:bg-surface-container-lowest text-primary dark:text-on-surface border-b border-outline-variant dark:border-outline sticky top-0 z-50 w-full bg-surface-container-lowest">
+<div class="flex justify-between items-center w-full px-container-margin py-4 max-w-[1200px] mx-auto"><!-- Left: Logo & Links -->
+<div class="flex items-center space-x-8">
+  <a class="flex items-center h-8" href="#">
+    <svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 712.2 262.81" class="h-8 md:h-10 w-auto">
+      <defs>
+        <style>
+          .cls-1 { fill: #fdffff; }
+          .cls-2 { fill: #191919; }
+          .cls-3 { fill: #e20020; }
+        </style>
+      </defs>
+      <g id="Calque_1-2" data-name="Calque 1">
+        <g>
+          <g>
+            <path class="cls-3" d="M217.19,0l-4.39,98.66c-.1,1.9,1.69,3.35,3.53,2.85l58.57-19.58-36.11,61.22c-1.32,1.13-1.3,3.18.04,4.29l42.21,61.02-75.98-16.68c-1.57-.22-3.01.92-3.17,2.5l-9.45,68.54-36.33-45.55c-.74-1.67-2.86-2.19-4.29-1.06l-82.59,39.38,39.9-73.25c.85-1.66-.14-3.68-1.97-4.03L0,161.75l118.42-37.11c1.54-.49,2.35-2.17,1.76-3.68l-19.46-70.46,59.61,43.65c1.35,1,3.27.59,4.1-.88L217.19,0Z"></path>
+            <path class="cls-1" d="M159.6,159.75c-5.64,22.61-17.94,39.61-27.47,37.97-9.53-1.64-12.69-21.3-7.05-43.92,5.64-22.61,17.94-39.61,27.47-37.97,9.53,1.64,12.69,21.3,7.05,43.92Z"></path>
+            <path class="cls-1" d="M203.86,158.15c-6.98,24.33-21.31,42.22-32,39.96s-13.7-23.81-6.71-48.13c6.98-24.33,21.31-42.22,32-39.96,10.69,2.26,13.7,23.81,6.71,48.13Z"></path>
+          </g>
+          <g>
+            <path class="cls-2" d="M317.71,196.65h28.52l-40.72-84.51h-31.01l-40.84,84.51h26.39l7.44-16.33h42.79l7.41,16.33ZM276.14,161.38l12.8-28.1,12.76,28.1h-25.56Z"></path>
+            <path class="cls-2" d="M404.23,112.14v31.03c-1.06-1.04-2.27-2.06-3.67-3.04-2.53-1.78-5.68-3.21-9.47-4.32-3.79-1.1-8.25-1.66-13.38-1.66-3.32,0-6.55.41-9.71,1.24-3.16.83-6.1,2.07-8.82,3.73s-5.13,3.75-7.22,6.27c-2.09,2.53-3.71,5.52-4.85,9-1.15,3.47-1.72,7.38-1.72,11.72,0,7.26,1.54,13.28,4.62,18.05,3.08,4.78,7.08,8.33,12.01,10.65s10.16,3.49,15.68,3.49c4.34,0,8.36-.45,12.07-1.36,3.71-.91,6.98-2.23,9.82-3.97,1.76-1.07,3.28-2.3,4.62-3.65v7.32h25.21v-84.51h-25.21ZM401.87,174.69c-.87,1.22-1.97,2.31-3.31,3.26-1.34.95-2.9,1.68-4.68,2.19-1.78.51-3.77.77-5.98.77-3.71,0-6.83-.69-9.35-2.07-2.52-1.38-4.4-3.2-5.62-5.44-1.22-2.25-1.84-4.64-1.84-7.16,0-1.58.22-3.08.65-4.5.43-1.42,1.1-2.74,2.01-3.97.91-1.22,2.03-2.31,3.37-3.25,1.34-.95,2.92-1.68,4.73-2.19,1.81-.51,3.83-.77,6.04-.77,3.71,0,6.79.69,9.23,2.07,2.45,1.38,4.28,3.18,5.51,5.39,1.22,2.21,1.83,4.62,1.83,7.22,0,1.5-.22,2.98-.65,4.44s-1.09,2.8-1.95,4.02Z"></path>
+            <path class="cls-2" d="M496.44,112.14v31.03c-1.06-1.04-2.27-2.06-3.67-3.04-2.53-1.78-5.68-3.21-9.47-4.32-3.79-1.1-8.25-1.66-13.38-1.66-3.32,0-6.55.41-9.71,1.24-3.16.83-6.1,2.07-8.82,3.73s-5.13,3.75-7.22,6.27c-2.09,2.53-3.71,5.52-4.85,9-1.15,3.47-1.72,7.38-1.72,11.72,0,7.26,1.54,13.28,4.62,18.05,3.08,4.78,7.08,8.33,12.01,10.65s10.16,3.49,15.68,3.49c4.34,0,8.36-.45,12.07-1.36,3.71-.91,6.98-2.23,9.82-3.97,1.76-1.07,3.28-2.3,4.62-3.65v7.32h25.21v-84.51h-25.21ZM494.07,174.69c-.87,1.22-1.97,2.31-3.31,3.26-1.34.95-2.9,1.68-4.68,2.19-1.78.51-3.77.77-5.98.77-3.71,0-6.83-.69-9.35-2.07-2.52-1.38-4.4-3.2-5.62-5.44-1.22-2.25-1.84-4.64-1.84-7.16,0-1.58.22-3.08.65-4.5.43-1.42,1.1-2.74,2.01-3.97.91-1.22,2.03-2.31,3.37-3.25,1.34-.95,2.92-1.68,4.73-2.19,1.81-.51,3.83-.77,6.04-.77,3.71,0,6.79.69,9.23,2.07,2.45,1.38,4.28,3.18,5.51,5.39,1.22,2.21,1.83,4.62,1.83,7.22,0,1.5-.22,2.98-.65,4.44s-1.09,2.8-1.95,4.02Z"></path>
+            <path class="cls-2" d="M533.72,196.65v-60.84h25.21v60.84h-25.21ZM533.84,129.77v-17.63h25.09v17.63h-25.09Z"></path>
+            <path class="cls-2" d="M624.32,164.22c-1.54-1.5-3.49-2.76-5.86-3.79l32.43-24.62h-25.57l-33,25.88,8.74-49.55h-21.66l-14.91,84.51h21.66l2.38-13.27,9.69-7.2c2.05-1.5,4.24-2.23,6.57-2.19,2.33.04,4.16,1.32,5.5,3.85l10.77,18.82h24.03l-15.86-25.68c-1.74-3-3.37-5.25-4.91-6.75Z"></path>
+            <path class="cls-2" d="M712.2,151.67v-15.86h-20.95v-16.45h-25.21v16.45h-13.97v15.86h13.97v24.15c0,6.55,1.97,11.66,5.92,15.33,3.95,3.67,9.23,5.51,15.86,5.51h24.38v-16.22h-12.19c-3.08,0-5.31-.79-6.69-2.37-1.38-1.58-2.07-3.75-2.07-6.51v-19.89h20.95Z"></path>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </a>
+  <div class="hidden md:flex items-center space-x-6">
+    <a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600;">Femmes</a>
+    <a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600;">Hommes</a>
+    <a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600;">Enfants</a>
+    <a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600;">Marques</a>
+  </div>
+</div>
+<!-- Right: Actions -->
+<div class="flex items-center space-x-4">
+  <button aria-label="search" class="text-primary hover:opacity-80 transition-opacity duration-200">
+    <span class="material-symbols-outlined">search</span>
+  </button>
+  <button aria-label="favorite" class="text-primary hover:opacity-80 transition-opacity duration-200">
+    <span class="material-symbols-outlined">favorite</span>
+  </button>
+  <button aria-label="shopping_bag" class="text-primary hover:opacity-80 transition-opacity duration-200">
+    <span class="material-symbols-outlined">shopping_bag</span>
+  </button>
+  <button aria-label="person" class="text-primary hover:opacity-80 transition-opacity duration-200">
+    <span class="material-symbols-outlined">person</span>
+  </button>
+  <a class="hidden md:flex bg-primary text-on-primary px-6 py-2 rounded-full font-button-text text-button-text hover:bg-primary/90 transition-colors" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600;">Vendre</a>
+</div></div>
+</nav>
+<main class="w-full">
+<!-- 2. Banner -->
+<div class="w-full h-48 md:h-64 bg-accent-orange relative">
+<!-- Optional subtle pattern on banner -->
+
+</div>
+<!-- Main Profile Container -->
+<div class="max-w-[1200px] mx-auto px-container-margin relative pb-section-gap">
+<!-- 3. Profile Info -->
+<div class="flex flex-col items-center -mt-20 md:-mt-24 mb-8">
+<!-- Avatar -->
+<div class="relative w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-surface-container-lowest bg-surface-container overflow-hidden z-10 shadow-lg">
+<img class="w-full h-full object-cover" data-alt="A striking portrait of a stylish urban fashion seller, young adult, wearing trendy streetwear, confident expression, outdoor natural lighting, high quality fashion photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmDDYyt4UtJ5itLW3SiYfE8Ori9qIPUywC-jEhST1JpZ52wREV-yRGj_xXzmsTAdMADNEyK2-hvAOPWpwnEMgCLkDj9m6NnbdAuyzm5r3rDZJIfr2TZLd3806TNl20pxJWN0LtxPHG_T947pSIUb51zvZeX27e8T4f2RyKxY1tngwTfmNayf3a-mbumg9KhJ158GBLBchP5-pbjgJ77tzMgzBYrh14tynWWAg5HKMxxct-GxWSorP_">
+</div>
+<!-- Name & Badge -->
+<div class="mt-4 flex items-center gap-2">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface uppercase tracking-tight" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">DAKARVIBES</h1>
+<span class="material-symbols-outlined text-accent-blue text-xl" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<!-- Meta Info -->
+<div class="flex items-center gap-4 mt-2 text-secondary font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Almadies, Dakar
+                    </span>
+<span class="">•</span>
+<span class="">Membre depuis Juin 2023</span>
+</div>
+<!-- Rating -->
+<div class="flex items-center gap-2 mt-3 bg-surface-container-low px-4 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-accent-yellow text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold text-on-surface">4.9</span>
+<span class="text-secondary">(156 avis)</span>
+</div>
+</div>
+<!-- 4. Stats Row -->
+<div class="flex justify-center items-center gap-4 md:gap-12 mb-8 border-outline-variant py-6">
+<div class="text-center">
+<div class="font-headline-md text-headline-md text-on-surface" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 500;">1.2K</div>
+<div class="font-body-sm text-body-sm text-secondary mt-1">Abonnés</div>
+</div>
+
+<div class="text-center">
+<div class="font-headline-md text-headline-md text-on-surface" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 500;">84</div>
+<div class="font-body-sm text-body-sm text-secondary mt-1">Articles vendus</div>
+</div>
+
+<div class="text-center">
+<div class="font-headline-md text-headline-md text-on-surface" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 500;">98%</div>
+<div class="font-body-sm text-body-sm text-secondary mt-1">de réponses</div>
+</div>
+</div>
+<!-- 5. Action Buttons -->
+<div class="flex justify-center gap-4 mb-12">
+<button class="px-8 py-3 rounded-full border border-primary text-primary font-button-text text-button-text hover:bg-surface-container transition-colors duration-200 min-w-[140px]">
+                    Suivre
+                </button>
+<button class="px-8 py-3 rounded-full bg-primary text-on-primary font-button-text text-button-text hover:opacity-90 transition-opacity duration-200 min-w-[140px]">
+                    Message
+                </button>
+</div>
+<!-- 6. Navigation Tabs -->
+<div class="flex justify-center gap-8 mb-8 border-b border-outline-variant">
+<button class="pb-3 text-primary font-headline-md text-sm tracking-wider border-b-2 border-primary uppercase" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">
+                    EN VENTE
+                </button>
+<button class="pb-3 text-secondary hover:text-primary transition-colors duration-200 font-headline-md text-sm tracking-wider uppercase" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">
+                    VENDU
+                </button>
+</div>
+<!-- 7. Content Grid ("En vente") -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-grid-gutter">
+<!-- Card 1 -->
+<div class="group relative flex flex-col cursor-pointer">
+<div class="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A trendy vintage oversized graphic tee, laid flat on a clean white surface, bright studio lighting, streetwear aesthetic, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-OTDiTQydGENAUTH8brstXN7C-mlr1e5K5CKaPI20E-HNsa6_YpLJQU_w50HDm7jLMWv3dqaSDiT6gISoK1w0KtNVTXXEURd9NBYEIfhKcnQbZeEe_mTgqxULZZXHrUXVJPt2qg5nP37v0Dz9ilG2LCsnC0zNnDY9WxYf_iCmGCOIcKMHPaL1DIeQJ06C6uHyMbt7KI3cf_9L30GZUhl8bv0JomZ-R1EhYjMFHBOKSteEtl3ZcW64">
+<button class="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm p-1.5 rounded-full text-secondary hover:text-accent-rose transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-surface-container-lowest px-2 py-1 rounded text-xs font-bold uppercase">
+                            M
+                        </div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">T-Shirt Vintage Oversize</p>
+<p class="font-body-sm text-[16px] font-semibold text-on-surface mt-1">15 000 FCFA</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex flex-col cursor-pointer">
+<div class="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A pair of stylish urban cargo pants in olive green, presented on a hanger against a minimalist grey background, crisp lighting, modern fashion." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAPArCBcb6xiSi2KWU2OVNnitm9Ew-UpTy0gMh3eWPcF719SwvhJC0LEfJOIBeaw7ktjtMcp0Pi5vyqcWeHeJKP75zNtVeLEUINMOTsGeu4Oof9uNKE2zKS8ii_ZTGJCPuWv0Q4-eH8ZGb2OSsy61-1E8YcExL_OwfOoGv6KhaSWKbTKKCCFfntcYmIp3V9971zU_esBpiIIZjBJrmuWtF_MJyagve6XbgLbRYACJzUfhXzReQ7KZD">
+<button class="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm p-1.5 rounded-full text-secondary hover:text-accent-rose transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-surface-container-lowest px-2 py-1 rounded text-xs font-bold uppercase">
+                            L
+                        </div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">Cargo Pants Y2K</p>
+<p class="font-body-sm text-[16px] font-semibold text-on-surface mt-1">22 000 FCFA</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex flex-col cursor-pointer">
+<div class="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A classic pair of retro sneakers, white with bold blue accents, sitting on a concrete floor, dramatic shadows, streetwear photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOY-xslynltgfu1qq_nUMrzwFaAlw4Y6yj_DXtrd7XBGPZCzlyCDW1EG64BrvMBv31n0TKOSR43OoBJWFVsStRLgOvkcGt_qFgosHa74NVORyR7hPFOq2WFVvIzRgWz-e6cLCmIMAYIbBAstbRvBGHnXWAwVubUDohnv14J7IO8oGIkjsc6OlJW6wCcN9GdNQB9bEMVPfXKZsD8xDrfTUeuGy_hwGukv2Btp5fpeOs0DFFmFYgmIBn">
+<button class="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm p-1.5 rounded-full text-secondary hover:text-accent-rose transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-surface-container-lowest px-2 py-1 rounded text-xs font-bold uppercase">
+                            42
+                        </div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">Sneakers Retro 90s</p>
+<p class="font-body-sm text-[16px] font-semibold text-on-surface mt-1">35 000 FCFA</p>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative flex flex-col cursor-pointer">
+<div class="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A brightly colored beanie hat in neon orange, worn by a mannequin head, studio setting, high contrast lighting, urban accessory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyO-kN_m73p3pqqhCbnRdmxNe9FtQeDDquiaAzsTzlzoiejxxA8D1l_-au8Y4pqOihWXWIGkMPUkmWMCDL0acGida0kHeMsCeR_ZR1ugeGaqMhLtvPCwPVhTHNiQXLjckfGXwo58IVUirP5fSRw-0l0fWCEyL5lSx2LjRSmDlp4coyJoOdRG6kuooGsPLPlg0YhOFWAlB1e5l9JTTbQ6AspAXH1dDHZglq2EuwbppxNfl5ZfeBVwzW">
+<button class="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm p-1.5 rounded-full text-secondary hover:text-accent-rose transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-surface-container-lowest px-2 py-1 rounded text-xs font-bold uppercase">
+                            TU
+                        </div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">Beanie Orange Fluo</p>
+<p class="font-body-sm text-[16px] font-semibold text-on-surface mt-1">5 000 FCFA</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More button placeholder -->
+<div class="mt-12 flex justify-center">
+<button class="px-6 py-2 rounded-full border border-outline text-secondary hover:border-primary hover:text-primary transition-colors text-sm uppercase tracking-wide">Voir plus</button>
+</div><section class="mt-16">
+<div class="flex items-baseline gap-4 mb-8">
+<h2 class="font-headline-lg text-headline-md uppercase" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">Avis</h2>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-accent-yellow text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold">4.9</span>
+<span class="text-secondary text-sm">(156 avis)</span>
+</div>
+</div>
+<div class="space-y-8">
+<div class="border-b border-outline-variant pb-6">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmDDYyt4UtJ5itLW3SiYfE8Ori9qIPUywC-jEhST1JpZ52wREV-yRGj_xXzmsTAdMADNEyK2-hvAOPWpwnEMgCLkDj9m6NnbdAuyzm5r3rDZJIfr2TZLd3806TNl20pxJWN0LtxPHG_T947pSIUb51zvZeX27e8T4f2RyKxY1tngwTfmNayf3a-mbumg9KhJ158GBLBchP5-pbjgJ77tzMgzBYrh14tynWWAg5HKMxxct-GxWSorP_">
+</div>
+<div>
+<p class="font-bold text-sm">Moussa D.</p>
+<div class="flex text-accent-yellow">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<span class="ml-auto text-xs text-secondary">Il y a 2 jours</span>
+</div>
+<p class="text-sm text-on-surface">Super vendeur ! Le t-shirt est exactement comme sur les photos et la livraison a été ultra rapide.</p>
+</div>
+<div class="border-b border-outline-variant pb-6">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmDDYyt4UtJ5itLW3SiYfE8Ori9qIPUywC-jEhST1JpZ52wREV-yRGj_xXzmsTAdMADNEyK2-hvAOPWpwnEMgCLkDj9m6NnbdAuyzm5r3rDZJIfr2TZLd3806TNl20pxJWN0LtxPHG_T947pSIUb51zvZeX27e8T4f2RyKxY1tngwTfmNayf3a-mbumg9KhJ158GBLBchP5-pbjgJ77tzMgzBYrh14tynWWAg5HKMxxct-GxWSorP_">
+</div>
+<div>
+<p class="font-bold text-sm">Fatou K.</p>
+<div class="flex text-accent-yellow">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<span class="ml-auto text-xs text-secondary">Il y a 1 semaine</span>
+</div>
+<p class="text-sm text-on-surface">Articles de qualité, je recommande vivement DakarVibes pour le streetwear à Dakar.</p>
+</div>
+<div class="pb-6">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmDDYyt4UtJ5itLW3SiYfE8Ori9qIPUywC-jEhST1JpZ52wREV-yRGj_xXzmsTAdMADNEyK2-hvAOPWpwnEMgCLkDj9m6NnbdAuyzm5r3rDZJIfr2TZLd3806TNl20pxJWN0LtxPHG_T947pSIUb51zvZeX27e8T4f2RyKxY1tngwTfmNayf3a-mbumg9KhJ158GBLBchP5-pbjgJ77tzMgzBYrh14tynWWAg5HKMxxct-GxWSorP_">
+</div>
+<div>
+<p class="font-bold text-sm">Omar S.</p>
+<div class="flex text-accent-yellow">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+</div>
+<span class="ml-auto text-xs text-secondary">Il y a 2 semaines</span>
+</div>
+<p class="text-sm text-on-surface">Très bonne expérience, communication fluide avec le vendeur.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- 8. Footer Component -->
+<footer class="bg-surface-container-high text-on-surface">
+<!-- Trust Band Separator Logic -->
+<div class="bg-primary text-on-primary py-12 mb-8">
+<div class="max-w-[1200px] mx-auto px-container-margin grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+<div>
+<span class="material-symbols-outlined text-[32px] mb-2" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<h3 class="font-headline-md text-lg uppercase mb-1" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">LIVRAISON RAPIDE</h3>
+<p class="font-body-sm text-sm opacity-80">Partout à Dakar en 24h</p>
+</div>
+<div>
+<span class="material-symbols-outlined text-[32px] mb-2" style="font-variation-settings: 'FILL' 1;">verified</span>
+<h3 class="font-headline-md text-lg uppercase mb-1" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">AUTHENTICITÉ</h3>
+<p class="font-body-sm text-sm opacity-80">Articles vérifiés</p>
+</div>
+<div>
+<span class="material-symbols-outlined text-[32px] mb-2" style="font-variation-settings: 'FILL' 1;">payments</span>
+<h3 class="font-headline-md text-lg uppercase mb-1" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">PAIEMENT SÉCURISÉ</h3>
+<p class="font-body-sm text-sm opacity-80">Wave, Orange Money, Cash</p>
+</div>
+<div>
+<span class="material-symbols-outlined text-[32px] mb-2" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+<h3 class="font-headline-md text-lg uppercase mb-1" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">SERVICE CLIENT</h3>
+<p class="font-body-sm text-sm opacity-80">Disponible 7j/7</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-grid-gutter px-container-margin py-section-gap max-w-[1200px] mx-auto" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;"><div class="col-span-1 flex flex-col items-start scale-[2] origin-left mt-1"></div>
+<!-- Brand Column -->
+
+<!-- Links Columns -->
+<div class="col-span-1">
+<ul class="space-y-3 text-label-caps">
+<li class=""><a class="text-secondary dark:text-secondary-fixed-dim hover:text-accent-orange transition-colors duration-300" href="#">Aide</a></li>
+<li class=""><a class="text-secondary dark:text-secondary-fixed-dim hover:text-accent-orange transition-colors duration-300" href="#">Livraison</a></li>
+<li class=""><a class="text-secondary dark:text-secondary-fixed-dim hover:text-accent-orange transition-colors duration-300" href="#">Retours</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<ul class="space-y-3 text-label-caps">
+<li class=""><a class="text-secondary dark:text-secondary-fixed-dim hover:text-accent-orange transition-colors duration-300" href="#">Contact</a></li>
+<li class=""><a class="text-secondary dark:text-secondary-fixed-dim hover:text-accent-orange transition-colors duration-300" href="#">Confidentialité</a></li>
+<li class=""><a class="text-secondary dark:text-secondary-fixed-dim hover:text-accent-orange transition-colors duration-300" href="#">Conditions</a></li>
+</ul>
+</div><div class="col-span-1"><p class="font-bold text-lg mb-3" style="font-family: &quot;Google Sans&quot;, sans-serif;">Nous suivre</p><div class="flex gap-4 text-secondary dark:text-secondary-fixed-dim"><a href="#" class="hover:text-accent-orange transition-colors duration-300" aria-label="Facebook"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path></svg></a><a href="#" class="hover:text-accent-orange transition-colors duration-300" aria-label="Instagram"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg></a><a href="#" class="hover:text-accent-orange transition-colors duration-300" aria-label="TikTok"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.31-.75.42-1.24 1.25-1.33 2.1-.1.7.1 1.41.53 1.98.5.73 1.36 1.19 2.24 1.17.96.03 1.91-.41 2.46-1.21.38-.53.56-1.18.53-1.83-.02-3.77-.01-7.54-.01-11.31z"></path></svg></a><a href="#" class="hover:text-accent-orange transition-colors duration-300" aria-label="X (Twitter)"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.494h2.039L6.486 3.24H4.298l13.311 17.407z"></path></svg></a></div></div>
+</div>
+<div class="border-t border-outline-variant py-6 text-center">
+    <p class="font-body-sm text-body-sm text-secondary dark:text-secondary-fixed-dim">
+        © 2024 Addikt Dakar. Urban Streetwear &amp; Vintage.
+    </p>
+</div></footer>
+
+
+
+
+
+
+</body></html>
