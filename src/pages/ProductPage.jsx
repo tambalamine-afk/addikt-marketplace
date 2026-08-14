@@ -29,7 +29,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
   const renderProductCard = (p, index, isPopular = false, isNew = false) => (
     <Link key={p.id} to={`/product/${p.id}`} className={`group block ${index === 4 ? 'hidden lg:block' : ''}`}>
       <div className="aspect-[4/5] bg-surface-container rounded-2xl overflow-hidden mb-3 relative border border-outline-variant/30">
-        <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={p.name} src={p.image} />
+        <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={p.title} src={p.image} />
         {isPopular && <div className="absolute top-2 left-2 bg-accent-rose text-white font-label text-[10px] uppercase px-2 py-1 rounded-sm">Populaire</div>}
         {isNew && <div className="absolute top-2 left-2 bg-primary text-white font-label text-[10px] uppercase px-2 py-1 rounded-sm">Nouveau</div>}
         <div className="absolute top-2 right-2 drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
@@ -38,8 +38,8 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           </span>
         </div>
       </div>
-      <h4 className="font-label text-sm text-primary truncate mb-1">{p.name}</h4>
-      <p className="text-sm font-bold text-primary">{p.price.toLocaleString('fr-SN')} F</p>
+      <h4 className="font-label text-sm text-primary truncate mb-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{p.title}</h4>
+      <p className="text-sm font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{p.price.toLocaleString('fr-SN')} F</p>
     </Link>
   );
 
@@ -52,7 +52,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           <span className="material-symbols-outlined text-[16px]">chevron_right</span>
           <Link to={`/category/${product.category?.toLowerCase() || 'femmes'}`} className="hover:text-primary transition-colors text-primary border-b-2 border-primary pb-0.5 capitalize">{product.category || 'Femmes'}</Link>
           <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-          <span className="text-outline">{product.name}</span>
+          <span className="text-outline">{product.title}</span>
         </div>
 
         {/* Product Container */}
@@ -63,7 +63,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
             <div className="relative w-full aspect-[3/4] bg-surface-container rounded-2xl overflow-hidden group border border-outline-variant/30">
               <img 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                alt={product.name} 
+                alt={product.title} 
                 src={product.image} 
               />
               {/* Overlays */}
@@ -102,15 +102,15 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           <div className="w-full md:w-[45%] flex flex-col pt-2 lg:pt-8">
             {/* Header */}
             <div className="mb-6">
-              <h1 className="text-[32px] md:text-[40px] font-semibold leading-[1.1] tracking-tighter mb-4 text-primary uppercase font-body">
-                {product.name}
+              <h1 className="text-[32px] md:text-[40px] font-semibold leading-[1.1] tracking-tighter mb-4 text-primary uppercase font-body" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>
+                {product.title}
               </h1>
               <div className="flex items-end gap-3 mb-2">
-                <span className="text-[28px] font-bold text-primary">{product.price.toLocaleString('fr-SN')} F</span>
-                <span className="text-[18px] text-outline line-through mb-1 font-bold">{(product.price * 1.15).toLocaleString('fr-SN')} F</span>
+                <span className="text-[28px] font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{product.price.toLocaleString('fr-SN')} F</span>
+                <span className="text-[18px] text-outline line-through mb-1 font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{(product.price * 1.15).toLocaleString('fr-SN')} F</span>
                 <span className="bg-accent-orange text-white font-label text-xs px-2 py-1 rounded-sm mb-1 uppercase font-bold transform -rotate-3">-15%</span>
               </div>
-              <p className="font-body text-sm text-secondary">Taille {product.size || 'M'} · Très bon état</p>
+              <p className="font-body text-sm text-secondary" style={{ fontFamily: '"Google Sans", sans-serif' }}>Taille {product.size || 'M'} · Très bon état</p>
             </div>
             
             {/* Actions */}
@@ -118,10 +118,11 @@ export default function ProductPage({ products, toggleLike, addToast }) {
               <button 
                 onClick={() => navigate(`/messages/${product.sellerId || 1}`)}
                 className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200"
+                style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
               >
                 Envoyer un message
               </button>
-              <button className="w-full bg-white border border-primary text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-surface-container-low transition-colors duration-200">
+              <button className="w-full bg-white border border-primary text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-surface-container-low transition-colors duration-200" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
                 Faire une offre
               </button>
             </div>
@@ -130,15 +131,15 @@ export default function ProductPage({ products, toggleLike, addToast }) {
             <div className="bg-surface-container-low p-4 rounded-2xl flex gap-4 items-start mb-8 border border-outline-variant/30">
               <span className="material-symbols-outlined text-accent-blue mt-0.5">verified_user</span>
               <div>
-                <p className="font-body text-sm text-on-surface-variant font-medium leading-snug mb-1">Vérifie toujours l'article en main propre avant de payer.</p>
-                <a className="font-label text-xs text-primary underline decoration-2 underline-offset-4 hover:text-accent-blue transition-colors" href="#">En savoir plus</a>
+                <p className="font-body text-sm text-on-surface-variant font-medium leading-snug mb-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>Vérifie toujours l'article en main propre avant de payer.</p>
+                <a className="font-label text-xs text-primary underline decoration-2 underline-offset-4 hover:text-accent-blue transition-colors" href="#" style={{ fontFamily: '"Google Sans", sans-serif' }}>En savoir plus</a>
               </div>
             </div>
             
             {/* Description */}
             <div className="mb-8">
-              <p className="font-body text-[16px] text-on-surface-variant leading-relaxed mb-4">
-                Magnifique article {product.name.toLowerCase()}. Coupe parfaite, couleurs vibrantes idéales pour la saison.
+              <p className="font-body text-[16px] text-on-surface-variant leading-relaxed mb-4" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                Magnifique article {product.title?.toLowerCase()}. Coupe parfaite, couleurs vibrantes idéales pour la saison.
               </p>
               <div className="flex flex-wrap gap-2">
                 <button className="px-6 py-2.5 rounded-full border border-outline-variant text-[14px] text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-medium bg-white">#dakar</button>
@@ -154,14 +155,14 @@ export default function ProductPage({ products, toggleLike, addToast }) {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-full overflow-hidden bg-surface-container border border-outline-variant">
-                    <img className="w-full h-full object-cover" alt="Vendeur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7dFp_KkAxEPK_P_ppYj28vXei2rCaxWwn7imZEnN9JrzteCDDx81SKxEH_m6MUfMGNFLk87XN1L1qQL4Wyz74z6guUDem4qsCxaaK1etD4PLWjBUCr5lrP3HrxoaMRmLzZLPefN51sBtk9sHEcmyWcCRrj3ireqMjZL19GXF5QwkSxH11LuPlGq-NIBomoo9qkXUpnGrdH9nyK6PvpgMCKmdVNAOewnx0QLE7ea9MXlhLLYGL3P4I" />
+                    <img className="w-full h-full object-cover" alt="Vendeur" src={product.seller?.avatar || "https://lh3.googleusercontent.com/aida-public/AB6AXuC7dFp_KkAxEPK_P_ppYj28vXei2rCaxWwn7imZEnN9JrzteCDDx81SKxEH_m6MUfMGNFLk87XN1L1qQL4Wyz74z6guUDem4qsCxaaK1etD4PLWjBUCr5lrP3HrxoaMRmLzZLPefN51sBtk9sHEcmyWcCRrj3ireqMjZL19GXF5QwkSxH11LuPlGq-NIBomoo9qkXUpnGrdH9nyK6PvpgMCKmdVNAOewnx0QLE7ea9MXlhLLYGL3P4I"} />
                   </div>
                   <div>
-                    <h3 className="font-label text-lg text-primary flex items-center gap-1 font-bold">
-                      {product.seller || 'Ibrahima N.'}
+                    <h3 className="font-label text-lg text-primary flex items-center gap-1 font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+                      {product.seller?.name || 'Ibrahima N.'}
                       <span className="material-symbols-outlined filled text-accent-blue text-[18px]">verified</span>
                     </h3>
-                    <p className="font-body text-xs text-secondary">42 vendus · Actif cette semaine</p>
+                    <p className="font-body text-xs text-secondary" style={{ fontFamily: '"Google Sans", sans-serif' }}>42 vendus · Actif cette semaine</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
@@ -170,10 +171,10 @@ export default function ProductPage({ products, toggleLike, addToast }) {
                 </div>
               </div>
               <div className="flex gap-3">
-                <Link to={`/seller/${product.sellerId || 1}`} className="flex-1 bg-white border border-primary text-primary font-bold text-xs uppercase py-3 rounded-full hover:bg-surface-container-high transition-colors text-center block">
+                <Link to={`/seller/${product.sellerId || 1}`} className="flex-1 bg-white border border-primary text-primary font-bold text-xs uppercase py-3 rounded-full hover:bg-surface-container-high transition-colors text-center block" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
                   Voir la boutique
                 </Link>
-                <button className="flex-1 bg-white border border-primary text-primary font-bold text-xs uppercase py-3 rounded-full hover:bg-surface-container-high transition-colors">
+                <button className="flex-1 bg-white border border-primary text-primary font-bold text-xs uppercase py-3 rounded-full hover:bg-surface-container-high transition-colors" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
                   Poser une question
                 </button>
               </div>
@@ -181,7 +182,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
             
             {/* Reviews */}
             <div className="mb-8">
-              <h3 className="font-headline text-lg uppercase mb-4 text-primary font-bold">Avis récents</h3>
+              <h3 className="font-headline text-lg uppercase mb-4 text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Avis récents</h3>
               <div className="flex flex-col gap-4">
                 <div className="bg-surface-container-low p-4 rounded-2xl border border-outline-variant/30">
                   <div className="flex justify-between items-start mb-2">
@@ -220,7 +221,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           {/* More from seller */}
           <div className="mb-16">
             <div className="flex justify-between items-end mb-6">
-              <h2 className="font-headline text-2xl font-bold uppercase text-primary">Plus de ce vendeur</h2>
+              <h2 className="font-headline text-2xl font-bold uppercase text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Plus de ce vendeur</h2>
               <a className="font-label text-sm text-secondary hover:text-primary transition-colors underline decoration-1 underline-offset-4" href="#">Tout voir</a>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -231,7 +232,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           {/* You might also like */}
           <div>
             <div className="flex justify-between items-end mb-6">
-              <h2 className="font-headline text-2xl font-bold uppercase text-primary">Tu pourrais aimer</h2>
+              <h2 className="font-headline text-2xl font-bold uppercase text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Tu pourrais aimer</h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {products.slice(5, 10).map((p, i) => renderProductCard(p, i, i === 1, i === 3))}

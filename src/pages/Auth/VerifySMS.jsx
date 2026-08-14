@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function VerifySMS() {
   const [timeLeft, setTimeLeft] = useState(30);
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '']); // 5 inputs matching stitch
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function VerifySMS() {
     setOtp(newOtp);
 
     // Auto-focus next input
-    if (value !== '' && index < 5) {
+    if (value !== '' && index < 4) {
       inputRefs.current[index + 1].focus();
     }
   };
@@ -41,25 +41,25 @@ export default function VerifySMS() {
   };
 
   return (
-    <div className="bg-surface text-on-surface min-h-[calc(100vh-200px)] flex flex-col font-body-sm relative overflow-hidden w-full items-center">
-      {/* Top Navigation (Shell suppressed for transactional, but leaving a back button) */}
-      <header className="flex justify-between items-center w-full px-grid-gutter py-4 bg-surface dark:bg-surface top-0 z-10 max-w-md">
-        <button onClick={() => navigate(-1)} className="text-primary hover:opacity-80 transition-opacity">
-          <span className="material-symbols-outlined text-[24px]">arrow_back</span>
-        </button>
-        <div className="font-headline-md text-2xl font-black text-primary italic" style={{ fontFamily: '"Monument Extended", sans-serif' }}>
-          Addi<span className="italic">k</span>t
-        </div>
-        <div className="w-6 h-6"></div> {/* Spacer for alignment */}
-      </header>
-      
+    <div className="bg-surface text-on-surface h-screen flex flex-col font-body-sm relative overflow-hidden">
       {/* Main Content Area */}
-      <main className="flex-grow flex flex-col justify-center items-center px-container-margin pt-10 pb-10 max-w-md mx-auto w-full relative z-10">
-        <div className="w-full mb-10">
-          <h1 className="font-headline-lg-mobile text-3xl md:text-4xl text-primary uppercase leading-tight mb-4 tracking-tighter" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>
-            Entre le code<br />reçu par SMS
+      <main className="flex-grow flex flex-col justify-center items-center px-container-margin max-w-md mx-auto w-full relative z-10">
+        
+        <header className="flex justify-between items-center w-full bg-surface dark:bg-surface z-10 mb-4 pb-4">
+          <button onClick={() => navigate(-1)} className="text-primary hover:opacity-80 transition-opacity">
+            <span className="material-symbols-outlined text-[24px]">arrow_back</span>
+          </button>
+          <div className="text-headline-md font-black text-primary italic font-body-lg" style={{ fontFamily: '"Monument Extended", sans-serif' }}>
+            Addi<span className="italic">k</span>t
+          </div>
+          <div className="w-6 h-6"></div>
+        </header>
+
+        <div className="w-full mb-10 min-w-max flex flex-col items-center text-center">
+          <h1 className="font-body-lg text-headline-md text-primary uppercase leading-tight mb-4 tracking-tighter font-bold whitespace-nowrap" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>
+            Entre le code reçu par SMS
           </h1>
-          <p className="font-body-lg text-lg text-on-surface-variant flex flex-col sm:flex-row sm:items-center gap-2">
+          <p className="font-body-lg text-body-lg text-on-surface-variant flex flex-col sm:flex-row sm:items-center gap-2 justify-center" style={{ fontFamily: '"Google Sans", sans-serif' }}>
             <span>Code envoyé au <span className="font-bold text-primary">+221 77 123 45 67</span></span>
             <button onClick={() => navigate(-1)} className="text-accent-blue font-bold hover:underline">Modifier</button>
           </p>
@@ -75,7 +75,7 @@ export default function VerifySMS() {
                 value={value}
                 onChange={(e) => handleChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
-                className="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-2xl text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors"
+                className="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors"
                 inputMode="numeric"
                 maxLength={1}
                 type="text"
@@ -86,24 +86,26 @@ export default function VerifySMS() {
         </div>
         
         {/* Resend and Timer */}
-        <div className="w-full flex justify-between items-center mb-12">
+        <div className="w-full flex justify-between items-center mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 400 }}>
           <button 
-            className={`font-button-text transition-colors ${timeLeft <= 0 ? 'text-primary font-bold' : 'text-secondary hover:text-primary opacity-50 cursor-not-allowed'}`}
+            className={`font-button-text text-button-text hover:text-primary transition-colors ${timeLeft <= 0 ? 'text-primary font-bold' : 'text-secondary opacity-50 cursor-not-allowed'}`}
             disabled={timeLeft > 0}
             onClick={() => setTimeLeft(30)}
+            style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
           >
             Renvoyer le code
           </button>
-          <span className={`font-body-sm font-bold ${timeLeft <= 0 ? 'text-secondary' : 'text-primary'}`}>
+          <span className={`font-body-sm text-body-sm font-bold ${timeLeft <= 0 ? 'text-secondary' : 'text-primary'}`}>
             00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
           </span>
         </div>
         
         {/* Verify Action Button */}
-        <div className="w-full mt-auto">
+        <div className="w-full">
           <button 
             onClick={handleVerify}
-            className="w-full py-4 bg-tertiary text-on-tertiary font-button-text rounded-full uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all"
+            className="w-full py-4 bg-tertiary text-on-tertiary font-button-text text-button-text rounded-full uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all"
+            style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
           >
             Vérifier
           </button>

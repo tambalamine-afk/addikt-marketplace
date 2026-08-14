@@ -180,13 +180,13 @@ export default function LandingPage() {
 
             {/* 4. Button */}
             {toggleState === 'acheter' ? (
-              <button className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+              <Link to="/category" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
                 Découvrir
-              </button>
+              </Link>
             ) : (
-              <button className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+              <Link to="/publish" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
                 Sell now
-              </button>
+              </Link>
             )}
 
             {/* 5. Stats Cards */}
@@ -325,7 +325,7 @@ export default function LandingPage() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
           {PRODUCTS_GRID.map((item, idx) => (
-            <Link key={idx} to={`/product/${idx + 1}`} className="flex flex-col gap-3 group cursor-pointer">
+            <Link key={idx} to={`/product/p${(idx % 12) + 1}`} className="flex flex-col gap-3 group cursor-pointer">
               <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
                 <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); /* Like logic here */ }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
                 <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} />
@@ -349,7 +349,7 @@ export default function LandingPage() {
         </div>
         <div className="flex flex-row justify-between gap-8 w-full">
           {BOUTIQUES.map((boutique, idx) => (
-            <div key={idx} className="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+            <Link to={`/seller/${idx + 1}`} key={idx} className="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer block">
               <div className="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden">
                 {boutique.images.map((img, imgIdx) => (
                   <img key={imgIdx} className="aspect-[4/3] object-cover" src={img} alt="" />
@@ -367,9 +367,9 @@ export default function LandingPage() {
                     </div>
                   </div>
                 </div>
-                <button className="hover:text-error transition-colors"><span className="material-symbols-outlined">favorite</span></button>
+                <button className="hover:text-error transition-colors" onClick={(e) => e.preventDefault()}><span className="material-symbols-outlined">favorite</span></button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -388,7 +388,7 @@ export default function LandingPage() {
             <button className="absolute -left-4 z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
             <div className="flex gap-[10px] overflow-x-auto hide-scrollbar snap-x w-full pb-4">
               {NEW_DROP.map((item, idx) => (
-                <Link key={idx} to={`/product/${idx + 10}`} className="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start">
+                <Link key={idx} to={`/product/p${(idx % 12) + 1}`} className="min-w-[220px] md:min-w-[calc(25%-10px)] flex flex-col gap-3 snap-start">
                   <div className="aspect-[3/4] overflow-hidden">
                     <img alt={item.title.toUpperCase()} className="w-full h-full object-cover" src={item.img} />
                   </div>
@@ -407,22 +407,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 7. CATÉGORIES */}
-      <section className="w-full max-w-7xl mx-auto px-container-margin py-12">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {CATEGORIES.map((cat, idx) => (
-            <Link key={idx} to={cat.link} className="relative aspect-[9/16] rounded-xl overflow-hidden group cursor-pointer block">
-              <div className="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110">
-                <img alt={cat.title} className="w-full h-full object-cover" src={cat.img} />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent p-6 flex flex-col justify-end">
-                <p className="text-sm mb-1" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 600, color: 'rgb(255, 255, 255)' }}>{cat.subtitle}</p>
-                <h3 className="text-2xl" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 600, color: 'rgb(255, 255, 255)' }}>{cat.title}</h3>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+
 
       {/* Decorative Categories SVG Section */}
       <section className="w-full py-16 flex flex-col items-center justify-center overflow-hidden min-h-[600px] bg-surface">
