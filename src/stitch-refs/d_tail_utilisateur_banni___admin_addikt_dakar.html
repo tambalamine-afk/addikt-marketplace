@@ -1,0 +1,343 @@
+<!DOCTYPE html><html class="light" lang="fr" style="width: 1280px; height: 1043px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Addikt Dakar - Profil Utilisateur Banni</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#cfc4c5",
+                        "status-success": "#007782",
+                        "on-primary": "#ffffff",
+                        "surface": "#FFFFFF",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "background": "#f5f5f5", // Changed to match prompt
+                        "surface-container-low": "#f3f3f3",
+                        "on-primary-fixed-variant": "#474747",
+                        "surface-dim": "#dadada",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "tertiary": "#000000",
+                        "primary-fixed": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1b1b1b",
+                        "on-primary-container": "#848484",
+                        "primary": "#000000",
+                        "status-warning": "#FFB800",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "secondary-fixed": "#e4e2e2",
+                        "border-base": "#E5E5E5",
+                        "on-background": "#1a1c1c",
+                        "secondary": "#5e5e5e",
+                        "secondary-container": "#e1dfdf",
+                        "surface-container-highest": "#e2e2e2",
+                        "inverse-primary": "#c6c6c6",
+                        "primary-container": "#1b1b1b",
+                        "surface-tint": "#5e5e5e",
+                        "on-surface": "#1a1c1c",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary-container": "#848484",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-secondary-fixed-variant": "#464747",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-container": "#626263",
+                        "outline": "#7e7576",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#4c4546",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "on-tertiary": "#ffffff",
+                        "status-danger": "#FF2300",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-container": "#1b1b1b",
+                        "inverse-on-surface": "#f1f1f1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-collapsed": "64px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "sidebar-width": "240px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "table-data": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "table-data": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar (from JSON) -->
+<aside class="bg-surface dark:bg-surface w-sidebar-width h-screen fixed left-0 top-0 border-r border-border-base dark:border-outline-variant flex flex-col z-50">
+<div class="p-6 border-b border-border-base">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">ADDIKT DAKAR</h1>
+<p class="font-body-md text-body-md text-secondary mt-1">Marketplace Admin</p>
+</div>
+<nav class="flex-1 py-4 overflow-y-auto">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-on-secondary-container hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">dashboard</span>
+<span class="font-body-md text-body-md">Tableau de bord</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-on-secondary-container hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">storefront</span>
+<span class="font-body-md text-body-md">Annonces</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-primary dark:text-primary font-semibold border-l-[3px] border-primary bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">group</span>
+<span class="font-body-md text-body-md">Utilisateurs</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-on-secondary-container hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">report_problem</span>
+<span class="font-body-md text-body-md">Signalements</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-on-secondary-container hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">article</span>
+<span class="font-body-md text-body-md">Contenu</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-on-secondary-container hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-size: 20px;">settings</span>
+<span class="font-body-md text-body-md">Paramètres</span>
+</a>
+</li>
+</ul>
+</nav>
+<div class="p-4 border-t border-border-base flex items-center gap-3">
+<img alt="Admin Profile Avatar" class="w-10 h-10 rounded-full object-cover border border-border-base" data-alt="A highly detailed close-up portrait of a professional African man wearing minimalist modern clothing in a brightly lit studio setting with neutral white background. The image style is sharp, corporate, and clean." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdrs5U4IHEY5TV720_5eL0VaP2uGsqhql7VM-0thqKngQJc7GzVZQ1qAIRDCbzpHlKoTjwZ2H6OarZEMLucGgB-wAghs506OY8nvMIyykaaIILvUFF_661kqJEi16MeahcemHDERwiKzesT88UZLWHBf7ggKjjvWYuE9RmLezLZW4P23-mC1m6XsNhdm2M_HCELo6Mxf6yE7C6wC57AFnO0MInAVV0j5TW7-rbohzdI0wK2Oauwzpo">
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md font-semibold truncate text-primary">Admin Name</p>
+<p class="font-label-sm text-label-sm text-secondary truncate">Super Admin</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 ml-sidebar-width flex flex-col min-h-screen">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-surface dark:bg-surface h-16 w-full sticky top-0 z-40 border-b border-border-base dark:border-outline-variant flex justify-between items-center px-container-padding">
+<div class="flex-1 max-w-md hidden md:flex items-center bg-background border border-border-base rounded px-3 py-1.5 focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-secondary mr-2" style="font-size: 20px;">search</span>
+<input class="bg-transparent border-none outline-none w-full font-body-md text-body-md placeholder-secondary text-primary p-0 focus:ring-0" placeholder="Rechercher..." type="text">
+</div>
+<div class="flex items-center gap-4 ml-auto">
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">notifications</span>
+</button>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-container-padding space-y-6 max-w-6xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex items-center gap-4 mb-2">
+<button class="flex items-center gap-2 text-secondary hover:text-primary font-label-sm text-label-sm transition-colors border border-border-base bg-surface px-3 py-1.5 rounded">
+<span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+                    RETOUR À LA GESTION
+                </button>
+</div>
+<div class="flex justify-between items-end pb-4 border-b border-border-base">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary flex items-center gap-3">
+                        Mamadou L.
+                        <span class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface border border-status-danger text-status-danger font-label-sm text-label-sm uppercase rounded">
+<span class="w-1.5 h-1.5 bg-status-danger rounded-full"></span>
+                            BANNI
+                        </span>
+</h2>
+<p class="font-body-md text-body-md text-secondary mt-1">ID: USR-9824-DKR</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Profile & Ban Info -->
+<div class="space-y-6 lg:col-span-1">
+<!-- Ban Info Alert Card -->
+<div class="bg-surface border border-status-danger p-6 rounded-DEFAULT relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-status-danger"></div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-status-danger mt-1" style="font-variation-settings: 'FILL' 1;">gavel</span>
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-status-danger mb-2">Détails du Bannissement</h3>
+<div class="space-y-3 font-body-md text-body-md">
+<div>
+<span class="text-secondary block font-label-sm text-label-sm uppercase mb-0.5">Motif principal</span>
+<span class="text-primary font-semibold">Fraude répétée (Faux paiements Wave)</span>
+</div>
+<div>
+<span class="text-secondary block font-label-sm text-label-sm uppercase mb-0.5">Date d'effet</span>
+<span class="text-primary">12 Nov 2023, 14:32</span>
+</div>
+<div>
+<span class="text-secondary block font-label-sm text-label-sm uppercase mb-0.5">Administrateur</span>
+<span class="text-primary">S. Ndiaye</span>
+</div>
+</div>
+<button class="mt-6 w-full bg-surface border border-primary text-primary font-label-sm text-label-sm uppercase py-2 px-4 hover:bg-background transition-colors flex justify-center items-center gap-2 rounded">
+<span class="material-symbols-outlined" style="font-size: 16px;">lock_open</span>
+                                    LEVER LE BANNISSEMENT
+                                </button>
+</div>
+</div>
+</div>
+<!-- Profile Details Card -->
+<div class="bg-surface border border-border-base p-6 rounded-DEFAULT">
+<div class="flex flex-col items-center mb-6 text-center">
+<div class="relative w-24 h-24 mb-4">
+<img class="w-full h-full rounded-full object-cover border-2 border-border-base grayscale" data-alt="A clear frontal photograph of a Senegalese man in his 30s against a stark white studio backdrop. He is wearing a casual dark grey t-shirt. The image has a desaturated, slightly gritty documentary style, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5DWcRumP_Ng7WFSZgR86dZccOURSGyGinUkB3FaoHSO6eO7ge49PPdiBQgzVE0S15WtB6uDzRWpHBknZw7w0fvKKkFuQXjRf9W-7xQLxfTkRxNQteVkUalIDO3f_ZM1JPGIrh5snyghXUZ3BYuy4PGanln1VgNpPw6EKU_ZF-j8qn5oUEWscPrtz49KyhgLqfQECKLj3OZ90H5qaigfyyGcYV1w3T43rxGu9AJonIZSWOVmrO88vq">
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Mamadou Leye</h3>
+<p class="font-body-md text-body-md text-secondary">+221 77 123 45 67</p>
+</div>
+<div class="space-y-4 border-t border-border-base pt-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-size: 20px;">location_on</span>
+<div>
+<span class="text-secondary block font-label-sm text-label-sm uppercase mb-0.5">Quartier</span>
+<span class="font-body-md text-body-md text-primary">Médina, Dakar</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-size: 20px;">calendar_today</span>
+<div>
+<span class="text-secondary block font-label-sm text-label-sm uppercase mb-0.5">Membre depuis</span>
+<span class="font-body-md text-body-md text-primary">14 Mars 2022</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-size: 20px;">mail</span>
+<div>
+<span class="text-secondary block font-label-sm text-label-sm uppercase mb-0.5">Email</span>
+<span class="font-body-md text-body-md text-primary">m.leye.99@example.com</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Stats & Tabs -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface border border-border-base p-4 rounded-DEFAULT flex flex-col justify-center items-start">
+<span class="text-secondary font-label-sm text-label-sm uppercase mb-1">Annonces (Masquées)</span>
+<div class="flex items-end gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">42</span>
+<span class="material-symbols-outlined text-secondary mb-1" style="font-size: 20px;">visibility_off</span>
+</div>
+</div>
+<div class="bg-surface border border-border-base p-4 rounded-DEFAULT flex flex-col justify-center items-start">
+<span class="text-secondary font-label-sm text-label-sm uppercase mb-1">Note moyenne</span>
+<div class="flex items-end gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">2.1</span>
+<span class="font-body-md text-body-md text-secondary mb-1">/ 5</span>
+</div>
+</div>
+<div class="bg-surface border border-status-danger p-4 rounded-DEFAULT flex flex-col justify-center items-start bg-error-container bg-opacity-20">
+<span class="text-status-danger font-label-sm text-label-sm uppercase mb-1">Signalements reçus</span>
+<div class="flex items-end gap-2">
+<span class="font-headline-lg text-headline-lg text-status-danger">15</span>
+<span class="material-symbols-outlined text-status-danger mb-1" style="font-size: 20px;">warning</span>
+</div>
+</div>
+</div>
+<!-- Tabs & Content -->
+<div class="bg-surface border border-border-base rounded-DEFAULT overflow-hidden">
+<!-- Tab Headers -->
+<div class="flex border-b border-border-base bg-background overflow-x-auto">
+<button class="px-6 py-4 font-label-sm text-label-sm uppercase text-secondary hover:bg-surface-container-highest transition-colors whitespace-nowrap">
+                                Annonces (42)
+                            </button>
+<button class="px-6 py-4 font-label-sm text-label-sm uppercase text-primary border-b-2 border-primary bg-surface font-semibold whitespace-nowrap">
+                                Signalements (15)
+                            </button>
+<button class="px-6 py-4 font-label-sm text-label-sm uppercase text-secondary hover:bg-surface-container-highest transition-colors whitespace-nowrap">
+                                Historique
+                            </button>
+</div>
+<!-- Tab Content (Signalements active) -->
+<div class="p-0">
+<!-- Table Structure -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-background">
+<tr>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider border-b border-border-base">Date</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider border-b border-border-base">Signalé par</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider border-b border-border-base">Raison</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider border-b border-border-base">Annonce liée</th>
+</tr>
+</thead>
+<tbody class="font-table-data text-table-data text-primary">
+<tr class="hover:bg-surface-bright transition-colors border-b border-border-base">
+<td class="py-3 px-4">12 Nov 2023</td>
+<td class="py-3 px-4">USR-112</td>
+<td class="py-3 px-4 font-semibold text-status-danger">Arnaque / Faux paiement</td>
+<td class="py-3 px-4 text-secondary">iPhone 13 Pro Max (ID: 992)</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors border-b border-border-base">
+<td class="py-3 px-4">11 Nov 2023</td>
+<td class="py-3 px-4">USR-544</td>
+<td class="py-3 px-4 font-semibold text-status-danger">Arnaque / Faux paiement</td>
+<td class="py-3 px-4 text-secondary">MacBook Air M1 (ID: 981)</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors border-b border-border-base">
+<td class="py-3 px-4">08 Nov 2023</td>
+<td class="py-3 px-4">USR-890</td>
+<td class="py-3 px-4 text-status-warning">Comportement abusif</td>
+<td class="py-3 px-4 text-secondary">Samsung S22 (ID: 950)</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors border-b border-border-base">
+<td class="py-3 px-4">02 Nov 2023</td>
+<td class="py-3 px-4">USR-221</td>
+<td class="py-3 px-4 text-primary">Produit non conforme</td>
+<td class="py-3 px-4 text-secondary">AirPods Pro (ID: 884)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div id="snapdom-sandbox" data-snapdom-sandbox="true" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

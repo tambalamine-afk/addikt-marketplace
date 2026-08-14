@@ -1,18 +1,35 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function Category({ products, handleSelect }) {
-  // We'll use mock subcategories for now
-  const subcategories = [
-    'Robes', 'Hauts', 'Bas', 'Boubous & tenues trad', 'Vestes & manteaux', 'Chaussures', 'Sacs & accessoires', 'Bijoux', 'Vintage'
-  ];
+  const { id } = useParams();
+  const categoryId = id ? id.toLowerCase() : 'femmes';
+  
+  let title = 'Femmes';
+  let subcategories = [];
+
+  switch (categoryId) {
+    case 'hommes':
+      title = 'Hommes';
+      subcategories = ['T-shirts & Polos', 'Pantalons', 'Sweats & Pulls', 'Vestes & Manteaux', 'Costumes', 'Chaussures', 'Accessoires', 'Sneakers', 'Vintage'];
+      break;
+    case 'enfants':
+      title = 'Enfants';
+      subcategories = ['Bébé', 'Filles (2-14 ans)', 'Garçons (2-14 ans)', 'Chaussures', 'Jouets', 'Livres', 'Puériculture', 'Accessoires'];
+      break;
+    case 'femmes':
+    default:
+      title = 'Femmes';
+      subcategories = ['Robes', 'Hauts', 'Bas', 'Boubous & tenues trad', 'Vestes & manteaux', 'Chaussures', 'Sacs & accessoires', 'Bijoux', 'Vintage'];
+      break;
+  }
 
   return (
     <main className="flex-grow w-full max-w-[1440px] mx-auto px-container-margin py-8 bg-background text-on-background font-body-sm">
       {/* Category Header */}
       <div className="mb-section-gap pt-8">
-        <h1 className="text-[80px] text-primary uppercase mb-2 font-bold tracking-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700, lineHeight: 1.0, letterSpacing: '-0.02em' }}>Femmes</h1>
-        <p className="text-[18px] text-on-surface-variant" style={{ fontFamily: '"Google Sans", sans-serif' }}>1 240 articles</p>
+        <h1 className="text-5xl md:text-[6rem] lg:text-[7.5rem] text-primary mb-2 font-bold leading-none tracking-tighter" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 800, opacity: 1 }}>{title}</h1>
+        <p className="font-body-lg text-body-lg text-on-surface-variant md:ml-2 md:-mt-3">1 240 articles</p>
       </div>
 
       {/* Subcategories (Scrollable Chips) */}
@@ -21,8 +38,8 @@ export default function Category({ products, handleSelect }) {
           {subcategories.map((sub, idx) => (
             <button 
               key={idx} 
-              className={`flex-shrink-0 rounded-full px-6 py-3 text-[14px] border-2 transition-colors font-body-sm ${idx === 0 ? 'bg-primary text-on-primary border-primary' : idx === subcategories.length - 1 ? 'bg-surface-container-lowest text-accent-orange border-surface-variant hover:border-primary' : 'bg-surface-container-lowest text-primary border-surface-variant hover:border-primary'}`} 
-              style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}
+              className={`flex-shrink-0 rounded-full px-6 py-3 font-button-text text-button-text border-2 transition-colors ${idx === 0 ? 'bg-primary text-on-primary border-primary' : idx === subcategories.length - 1 ? 'bg-surface-container-lowest text-accent-orange border-surface-variant hover:border-primary' : 'bg-surface-container-lowest text-primary border-surface-variant hover:border-primary'}`} 
+              style={{ fontFamily: '"Zalando Sans Expanded Light", sans-serif' }}
             >
               {sub}
             </button>
@@ -35,25 +52,25 @@ export default function Category({ products, handleSelect }) {
         {/* Filter Button */}
         <button className="flex items-center gap-2 border-2 border-primary rounded-full px-6 py-2 hover:bg-surface-variant transition-colors group">
           <span className="material-symbols-outlined text-primary group-hover:text-accent-blue transition-colors">tune</span>
-          <span className="text-[14px] text-primary" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}>Filtres</span>
+          <span className="font-button-text text-button-text">Filtres</span>
         </button>
         
         {/* Active Filter Chips */}
         <div className="flex flex-wrap gap-2 flex-grow">
           <div className="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-1">
-            <span className="text-[12px] uppercase" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}>Taille M</span>
+            <span className="font-label-caps text-label-caps">Taille M</span>
             <button className="material-symbols-outlined text-[16px] hover:text-accent-rose">close</button>
           </div>
           <div className="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-1">
-            <span className="text-[12px] uppercase" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}>Moins de 10 000 F</span>
+            <span className="font-label-caps text-label-caps">Moins de 10 000 F</span>
             <button className="material-symbols-outlined text-[16px] hover:text-accent-rose">close</button>
           </div>
         </div>
 
         {/* Sort Selector */}
         <div className="flex items-center gap-2">
-          <span className="text-[12px] text-on-surface-variant uppercase" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}>Trier par:</span>
-          <select className="bg-transparent border-none text-[14px] focus:ring-0 p-0 text-primary cursor-pointer hover:text-accent-blue outline-none" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}>
+          <span className="font-label-caps text-label-caps text-on-surface-variant">Trier par:</span>
+          <select className="bg-transparent border-none font-button-text text-button-text focus:ring-0 p-0 text-primary cursor-pointer hover:text-accent-blue outline-none">
             <option>Plus récent</option>
             <option>Prix croissant</option>
             <option>Prix décroissant</option>
@@ -70,7 +87,7 @@ export default function Category({ products, handleSelect }) {
             <div className="relative w-full aspect-[3/4] bg-surface-container-low rounded-t-lg overflow-hidden">
               <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.name} src={product.image} />
               <button 
-                className="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm rounded-full p-2 text-primary hover:text-accent-rose hover:bg-surface-container-lowest transition-colors z-10"
+                className="absolute top-3 right-3 text-primary hover:text-accent-rose transition-colors z-10 drop-shadow-md"
                 onClick={(e) => {
                   e.stopPropagation();
                   // toggleLike would normally be passed here, for now it's handled in App
@@ -81,10 +98,10 @@ export default function Category({ products, handleSelect }) {
             </div>
             <div className="p-4 flex flex-col gap-1">
               <div className="flex justify-between items-start">
-                <span className="text-[18px] font-bold text-primary tracking-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{product.price.toLocaleString('fr-SN')} FCFA</span>
+                <span className="text-body-lg font-bold text-primary tracking-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{product.price.toLocaleString('fr-SN')} FCFA</span>
               </div>
-              <span className="text-[14px] text-on-surface-variant truncate" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.name}</span>
-              <span className="text-[12px] text-on-surface-variant mt-1 uppercase" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}>{product.size}</span>
+              <span className="font-body-sm text-body-sm text-on-surface-variant truncate">{product.name}</span>
+              <span className="font-label-caps text-label-caps text-on-surface-variant mt-1">{product.size}</span>
             </div>
           </div>
         ))}
@@ -92,7 +109,10 @@ export default function Category({ products, handleSelect }) {
 
       {/* Pagination / Load More */}
       <div className="flex justify-center mb-section-gap">
-        <button className="bg-primary text-on-primary text-[14px] px-8 py-4 rounded-full uppercase tracking-wider hover:bg-inverse-surface hover:text-accent-blue transition-all transform active:scale-95 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-1 hover:translate-x-1" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 500 }}>
+        <button 
+          className="bg-primary text-on-primary font-button-text text-button-text px-8 py-4 rounded-full uppercase tracking-wider hover:bg-inverse-surface hover:text-accent-blue transition-all transform active:scale-95 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-1 hover:translate-x-1"
+          style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}
+        >
           Charger plus de pépites
         </button>
       </div>

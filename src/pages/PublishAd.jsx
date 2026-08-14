@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function PublishAd() {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -11,6 +11,16 @@ export default function PublishAd() {
     'Vestes & manteaux', 'Chaussures', 'Sacs & accessoires', 
     'Bijoux', 'Vintage'
   ];
+
+  const navigate = useNavigate();
+
+  const handlePublish = (e) => {
+    e.preventDefault();
+    // Simulate API call
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);
+  };
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Taille unique'];
 
@@ -59,13 +69,13 @@ export default function PublishAd() {
 
           {/* Title Section */}
           <section className="space-y-4">
-            <label className="text-[18px] md:text-[24px] text-primary uppercase block" htmlFor="title" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Titre de l'annonce</label>
+            <label className="font-headline-md text-headline-md text-primary uppercase block font-bold" htmlFor="title" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Titre de l'annonce</label>
             <input className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 text-[16px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all font-medium outline-none" id="title" placeholder="Ex: Robe wax imprimé, taille M" type="text" style={{ fontFamily: '"Google Sans", sans-serif' }} />
           </section>
 
           {/* Category Section */}
           <section className="space-y-4">
-            <h2 className="text-[18px] md:text-[24px] text-primary uppercase font-extrabold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Catégorie</h2>
+            <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Catégorie</h2>
             <div className="flex flex-wrap gap-3">
               {categories.map((cat) => (
                 <button 
@@ -83,7 +93,7 @@ export default function PublishAd() {
 
           {/* Size Section */}
           <section className="space-y-4">
-            <h2 className="text-[18px] md:text-[24px] text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Taille</h2>
+            <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Taille</h2>
             <div className="flex flex-wrap gap-3">
               {sizes.map((size) => (
                 <button 
@@ -101,7 +111,7 @@ export default function PublishAd() {
 
           {/* Condition Section */}
           <section className="space-y-4">
-            <h2 className="text-[18px] md:text-[24px] text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>État</h2>
+            <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>État</h2>
             <div className="flex flex-wrap gap-3">
               {conditions.map((cond) => (
                 <button 
@@ -120,7 +130,7 @@ export default function PublishAd() {
           {/* Price & Offers Section */}
           <section className="space-y-6">
             <div className="space-y-4">
-              <label className="text-[18px] md:text-[24px] text-primary uppercase block font-bold" htmlFor="price" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Prix de vente</label>
+              <label className="font-headline-md text-headline-md text-primary uppercase block font-bold" htmlFor="price" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Prix de vente</label>
               <div className="relative max-w-[200px]">
                 <input className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 pr-12 text-[20px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all font-bold outline-none" id="price" placeholder="0" type="number" style={{ fontFamily: '"Google Sans", sans-serif' }} />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
@@ -147,7 +157,7 @@ export default function PublishAd() {
 
           {/* Description */}
           <section className="space-y-4">
-            <label className="text-[18px] md:text-[24px] text-primary uppercase block font-bold" htmlFor="description" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Description</label>
+            <label className="font-headline-md text-headline-md text-primary uppercase block font-bold" htmlFor="description" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Description</label>
             <textarea className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 text-[16px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none font-medium outline-none" id="description" placeholder="Décris ton article, dis ce qui le rend spécial, précise les défauts éventuels..." rows="6" style={{ fontFamily: '"Google Sans", sans-serif' }}></textarea>
           </section>
         </form>
@@ -156,7 +166,12 @@ export default function PublishAd() {
       {/* Sticky Submit Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant/30 p-4 px-container-margin z-50">
         <div className="max-w-3xl mx-auto flex justify-center">
-          <button className="w-full md:w-auto md:min-w-[400px] bg-primary text-white font-bold text-[16px] py-4 px-8 rounded-full uppercase tracking-wider hover:bg-black/80 transition-colors shadow-lg" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }} type="button">
+          <button 
+            onClick={handlePublish}
+            className="w-full md:w-auto md:min-w-[400px] bg-primary text-white font-headline-md font-bold text-[16px] py-4 px-8 rounded-full uppercase tracking-wider hover:bg-black/80 transition-colors shadow-lg" 
+            style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }} 
+            type="button"
+          >
             Publier l'annonce
           </button>
         </div>

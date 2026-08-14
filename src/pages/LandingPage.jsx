@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AdCarousel from '../components/AdCarousel';
+import TopSellers from '../components/TopSellers';
+import AppPromoBanner from '../components/AppPromoBanner';
 
 const slideData = [
   { title: "Vintage Vibes", subtitle: "Des pièces uniques, à ne pas laisser filer.", color: "#A8A29E", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxLgjMfUFExwuaqPvDCm-TZviw8WL3U4SHmcp7u3cvkhIIx1CpjzohYsejzpqx_abQIvviLLh-u45yYfgh_hvuQqGR_uNzEaNNknvcQYjk7yZzKeKCyqXCiJNsTTAWoIotGVgPFW8y0rXgsx3x_2aFs7ZFN9R9fC7JozICwJWPfycH1Wfvfw-gJ-RTdAU6GGl74MzC8MNCDCw1VhRymfJ91lUqOIXJ1YdwF_jIBxYLJEnSyT5OIvlK" },
@@ -59,6 +62,54 @@ const BOUTIQUES = [
   }
 ];
 
+const NOS_SELECTIONS = [
+  {
+    title: "Essentiels Été",
+    subtitle: "La sélection légère",
+    size: "Taille XS-S",
+    category: "Pour elles",
+    icon: "favorite",
+    bgColor: "bg-[#D9F99D]",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmUb5psVnhq7h70ikcb8T985LWoU0SQEkYZWzyweDLc1JbAQ5bXiSJtkmvlkKMLDb4c6KZ73x8QJgSYCzFkxO_KRk2IhF0sc_DKssaGNz2imFETbDGHqzP3IB7HdBgM-sl-HgQPaB4IdfGNoC9soBeCYS1zNCOHPGHyewQnzfD9hk4teerJIBCPw3L-4xgWmetEzCg8KC-JBBO_cAmxjUzyGgmlec6-vwvyxfwkLvM9sOCznjubhxx"
+  },
+  {
+    title: "Streetwear Dakar",
+    subtitle: "L'énergie urbaine",
+    size: "Taille M-L",
+    category: "Pour eux",
+    icon: "star",
+    bgColor: "bg-[#E9D5FF]",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBHvJNRFRRFipwGOU6r5CrtQIkXjSXwIAU_yCzBlAjO8kiwL1OnmM6qNh3GjiL5WWzwPuObkBYZH84PJBXjc_EKneKRUBoJH2i7IeM08Ad3WC9Cv1K-kPe2Q-ZZ0kEF8C2j8kbEMc-_2LaGqF_MXMNN8tIVu5koGgm44OKqBMAiM-pF5bM_rkodgbcfOHNVZf5vPyV5LFIdgaKkXy78wnKt06dnLzHbRq6vDSUQbqwVrR-t5jGjfBhO"
+  },
+  {
+    title: "Boubous & Wax",
+    subtitle: "L'élégance intemporelle",
+    size: "Toutes tailles",
+    category: "Traditions",
+    icon: "favorite",
+    bgColor: "bg-[#F5E6D3]",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAm8_1BAcNpiYkfmMbIAoVTNC7mu2BiuAOAxdbZisiKbXJ1_fm5CdLtEMwbN_-Ia_chcop9oGVq5IeeV7WvUnuruaqv9PPgryqYSqzpHIpbhmXHBmPqm_7-kWsFw5j6YpUqwRDJIPeRwp6mxhWrzTzO-o-bJeMd18OzcjUnu0d3jEChj-g_2wHJf3fuZIqqCGY7VPdV602Ij4gv3lWQzPz4hwhxSVxgmoUlAkBahQlsxltYtnDFKsQU"
+  },
+  {
+    title: "Sneakers Rares",
+    subtitle: "Pépites de collection",
+    size: "Taille 36-42",
+    category: "Chaussures",
+    icon: "star",
+    bgColor: "bg-[#BFDBFE]",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCpvarkjSvXHjbnXwxbwH8bTFmso3S7iCQDQPG1vJojemVTJL73NZRKxNhnCPo4Yrmhw-wtchwYjwIYt9SAnOIjsImijq8ugpYuxSfshnzTpm6II3yS1_6wTsYPeUu73iTJ82TBZiadGJN1TjkpnDsXgPYV2QXpWys1BlGnbn9ib9Ztv7vZTbYKrzfIXZxgkQMbFc6KyzjWxbtIeMjkyW_7x-vwaUJHx_4YcBI_ncjzHkhFQ5gbjA5e"
+  },
+  {
+    title: "Trouvailles Vintage",
+    subtitle: "Le charme du passé",
+    size: "Pièce unique",
+    category: "Vintage",
+    icon: "favorite",
+    bgColor: "bg-[#FECACA]",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBg03R2BWlcW2jG7WVIVLsyQneN18hJYJmmVp03_9jiJoAbngMoUqy0HvSFdrPH7py76NyKFum1C4iLmg3OOZL-MLZyGFeM743Ufx1NukjbtSEM_US_UB72QrTPz5tKvPmfphi0676bSelL63CbKezpH2rNU2NvWdTmqIUQqV0hTtObSC02w5Q_c585uoxwwBfrYSDrXzhKElY6T_rS1q4zlgfZHGIL6Vkl8BVMJcNCFGjWOK-sH6cp"
+  }
+];
+
 const NEW_DROP = [
   { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD5AqZ2cPaCCf-8N33xxQ9xu6KHDxfq2LCMk6oPckVrXk32kNQfDMzyZlolsO6lH14qv1BDuv2HoAD9kCGSDVG5c9_U1o5cVoETCDDB8HsvWCWK-fP3qroc-SfZN7NSoXoFyLsl2lN7rTlBCslN6dsrGMsXtZZ-9VIhnUgZeNODEhJ0Sq27lxnzsGMD0UIlH70Grrnoa4W0rbw9wIiW-wVeDaiWjhb1IpzvOo5wZT84AlBq-uTrubxE", title: "Carhartt vintage", price: "25000 F", size: "XL" },
   { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA8PaSiZF5onF-yWWfEvXiCLpcDKb_pZFjuoVLY8-1chVppqlf8RA30WpA-Dy2ueZFW33TXqASKiUJgL1QZEk-oqb2Q1z8PhKzmzmKHHMStIJoLiI-3SD-XJIS-qeArXWLglmu2ZyH2JuK25D2pBnMd73CEmHfVRLlmN5sw48Av1hSkIbsoCyZx5lUomUgWAMYwZPOKG7rj98_l9l-fowk-0HLCaDbEc3uxb88m2BSAaR9xD7K1crdK", title: "Dakar union", price: "18000 F", size: "M" },
@@ -89,41 +140,147 @@ export default function LandingPage() {
   return (
     <main>
       {/* 2. HERO SECTION */}
-      <section className="bg-accent-orange w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-16 mx-auto max-w-[98%] mt-4" style={{ borderRadius: '40px' }}>
+      <section className={`w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-20 mx-auto max-w-full ${toggleState === 'acheter' ? 'bg-accent-orange' : 'bg-[#00a6fb]'}`}>
         <div className="max-w-7xl mx-auto w-full px-container-margin grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
           <div className="flex flex-col justify-center items-start pt-8 md:pt-0">
-            <h1 className="text-headline-xl text-on-primary leading-[0.9] mb-8 font-headline-xl" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 900 }}>Trouve tes <br/><span className="text-accent-yellow">pépites</span></h1>
-            <div className="relative bg-black/10 hover:bg-black/20 backdrop-blur-sm rounded-full p-1.5 flex items-center transition-colors duration-300 border border-white/20 w-56">
+            {/* 1. Toggle */}
+            <div className="relative bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-1 flex items-center transition-colors duration-300 border border-white/20 w-48 mb-6">
               <div 
-                className="absolute left-1.5 top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-full transition-transform duration-300 ease-in-out shadow-sm" 
+                className="absolute left-1 top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-full transition-transform duration-300 ease-in-out shadow-sm" 
                 style={{ transform: toggleState === 'acheter' ? 'translateX(0)' : 'translateX(100%)' }}
               ></div>
               <button 
-                className={`relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 uppercase tracking-wide text-sm py-1 ${toggleState === 'acheter' ? 'text-primary' : 'text-white'}`}
+                className={`relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 tracking-wide text-[15px] py-1.5 ${toggleState === 'acheter' ? 'text-primary' : 'text-white'}`}
                 onClick={() => setToggleState('acheter')}
               >
                 Acheter
               </button>
               <button 
-                className={`relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 uppercase tracking-wide text-sm py-1 ${toggleState === 'vendre' ? 'text-primary' : 'text-white'}`}
+                className={`relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 tracking-wide text-[15px] py-1.5 ${toggleState === 'vendre' ? 'text-primary' : 'text-white'}`}
                 onClick={() => setToggleState('vendre')}
                 style={{ fontFamily: '"Mona Sans Expanded", sans-serif', fontWeight: 700 }}
               >
                 Vendre
               </button>
             </div>
+
+            {/* 2. Headline */}
+            <h1 className="text-[48px] lg:text-[56px] leading-[1.05] text-on-primary mb-4" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 900, letterSpacing: '-0.02em' }}>
+              {toggleState === 'acheter' ? (
+                <>Trouve tes <br/>pépites.</>
+              ) : (
+                <>Vends tes <br/>pépites.</>
+              )}
+            </h1>
+            
+            {/* 3. Subtitle */}
+            <p className="text-on-primary/90 font-body-lg mb-8 text-[18px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+              Ensemble, rendons la mode circulaire.
+            </p>
+
+            {/* 4. Button */}
+            {toggleState === 'acheter' ? (
+              <button className="bg-primary text-white px-8 py-3.5 rounded-sm font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+                Découvrir
+              </button>
+            ) : (
+              <button className="bg-primary text-white px-8 py-3.5 rounded-sm font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+                Sell now
+              </button>
+            )}
+
+            {/* 5. Stats Cards */}
+            {toggleState === 'acheter' ? (
+              <div className="flex gap-4 w-full overflow-x-auto hide-scrollbar pb-2">
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
+                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">checkroom</span>
+                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '16px' }}>1M+</span>
+                  <span className="text-on-surface-variant text-xs mt-0.5">Articles en vente</span>
+                </div>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
+                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">auto_awesome</span>
+                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '16px' }}>10K+</span>
+                  <span className="text-on-surface-variant text-xs mt-0.5">Nouveautés / jour</span>
+                </div>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
+                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">verified_user</span>
+                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Sécurité</span>
+                  <span className="text-on-surface-variant text-xs mt-0.5 underline cursor-pointer">Protection Addikt</span>
+                </div>
+              </div>
+            ) : (
+              <div className="flex gap-4 w-full overflow-x-auto hide-scrollbar pb-2">
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
+                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">verified_user</span>
+                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Vends en sécurité</span>
+                  <span className="text-on-surface-variant text-xs mt-0.5 underline cursor-pointer">Protection Addikt</span>
+                </div>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
+                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">auto_awesome</span>
+                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Publie vite</span>
+                  <span className="text-on-surface-variant text-xs mt-0.5">Annonces intelligentes</span>
+                </div>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
+                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">local_shipping</span>
+                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Expédie facile</span>
+                  <span className="text-on-surface-variant text-xs mt-0.5">Sans imprimante</span>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="relative h-[350px] flex justify-center items-center">
-            <div className="absolute w-56 h-72 transform -rotate-[15deg] -translate-x-20 overflow-hidden" style={{ backgroundColor: 'rgb(249, 249, 249)', borderRadius: '22px' }}></div>
-            <div className="absolute w-56 h-72 transform rotate-[5deg] z-10 translate-y-6 overflow-hidden" style={{ backgroundColor: 'rgb(255, 206, 84)', borderRadius: '22px' }}></div>
-            <div className="absolute w-56 h-72 transform rotate-[15deg] translate-x-24 -translate-y-4 overflow-hidden z-20" style={{ backgroundColor: 'rgb(239, 71, 111)', borderRadius: '22px' }}></div>
+          <div className="relative h-[450px] flex justify-center items-center mt-8 md:mt-0">
+            <div className="absolute w-56 h-[320px] transform -rotate-[15deg] -translate-x-36 overflow-hidden z-0" style={{ backgroundColor: 'rgb(249, 249, 249)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+              <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600" className="w-full h-full object-cover"/>
+            </div>
+            <div className="absolute w-56 h-[320px] transform rotate-0 z-10 translate-y-2 scale-105 overflow-hidden" style={{ backgroundColor: 'rgb(255, 206, 84)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}>
+              <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600" className="w-full h-full object-cover"/>
+            </div>
+            <div className="absolute w-56 h-[320px] transform rotate-[15deg] translate-x-36 -translate-y-2 overflow-hidden z-0" style={{ backgroundColor: 'rgb(239, 71, 111)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+              <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600" className="w-full h-full object-cover"/>
+            </div>
           </div>
+        </div>
+      </section>
+
+
+      {/* MAIN CONTENT AREA */}
+      <div className="w-full">
+        {toggleState === 'acheter' ? (
+          <div>
+            {/* AD CAROUSEL SECTION */}
+            <AdCarousel />
+            
+            {/* 2.5. NOS SÉLECTIONS */}
+      <section className="w-full max-w-7xl mx-auto px-container-margin py-12 overflow-hidden">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="font-headline-lg text-primary text-3xl" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>Nos sélections</h2>
+          <div className="hidden md:flex gap-2">
+            <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+              <span className="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+              <span className="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        </div>
+        <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x pb-4">
+          {NOS_SELECTIONS.map((item, idx) => (
+            <div key={idx} className="min-w-[300px] md:min-w-[350px] aspect-[3/4] rounded-[40px] bg-[#F3EFE9] p-6 flex flex-col snap-start transition-transform duration-500 hover:scale-[1.02] cursor-pointer group">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-black leading-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{item.title}</h3>
+                <p className="text-black/60 text-sm mt-1">{item.subtitle}</p>
+              </div>
+              <div className="relative flex-1 w-full rounded-3xl overflow-hidden">
+                <img alt={item.title} className="w-full h-full object-cover" src={item.img} />
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* 3. TRUST BAND / PROMO CAROUSEL */}
       <section className="w-full px-container-margin py-8">
-        <div className="max-w-7xl mx-auto h-[260px] overflow-hidden flex flex-col md:flex-row shadow-sm relative group rounded-[40px]">
+        <div className="max-w-7xl mx-auto h-[260px] overflow-hidden flex flex-col md:flex-row shadow-sm relative group rounded-[30px]">
           <div className="w-full md:w-1/3 p-12 flex flex-col justify-center items-start text-white transition-colors duration-500 z-10 absolute left-0 top-0 bottom-0" style={{ backgroundColor: slideData[currentSlide].color }}>
             <h3 className="text-3xl mb-2 font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>{slideData[currentSlide].title}</h3>
             <p className="mb-6 opacity-90 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>{slideData[currentSlide].subtitle}</p>
@@ -163,14 +320,14 @@ export default function LandingPage() {
       {/* 4. SUGGÉRÉ POUR TOI */}
       <section className="w-full max-w-7xl mx-auto px-container-margin relative py-12">
         <div className="flex items-center justify-between mb-10 relative z-10">
-          <h2 className="font-headline-lg text-headline-lg text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Pour toi</h2>
-          <button className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors">Tout voir</button>
+          <h2 className="font-headline-lg text-primary text-3xl" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>Pour toi</h2>
+          <button className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2">Tout voir</button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
           {PRODUCTS_GRID.map((item, idx) => (
-            <div key={idx} className="flex flex-col gap-3 group cursor-pointer">
+            <Link key={idx} to={`/product/${idx + 1}`} className="flex flex-col gap-3 group cursor-pointer">
               <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
-                <div className="absolute top-2 right-2 z-20"><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+                <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); /* Like logic here */ }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
                 <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} />
               </div>
               <div className="flex justify-between items-end">
@@ -180,7 +337,7 @@ export default function LandingPage() {
                 </div>
                 <span className="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">{item.size}</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -188,9 +345,9 @@ export default function LandingPage() {
       {/* 5. TOP BOUTIQUES */}
       <section className="w-full max-w-7xl mx-auto px-container-margin py-12">
         <div className="flex items-center gap-4 mb-10">
-          <h2 className="text-headline-lg text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Top Boutik</h2>
+          <h2 className="text-headline-md text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Top Boutik</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex flex-row justify-between gap-8 w-full">
           {BOUTIQUES.map((boutique, idx) => (
             <div key={idx} className="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
               <div className="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden">
@@ -199,8 +356,13 @@ export default function LandingPage() {
                 ))}
               </div>
               <div className="flex justify-between items-center w-full px-2">
-                <span className="font-headline-md text-xl text-primary">{boutique.handle}</span>
-                <button className={`bg-primary text-on-primary font-button-text px-4 py-2 rounded-full transition-colors ${boutique.buttonHover}`}>Visiter</button>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
+                    <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtwTDV42ZbLuj6QnBR9UKGkIimOcFACHMlO1CrulKBFpUaODHdGeQmQoH1PEfulBizSgnWvcfEL-5xd3vS-NHbshmy_vhcmNfz4xu2D8ICH-g2mwtZk0zxFg5WMKUygm_WCqWTvSKXB3LEi_myz00VAIc8lZqkONlQS6_FHTv1aHqAtBjHtvfatTCoQaFfn0111IYJdkrD3uRIzXz8_yQe_tZhXW2l2EqEaPDMUfSpbrfSKNmPTMNZ6WDo" style={{ objectPosition: '0% 0%', scale: '2' }} />
+                  </div>
+                  <span className="font-headline-md text-xl text-primary">{boutique.handle.replace('@', '')}</span>
+                </div>
+                <button className="hover:text-error transition-colors"><span className="material-symbols-outlined">favorite</span></button>
               </div>
             </div>
           ))}
@@ -208,34 +370,34 @@ export default function LandingPage() {
       </section>
 
       {/* 6. NEW DROP */}
-      <section className="w-full max-w-[98%] mx-auto rounded-[40px] px-container-margin py-16 relative overflow-hidden my-12" style={{ backgroundColor: 'rgb(0, 166, 251)', borderRadius: '18px' }}>
+      <section className="w-full max-w-[98%] mx-auto bg-white rounded-[40px] px-container-margin py-16 relative overflow-hidden my-12" style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '18px' }}>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex items-center justify-between gap-4 mb-10">
             <div className="flex items-center gap-4">
-              <h2 className="font-headline-lg text-headline-lg text-white" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 'bold' }}>Fresh DROP</h2>
-              <svg className="text-white" fill="currentColor" height="40" viewBox="0 0 100 100" width="40"><path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path></svg>
+              <h2 className="font-headline-lg text-black" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600, fontSize: '24px' }}>Fresh DROP</h2>
+              <svg className="text-black" fill="currentColor" height="40" viewBox="0 0 100 100" width="40"><path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path></svg>
             </div>
-            <button className="bg-on-primary text-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-yellow transition-colors hidden sm:block">Explore</button>
+            <button className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:block">Explore</button>
           </div>
           <div className="relative flex items-center group">
-            <button className="absolute -left-4 z-20 w-10 h-10 flex items-center justify-center border border-white/50 rounded-full text-white hover:bg-white/10 transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
-            <div className="flex gap-[10px] overflow-x-auto snap-x w-full pb-4" style={{ scrollbarWidth: 'none' }}>
+            <button className="absolute -left-4 z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
+            <div className="flex gap-[10px] overflow-x-auto hide-scrollbar snap-x w-full pb-4">
               {NEW_DROP.map((item, idx) => (
-                <div key={idx} className="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start">
-                  <div className="aspect-[3/4] rounded-xl overflow-hidden">
+                <Link key={idx} to={`/product/${idx + 10}`} className="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start">
+                  <div className="aspect-[3/4] overflow-hidden">
                     <img alt={item.title.toUpperCase()} className="w-full h-full object-cover" src={item.img} />
                   </div>
                   <div className="flex flex-col gap-1 px-1">
-                    <span className="font-bold text-white text-sm" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 400 }}>{item.title}</span>
+                    <span className="font-bold text-sm text-black" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 400 }}>{item.title}</span>
                     <div className="flex justify-between items-center">
-                      <span className="font-bold text-white" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
-                      <span className="text-white/80 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
+                      <span className="font-bold text-black" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
+                      <span className="text-black/60 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
-            <button className="absolute -right-4 z-20 w-10 h-10 flex items-center justify-center border border-white/50 rounded-full text-white hover:bg-white/10 transition-colors"><span className="material-symbols-outlined">chevron_right</span></button>
+            <button className="absolute -right-4 z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors"><span className="material-symbols-outlined">chevron_right</span></button>
           </div>
         </div>
       </section>
@@ -274,6 +436,115 @@ export default function LandingPage() {
           </svg>
         </div>
       </section>
+          </div>
+        ) : (
+          <div>
+            <VendreContent />
+          </div>
+        )}
+      </div>
     </main>
   );
 }
+
+const VendreContent = () => (
+  <div className="w-full mb-12">
+    {/* SIMPLICITY SECTION */}
+    <section className="bg-surface-container-lowest py-16 px-container-margin my-8">
+      <div className="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div className="order-2 md:order-1 flex justify-center">
+          <div className="relative w-[300px] h-[600px] border-8 border-primary rounded-[3rem] overflow-hidden shadow-xl bg-surface">
+            <div className="absolute top-0 w-full h-8 bg-primary rounded-b-3xl flex justify-center items-end pb-1">
+              <div className="w-20 h-4 bg-primary-container rounded-full"></div>
+            </div>
+            <div className="p-6 pt-12 h-full flex flex-col gap-4">
+              <div className="w-full h-48 bg-surface-container-high rounded-xl mb-4 flex items-center justify-center">
+                <span className="material-symbols-outlined text-4xl text-outline">add_a_photo</span>
+              </div>
+              <div className="h-4 bg-surface-container-high rounded w-3/4"></div>
+              <div className="h-4 bg-surface-container-high rounded w-1/2"></div>
+              <div className="mt-auto space-y-2">
+                <div className="h-10 bg-primary rounded-full w-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="order-1 md:order-2 space-y-12">
+          <h2 className="text-headline-lg text-primary mb-8" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Addikt rend la <br/>vente simple</h2>
+          <div className="flex gap-4 items-start">
+            <span className="material-symbols-outlined text-4xl text-primary mt-1">money_off</span>
+            <div>
+              <h3 className="font-headline-md text-primary mb-2" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Aucun frais de vente</h3>
+              <p className="font-body-lg text-on-surface-variant" style={{ fontFamily: '"Google Sans", sans-serif' }}>Garde 100% de ce que tu gagnes. Zéro commission sur tes ventes.</p>
+            </div>
+          </div>
+          <div className="flex gap-4 items-start">
+            <span className="material-symbols-outlined text-4xl text-primary mt-1">timer</span>
+            <div>
+              <h3 className="font-headline-md text-primary mb-2" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Publie en quelques secondes</h3>
+              <p className="font-body-lg text-on-surface-variant" style={{ fontFamily: '"Google Sans", sans-serif' }}>Prends une photo, ajoute un prix, et c'est en ligne. C'est aussi simple que ça.</p>
+            </div>
+          </div>
+          <div className="flex gap-4 items-start">
+            <span className="material-symbols-outlined text-4xl text-primary mt-1">forum</span>
+            <div>
+              <h3 className="font-headline-md text-primary mb-2" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Contact direct avec l'acheteur</h3>
+              <p className="font-body-lg text-on-surface-variant" style={{ fontFamily: '"Google Sans", sans-serif' }}>Négocie et organise la remise en main propre directement via notre messagerie sécurisée.</p>
+            </div>
+          </div>
+          <div className="flex gap-4 items-start">
+            <span className="material-symbols-outlined text-4xl text-primary mt-1">verified_user</span>
+            <div>
+              <h3 className="font-headline-md text-primary mb-2" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Vends avec confiance</h3>
+              <p className="font-body-lg text-on-surface-variant" style={{ fontFamily: '"Google Sans", sans-serif' }}>Notre équipe de modération veille à ce que la communauté reste sûre et respectueuse.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <AppPromoBanner />
+    
+    <TopSellers />
+
+    {/* TESTIMONIALS SECTION */}
+    <section className="py-16 px-container-margin bg-surface-container-low mb-12">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="font-headline-lg text-primary mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Ce que les vendeurs disent d'Addikt</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+            <p className="font-bold mb-4 text-primary">@vintage_dakar</p>
+            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Addikt me permet de partager mon style, de donner une seconde vie aux vêtements, et surtout, m'aide à être financièrement indépendant."</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+            <p className="font-bold mb-4 text-primary">@style_retro</p>
+            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Je vends sur Addikt parce que j'adore la simplicité de l'interface et la facilité pour publier des articles. Cette année, je me rapproche des 500 ventes !"</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+            <p className="font-bold mb-4 text-primary">@dakar_chic</p>
+            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Nous vendons sur Addikt car le processus est fluide et facile. Tout est très simple, de la mise en ligne à la livraison."</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+            <p className="font-bold mb-4 text-primary">@pop_thrift</p>
+            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Vendre sur Addikt est le meilleur complément de revenu possible. Pas de frais de vente et vous pouvez aller aussi loin que vous le souhaitez !"</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* CIRCULAR FASHION BANNER */}
+    <section className="py-16 px-container-margin">
+      <div className="max-w-7xl mx-auto rounded-[2rem] p-12 flex flex-col gap-8 items-start relative overflow-hidden" style={{ backgroundColor: 'rgb(226, 0, 32)' }}>
+        <h2 className="text-headline-md text-white relative z-10" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Keep fashion circular</h2>
+        <button className="bg-primary text-white px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity relative z-10">Sell now</button>
+        <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden md:block opacity-50">
+          <svg height="93" viewBox="0 0 241.67 225.99" width="100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M186.76,0l-3.77,84.84c-.09,1.64,1.45,2.88,3.03,2.45l50.37-16.84-31.05,52.64c-1.14.97-1.12,2.74.03,3.69l36.3,52.47-65.33-14.34c-1.35-.19-2.59.79-2.72,2.15l-8.12,58.93-31.24-39.17c-.64-1.43-2.46-1.88-3.69-.91l-71.02,33.86,34.31-62.99c.73-1.43-.12-3.17-1.7-3.46L0,139.09l101.83-31.91c1.32-.42,2.02-1.87,1.52-3.16l-16.73-60.59,51.26,37.53c1.16.86,2.82.51,3.53-.75L186.76,0Z" fill="#e20020"></path>
+            <path d="M137.23,137.36c-4.85,19.44-15.42,34.06-23.62,32.65-8.2-1.41-10.91-18.32-6.06-37.76,4.85-19.44,15.42-34.06,23.62-32.65,8.2,1.41,10.91,18.32,6.06,37.76Z" fill="#fdffff"></path>
+            <path d="M175.3,135.99c-6,20.92-18.33,36.3-27.52,34.36s-11.78-20.47-5.77-41.39c6-20.92,18.33-36.3,27.52-34.36,9.19,1.94,11.78,20.47,5.77,41.39Z" fill="#fdffff"></path>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+);

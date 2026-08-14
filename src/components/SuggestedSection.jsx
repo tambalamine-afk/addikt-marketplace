@@ -76,7 +76,7 @@ export default function SuggestedSection({ onSelect }) {
           <div key={index} className="flex flex-col gap-3 group cursor-pointer" onClick={() => onSelect && onSelect(product)}>
             <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
               <div className="absolute top-2 right-2 z-20">
-                <span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span>
+                <span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span>
               </div>
               <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
             </div>

@@ -1,0 +1,364 @@
+<!DOCTYPE html><html class="light" lang="fr" style="width: 1280px; height: 380px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Addikt Dakar - Gestion du Contenu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#626263",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "outline-variant": "#cfc4c5",
+                      "on-error-container": "#93000a",
+                      "border-base": "#E5E5E5",
+                      "surface-container-low": "#f3f3f3",
+                      "surface-container": "#eeeeee",
+                      "inverse-primary": "#c6c6c6",
+                      "primary": "#000000",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#1b1b1b",
+                      "secondary-container": "#e1dfdf",
+                      "surface-container-high": "#e8e8e8",
+                      "secondary": "#5e5e5e",
+                      "surface-dim": "#dadada",
+                      "background": "#f9f9f9",
+                      "surface-bright": "#f9f9f9",
+                      "on-error": "#ffffff",
+                      "surface-tint": "#5e5e5e",
+                      "on-surface-variant": "#4c4546",
+                      "tertiary-fixed": "#e2e2e2",
+                      "status-danger": "#FF2300",
+                      "surface-container-highest": "#e2e2e2",
+                      "outline": "#7e7576",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "on-background": "#1a1c1c",
+                      "error": "#ba1a1a",
+                      "on-surface": "#1a1c1c",
+                      "primary-container": "#1b1b1b",
+                      "on-primary-container": "#848484",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#e2e2e2",
+                      "primary-fixed": "#e2e2e2",
+                      "on-tertiary-container": "#848484",
+                      "on-primary-fixed": "#1b1b1b",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "secondary-fixed": "#e4e2e2",
+                      "on-secondary-fixed-variant": "#464747",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "inverse-surface": "#2f3131",
+                      "surface": "#FFFFFF",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "status-success": "#007782",
+                      "on-primary-fixed-variant": "#474747",
+                      "tertiary": "#000000",
+                      "status-warning": "#FFB800"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "sidebar-width": "240px",
+                      "gutter": "16px",
+                      "container-padding": "24px",
+                      "sidebar-collapsed": "64px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "table-data": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-sm": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "table-data": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar -->
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface border-r border-border-base flex flex-col z-50">
+<div class="p-6">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">ADDIKT DAKAR</h1>
+<p class="font-body-md text-body-md text-secondary mt-1">Marketplace Admin</p>
+</div>
+<nav class="flex-1 overflow-y-auto py-2">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+                Tableau de bord
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+                Annonces
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+                Utilisateurs
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px]">report_problem</span>
+                Signalements
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-semibold border-l-[3px] border-primary bg-surface-container-low font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]">article</span>
+                Contenu
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                Paramètres
+            </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-sidebar-width flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="h-16 w-full sticky top-0 z-40 bg-surface border-b border-border-base flex justify-between items-center px-container-padding">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md text-primary font-bold">Gestion du Contenu</h2>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-secondary hover:bg-surface-container-lowest transition-all p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+<div class="flex items-center gap-3 cursor-pointer group">
+<span class="font-body-md text-body-md text-secondary group-hover:text-primary transition-colors">Admin Name</span>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-border-base">
+<img alt="Admin Profile Avatar" class="w-full h-full object-cover" data-alt="A professional minimalist portrait photo of an admin user in a bright clean setting, neutral tones, high key lighting, solid white background, corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwBUaygT2sXyD1zF_Z3wmPlQweNsrhONv8oXeISJCddBDpsiWFegkRz3Qb7ZuVj4D90bSbaPzRyTg9pNLNhZQC0W4fPgVKRXF05Tt54szRj_Z1x5PLMwgROfdaZjsl5qV_q2tLFyIfUnECI7qx-0MHV6K8XSIRaYYcck4tG9kAhwBrFovsKiqd4h2xBD_pNH0YF4DNF0zh0FFTvSPwnCdD4k7k-UM-VdVSjotAZUyzYdx79Z_VeWvm">
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-container-padding flex-1">
+<!-- Tabs -->
+<div class="flex border-b border-border-base mb-8 gap-8">
+<button class="pb-3 border-b-2 border-transparent text-secondary hover:text-primary font-body-md text-body-md font-semibold transition-colors" onclick="switchTab('categories')">Catégories</button>
+<button class="pb-3 border-b-2 border-primary text-primary font-body-md text-body-md font-semibold transition-colors" onclick="switchTab('top-boutik')">Top Boutik</button>
+<button class="pb-3 border-b-2 border-transparent text-secondary hover:text-primary font-body-md text-body-md font-semibold transition-colors" onclick="switchTab('fresh-drop')">Fresh DROP</button>
+</div>
+<!-- Tab Content: Top Boutik (Active) -->
+<div class="block" id="tab-top-boutik">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-primary">Boutiques Sélectionnées</h3>
+<button class="bg-primary text-on-primary font-body-md text-body-md px-4 py-2 rounded flex items-center gap-2 hover:bg-surface-tint transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Ajouter une boutique
+                    </button>
+</div>
+<!-- Bento Grid for Boutiques -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Shop Card 1 -->
+<div class="bg-surface border border-border-base rounded p-4 flex items-center justify-between group hover:border-primary transition-colors cursor-move">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline cursor-grab active:cursor-grabbing">drag_indicator</span>
+<div class="w-12 h-12 bg-surface-container rounded-full border border-border-base overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A minimalist logo for a fashion boutique, black and white abstract geometric design, clean lines, white background, modern corporate identity style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWLDygZD8EbyCyS84_GDFt-KPYiZ0dyQaY2EXZwOJ5OAMXZW8MM121kC8yjwCt_bWahcwKutQvvD5grAMTW4yXfLKesHWVc-8gQ1EH9LlC_9UeEPAFJHdXkZ0JnY6Ww4lSDRdHFNBS7d2tTKKdkhXrUY04-_OHTvojbgKTorJzSV-wjdOdr334rP09JKIOhsCWihI5Zjq0ODHLjp_1goNuXT_bwqonsUyzRp4ho4jnRwj6uXnnEFFq">
+</div>
+<div>
+<h4 class="font-body-md text-body-md text-primary font-semibold">Dakar Streetwear</h4>
+<p class="font-table-data text-table-data text-secondary">@dkr_street</p>
+</div>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-status-danger hover:bg-error-container p-1 rounded"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+<!-- Shop Card 2 -->
+<div class="bg-surface border border-border-base rounded p-4 flex items-center justify-between group hover:border-primary transition-colors cursor-move">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline cursor-grab active:cursor-grabbing">drag_indicator</span>
+<div class="w-12 h-12 bg-surface-container rounded-full border border-border-base overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A sophisticated minimalist logo for a high-end fashion store, elegant typography, black text on white background, subtle grey accents, clean luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiHCq29SbMz8nzqNcb7MUrxd30vT2FYK2QwMnR2aZF2VRTCDtKvlRavqzLUxHy1AMtrXhBaCNec3h0_1YmfRd_louNg7w9s-EcmYXfPqonM96tP1w9EUoSqBZGb0TAMvh0wGvgvyhusOFMBGOhSlqpOzuH5qBjPHB2OWNKxlYyQOAcuCPFzk7DzCkNKObAc0l_cDqXpDo52zjZDPP9KA77ZD6QcwnEDIuhGF4wighApn7t7uqE7Mw7">
+</div>
+<div>
+<h4 class="font-body-md text-body-md text-primary font-semibold">Senegal Chic</h4>
+<p class="font-table-data text-table-data text-secondary">@sen_chic</p>
+</div>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-status-danger hover:bg-error-container p-1 rounded"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+<!-- Shop Card 3 -->
+<div class="bg-surface border border-border-base rounded p-4 flex items-center justify-between group hover:border-primary transition-colors cursor-move">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline cursor-grab active:cursor-grabbing">drag_indicator</span>
+<div class="w-12 h-12 bg-surface-container rounded-full border border-border-base overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A modern urban clothing brand logo, bold black lettering, minimalist icon, stark white background, sharp contrast, streetwear aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA1ZehNzgzHV_rcmnanp9-vngFoIx67vtw2TpS74wb-eIT2EEJzKzG1Y38Hd0sViMA-Jr_0ow0Y59p2CfZ0M36qsPIxihlc67JTkTg1bcljlRDeKksYsZ_EV0lR2Ig2BEdtnN-5JkI2qu6D4-UvIFzXxke1TjWPdwj-3CsucZzzaiCNZoNBsI4VVqh5SeWC3WzJ4TwixZnO0h587VXhyHegOP-VBKLuzJGBDOIZbCZ3SxqjaOjdz7Q">
+</div>
+<div>
+<h4 class="font-body-md text-body-md text-primary font-semibold">Urban Ouest</h4>
+<p class="font-table-data text-table-data text-secondary">@urban_ouest</p>
+</div>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-status-danger hover:bg-error-container p-1 rounded"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Tab Content: Catégories (Hidden initially for demo, script handles switching) -->
+<div class="hidden" id="tab-categories">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-primary">Structure des Catégories</h3>
+<button class="bg-surface border border-border-base text-primary font-body-md text-body-md px-4 py-2 rounded flex items-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Nouvelle catégorie
+                    </button>
+</div>
+<div class="bg-surface border border-border-base rounded overflow-hidden">
+<div class="bg-surface-container-low px-4 py-2 border-b border-border-base">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Arborescence</span>
+</div>
+<!-- Category Tree Item -->
+<div class="flex items-center justify-between px-4 py-3 border-b border-border-base hover:bg-surface-bright group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">folder</span>
+<span class="font-body-md text-body-md text-primary font-semibold">Hauts</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-status-danger hover:bg-error-container p-1 rounded"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+<!-- Category Tree Item -->
+<div class="flex items-center justify-between px-4 py-3 border-b border-border-base hover:bg-surface-bright group pl-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[20px]">subdirectory_arrow_right</span>
+<span class="font-body-md text-body-md text-primary">T-shirts</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-status-danger hover:bg-error-container p-1 rounded"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+<!-- Category Tree Item -->
+<div class="flex items-center justify-between px-4 py-3 border-b border-border-base hover:bg-surface-bright group pl-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[20px]">subdirectory_arrow_right</span>
+<span class="font-body-md text-body-md text-primary">Chemises</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-status-danger hover:bg-error-container p-1 rounded"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+<!-- Category Tree Item -->
+<div class="flex items-center justify-between px-4 py-3 border-b border-border-base hover:bg-surface-bright group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">folder</span>
+<span class="font-body-md text-body-md text-primary font-semibold">Bas</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-status-danger hover:bg-error-container p-1 rounded"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden" id="tab-fresh-drop">
+<div class="flex justify-center items-center h-64 border border-dashed border-border-base rounded bg-surface">
+<p class="font-body-md text-body-md text-secondary">Contenu Fresh DROP (À venir)</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+        function switchTab(tabId) {
+            // Very basic tab switching for demonstration
+            document.getElementById('tab-top-boutik').classList.add('hidden');
+            document.getElementById('tab-categories').classList.add('hidden');
+            document.getElementById('tab-fresh-drop').classList.add('hidden');
+            
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            // Reset tab styling (simplistic approach)
+            const buttons = document.querySelectorAll('.border-b-2');
+            buttons.forEach(btn => {
+                btn.classList.remove('border-primary', 'text-primary');
+                btn.classList.add('border-transparent', 'text-secondary');
+            });
+            
+            event.currentTarget.classList.remove('border-transparent', 'text-secondary');
+            event.currentTarget.classList.add('border-primary', 'text-primary');
+        }
+    </script>
+<div id="snapdom-sandbox" data-snapdom-sandbox="true" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

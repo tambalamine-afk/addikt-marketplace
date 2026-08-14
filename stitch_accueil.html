@@ -1,0 +1,546 @@
+<!DOCTYPE html><html class="light" lang="fr" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Addikt - Trouve tes pépites</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        /* Custom Font Imports - Approximations for the requested specific fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@400;700;800&family=Inter:wght@400;600&display=swap');
+
+        /* Simulating the requested fonts using Google Fonts approximations */
+        :root {
+            --font-monument: 'Syne', sans-serif; /* Approximation for Monument Extended */
+            --font-flatit: 'Space Grotesk', sans-serif; /* Approximation for Flatit Quiet Sans */
+            --font-zalando: 'Inter', sans-serif; /* Approximation for Zalando Sans */
+        }
+
+        /* Float Animations for Categories SVG */
+        @keyframes float-1 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-2 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-3 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .shape-group-1 { animation: float-1 6s ease-in-out infinite; transform-origin: center; }
+        .shape-group-2 { animation: float-2 7s ease-in-out infinite 1s; transform-origin: center; }
+        .shape-group-3 { animation: float-3 8s ease-in-out infinite 2s; transform-origin: center; }
+        .shape-group-4 { animation: float-1 6.5s ease-in-out infinite 0.5s; transform-origin: center; }
+        .shape-group-5 { animation: float-2 7.5s ease-in-out infinite 1.5s; transform-origin: center; }
+        .shape-group-6 { animation: float-3 8.5s ease-in-out infinite 2.5s; transform-origin: center; }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {background: "#f9f9f9", "on-secondary-fixed-variant": "#454747", "surface-container-low": "#f3f3f3", "inverse-on-surface": "#f1f1f1", "on-background": "#1b1b1b", primary: "#000000", "secondary-fixed": "#e2e2e2", "surface-variant": "#e2e2e2", "on-secondary-container": "#616363", "inverse-surface": "#303030", "surface-tint": "#5e5e5e", "surface-container": "#eeeeee", "primary-fixed-dim": "#c6c6c6", "secondary-container": "#dfe0e0", "error-container": "#ffdad6", error: "#ba1a1a", "accent-orange": "#FF4D00", "on-tertiary-container": "#848484", tertiary: "#000000", "secondary-fixed-dim": "#c6c6c7", "on-primary": "#ffffff", "accent-purple": "#BF80FF", "accent-blue": "#0099FF", "accent-rose": "#FF6B8B", "surface-container-highest": "#e2e2e2", "on-secondary-fixed": "#1a1c1c", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#c6c6c6", "on-surface": "#1b1b1b", "on-primary-fixed": "#1b1b1b", "trust-grey": "#F2F2F2", surface: "#f9f9f9", "primary-container": "#1b1b1b", "on-tertiary-fixed": "#1b1b1b", "on-primary-fixed-variant": "#474747", "on-tertiary": "#ffffff", "surface-container-lowest": "#ffffff", "accent-yellow": "#FFD700", "on-error-container": "#93000a", "surface-container-high": "#e8e8e8", "surface-bright": "#f9f9f9", "on-error": "#ffffff", "primary-fixed": "#e2e2e2", secondary: "#5d5f5f", "tertiary-container": "#1b1b1b", "tertiary-fixed": "#e2e2e2", "inverse-primary": "#c6c6c6", "on-tertiary-fixed-variant": "#474747", "surface-dim": "#dadada", "outline-variant": "#cfc4c5", "on-primary-container": "#848484", "on-surface-variant": "#4c4546", outline: "#7e7576", "brand-black": "#111111", "footer-bg": "#EFEBE3"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-margin": "24px", "trust-band-padding": "40px", "section-gap": "80px", "grid-gutter": "16px"}, fontFamily: {"label-caps": ["var(--font-flatit)"], "headline-md": ["var(--font-monument)"], "headline-lg-mobile": ["var(--font-monument)"], "body-sm": ["var(--font-zalando)"], "body-lg": ["var(--font-zalando)"], "headline-lg": ["var(--font-monument)"], "headline-xl": ["var(--font-monument)"], "button-text": ["var(--font-flatit)"], "nav-link": ["var(--font-flatit)"], headline: ["Monument Extended"], display: ["Monument Extended"], body: ["Zalando Sans Expanded"], label: ["Flatit Quiet Sans"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.2", fontWeight: "700"}], "headline-md": ["24px", {lineHeight: "1.2", fontWeight: "800"}], "headline-lg-mobile": ["32px", {lineHeight: "1.1", fontWeight: "800"}], "body-sm": ["14px", {lineHeight: "1.4", fontWeight: "400"}], "body-lg": ["18px", {lineHeight: "1.5", fontWeight: "400"}], "headline-lg": ["48px", {lineHeight: "1.1", fontWeight: "800"}], "headline-xl": ["80px", {lineHeight: "1.0", letterSpacing: "-0.02em", fontWeight: "900"}], "button-text": ["14px", {lineHeight: "1.0", fontWeight: "600"}], "nav-link": ["16px", {lineHeight: "normal", fontWeight: "600"}]}}}};</script>
+<link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Syne:wght@400;700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@500;600&amp;display=swap" rel="stylesheet"><link class="" href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&amp;display=swap" rel="stylesheet"></head>
+<body class="bg-background text-on-background font-body-lg overflow-x-hidden">
+<!-- 1. HEADER -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant w-full">
+<div class="flex justify-between items-center px-container-margin w-full max-w-7xl mx-auto py-2"><a class="flex items-center shrink-0 mr-8" href="/">
+<div class="w-auto flex items-center h-10"><img alt="Addikt Logo" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida/AP1WRLsFCxYE7eK95VjbH3aJcV9rRhANBoUUCv7x8BO5Kfou2x8qWh8LCx_zkxtnKlpIlOjEr7QHT44RKjog11KpaIN2KWRm-uBYdfREmd9YpDCforBbbIuCCfC_qUAiOMu3-kYtcxN5SCNjDwKCx0y7Mn5kpDTcEj9vSGEM7O9Hkk6cDUfUDbY-Uu1m_Vnbrq3sT1owXlL8seOU1IJSXplqDmMdmIwqFydCcS7LtrtvmLC-COAL5FZR7QaVzQ"></div>
+</a>
+<nav class="hidden md:flex items-center gap-6 flex-1"><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Femmes</a><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Hommes</a><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Enfants</a><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Marques</a><a class="font-nav-link text-nav-link text-accent-orange font-bold hover:opacity-70 transition-opacity" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Vendre</a></nav><div class="hidden lg:flex flex-1 max-w-md mx-8 relative items-center">
+<div class="relative w-full">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2 px-6 pr-12 text-sm font-body-sm focus:outline-none focus:border-accent-orange transition-colors" placeholder="Cherchez ce que vous voulez" type="text">
+<button class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-accent-orange text-white p-1.5 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Shopping Bag" class="hover:text-accent-orange transition-colors">
+<img alt="Shopping Bag" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida/AP1WRLtGHj5X4I5jT5zpushQKaYZV6vY7rDNKnx2zWPjsQpFgjTN4AK0wdDjvHwFfbALTWt_qh8f2B3H8fsMvFfmO_NVO4DZp6tdwucO-6g7Cz7Dowczi_7TMvpr3e69rH5NXiQ7xYkVG0wTTyRbPtCjAgBmcO1x6_YHuq6hUiUm7uh1XNI4mrUg09bJv4osJhiUbbdW5feUss7kPaKQ0UOBMA-OrV1CIUhXLMazEkU64IkRk7wGh5jYoe3lbKk">
+</button>
+<button class="bg-primary text-on-primary font-button-text text-button-text px-6 py-2 rounded-full hover:bg-accent-blue transition-colors hidden sm:block" style="font-family: &quot;Google Sans Medium&quot;, sans-serif;">
+                    Se connecter
+                </button>
+<button class="bg-surface-container text-primary font-button-text text-button-text px-6 py-2 rounded-full hover:bg-surface-variant transition-colors hidden sm:block">
+                    S'inscrire
+                </button>
+</div>
+</div>
+</header>
+<main>
+<!-- 2. HERO SECTION -->
+<section class="bg-accent-orange w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-16 mx-auto max-w-[98%] mt-4">
+<!-- Background Sparkles -->
+<div class="max-w-7xl mx-auto w-full px-container-margin grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+<div class="flex flex-col justify-center items-start pt-8 md:pt-0">
+<h1 class="text-headline-xl text-on-primary leading-[0.9] mb-8 font-headline-xl" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 900;">Trouve tes <br><span class="text-accent-yellow">pépites</span></h1>
+<div class="relative bg-black/10 hover:bg-black/20 backdrop-blur-sm rounded-full p-1.5 flex items-center transition-colors duration-300 border border-white/20 w-56">
+<div class="absolute left-1.5 top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-full transition-transform duration-300 ease-in-out shadow-sm" id="slider-indicator" style="transform: translateX(100%);"></div>
+<button class="relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 uppercase tracking-wide text-sm py-1 text-white" id="btn-acheter" onclick="setToggle('acheter')">
+                            Acheter
+                        </button>
+<button class="relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 uppercase tracking-wide text-sm py-1 text-primary" id="btn-vendre" onclick="setToggle('vendre')" style="font-family: &quot;Mona Sans Expanded&quot;, sans-serif; font-weight: 700;">
+                            Vendre
+                        </button>
+</div>
+</div>
+<div class="relative h-[350px] flex justify-center items-center"><div class="absolute w-56 h-72 transform -rotate-[15deg] -translate-x-20 overflow-hidden" style="background-color: rgb(249, 249, 249); border-radius: 22px;"></div><div class="absolute w-56 h-72 transform rotate-[5deg] z-10 translate-y-6 overflow-hidden" style="background-color: rgb(255, 206, 84); border-radius: 22px;"></div><div class="absolute w-56 h-72 transform rotate-[15deg] translate-x-24 -translate-y-4 overflow-hidden z-20" style="background-color: rgb(239, 71, 111); border-radius: 22px;"></div></div>
+</div>
+</section><section class="w-full max-w-7xl mx-auto px-container-margin py-12 overflow-hidden">
+<div class="flex items-center justify-between mb-10">
+<h2 class="font-headline-lg text-primary text-3xl" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">Nos sélections</h2>
+<div class="hidden md:flex gap-2">
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex gap-6 overflow-x-auto hide-scrollbar snap-x pb-4">
+<!-- Card 1: Essentiels Été -->
+<div class="min-w-[300px] md:min-w-[350px] aspect-[3/4] rounded-[40px] bg-[#D9F99D] p-6 flex flex-col justify-between snap-start transition-transform duration-500 hover:scale-[1.02] cursor-pointer group" style="width: 1280px;">
+<div class="flex justify-between items-start">
+<span class="bg-white/80 backdrop-blur-sm text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Taille XS-S</span>
+<div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full">
+<span class="text-black text-[10px] font-bold uppercase tracking-wider">Pour elles</span>
+<span class="material-symbols-outlined text-sm">favorite</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-bold text-black leading-tight" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif;">Essentiels Été</h3>
+<p class="text-black/60 text-sm mt-1">La sélection légère</p>
+</div>
+<div class="relative h-[55%] w-full mt-auto rounded-b-[32px] overflow-hidden">
+<img alt="Essentiels Été" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmUb5psVnhq7h70ikcb8T985LWoU0SQEkYZWzyweDLc1JbAQ5bXiSJtkmvlkKMLDb4c6KZ73x8QJgSYCzFkxO_KRk2IhF0sc_DKssaGNz2imFETbDGHqzP3IB7HdBgM-sl-HgQPaB4IdfGNoC9soBeCYS1zNCOHPGHyewQnzfD9hk4teerJIBCPw3L-4xgWmetEzCg8KC-JBBO_cAmxjUzyGgmlec6-vwvyxfwkLvM9sOCznjubhxx">
+<div class="absolute bottom-3 left-3 bg-white/40 backdrop-blur-sm rounded-full py-1.5 px-4 flex items-center gap-2">
+<span class="text-xs font-bold text-black">Voir plus</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Streetwear Dakar -->
+<div class="min-w-[300px] md:min-w-[350px] aspect-[3/4] rounded-[40px] bg-[#E9D5FF] p-6 flex flex-col justify-between snap-start transition-transform duration-500 hover:scale-[1.02] cursor-pointer group" style="width: 1280px;">
+<div class="flex justify-between items-start">
+<span class="bg-white/80 backdrop-blur-sm text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Taille M-L</span>
+<div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full">
+<span class="text-black text-[10px] font-bold uppercase tracking-wider">Pour eux</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-bold text-black leading-tight" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif;">Streetwear Dakar</h3>
+<p class="text-black/60 text-sm mt-1">L'énergie urbaine</p>
+</div>
+<div class="relative h-[55%] w-full mt-auto rounded-b-[32px] overflow-hidden">
+<img alt="Streetwear Dakar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHvJNRFRRFipwGOU6r5CrtQIkXjSXwIAU_yCzBlAjO8kiwL1OnmM6qNh3GjiL5WWzwPuObkBYZH84PJBXjc_EKneKRUBoJH2i7IeM08Ad3WC9Cv1K-kPe2Q-ZZ0kEF8C2j8kbEMc-_2LaGqF_MXMNN8tIVu5koGgm44OKqBMAiM-pF5bM_rkodgbcfOHNVZf5vPyV5LFIdgaKkXy78wnKt06dnLzHbRq6vDSUQbqwVrR-t5jGjfBhO">
+<div class="absolute bottom-3 left-3 bg-white/40 backdrop-blur-sm rounded-full py-1.5 px-4 flex items-center gap-2">
+<span class="text-xs font-bold text-black">Voir plus</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Boubous & Wax -->
+<div class="min-w-[300px] md:min-w-[350px] aspect-[3/4] rounded-[40px] bg-[#F5E6D3] p-6 flex flex-col justify-between snap-start transition-transform duration-500 hover:scale-[1.02] cursor-pointer group" style="width: 1280px;">
+<div class="flex justify-between items-start">
+<span class="bg-white/80 backdrop-blur-sm text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Toutes tailles</span>
+<div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full">
+<span class="text-black text-[10px] font-bold uppercase tracking-wider">Traditions</span>
+<span class="material-symbols-outlined text-sm">favorite</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-bold text-black leading-tight" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif;">Boubous &amp; Wax</h3>
+<p class="text-black/60 text-sm mt-1">L'élégance intemporelle</p>
+</div>
+<div class="relative h-[55%] w-full mt-auto rounded-b-[32px] overflow-hidden">
+<img alt="Boubous &amp; Wax" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm8_1BAcNpiYkfmMbIAoVTNC7mu2BiuAOAxdbZisiKbXJ1_fm5CdLtEMwbN_-Ia_chcop9oGVq5IeeV7WvUnuruaqv9PPgryqYSqzpHIpbhmXHBmPqm_7-kWsFw5j6YpUqwRDJIPeRwp6mxhWrzTzO-o-bJeMd18OzcjUnu0d3jEChj-g_2wHJf3fuZIqqCGY7VPdV602Ij4gv3lWQzPz4hwhxSVxgmoUlAkBahQlsxltYtnDFKsQU">
+<div class="absolute bottom-3 left-3 bg-white/40 backdrop-blur-sm rounded-full py-1.5 px-4 flex items-center gap-2">
+<span class="text-xs font-bold text-black">Voir plus</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Sneakers Rares -->
+<div class="min-w-[300px] md:min-w-[350px] aspect-[3/4] rounded-[40px] bg-[#BFDBFE] p-6 flex flex-col justify-between snap-start transition-transform duration-500 hover:scale-[1.02] cursor-pointer group" style="width: 1280px;">
+<div class="flex justify-between items-start">
+<span class="bg-white/80 backdrop-blur-sm text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Taille 36-42</span>
+<div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full">
+<span class="text-black text-[10px] font-bold uppercase tracking-wider">Chaussures</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-bold text-black leading-tight" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif;">Sneakers Rares</h3>
+<p class="text-black/60 text-sm mt-1">Pépites de collection</p>
+</div>
+<div class="relative h-[55%] w-full mt-auto rounded-b-[32px] overflow-hidden">
+<img alt="Sneakers Rares" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpvarkjSvXHjbnXwxbwH8bTFmso3S7iCQDQPG1vJojemVTJL73NZRKxNhnCPo4Yrmhw-wtchwYjwIYt9SAnOIjsImijq8ugpYuxSfshnzTpm6II3yS1_6wTsYPeUu73iTJ82TBZiadGJN1TjkpnDsXgPYV2QXpWys1BlGnbn9ib9Ztv7vZTbYKrzfIXZxgkQMbFc6KyzjWxbtIeMjkyW_7x-vwaUJHx_4YcBI_ncjzHkhFQ5gbjA5e">
+<div class="absolute bottom-3 left-3 bg-white/40 backdrop-blur-sm rounded-full py-1.5 px-4 flex items-center gap-2">
+<span class="text-xs font-bold text-black">Voir plus</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Card 5: Trouvailles Vintage -->
+<div class="min-w-[300px] md:min-w-[350px] aspect-[3/4] rounded-[40px] bg-[#FECACA] p-6 flex flex-col justify-between snap-start transition-transform duration-500 hover:scale-[1.02] cursor-pointer group" style="width: 1280px;">
+<div class="flex justify-between items-start">
+<span class="bg-white/80 backdrop-blur-sm text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Pièce unique</span>
+<div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full">
+<span class="text-black text-[10px] font-bold uppercase tracking-wider">Vintage</span>
+<span class="material-symbols-outlined text-sm">favorite</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-bold text-black leading-tight" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif;">Trouvailles Vintage</h3>
+<p class="text-black/60 text-sm mt-1">Le charme du passé</p>
+</div>
+<div class="relative h-[55%] w-full mt-auto rounded-b-[32px] overflow-hidden">
+<img alt="Trouvailles Vintage" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg03R2BWlcW2jG7WVIVLsyQneN18hJYJmmVp03_9jiJoAbngMoUqy0HvSFdrPH7py76NyKFum1C4iLmg3OOZL-MLZyGFeM743Ufx1NukjbtSEM_US_UB72QrTPz5tKvPmfphi0676bSelL63CbKezpH2rNU2NvWdTmqIUQqV0hTtObSC02w5Q_c585uoxwwBfrYSDrXzhKElY6T_rS1q4zlgfZHGIL6Vkl8BVMJcNCFGjWOK-sH6cp">
+<div class="absolute bottom-3 left-3 bg-white/40 backdrop-blur-sm rounded-full py-1.5 px-4 flex items-center gap-2">
+<span class="text-xs font-bold text-black">Voir plus</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. TRUST BAND -->
+<section class="w-full px-container-margin py-8">
+<div class="max-w-7xl mx-auto h-[260px] overflow-hidden flex flex-col md:flex-row shadow-sm relative group" id="promo-carousel" onmouseenter="pauseCarousel()" onmouseleave="resumeCarousel()">
+<!-- Left Side: Content (Static container with dynamic background) -->
+<div class="w-full md:w-1/3 p-12 flex flex-col justify-center items-start text-white transition-colors duration-500 z-10 absolute left-0 top-0 bottom-0" id="carousel-bg-container" style="background-color: rgb(217, 70, 239); border-radius: 0px;">
+<h3 class="text-3xl mb-2 font-bold" id="carousel-title" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">Looks Wax</h3>
+<p class="mb-6 opacity-90 text-sm" id="carousel-subtitle" style="font-family: &quot;Google Sans&quot;, sans-serif;">Le motif qui ne se démode jamais.</p>
+<button class="bg-white text-black px-6 py-2 rounded-full hover:opacity-90 transition-opacity font-bold text-sm">
+                Shop now
+            </button>
+</div>
+<!-- Right Side: Image Area -->
+<div class="w-full md:w-2/3 absolute right-0 top-0 bottom-0">
+<div class="flex h-full w-full transition-transform duration-500 ease-in-out" id="carousel-slides" style="transform: translateX(-200%);">
+<!-- Slide 1 -->
+<div class="w-full h-full shrink-0">
+<img alt="Vintage Vibes" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxLgjMfUFExwuaqPvDCm-TZviw8WL3U4SHmcp7u3cvkhIIx1CpjzohYsejzpqx_abQIvviLLh-u45yYfgh_hvuQqGR_uNzEaNNknvcQYjk7yZzKeKCyqXCiJNsTTAWoIotGVgPFW8y0rXgsx3x_2aFs7ZFN9R9fC7JozICwJWPfycH1Wfvfw-gJ-RTdAU6GGl74MzC8MNCDCw1VhRymfJ91lUqOIXJ1YdwF_jIBxYLJEnSyT5OIvlK">
+</div>
+<!-- Slide 2 -->
+<div class="w-full h-full shrink-0">
+<img alt="Sneakers de la semaine" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiU-4HGh-ATzQvfsVrhatuBF1hLHnmeIQ2HLQK6E4X2AoE0YD0DFIMGr3d8i4g3X_b_m76-KhO6mKWt766QPpy5NSW9xhZLMxfSopUmlMnaBlnT7uQwx-4o83wc7di0wGafvg0NNm8BeAruXw7pLXIzjx_CSukej7tuGFSuwbFFQUbk840X9qRhAWhOeD5nNWj_c7oyuPi5-OGurgzQynkq2qhre4GtniezzxUWr3wSmjWYZDBJnzO">
+</div>
+<!-- Slide 3 -->
+<div class="w-full h-full shrink-0">
+<img alt="Looks Wax" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxbqGSfDWXUEhaRcbeghlO4wxcF03GpYPW6Mq9zajiz7Y__NxpPNqa4bqXDK_l0CK4fh0mq7Cfr9TgZi3f560BfaImqAYkYX-FSPCGwGE8Ma9Juz1YLhCPA3uHE4F14E1boQepHJBYIoCZYlhgTFalpfNT1FjK6gPEg0rFwPd_8NFkI56-YmRQ1v_BEjEj_G0e2-s8x0VGgO2UshLhrfcfszGcaO1Wukm6N0mxS6MPCQKDekzkq8WJ">
+</div>
+</div>
+<!-- Pagination Dots -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="carousel-dots">
+<button aria-label="Go to slide 1" class="w-2 h-2 rounded-full bg-white/40 transition-all duration-300 hover:scale-125 hover:bg-white/80" onclick="goToSlide(0)" style="animation-delay: 499ms;"></button>
+<button aria-label="Go to slide 2" class="w-2 h-2 rounded-full bg-white/40 transition-all duration-300 hover:scale-125 hover:bg-white/80" onclick="goToSlide(1)" style="animation-delay: 499ms;"></button>
+<button aria-label="Go to slide 3" class="w-2.5 h-2.5 rounded-full bg-white transition-all duration-300 hover:scale-125" onclick="goToSlide(2)" style="animation-delay: 499ms;"></button>
+</div>
+</div>
+<!-- Navigation Arrow -->
+<button aria-label="Next slide" class="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center text-black shadow-md hover:bg-gray-100 transition-colors z-20" onclick="nextSlide()">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<script>
+    let currentSlide = 0;
+    const totalSlides = 3;
+    let carouselInterval;
+    
+    const slideData = [
+        { title: "Vintage Vibes", subtitle: "Des pièces uniques, à ne pas laisser filer.", color: "#A8A29E" },
+        { title: "Sneakers de la semaine", subtitle: "Les paires les plus recherchées, en stock maintenant.", color: "#22C55E" },
+        { title: "Looks Wax", subtitle: "Le motif qui ne se démode jamais.", color: "#D946EF" }
+    ];
+
+    function updateCarousel() {
+        const slidesContainer = document.getElementById('carousel-slides');
+        const dots = document.getElementById('carousel-dots').children;
+        const bgContainer = document.getElementById('carousel-bg-container');
+        const titleEl = document.getElementById('carousel-title');
+        const subtitleEl = document.getElementById('carousel-subtitle');
+        
+        // Update Slides
+        slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Update Content & Color
+        bgContainer.style.backgroundColor = slideData[currentSlide].color;
+        titleEl.textContent = slideData[currentSlide].title;
+        subtitleEl.textContent = slideData[currentSlide].subtitle;
+        
+        // Update Dots
+        for (let i = 0; i < dots.length; i++) {
+            if (i === currentSlide) {
+                dots[i].className = 'w-2.5 h-2.5 rounded-full bg-white transition-all duration-300 hover:scale-125';
+            } else {
+                dots[i].className = 'w-2 h-2 rounded-full bg-white/40 transition-all duration-300 hover:scale-125 hover:bg-white/80';
+            }
+        }
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        updateCarousel();
+    }
+
+    function startCarousel() {
+        carouselInterval = setInterval(nextSlide, 5000);
+    }
+
+    function pauseCarousel() {
+        clearInterval(carouselInterval);
+    }
+
+    function resumeCarousel() {
+        startCarousel();
+    }
+
+    // Initialize
+    startCarousel();
+</script>
+</section>
+<!-- 4. SUGGÉRÉ POUR TOI -->
+<section class="w-full max-w-7xl mx-auto px-container-margin relative py-12">
+<div class="flex items-center justify-between mb-10 relative z-10">
+<h2 class="font-headline-lg text-primary text-3xl" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600;">Pour toi</h2>
+<button class="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2">Tout voir</button>
+</div>
+<div class="absolute right-10 top-0 text-accent-yellow z-0 hidden lg:block opacity-90 w-32 h-32">
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
+<!-- Product Cards with Dots -->
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="Chemise Été" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjY9WRoP3gdmglUGKoNydhseBPXXvU-7T5pRrVBEQa8c-9PTtxE_Ircs8XNPk2j3zbeWKZG2SQr5jqmYs4WFM9-yZILZM9UsyRkU3Z9k8uoEnWFBV-Ymmz-i0yQG38xy1_hFxo_KIta3WS2OOTC-3CjfMPNfQi7h8e5IbfEEjTBZAbaj_VgW_JsiyCYXIEw3YcVQNXdCW776pMyu6M8Ln0FZ4SCTIH44eddzjZdGBE150pi13ntQLj"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Chemise Été</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">2500 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="Veste Jean" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCn1-DOUvoPMAI3OgItbzAbfbQIN3JqFcpo81LAKueaJ7KUZ3m5wcT3-qgapek4yXvvK01NdEqtar0nwHUTb0zM-cyojjNdgMDgUTUy_h82T2QlGdb9eFr3NAMKypXG-cnh4eytv5TjuboPRuO59H5cKoE1dAR2u3VnIXBzHHH9xioxicZJRgKF1wxRedaAB5FLX59Bm2vSrPEgi8ttdht1MH6m6aGh3VCrTod6kKxp-RmN8glqkhR"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Veste Jean</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">12000 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="Robe Fleur" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCENOK7bHdSnCo8oedGJTk4F9cz85hG0-HD3bUMzniyFBCBUUA2Q8jh6Bc4ozWQT1K10vcw7NwDE1cl83yGin1QXAI3okHa9MBdwil9DvuCOKWF4myVwrTnS4Mks5nllL8M-I9nrSFYujtXgl7ZXGPjVvceiCmaRqoR0ijlK0kixPkCLKE6aVVqCyNPhJEDwX-WLCCfsvfl-WggLHb-vNN9HkOLXdNvp_7n2-z42HuQQLUwQod6YU4Y"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Robe Fleur</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">5500 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative"><div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div><img alt="Pantalon" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpS3vXfjGPvLu5UMv1cqbpeynzq2vFTcCT57xF89jQnwFBcvqkSw5MHhzkrXxBo10oMbv2cUTvjwCs1O4vS1niHU7udjXJWn9pr_7BwO5xS0Ds-JEgCJXo4BF86wFnZKxbOVLK8EAFddDGNTgm7Tab3EXrqSCZzVBBTz7kDUhKmqihd4JLrE0qxbiQMiRMvebpcs1e49CXef7F29gk9oTT2m45bpvt17PDvx2Nt28qrANM7fL649LT"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Pantalon</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">8000 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="T-shirt" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw9qFRcg-PAa-7zMaH_B8pc2yfK4HvGyQzEOh6LMce9HlMTChL7m3UI3TimVlAixu-nmt6ejNuOecOzn4odK0imoxbB0SH0piGP4xyGxEPHgEipHEWR_RrcVNZjgnNH1d7jd_Bb_tUXFkHAoa2DjuIpbBeLWSjehtn6sdpCPMyMhH_gfC02VMY68zG31EOofOP3SDdcgS0WLspLwNdWXLK8T27_LxVZBpBYiHLdbBnj_OqKo8vVfGT"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">T-shirt</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">3000 F</span></div><span class="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">S</span></div>
+</div>
+<!-- Row 2 - Duplicated Items -->
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="Chemise Été" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjY9WRoP3gdmglUGKoNydhseBPXXvU-7T5pRrVBEQa8c-9PTtxE_Ircs8XNPk2j3zbeWKZG2SQr5jqmYs4WFM9-yZILZM9UsyRkU3Z9k8uoEnWFBV-Ymmz-i0yQG38xy1_hFxo_KIta3WS2OOTC-3CjfMPNfQi7h8e5IbfEEjTBZAbaj_VgW_JsiyCYXIEw3YcVQNXdCW776pMyu6M8Ln0FZ4SCTIH44eddzjZdGBE150pi13ntQLj"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Chemise Été</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">2500 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="Veste Jean" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCn1-DOUvoPMAI3OgItbzAbfbQIN3JqFcpo81LAKueaJ7KUZ3m5wcT3-qgapek4yXvvK01NdEqtar0nwHUTb0zM-cyojjNdgMDgUTUy_h82T2QlGdb9eFr3NAMKypXG-cnh4eytv5TjuboPRuO59H5cKoE1dAR2u3VnIXBzHHH9xioxicZJRgKF1wxRedaAB5FLX59Bm2vSrPEgi8ttdht1MH6m6aGh3VCrTod6kKxp-RmN8glqkhR"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Veste Jean</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">12000 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="Robe Fleur" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCENOK7bHdSnCo8oedGJTk4F9cz85hG0-HD3bUMzniyFBCBUUA2Q8jh6Bc4ozWQT1K10vcw7NwDE1cl83yGin1QXAI3okHa9MBdwil9DvuCOKWF4myVwrTnS4Mks5nllL8M-I9nrSFYujtXgl7ZXGPjVvceiCmaRqoR0ijlK0kixPkCLKE6aVVqCyNPhJEDwX-WLCCfsvfl-WggLHb-vNN9HkOLXdNvp_7n2-z42HuQQLUwQod6YU4Y"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Robe Fleur</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">5500 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative"><div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div><img alt="Pantalon" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpS3vXfjGPvLu5UMv1cqbpeynzq2vFTcCT57xF89jQnwFBcvqkSw5MHhzkrXxBo10oMbv2cUTvjwCs1O4vS1niHU7udjXJWn9pr_7BwO5xS0Ds-JEgCJXo4BF86wFnZKxbOVLK8EAFddDGNTgm7Tab3EXrqSCZzVBBTz7kDUhKmqihd4JLrE0qxbiQMiRMvebpcs1e49CXef7F29gk9oTT2m45bpvt17PDvx2Nt28qrANM7fL649LT"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">Pantalon</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">8000 F</span></div><button class="hover:text-error transition-colors rounded-full"><span class="material-symbols-outlined">favorite</span></button></div>
+</div>
+<div class="flex flex-col gap-3 group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+<div class="absolute top-2 right-2 z-20"><span class="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer bg-surface/90 rounded-full p-1 shadow-sm">favorite</span></div>
+<img alt="T-shirt" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw9qFRcg-PAa-7zMaH_B8pc2yfK4HvGyQzEOh6LMce9HlMTChL7m3UI3TimVlAixu-nmt6ejNuOecOzn4odK0imoxbB0SH0piGP4xyGxEPHgEipHEWR_RrcVNZjgnNH1d7jd_Bb_tUXFkHAoa2DjuIpbBeLWSjehtn6sdpCPMyMhH_gfC02VMY68zG31EOofOP3SDdcgS0WLspLwNdWXLK8T27_LxVZBpBYiHLdbBnj_OqKo8vVfGT"></div>
+<div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-black text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">T-shirt</span><span class="text-black font-bold" style="font-family: &quot;Google Sans&quot;, sans-serif;">3000 F</span></div><span class="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">S</span></div>
+</div></div>
+</section>
+<!-- 5. TOP BOUTIQUES -->
+<section class="w-full max-w-7xl mx-auto px-container-margin py-12">
+<div class="flex items-center gap-4 mb-10">
+<h2 class="text-headline-md text-primary font-bold" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Top Boutik</h2>
+</div>
+<div class="flex flex-row justify-between gap-8 w-full">
+<div class="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+<div class="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCn1-DOUvoPMAI3OgItbzAbfbQIN3JqFcpo81LAKueaJ7KUZ3m5wcT3-qgapek4yXvvK01NdEqtar0nwHUTb0zM-cyojjNdgMDgUTUy_h82T2QlGdb9eFr3NAMKypXG-cnh4eytv5TjuboPRuO59H5cKoE1dAR2u3VnIXBzHHH9xioxicZJRgKF1wxRedaAB5FLX59Bm2vSrPEgi8ttdht1MH6m6aGh3VCrTod6kKxp-RmN8glqkhR"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjY9WRoP3gdmglUGKoNydhseBPXXvU-7T5pRrVBEQa8c-9PTtxE_Ircs8XNPk2j3zbeWKZG2SQr5jqmYs4WFM9-yZILZM9UsyRkU3Z9k8uoEnWFBV-Ymmz-i0yQG38xy1_hFxo_KIta3WS2OOTC-3CjfMPNfQi7h8e5IbfEEjTBZAbaj_VgW_JsiyCYXIEw3YcVQNXdCW776pMyu6M8Ln0FZ4SCTIH44eddzjZdGBE150pi13ntQLj"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBugp3TioWKGGLxZIFzU0gf7WNvePzpaY6hJoAelOKYaCCXCEGSKY1FH5Sms5vQj8rhHq9RF1vudipGoOjLeyZNJq0Ny231EWHgvg498v6_hJH6m7EpvGKDbrNNlxLOMInRexFrW3nNBF4K4VCwXNMhpefC1QkSOwMyjUu7_9nOGHxhwtqwhddLShOKOVNs_aP_q9eNJ5T-Kgm1yA-2T7UCAh-9UyMrLDHYoZWFBRFypBzFIyO2aeL4"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCENOK7bHdSnCo8oedGJTk4F9cz85hG0-HD3bUMzniyFBCBUUA2Q8jh6Bc4ozWQT1K10vcw7NwDE1cl83yGin1QXAI3okHa9MBdwil9DvuCOKWF4myVwrTnS4Mks5nllL8M-I9nrSFYujtXgl7ZXGPjVvceiCmaRqoR0ijlK0kixPkCLKE6aVVqCyNPhJEDwX-WLCCfsvfl-WggLHb-vNN9HkOLXdNvp_7n2-z42HuQQLUwQod6YU4Y"></div>
+<div class="flex justify-between items-center w-full px-2">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full overflow-hidden shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtwTDV42ZbLuj6QnBR9UKGkIimOcFACHMlO1CrulKBFpUaODHdGeQmQoH1PEfulBizSgnWvcfEL-5xd3vS-NHbshmy_vhcmNfz4xu2D8ICH-g2mwtZk0zxFg5WMKUygm_WCqWTvSKXB3LEi_myz00VAIc8lZqkONlQS6_FHTv1aHqAtBjHtvfatTCoQaFfn0111IYJdkrD3uRIzXz8_yQe_tZhXW2l2EqEaPDMUfSpbrfSKNmPTMNZ6WDo" style="object-position: 0% 0%; scale: 2;"></div><span class="font-headline-md text-xl text-primary">VintageDakar</span></div>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined">favorite</span></button>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+<div class="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfxX1PRfjl7U72oVJ7rqcg9-zrTwLFpCq-7NkxI2H9a9OqApKY5_UXUwwh8r2BSZ6UCswErPqefd96GsaYere7UCzHnx5Gh2L9aqe8AhBcpLoXUOTWmMA4fxPeIkZ1lFqbZuZ5YxnZ8G0AfWV6PI-DbmGgo0PxN_6wyUUmv9Vr4GS-0g9TxX1Jewn2ugSDoItsko8BYiel5xB4UWvnd5JLn7_ZrJOwh_OXltXp2CiKH5r_-U3Z2wmo"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpS3vXfjGPvLu5UMv1cqbpeynzq2vFTcCT57xF89jQnwFBcvqkSw5MHhzkrXxBo10oMbv2cUTvjwCs1O4vS1niHU7udjXJWn9pr_7BwO5xS0Ds-JEgCJXo4BF86wFnZKxbOVLK8EAFddDGNTgm7Tab3EXrqSCZzVBBTz7kDUhKmqihd4JLrE0qxbiQMiRMvebpcs1e49CXef7F29gk9oTT2m45bpvt17PDvx2Nt28qrANM7fL649LT"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACcbSS4y2pJ23MnUkOsDTBRG_3QY0sD49h3EN1xt9qaJwHjTEtCoqT8I_yinhPy5AbuCbwHg18mw_KjP-Ba-NdWbJv06_EMA2EjT5XW0v1FtlPKOU8boUyfDxKpbxxqws3EX1weIPjtRBJ5u5aWO2uKTTox-az-D_lolvTTPAsZPJcY2umQhxEAlaFunbNsuTkjecWUf86j7TelGPT3sAqq15qfCjJNVrJ6CnNpN6Lq8MGc5c3sqPk"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw9qFRcg-PAa-7zMaH_B8pc2yfK4HvGyQzEOh6LMce9HlMTChL7m3UI3TimVlAixu-nmt6ejNuOecOzn4odK0imoxbB0SH0piGP4xyGxEPHgEipHEWR_RrcVNZjgnNH1d7jd_Bb_tUXFkHAoa2DjuIpbBeLWSjehtn6sdpCPMyMhH_gfC02VMY68zG31EOofOP3SDdcgS0WLspLwNdWXLK8T27_LxVZBpBYiHLdbBnj_OqKo8vVfGT"></div>
+<div class="flex justify-between items-center w-full px-2">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full overflow-hidden shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtwTDV42ZbLuj6QnBR9UKGkIimOcFACHMlO1CrulKBFpUaODHdGeQmQoH1PEfulBizSgnWvcfEL-5xd3vS-NHbshmy_vhcmNfz4xu2D8ICH-g2mwtZk0zxFg5WMKUygm_WCqWTvSKXB3LEi_myz00VAIc8lZqkONlQS6_FHTv1aHqAtBjHtvfatTCoQaFfn0111IYJdkrD3uRIzXz8_yQe_tZhXW2l2EqEaPDMUfSpbrfSKNmPTMNZ6WDo" style="object-position: 100% 0%; scale: 2;"></div><span class="font-headline-md text-xl text-primary">StyleRetro</span></div>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined">favorite</span></button>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+<div class="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcs43Suu82hPn-qrAKD-phR9HCmndvs8-2g_AKei7O9d2WWquUYcidNK2mqpM4yJ3kKF9ESK8xlztIgB0RIhdg8uY8aQIDAkaFqk6l6xKJ_9eeNJhGUEKqQ9G2qL3RnXziJa8zeiRoSq4qXCAhxAPEBoTbcGrFEDugdYhpuqf8D6xugJWCQq9EfNgj0_Gsm-FRrr-Uq9zkaiDeucET8UCdLHKfOnilpdN6mODco9GnKB6kpODYUhrL"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5p1FuRWy3m0NFykexcQcRtdjf6cFnRz8p7pbXN94KpoaOLtF8TH8kOE-5NE1wo2DkL93rdwMWbnIclQ8buif2RLBT0QmxWx80RkjV6LVL0BjWRVtwBYDWfCbhHL4pSebvqBj0yT6N5z1pHF5KzFY42z0_NmrJlDhK3JKSGqGNvJixmvj7znS056rtrqBYf6FAMt_NZRo61MDmRkEqP-L7BPxFq9yZyAYtdMhKQaFU0IY9su6Pwxyd"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCn1-DOUvoPMAI3OgItbzAbfbQIN3JqFcpo81LAKueaJ7KUZ3m5wcT3-qgapek4yXvvK01NdEqtar0nwHUTb0zM-cyojjNdgMDgUTUy_h82T2QlGdb9eFr3NAMKypXG-cnh4eytv5TjuboPRuO59H5cKoE1dAR2u3VnIXBzHHH9xioxicZJRgKF1wxRedaAB5FLX59Bm2vSrPEgi8ttdht1MH6m6aGh3VCrTod6kKxp-RmN8glqkhR"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjY9WRoP3gdmglUGKoNydhseBPXXvU-7T5pRrVBEQa8c-9PTtxE_Ircs8XNPk2j3zbeWKZG2SQr5jqmYs4WFM9-yZILZM9UsyRkU3Z9k8uoEnWFBV-Ymmz-i0yQG38xy1_hFxo_KIta3WS2OOTC-3CjfMPNfQi7h8e5IbfEEjTBZAbaj_VgW_JsiyCYXIEw3YcVQNXdCW776pMyu6M8Ln0FZ4SCTIH44eddzjZdGBE150pi13ntQLj"></div>
+<div class="flex justify-between items-center w-full px-2">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full overflow-hidden shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtwTDV42ZbLuj6QnBR9UKGkIimOcFACHMlO1CrulKBFpUaODHdGeQmQoH1PEfulBizSgnWvcfEL-5xd3vS-NHbshmy_vhcmNfz4xu2D8ICH-g2mwtZk0zxFg5WMKUygm_WCqWTvSKXB3LEi_myz00VAIc8lZqkONlQS6_FHTv1aHqAtBjHtvfatTCoQaFfn0111IYJdkrD3uRIzXz8_yQe_tZhXW2l2EqEaPDMUfSpbrfSKNmPTMNZ6WDo" style="object-position: 0% 100%; scale: 2;"></div><span class="font-headline-md text-xl text-primary">PopThrift</span></div>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined">favorite</span></button>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer">
+<div class="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBugp3TioWKGGLxZIFzU0gf7WNvePzpaY6hJoAelOKYaCCXCEGSKY1FH5Sms5vQj8rhHq9RF1vudipGoOjLeyZNJq0Ny231EWHgvg498v6_hJH6m7EpvGKDbrNNlxLOMInRexFrW3nNBF4K4VCwXNMhpefC1QkSOwMyjUu7_9nOGHxhwtqwhddLShOKOVNs_aP_q9eNJ5T-Kgm1yA-2T7UCAh-9UyMrLDHYoZWFBRFypBzFIyO2aeL4"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCENOK7bHdSnCo8oedGJTk4F9cz85hG0-HD3bUMzniyFBCBUUA2Q8jh6Bc4ozWQT1K10vcw7NwDE1cl83yGin1QXAI3okHa9MBdwil9DvuCOKWF4myVwrTnS4Mks5nllL8M-I9nrSFYujtXgl7ZXGPjVvceiCmaRqoR0ijlK0kixPkCLKE6aVVqCyNPhJEDwX-WLCCfsvfl-WggLHb-vNN9HkOLXdNvp_7n2-z42HuQQLUwQod6YU4Y"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfxX1PRfjl7U72oVJ7rqcg9-zrTwLFpCq-7NkxI2H9a9OqApKY5_UXUwwh8r2BSZ6UCswErPqefd96GsaYere7UCzHnx5Gh2L9aqe8AhBcpLoXUOTWmMA4fxPeIkZ1lFqbZuZ5YxnZ8G0AfWV6PI-DbmGgo0PxN_6wyUUmv9Vr4GS-0g9TxX1Jewn2ugSDoItsko8BYiel5xB4UWvnd5JLn7_ZrJOwh_OXltXp2CiKH5r_-U3Z2wmo"><img class="aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpS3vXfjGPvLu5UMv1cqbpeynzq2vFTcCT57xF89jQnwFBcvqkSw5MHhzkrXxBo10oMbv2cUTvjwCs1O4vS1niHU7udjXJWn9pr_7BwO5xS0Ds-JEgCJXo4BF86wFnZKxbOVLK8EAFddDGNTgm7Tab3EXrqSCZzVBBTz7kDUhKmqihd4JLrE0qxbiQMiRMvebpcs1e49CXef7F29gk9oTT2m45bpvt17PDvx2Nt28qrANM7fL649LT"></div>
+<div class="flex justify-between items-center w-full px-2">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full overflow-hidden shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtwTDV42ZbLuj6QnBR9UKGkIimOcFACHMlO1CrulKBFpUaODHdGeQmQoH1PEfulBizSgnWvcfEL-5xd3vS-NHbshmy_vhcmNfz4xu2D8ICH-g2mwtZk0zxFg5WMKUygm_WCqWTvSKXB3LEi_myz00VAIc8lZqkONlQS6_FHTv1aHqAtBjHtvfatTCoQaFfn0111IYJdkrD3uRIzXz8_yQe_tZhXW2l2EqEaPDMUfSpbrfSKNmPTMNZ6WDo" style="object-position: 100% 100%; scale: 2;"></div><span class="font-headline-md text-xl text-primary">DakarChic</span></div>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined">favorite</span></button>
+</div>
+</div></div>
+</section>
+<!-- 6. NEW DROP -->
+<section class="w-full max-w-[98%] mx-auto bg-accent-purple rounded-[40px] px-container-margin py-16 relative overflow-hidden my-12" style="background-color: rgb(255, 255, 255); border-radius: 18px;"><div class="max-w-7xl mx-auto relative z-10"><div class="flex items-center justify-between gap-4 mb-10"><div class="flex items-center gap-4"><h2 class="font-headline-lg text-black" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 600; font-size: 24px;">Fresh DROP</h2><svg class="text-black" fill="currentColor" height="40" viewBox="0 0 100 100" width="40"><path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path></svg></div><button class="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:block">Explore</button></div><div class="relative flex items-center group"><button class="absolute z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors -left-4"><span class="material-symbols-outlined">chevron_left</span></button><div class="flex gap-[10px] overflow-x-auto hide-scrollbar snap-x w-full pb-4"><div class="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start"><div class="aspect-[3/4] overflow-hidden"><img alt="CARHARTT VINTAGE" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5AqZ2cPaCCf-8N33xxQ9xu6KHDxfq2LCMk6oPckVrXk32kNQfDMzyZlolsO6lH14qv1BDuv2HoAD9kCGSDVG5c9_U1o5cVoETCDDB8HsvWCWK-fP3qroc-SfZN7NSoXoFyLsl2lN7rTlBCslN6dsrGMsXtZZ-9VIhnUgZeNODEhJ0Sq27lxnzsGMD0UIlH70Grrnoa4W0rbw9wIiW-wVeDaiWjhb1IpzvOo5wZT84AlBq-uTrubxE"></div><div class="flex flex-col gap-1 px-1"><span class="font-bold text-sm text-black" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 400;">Carhartt vintage</span><div class="flex justify-between items-center"><span class="font-bold text-black" style="font-family: &quot;Google Sans&quot;, sans-serif;">25000 F</span><span class="text-black/60 text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">XL</span></div></div></div><div class="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start"><div class="aspect-[3/4] overflow-hidden"><img alt="DAKAR UNION" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8PaSiZF5onF-yWWfEvXiCLpcDKb_pZFjuoVLY8-1chVppqlf8RA30WpA-Dy2ueZFW33TXqASKiUJgL1QZEk-oqb2Q1z8PhKzmzmKHHMStIJoLiI-3SD-XJIS-qeArXWLglmu2ZyH2JuK25D2pBnMd73CEmHfVRLlmN5sw48Av1hSkIbsoCyZx5lUomUgWAMYwZPOKG7rj98_l9l-fowk-0HLCaDbEc3uxb88m2BSAaR9xD7K1crdK"></div><div class="flex flex-col gap-1 px-1"><span class="font-bold text-sm text-black" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 400;">Dakar union</span><div class="flex justify-between items-center"><span class="font-bold text-black" style="font-family: &quot;Google Sans&quot;, sans-serif;">18000 F</span><span class="text-black/60 text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">XL</span></div></div></div><div class="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start"><div class="aspect-[3/4] overflow-hidden"><img alt="MINIMAL TROUSERS" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRZ1G-VR7rihSP3AEcWU5_5fOJrGbyMtS5TULpD8Y4FyCko7MQ_UIM5YqBzBFj2iJklrye1-a4500sTMULBIUwkLbSI3gn9NWARVPWmcGylJdUu_ihv9uLUPcEQywAXbivsEoZ3zCAycDxoZqLpz4KpVZ-HNTksHw-KB4rWMeRCIpMYytQI5a62KcHAVhJbFZqmaAH9q1o6aMl1iP_WHEXxBj4Gp2xzF0WZDcNuLk8RFuwOX3dFPMz"></div><div class="flex flex-col gap-1 px-1"><span class="font-bold text-sm text-black" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 400;">Minimal trousers</span><div class="flex justify-between items-center"><span class="font-bold text-black" style="font-family: &quot;Google Sans&quot;, sans-serif;">15000 F</span><span class="text-black/60 text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">XL</span></div></div></div><div class="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start"><div class="aspect-[3/4] overflow-hidden"><img alt="JORDAN 1 RETRO" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMW-Z7_PWlt-DMUT_Fhb6J9WEUh9G8c26Ck86FTV2ERheV-QYIA1GpiXR6qCXFWYPDxvSpxc_TkrqwGHqcpIOv4u9kIV4Obx2KRGcn2nm8F4P6h8FY14xe3Zd4n20VmY1eTd3OisVYrZhCXIohDetK7rXabGccy55uGFab3NKC1PgGiR4Wp14RrAGvQiJ2hMr1HZcpFpFfdV4zjoGhPxSNqQ9CqSS07ZzNl6s8IAWvTTkHcUYMcIQL"></div><div class="flex flex-col gap-1 px-1"><span class="font-bold text-sm text-black" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 400;">Jordan 1 retro</span><div class="flex justify-between items-center"><span class="font-bold text-black" style="font-family: &quot;Google Sans&quot;, sans-serif;">85000 F</span><span class="text-black/60 text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">XL</span></div></div></div><div class="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start"><div class="aspect-[3/4] overflow-hidden"><img alt="WAX JUMPSUIT" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zLTkSgDJk1y0prOXOmjhn0RiYNkeuomELs8zRh5C6Xhej_CrOChESTfFbideR2hbJKSZWwj5CT_gQIUsQuYy4WFUtAD61aT9NDbNTWpme35vkaIVk4bJU-OasFyykeyyknV8rxNVkemkKdKRqlZb5CkxP9G4vzfII9rELJOrgXT_0Jycl6u2g-bLkdrHeGYgPGtckUlS4NDykkhI4bdjHXgldPZLdyGSs95wTbwpBMLJylDxlP7x"></div><div class="flex flex-col gap-1 px-1"><span class="text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 400;">Wax jumpsuit</span><div class="flex justify-between items-center"><span class="font-bold text-black" style="font-family: &quot;Google Sans&quot;, sans-serif;">32000 F</span><span class="text-black/60 text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">XL</span></div></div></div><div class="min-w-[calc(16.66%-10px)] flex flex-col gap-3 snap-start"><div class="aspect-[3/4] overflow-hidden"><img alt="LEATHER BAG M&amp;CO" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCociVPzIVyJyl6Lt9w4w24s_Kng3Sh6AA8H16-6sHbYArL-pqXOA2Q63rA7ETj0iiVWWsQdpwiWeyeMCEm9EijAy_TiJE79_hXOXH4vbhLgX4O1oJgnzN5zeVc0nKFm5vLTNdI4qlI-8ROm30F6HM8GcBMwtucAmyUp6_0u5Ax2Iq-AdGLQIUcAIw6g7M628lLa0dQz-NskBmFzH9nZAagUuE02U5_-HgfI14HGbWFyqldDDrwY4Md"></div><div class="flex flex-col gap-1 px-1"><span class="font-bold text-sm text-black" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 400;">Leather bag m&amp;co</span><div class="flex justify-between items-center"><span class="font-bold text-black" style="font-family: &quot;Google Sans&quot;, sans-serif;">45000 F</span><span class="text-black/60 text-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">XL</span></div></div></div></div><button class="absolute z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors -right-4"><span class="material-symbols-outlined">chevron_right</span></button></div></div></section>
+<!-- 7. CATÉGORIES -->
+<section class="w-full max-w-7xl mx-auto px-container-margin py-12">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1: Femmes -->
+<div class="relative aspect-[9/16] rounded-xl overflow-hidden group cursor-pointer">
+<div class="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110">
+<img alt="Femmes" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN0hPZ7PccIkDRgVV3CXNQ362XwjArh7R41MNGUlbitiOPNnRSzW00afyffMi4WVQdbRG_OW1ZYZcvgQQodypwJCqWXLUJaUSaK7Eg3z9J1xy4eN4-KMGGX5gEezl2P8ou91zt5WOfv362OQWQRBZ5l7HR9hOX83uTAwKhJaGhWuK2Xz_dRyD122RU8GVuOz82w0BLKVov88Vzv4vlgnvspKfX3lHfwT4AU5PKOYOrfoJHPbmkVq6w">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent p-6 flex flex-col justify-end">
+<p class="text-sm mb-1" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">Blouses, robes et plus</p>
+<h3 class="text-2xl" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">Femmes</h3>
+</div>
+</div>
+<!-- Card 2: Hommes -->
+<div class="relative aspect-[9/16] rounded-xl overflow-hidden group cursor-pointer">
+<div class="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110">
+<img alt="Hommes" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByQnOkEqxcocHqJ0PJiwvlKQv6i0TivIInYvMg8-wC9MuM2NJeDBix9Ro6xgmOYweX7B5Rg35TG6uXpC79HZmhtgmR_2RhlDsSt5RUblN206q5gDy2itBGZdPpUsjHEqjpAc_HmIqtBJ68j6rY-sNsroy_qNtjoG-iFhzrFrI1gmvRTBNWozpts9JJPhRRDt2cWX2ya32fgQwq_B9BC-WJSDbpAdvfBS26mo4FrYFwwTQFRumCk4P2">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent p-6 flex flex-col justify-end">
+<p class="text-sm mb-1" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">T-shirts, polos et plus</p>
+<h3 class="text-2xl" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">Hommes</h3>
+</div>
+</div>
+<!-- Card 3: Enfants -->
+<div class="relative aspect-[9/16] rounded-xl overflow-hidden group cursor-pointer">
+<div class="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110">
+<img alt="Enfants" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpUYzloC2GpHHinOyTXHNXemuf8G6iDaecwSDlknf25NXpQuGDXnm6gRDtCUqjAc03rL7UYbtSoDraFs_ida3Lix_rorFyLVQ8cwwevbHk6eZmiMPcLATiykG2BJ4j3jDUUtSZk09hU6rM3ud6fV9oCrOz_1u9F0ehVylPu4MGfzFBVMWfSp1nxlg7q1AUTenWk0NIp1bIH_FL54xrqmepHqTSDjdKM25ZBoT_kX5l1pOR_CkowHg0">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent p-6 flex flex-col justify-end">
+<p class="text-sm mb-1" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">Pyjamas, tenues et plus</p>
+<h3 class="text-2xl" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">Enfants</h3>
+</div>
+</div>
+<!-- Card 4: Accessoires -->
+<div class="relative aspect-[9/16] rounded-xl overflow-hidden group cursor-pointer">
+<div class="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110">
+<img alt="Accessoires" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_gP-u7CegtOVZgGVsvsgo99hSykmyCqTimv1pG2obRfCuzj8nOCd6pf78d0wtxF-OmdffGIY04I3VCShIJeWQFFxf3jxuzxHsrWhvT25JQwNd3r2M52FM0AUkgSQNRFE_xRBhuYO3WSMxbrQoTDtGRx4JugpWGaAAblR-e-ITdYaVFXYZUwDkSEUphIk9VrY_brxBgpWQjKI3k7tZY6koCvUt-paJCWrrMCAiGthBfWp_yLJtK2Z-">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent p-6 flex flex-col justify-end">
+<p class="text-sm mb-1" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">Sacs, bijoux et plus</p>
+<h3 class="text-2xl" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 600; color: rgb(255, 255, 255);">Accessoires</h3>
+</div>
+</div>
+</div>
+</section><section class="w-full py-16 flex flex-col items-center justify-center overflow-hidden min-h-[600px] bg-surface">
+<h2 class="font-headline-lg text-primary text-center mb-24 relative z-20" style="font-size: clamp(3rem, 8vw, 6rem); font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Catégories</h2>
+<div class="w-full max-w-7xl mx-auto px-container-margin relative z-10 mt-[-50px]">
+<svg class="w-full h-auto" data-name="Calque 2" id="Calque_2" viewBox="-100 -50 1490.71 460.67" xmlns="http://www.w3.org/2000/svg">
+<defs><style>
+            .cls-1 { fill: #c77dff; }
+            .cls-2 { fill: #febfc8; }
+            .cls-3 { fill: #fee19d; }
+            .cls-4 { fill: #feced5; }
+            .cls-5 { fill: #fee2a1; }
+            .cls-6 { fill: #fec0c9; }
+            .cls-7 { fill: #fedc8d; }
+            .cls-8 { fill: #fef3d9; }
+            .cls-9 { fill: #feedc4; }
+            .cls-10 { fill: #fedc8a; }
+            .cls-11 { fill: #fedee3; }
+            .cls-12 { fill: #fe9fad; }
+            .cls-13 { fill: #feedc5; }
+            .cls-14 { fill: #fd7f91; }
+            .cls-15 { fill: #fdcf65; }
+            .cls-16 { fill: #ff4313; }
+            .cls-17 { fill: #00b2ae; }
+            .cls-18 { fill: #00a6fb; }
+        </style></defs>
+<g data-name="Calque 1" id="Calque_1-2">
+<g class="shape-group-1" transform="translate(100, 0)"><a class="cursor-pointer" href="/catalogue"><path class="cls-16" d="M651.31,226.37c27.59-27.6,7.04-92.89-45.92-145.85-52.95-52.95-118.25-73.51-145.85-45.92-21.47,21.47-13.78,65.78,15.64,109.33-20.45-3.73-38.03-.5-49.31,10.77-27.59,27.59-7.04,92.89,45.92,145.85,52.95,52.95,118.25,73.51,145.85,45.92,21.47-21.47,13.78-65.78-15.64-109.33,20.45,3.73,38.03.51,49.31-10.77Z"></path></a></g>
+<g class="shape-group-2" transform="translate(0, 0)"><a class="cursor-pointer" href="/hommes"><path class="cls-18" d="M402.49,149.22c-5.07-5.57-11.09-9.96-17.8-13.19-9.06-59.14-48.45-102.49-90.61-98.11-44.05,4.58-74.43,59.52-67.86,122.73,1.48,14.25,4.72,27.69,9.34,39.93-23.27,37.23-25.92,78.64-3.23,103.56,29.81,32.75,92.07,24.61,139.06-18.16,46.99-42.78,60.92-104,31.11-136.75Z"></path></a></g>
+<g class="shape-group-3" transform="translate(150, 0)">
+<path class="cls-4" d="M656.16,127.22h-.22v-1.97c.06-.19.14-.19.22,0v1.97Z"></path>
+<path class="cls-2" d="M656.16,115.85c-.06.19-.14.19-.22,0v-1.31c.38.28.22.88.22,1.31Z"></path>
+<path class="cls-12" d="M655.94,117.16v-1.31h.22c0,.43.16,1.03-.22,1.31Z"></path>
+<path class="cls-12" d="M656.16,125.25h-.22v-1.31c.4.28.22.88.22,1.31Z"></path>
+<g>
+<a class="cursor-pointer" href="/enfants"><path class="cls-14" d="M798.46,0c74.9-.31,99.3,108.8,32.32,141.46,24.75,35.96,26.68,84.46.64,120.28,25.74,191.51-267.7,69.29-148.23-66.65C609.1,102.36,695.94,2.43,798.46,0Z"></path></a>
+<path class="cls-6" d="M870.37,76.94c-.06.19-.14.19-.22,0v-3.5c.06-.19.14-.19.22,0v3.5Z"></path>
+<path class="cls-11" d="M870.37,73.45h-.22c0-.51-.04-1.03,0-1.53h.22v1.53Z"></path>
+<rect class="cls-11" height="1.53" width=".22" x="870.16" y="76.94"></rect>
+</g>
+</g>
+<g class="shape-group-4" transform="translate(200, 0)">
+<path class="cls-8" d="M1088.31,202.2h-.22c-.04-.87-.03-1.76,0-2.62h.22v2.62Z"></path>
+<path class="cls-9" d="M845.24,275.21c-.06.19-.14.19-.22,0v-1.75h.22v1.75Z"></path>
+<path class="cls-13" d="M845.24,285.48h-.22v-1.75c.06-.19.14-.19.22,0v1.75Z"></path>
+<path class="cls-7" d="M845.02,276.52v-1.31h.22c0,.44.18,1.03-.22,1.31Z"></path>
+<path class="cls-10" d="M845.24,283.73h-.22v-1.31c.4.28.22.88.22,1.31Z"></path>
+<g>
+<a class="cursor-pointer" href="/catalogue"><path class="cls-15" d="M949.07,18.58c55.94.32,82.41,62.01,88.5,109.9,46.94,15.15,66.09,77.08,37.1,116.49-10.3,14.7-25.55,25.51-42.91,30.18-13.86,8.74-26.62,19.26-37.98,31.04-28.35,78.42-147.79,59.38-148.76-23.76-.86-46.13,30.24-85.09,39.65-129.12.5-24.16-23.71-33.33-13.51-76.66,8-34.74,42.21-60.75,77.9-58.06Z"></path></a>
+<path class="cls-3" d="M951.25,18.58c-.58.38-1.61.38-2.19,0h2.19Z"></path>
+<path class="cls-5" d="M942.51,18.58c-.55.42-1.3.18-1.97.22v-.22h1.97Z"></path>
+</g>
+</g>
+<g class="shape-group-5" transform="translate(-100, 0)"><a class="cursor-pointer" href="/femmes"><path class="cls-17" d="M206.55,187.13c-24.11,83.01-87.83,150.31-142.31,150.31S-14.86,270.15,9.26,187.13C33.37,104.12,97.09,36.82,151.57,36.82s79.1,67.3,54.98,150.31Z"></path></a></g>
+<g class="shape-group-6" transform="translate(250, 0)"><a class="cursor-pointer" href="/accessoires"><path class="cls-1" d="M1167.17,61.22l23.89,17.36,29.45-2.2c43.87-3.28,77.05,38.98,63.45,80.82l-9.13,28.09,11.19,27.33c16.67,40.71-13.27,85.32-57.26,85.32h-29.53s-22.53,19.09-22.53,19.09c-33.56,28.44-85.25,13.75-98.84-28.09l-9.13-28.09-25.12-15.53c-37.42-23.13-39.42-76.82-3.83-102.68l23.89-17.36,7.01-28.69c10.44-42.73,60.88-61.23,96.47-35.37Z" style="fill: rgb(199, 125, 255);"></path></a></g>
+</g>
+</svg>
+</div></section>
+</main>
+<!-- 8. FOOTER -->
+<footer class="bg-primary text-on-primary w-full mt-12 pt-8">
+<div class="max-w-7xl mx-auto px-container-margin py-16"><div class="grid grid-cols-1 mb-24 text-on-primary md:grid-cols-4 max-w-4xl gap-8"><div class="flex flex-col gap-4"><h3 class="font-headline-md text-xl mb-4">Navigation</h3><ul class="flex flex-col gap-2 font-body-sm opacity-80"><li class="hover:text-accent-orange cursor-pointer transition-colors">Femmes</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Hommes</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Enfants</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Marques</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Vendre</li></ul></div><div class="flex flex-col gap-4"><h3 class="font-headline-md text-xl mb-4">Connect</h3><ul class="flex flex-col gap-2 font-body-sm opacity-80"><li class="hover:text-accent-orange cursor-pointer transition-colors">Instagram</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Facebook</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Pinterest</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Contact</li></ul></div><div class="flex flex-col gap-4"><h3 class="font-headline-md text-xl mb-4">Aide</h3><ul class="flex flex-col gap-2 font-body-sm opacity-80"><li class="hover:text-accent-orange cursor-pointer transition-colors">Livraison</li><li class="hover:text-accent-orange cursor-pointer transition-colors">Retours</li></ul></div><div class="flex flex-col gap-4"><h3 class="font-headline-md text-xl mb-4">Nous suivre</h3><div class="flex gap-4 items-center mt-2"><a aria-label="Facebook" class="hover:opacity-70 transition-opacity" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"></path></svg></a><a aria-label="Instagram" class="hover:opacity-70 transition-opacity" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg></a><a aria-label="TikTok" class="hover:opacity-70 transition-opacity" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.31-.75.42-1.24 1.25-1.33 2.1-.1.7.1 1.41.53 1.98.5.73 1.36 1.19 2.26 1.17.83.06 1.65-.31 2.21-.91.54-.59.84-1.39.84-2.2V.02z"></path></svg></a><a aria-label="X" class="hover:opacity-70 transition-opacity" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.494h2.039L6.486 3.24H4.298l13.311 17.407z"></path></svg></a></div></div></div><div class="flex justify-center items-center pt-8">
+<div class="h-[300px] md:h-[450px] w-full flex items-center justify-center"><svg class="w-full h-full mx-auto" data-name="Calque 2" id="Calque_2" viewBox="0 0 352.87 130.21" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1 { fill: #fdffff; }.cls-2 { fill: #e20020; }</style></defs><g data-name="Calque 1" id="Calque_1-2"><g><g><path class="cls-2" d="M107.61,0l-2.17,48.88c-.05.94.84,1.66,1.75,1.41l29.02-9.7-17.89,30.33c-.66.56-.65,1.58.02,2.12l20.92,30.23-37.64-8.27c-.78-.11-1.49.45-1.57,1.24l-4.68,33.96-18-22.57c-.37-.83-1.41-1.08-2.12-.52l-40.92,19.51,19.77-36.29c.42-.82-.07-1.82-.98-2L0,80.14l58.67-18.39c.76-.24,1.16-1.08.87-1.82l-9.64-34.91,29.54,21.63c.67.49,1.62.29,2.03-.43L107.61,0Z"></path><path class="cls-1" d="M79.07,79.15c-2.79,11.2-8.89,19.63-13.61,18.81s-6.29-10.55-3.49-21.76c2.79-11.2,8.89-19.63,13.61-18.81,4.72.81,6.29,10.55,3.49,21.76Z"></path><path class="cls-1" d="M101.01,78.36c-3.46,12.05-10.56,20.92-15.86,19.8s-6.79-11.79-3.33-23.85c3.46-12.05,10.56-20.92,15.86-19.8,5.3,1.12,6.79,11.79,3.33,23.85Z"></path></g><g><path class="cls-1" d="M157.42,97.43h14.13l-20.17-41.87h-15.36l-20.23,41.87h13.08l3.69-8.09h21.2l3.67,8.09ZM136.82,79.96l6.34-13.92,6.32,13.92h-12.66Z"></path><path class="cls-1" d="M200.28,55.56v15.38c-.53-.52-1.13-1.02-1.82-1.51-1.25-.88-2.82-1.59-4.69-2.14-1.88-.55-4.09-.82-6.63-.82-1.64,0-3.25.21-4.81.62-1.56.41-3.02,1.03-4.37,1.85s-2.54,1.86-3.58,3.11c-1.04,1.25-1.84,2.74-2.4,4.46-.57,1.72-.85,3.66-.85,5.81,0,3.6.76,6.58,2.29,8.94,1.52,2.37,3.51,4.13,5.95,5.28s5.03,1.73,7.77,1.73c2.15,0,4.14-.22,5.98-.67,1.84-.45,3.46-1.1,4.87-1.96.87-.53,1.63-1.14,2.29-1.81v3.63h12.49v-41.87h-12.49ZM199.11,86.55c-.43.61-.98,1.14-1.64,1.61-.67.47-1.44.83-2.32,1.08-.88.25-1.87.38-2.96.38-1.84,0-3.38-.34-4.63-1.03-1.25-.68-2.18-1.58-2.79-2.7-.61-1.11-.91-2.3-.91-3.55,0-.78.11-1.53.32-2.23.21-.7.55-1.36,1-1.96.45-.61,1.01-1.14,1.67-1.61.66-.47,1.45-.83,2.35-1.08.9-.25,1.9-.38,2.99-.38,1.84,0,3.36.34,4.57,1.03,1.21.68,2.12,1.57,2.73,2.67.61,1.09.91,2.29.91,3.58,0,.74-.11,1.48-.32,2.2s-.54,1.39-.97,1.99Z"></path><path class="cls-1" d="M245.97,55.56v15.38c-.53-.52-1.13-1.02-1.82-1.51-1.25-.88-2.82-1.59-4.69-2.14-1.88-.55-4.09-.82-6.63-.82-1.64,0-3.25.21-4.81.62-1.56.41-3.02,1.03-4.37,1.85s-2.54,1.86-3.58,3.11c-1.04,1.25-1.84,2.74-2.4,4.46-.57,1.72-.85,3.66-.85,5.81,0,3.6.76,6.58,2.29,8.94,1.52,2.37,3.51,4.13,5.95,5.28s5.03,1.73,7.77,1.73c2.15,0,4.14-.22,5.98-.67,1.84-.45,3.46-1.1,4.87-1.96.87-.53,1.63-1.14,2.29-1.81v3.63h12.49v-41.87h-12.49ZM244.79,86.55c-.43.61-.98,1.14-1.64,1.61-.67.47-1.44.83-2.32,1.08-.88.25-1.87.38-2.96.38-1.84,0-3.38-.34-4.63-1.03-1.25-.68-2.18-1.58-2.79-2.7-.61-1.11-.91-2.3-.91-3.55,0-.78.11-1.53.32-2.23.21-.7.55-1.36,1-1.96.45-.61,1.01-1.14,1.67-1.61.66-.47,1.45-.83,2.35-1.08.9-.25,1.9-.38,2.99-.38,1.84,0,3.36.34,4.57,1.03,1.21.68,2.12,1.57,2.73,2.67.61,1.09.91,2.29.91,3.58,0,.74-.11,1.48-.32,2.2s-.54,1.39-.97,1.99Z"></path><path class="cls-1" d="M264.44,97.43v-30.14h12.49v30.14h-12.49ZM264.5,64.3v-8.74h12.43v8.74h-12.43Z"></path><path class="cls-1" d="M309.33,81.36c-.76-.74-1.73-1.37-2.9-1.88l16.07-12.2h-12.67l-16.35,12.82,4.33-24.55h-10.73l-7.39,41.87h10.73l1.18-6.58,4.8-3.57c1.02-.74,2.1-1.1,3.25-1.08,1.15.02,2.06.66,2.73,1.91l5.34,9.32h11.9l-7.86-12.73c-.86-1.49-1.67-2.6-2.43-3.34Z"></path><path class="cls-1" d="M352.87,75.15v-7.86h-10.38v-8.15h-12.49v8.15h-6.92v7.86h6.92v11.96c0,3.25.98,5.78,2.93,7.59,1.96,1.82,4.57,2.73,7.86,2.73h12.08v-8.03h-6.04c-1.52,0-2.63-.39-3.31-1.17-.68-.78-1.03-1.86-1.03-3.23v-9.85h10.38Z"></path></g></g></g></svg></div>
+</div></div>
+<div class="border-t border-on-primary/10 py-8 px-container-margin"><div class="max-w-7xl mx-auto flex justify-center"><p class="font-body-sm opacity-60 text-center w-full" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 300;">© 2024 Addikt. Tous droits réservés.</p></div></div></footer>
+<script>
+    function setToggle(option) {
+        const indicator = document.getElementById('slider-indicator');
+        const btnAcheter = document.getElementById('btn-acheter');
+        const btnVendre = document.getElementById('btn-vendre');
+
+        if (option === 'acheter') {
+            indicator.style.transform = 'translateX(0)';
+            btnAcheter.classList.remove('text-white');
+            btnAcheter.classList.add('text-primary');
+            btnVendre.classList.remove('text-primary');
+            btnVendre.classList.add('text-white');
+        } else {
+            indicator.style.transform = 'translateX(100%)';
+            btnVendre.classList.remove('text-white');
+            btnVendre.classList.add('text-primary');
+            btnAcheter.classList.remove('text-primary');
+            btnAcheter.classList.add('text-white');
+        }
+    }
+</script>
+
+
+</body></html>

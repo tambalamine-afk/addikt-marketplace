@@ -43,13 +43,13 @@ export default function HomeHero({ onShopNow }) {
 
         {/* Right Side: Collage */}
         <div className="relative h-[350px] flex justify-center items-center">
-          <div className="absolute w-56 h-72 transform -rotate-[15deg] -translate-x-20 overflow-hidden rounded-[22px] shadow-lg">
+          <div className="absolute w-56 h-72 transform -rotate-[15deg] -translate-x-32 overflow-hidden rounded-[22px] shadow-lg border-0 z-0">
             <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600" alt="Fashion 1" className="w-full h-full object-cover" />
           </div>
-          <div className="absolute w-56 h-72 transform rotate-[5deg] z-10 translate-y-6 overflow-hidden rounded-[22px] shadow-lg">
+          <div className="absolute w-56 h-72 transform rotate-0 z-10 translate-y-2 scale-105 overflow-hidden rounded-[22px] shadow-xl border-0">
             <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600" alt="Fashion 2" className="w-full h-full object-cover" />
           </div>
-          <div className="absolute w-56 h-72 transform rotate-[15deg] translate-x-24 -translate-y-4 overflow-hidden z-20 rounded-[22px] shadow-lg">
+          <div className="absolute w-56 h-72 transform rotate-[15deg] translate-x-32 -translate-y-2 overflow-hidden z-0 rounded-[22px] shadow-lg border-0">
              <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600" alt="Fashion 3" className="w-full h-full object-cover" />
           </div>
         </div>

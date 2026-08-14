@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
-import ProductDetail from './components/ProductDetail';
+import ProductPage from './pages/ProductPage';
 import { PRODUCTS } from './data/mockData';
 
 import Login from './pages/Auth/Login';
@@ -43,8 +43,7 @@ export default function App() {
   const likedCount = products.filter(p => p.liked).length;
 
   const handleSelect = (product) => {
-    const full = products.find(p => p.id === product.id) || product;
-    setSelectedProduct(full);
+    // Legacy modal function - can be removed or kept for backward compatibility
   };
 
   return (
@@ -64,6 +63,7 @@ export default function App() {
           />}>
           <Route path="/" element={<LandingPage products={products} handleSelect={handleSelect} />} />
           <Route path="/category/:id?" element={<Category products={products} handleSelect={handleSelect} />} />
+          <Route path="/product/:id" element={<ProductPage products={products} toggleLike={toggleLike} addToast={addToast} />} />
           <Route path="/messages" element={<Inbox />} />
           <Route path="/seller/:id" element={<SellerProfile />} />
           <Route path="/publish" element={<PublishAd />} />
@@ -78,15 +78,6 @@ export default function App() {
         {/* Chat without Layout */}
         <Route path="/messages/:id" element={<Chat />} />
       </Routes>
-
-      {selectedProduct && (
-        <ProductDetail
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-          onToggleLike={toggleLike}
-          addToast={addToast}
-        />
-      )}
 
       <div className="toast-container">
         {toasts.map(t => <div key={t.id} className="toast">{t.msg}</div>)}

@@ -1,0 +1,365 @@
+<!DOCTYPE html><html class="light" lang="fr" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Addikt - Trouve tes pépites</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        /* Custom Font Imports - Approximations for the requested specific fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@400;700;800&family=Inter:wght@400;600&display=swap');
+
+        /* Simulating the requested fonts using Google Fonts approximations */
+        :root {
+            --font-monument: 'Syne', sans-serif; /* Approximation for Monument Extended */
+            --font-flatit: 'Space Grotesk', sans-serif; /* Approximation for Flatit Quiet Sans */
+            --font-zalando: 'Inter', sans-serif; /* Approximation for Zalando Sans */
+        }
+
+        /* Float Animations for Categories SVG */
+        @keyframes float-1 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-2 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-3 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .shape-group-1 { animation: float-1 6s ease-in-out infinite; transform-origin: center; }
+        .shape-group-2 { animation: float-2 7s ease-in-out infinite 1s; transform-origin: center; }
+        .shape-group-3 { animation: float-3 8s ease-in-out infinite 2s; transform-origin: center; }
+        .shape-group-4 { animation: float-1 6.5s ease-in-out infinite 0.5s; transform-origin: center; }
+        .shape-group-5 { animation: float-2 7.5s ease-in-out infinite 1.5s; transform-origin: center; }
+        .shape-group-6 { animation: float-3 8.5s ease-in-out infinite 2.5s; transform-origin: center; }
+
+        .carousel-slide { transition: opacity 0.5s ease-in-out; }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"error-container": "#ffdad6", primary: "#000000", "surface-container-lowest": "#ffffff", "primary-fixed-dim": "#c6c6c6", "on-error": "#ffffff", "on-background": "#1b1b1b", "secondary-container": "#dfe0e0", "on-error-container": "#93000a", background: "#f9f9f9", "surface-tint": "#5e5e5e", "surface-container": "#eeeeee", outline: "#7e7576", "on-tertiary-fixed": "#1b1b1b", "inverse-surface": "#303030", "surface-container-low": "#f3f3f3", "surface-variant": "#e2e2e2", "on-primary-fixed-variant": "#474747", "on-secondary-fixed": "#1a1c1c", "on-tertiary-container": "#848484", "on-secondary-fixed-variant": "#454747", "on-primary-fixed": "#1b1b1b", "on-tertiary-fixed-variant": "#474747", "surface-bright": "#f9f9f9", "primary-container": "#1b1b1b", "on-secondary-container": "#616363", "on-primary": "#ffffff", "on-primary-container": "#848484", "inverse-primary": "#c6c6c6", "surface-container-high": "#e8e8e8", "on-surface-variant": "#4c4546", surface: "#f9f9f9", secondary: "#5d5f5f", tertiary: "#000000", "inverse-on-surface": "#f1f1f1", "surface-dim": "#dadada", "surface-container-highest": "#e2e2e2", "tertiary-container": "#1b1b1b", "on-secondary": "#ffffff", "secondary-fixed": "#e2e2e2", error: "#ba1a1a", "on-surface": "#1b1b1b", "tertiary-fixed-dim": "#c6c6c6", "secondary-fixed-dim": "#c6c6c7", "outline-variant": "#cfc4c5", "on-tertiary": "#ffffff", "primary-fixed": "#e2e2e2", "tertiary-fixed": "#e2e2e2", "accent-orange": "#FF4D00", "accent-yellow": "#FFD700", "pocket-beige": "#F3F3F3", "accent-purple": "#BF80FF", "accent-blue": "#0099FF", "accent-rose": "#FF6B8B", "accent-green": "#00b2ae"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"section-gap": "80px", "container-margin": "24px"}, fontFamily: {headline: ["Monument Extended"], display: ["Monument Extended"], body: ["Zalando Sans Expanded"], label: ["Flatit Quiet Sans"], "label-caps": ["var(--font-flatit)"], "headline-md": ["var(--font-monument)"], "headline-lg-mobile": ["var(--font-monument)"], "body-sm": ["var(--font-zalando)"], "body-lg": ["var(--font-zalando)"], "headline-lg": ["var(--font-monument)"], "headline-xl": ["var(--font-monument)"], "button-text": ["var(--font-flatit)"], "nav-link": ["var(--font-flatit)"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.2", fontWeight: "700"}], "headline-md": ["24px", {lineHeight: "1.2", fontWeight: "800"}], "headline-lg-mobile": ["32px", {lineHeight: "1.1", fontWeight: "800"}], "body-sm": ["14px", {lineHeight: "1.4", fontWeight: "400"}], "body-lg": ["18px", {lineHeight: "1.5", fontWeight: "400"}], "headline-lg": ["48px", {lineHeight: "1.1", fontWeight: "800"}], "headline-xl": ["80px", {lineHeight: "1.0", letterSpacing: "-0.02em", fontWeight: "900"}], "button-text": ["14px", {lineHeight: "1.0", fontWeight: "600"}], "nav-link": ["16px", {lineHeight: "normal", fontWeight: "600"}]}}}};</script>
+<link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Syne:wght@400;700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@500;600&amp;display=swap" rel="stylesheet"><link class="" href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&amp;display=swap" rel="stylesheet"></head>
+<body class="bg-background text-on-background font-body-lg overflow-x-hidden">
+<!-- 1. HEADER -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant w-full">
+<div class="flex justify-between items-center px-container-margin w-full max-w-7xl mx-auto py-2"><a class="flex items-center shrink-0 mr-8" href="{{DATA:SCREEN:SCREEN_15}}">
+<div class="w-auto flex items-center h-10"><img alt="Addikt Logo" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida/AP1WRLsFCxYE7eK95VjbH3aJcV9rRhANBoUUCv7x8BO5Kfou2x8qWh8LCx_zkxtnKlpIlOjEr7QHT44RKjog11KpaIN2KWRm-uBYdfREmd9YpDCforBbbIuCCfC_qUAiOMu3-kYtcxN5SCNjDwKCx0y7Mn5kpDTcEj9vSGEM7O9Hkk6cDUfUDbY-Uu1m_Vnbrq3sT1owXlL8seOU1IJSXplqDmMdmIwqFydCcS7LtrtvmLC-COAL5FZR7QaVzQ"></div>
+</a>
+<nav class="hidden md:flex items-center gap-6 flex-1"><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Femmes</a><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Hommes</a><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Enfants</a><a class="font-nav-link text-nav-link text-on-surface hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Marques</a><a class="font-nav-link text-nav-link text-accent-orange font-bold hover:opacity-70 transition-opacity" href="#" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 500;">Vendre</a></nav><div class="hidden lg:flex flex-1 max-w-md mx-8 relative items-center">
+<div class="relative w-full">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2 px-6 pr-12 text-sm font-body-sm focus:outline-none focus:border-accent-orange transition-colors" placeholder="Cherchez ce que vous voulez" type="text">
+<button class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-accent-orange text-white p-1.5 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Shopping Bag" class="hover:text-accent-orange transition-colors">
+<svg class="w-6 h-6" data-name="Calque 2" id="Calque_2" viewBox="0 0 38.89 34.95" xmlns="http://www.w3.org/2000/svg"><g data-name="Calque 1" id="Calque_1-2"><g><path d="M7.13,34.95h24.63c2.11,0,4.1-.93,5.46-2.54,1.36-1.61,1.93-3.73,1.57-5.8l-3.54-20.43s-.03-.07-.04-.11c-.02-.08-.05-.15-.08-.22-.04-.09-.09-.18-.15-.26-.04-.06-.09-.12-.14-.17-.08-.08-.17-.14-.26-.2-.04-.03-.07-.06-.11-.08l-.93-.46-.6-3.48c0-.05-.04-.09-.05-.14-.02-.08-.05-.15-.08-.22-.05-.1-.1-.19-.17-.28-.03-.04-.04-.08-.07-.12-.02-.02-.04-.03-.06-.04-.09-.08-.19-.15-.29-.21-.05-.03-.1-.07-.15-.09-.12-.05-.25-.07-.38-.08-.05,0-.09-.03-.14-.03,0,0-.01,0-.02,0H7.38s-.01,0-.02,0c-.05,0-.1,0.02-.15,0.03-.13,0.02-.25,0.03-.36,0.08-.06,0.02-.1,0.06-.15,0.09-.1,0.06-.21,0.12-.29,0.21-.02,0.02-.04,0.02-.06,0.04-.03,0.03-.05,0.08-.07,0.12-.07,0.09-.13,0.18-.17,0.28-.03,0.07-.06,0.14-.08,0.22-.01,0.05-.04,0.09-.05,0.14l-.6,3.48-.93,0.46s-.07,0.06-.11,0.08c-.1,0.06-.18,0.12-.26,0.2-.05,0.05-.1,0.11-.14,0.17-.06,0.08-.1,0.17-.15,0.26-.03,0.07-.06,0.14-.08,0.22-.01,0.04-.03,0.07-.04,0.11L.11,26.61c-.36,2.07.21,4.19,1.57,5.8,1.36,1.62,3.35,2.54,5.46,2.54h0ZM10.99,2.89h0s16.93,0,16.93,0h0c-.34.33-.5.8-.43,1.26.05.33.21.62.45.84H10.97c.24-.22.4-.51.45-.84.07-.46-.09-.93-.43-1.26h0ZM2.95,27.1L6.28,7.87h26.33l3.34,19.23c.21,1.23-.13,2.49-.93,3.45-.81.96-2,1.52-3.25,1.52H7.13c-1.26,0-2.44-.55-3.25-1.52-.81-.96-1.15-2.22-.93-3.45h0Z" fill="currentColor"></path><path d="M19.45,21.41c4.74,0,8.6-3.86,8.6-8.6,0-.8-.64-1.44-1.44-1.44s-1.44.64-1.44,1.44c0,3.15-2.56,5.72-5.72,5.72s-5.72-2.56-5.72-5.72c0-.8-.64-1.44-1.44-1.44s-1.44.64-1.44,1.44c0,4.74,3.86,8.6,8.6,8.6Z" fill="currentColor"></path></g></g></svg>
+</button>
+<button class="bg-primary text-on-primary font-button-text text-button-text px-6 py-2 rounded-full hover:bg-accent-blue transition-colors hidden sm:block" style="font-family: &quot;Google Sans Medium&quot;, sans-serif;">
+                    Se connecter
+                </button>
+<button class="bg-surface-container text-primary font-button-text text-button-text px-6 py-2 rounded-full hover:bg-surface-variant transition-colors hidden sm:block">
+                    S'inscrire
+                </button>
+</div>
+</div>
+</header>
+<main>
+<!-- 2. HERO SECTION -->
+<section class="bg-accent-orange w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-16 mx-auto max-w-[98%] mt-4">
+<!-- Background Sparkles -->
+<div class="max-w-7xl mx-auto w-full px-container-margin grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 items-start">
+<div class="flex flex-col justify-center items-start pt-8 md:pt-0">
+<h1 class="text-headline-xl text-on-primary leading-[0.9] mb-8 font-headline-xl" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 900;">Trouve tes <br><span class="text-accent-yellow">pépites</span></h1>
+<div class="relative bg-black/10 hover:bg-black/20 backdrop-blur-sm rounded-full p-1.5 flex items-center transition-colors duration-300 border border-white/20 w-56">
+<div class="absolute left-1.5 top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-full transition-transform duration-300 ease-in-out shadow-sm" id="slider-indicator" style="transform: translateX(100%);"></div>
+<button class="relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 uppercase tracking-wide text-sm py-1 text-white" id="btn-acheter" onclick="window.location.href='{{DATA:SCREEN:SCREEN_15}}'">
+                            Acheter
+                        </button>
+<button class="relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 uppercase tracking-wide text-sm py-1 text-primary" id="btn-vendre" onclick="window.location.href='{{DATA:SCREEN:SCREEN_5}}'" style="font-family: &quot;Mona Sans Expanded&quot;, sans-serif; font-weight: 700;">
+                            Vendre
+                        </button>
+</div>
+</div>
+<div class="relative h-[350px] flex justify-center items-center"><div class="absolute w-56 h-72 transform -rotate-[15deg] -translate-x-20 overflow-hidden" style="background-color: rgb(249, 249, 249); border-radius: 22px;"></div><div class="absolute w-56 h-72 transform rotate-[5deg] z-10 translate-y-6 overflow-hidden" style="background-color: rgb(255, 206, 84); border-radius: 22px;"></div><div class="absolute w-56 h-72 transform rotate-[15deg] translate-x-24 -translate-y-4 overflow-hidden z-20" style="background-color: rgb(239, 71, 111); border-radius: 22px;"></div></div>
+</div>
+</section>
+<!-- ADVERTISING CAROUSEL -->
+<!-- SIMPLICITY SECTION -->
+<section class="bg-surface-container-lowest py-section-gap px-container-margin">
+<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="order-2 md:order-1 flex justify-center">
+<!-- Phone Mockup Placeholder -->
+<div class="relative w-[300px] h-[600px] border-8 border-primary rounded-[3rem] overflow-hidden shadow-xl bg-surface">
+<div class="absolute top-0 w-full h-8 bg-primary rounded-b-3xl flex justify-center items-end pb-1">
+<div class="w-20 h-4 bg-primary-container rounded-full"></div>
+</div>
+<div class="p-6 pt-12 h-full flex flex-col gap-4">
+<div class="w-full h-48 bg-surface-container-high rounded-xl mb-4 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-outline">add_a_photo</span>
+</div>
+<div class="h-4 bg-surface-container-high rounded w-3/4"></div>
+<div class="h-4 bg-surface-container-high rounded w-1/2"></div>
+<div class="mt-auto space-y-2">
+<div class="h-10 bg-primary rounded-full w-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="order-1 md:order-2 space-y-12"><h2 class="text-headline-lg text-primary mb-8" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Addikt rend la <br>vente simple</h2>
+<div class="flex gap-4 items-start">
+<span class="material-symbols-outlined text-4xl text-primary mt-1">money_off</span>
+<div>
+<h3 class="font-headline-md text-primary mb-2" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Aucun frais de vente</h3>
+<p class="font-body-lg text-on-surface-variant" style="font-family: &quot;Google Sans&quot;, sans-serif;">Garde 100% de ce que tu gagnes. Zéro commission sur tes ventes.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<span class="material-symbols-outlined text-4xl text-primary mt-1">timer</span>
+<div>
+<h3 class="font-headline-md text-primary mb-2" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Publie en quelques secondes</h3>
+<p class="font-body-lg text-on-surface-variant" style="font-family: &quot;Google Sans&quot;, sans-serif;">Prends une photo, ajoute un prix, et c'est en ligne. C'est aussi simple que ça.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<span class="material-symbols-outlined text-4xl text-primary mt-1">forum</span>
+<div>
+<h3 class="font-headline-md text-primary mb-2" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Contact direct avec l'acheteur</h3>
+<p class="font-body-lg text-on-surface-variant" style="font-family: &quot;Google Sans&quot;, sans-serif;">Négocie et organise la remise en main propre directement via notre messagerie sécurisée.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<span class="material-symbols-outlined text-4xl text-primary mt-1">verified_user</span>
+<div>
+<h3 class="font-headline-md text-primary mb-2" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Vends avec confiance</h3>
+<p class="font-body-lg text-on-surface-variant" style="font-family: &quot;Google Sans&quot;, sans-serif;">Notre équipe de modération veille à ce que la communauté reste sûre et respectueuse.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section class="w-full px-container-margin py-8"><div class="max-w-7xl mx-auto overflow-hidden h-[300px] flex flex-col md:flex-row border-0" style="border-radius: 35px;"><div class="w-full md:w-1/3 p-10 flex flex-col justify-center items-start relative z-20 transition-colors duration-500 bg-accent-purple" id="carousel-left-content"><div id="carousel-text-content"><h2 class="text-on-primary mb-4 leading-tight text-[24px]" id="carousel-title" style="font-family: 'Zalando Sans Expanded', sans-serif; font-weight: 700;">Fresh DROP</h2><p class="font-body-sm text-on-primary/90 mb-8 max-w-[240px]" id="carousel-subtitle">Découvrez les pépites vintage sélectionnées pour vous.</p></div><button class="bg-on-primary text-primary font-button-text text-button-text px-8 py-3 rounded-full hover:bg-accent-yellow transition-colors" id="carousel-button">Explorer</button></div><div class="w-full md:w-2/3 bg-surface-container-low relative group"><div class="absolute inset-0 w-full h-full"><div class="carousel-slide absolute inset-0 opacity-100 transition-opacity duration-500" data-slide="0" style="opacity: 0; z-index: 0;"><img alt="Slide 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLuV88NiMCJ8lSYAwdRuhIHvakHFy15yBAotJWDVdG7M6g5KY5EoZ2-cDwOv_oAhOoujDgCnnpvOzLUONoSSypDxGu6EMWtCX73rWYzjUeNReKqJxKfo7LMfSe0su3P2EM-bmVziydjKsHuxkb99UT-xLJDHVHpD_JmeCmG_5LRNeH7D78WGJQrJVJeTTFVE0-msqBMq8AKQQ2gVn5ZrwlkDrG4l2TGKX9a_kqXMM3AGzvQEeQjjLVouw4Y"></div><div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500" data-slide="1" style="opacity: 1; z-index: 10;"><img alt="Slide 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLub-mgZ8ZLUHgztvgCui7JMF74GEcz_bClOIMIQM4dKqNNnAV_y2KgJUcvSjyoQxyQaPt6YAUQLkq-ghxPA3ecWeP9T8wAS8d6CoBej1aNcl6feuIXzV9CFJxcRj80AipOXlNHhIPm-59pmcOlrpgyK6T_uSUUSyPggdSn0sHLhwv8GV4LI-gDMGuATm7pUjzLg1qI8zSWq-YyEkYlDpMUZSKfUau9tUKt78YdmQdk92erxgGZIminITCE"></div><div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500" data-slide="2" style="opacity: 0; z-index: 0;"><img alt="Slide 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLvRvQMpA_I4xc-9ci1zCeFDz9FyLlkJ0TikjR7VrqEOvV2fiwaVXrszhaBdv68vyeKi8tPIP47zUPrDSj9eEOI0PnzwuGF8aQi0yJEpOxw_MyJZzeMtfseKZbErIIoLjtj0jenuzb1sjsN7XKkwelFQoJKRnLhigev0K4zxmBeI6hiil5fQc5R494T8HFN_6ErAWSorg7M-mr44iWgsFoDO-xp2ZbY1Scc3Z81_6dlHA0Em190ZUdCajbI"></div></div><button class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-on-primary text-primary rounded-full flex items-center justify-center shadow-lg hover:bg-accent-yellow transition-colors z-30" id="next-slide"><span class="material-symbols-outlined">arrow_forward</span></button><div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30"><button class="w-2.5 h-2.5 rounded-full dot active bg-on-primary/30" data-index="0"></button><button class="w-2.5 h-2.5 rounded-full dot bg-on-primary" data-index="1"></button><button class="w-2.5 h-2.5 rounded-full dot bg-on-primary/30" data-index="2"></button></div></div></div></section>
+<!-- POCKET BANNER -->
+<!-- TOP SELLERS SECTION -->
+<section class="py-section-gap px-container-margin bg-surface">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-primary mb-12" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Meet the Top Sellers</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Seller Card 1 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-outline-variant">
+<div class="grid grid-cols-4 gap-2 mb-4">
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest"></div>
+<div>
+<p class="font-bold text-sm">The Vintage Block</p>
+<p class="text-xs text-on-surface-variant">thevintageblock</p>
+</div>
+</div>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase">Shop</button>
+</div>
+</div>
+<!-- Seller Card 2 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-outline-variant">
+<div class="grid grid-cols-4 gap-2 mb-4">
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest"></div>
+<div>
+<p class="font-bold text-sm">Rolling In Style</p>
+<p class="text-xs text-on-surface-variant">rollinginstyle</p>
+</div>
+</div>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase">Shop</button>
+</div>
+</div>
+<!-- Seller Card 3 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-outline-variant">
+<div class="grid grid-cols-4 gap-2 mb-4">
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+<div class="aspect-square bg-surface-container-high rounded-lg"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest"></div>
+<div>
+<p class="font-bold text-sm">GET LOST THRIFTING</p>
+<p class="text-xs text-on-surface-variant">getlostthrifting</p>
+</div>
+</div>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase">Shop</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TESTIMONIALS SECTION -->
+<section class="py-section-gap px-container-margin bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-primary mb-12" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">What sellers say about Addikt</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+<p class="font-bold mb-4 text-primary">@eighthfloorvintage</p>
+<p class="text-on-surface-variant text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">"Addikt lets me share my style, give clothes a second life, and most importantly, helps me be a stay-at-home mom."</p>
+</div>
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+<p class="font-bold mb-4 text-primary">@jackthriftsiu</p>
+<p class="text-on-surface-variant text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">"I sell on Addikt because I love the simplicity of the user face and how easy it is to list items. This year I'm getting close to 10,000 sales!"</p>
+</div>
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+<p class="font-bold mb-4 text-primary">@hurricanevtg</p>
+<p class="text-on-surface-variant text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">"We sell on Addikt because the process is smooth and easy. Everything is very simple from listing to shipping."</p>
+</div>
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
+<p class="font-bold mb-4 text-primary">@isolatedvtg</p>
+<p class="text-on-surface-variant text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">"Selling on Addikt is the best side hustle you can do. No seller fees and you can take it as far as you want to!"</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CIRCULAR FASHION BANNER -->
+<section class="py-16 px-container-margin">
+<div class="max-w-7xl mx-auto rounded-[2rem] p-12 flex flex-col gap-8 items-start relative" style="background-color: rgb(226, 0, 32); background-image: none;">
+<h2 class="text-headline-md text-white" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif; font-weight: 700;">Keep fashion circular</h2>
+<button class="bg-primary text-white px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity">Sell now</button>
+<div class="absolute right-12 top-1/2 -translate-y-1/2 hidden md:block"><svg data-name="Calque 2" height="93" id="Calque_2" viewBox="0 0 241.67 225.99" width="100" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1 { fill: #fdffff; }.cls-2 { fill: #e20020; }</style></defs><g data-name="Calque 1" id="Calque_1-2"><g><path class="cls-2" d="M186.76,0l-3.77,84.84c-.09,1.64,1.45,2.88,3.03,2.45l50.37-16.84-31.05,52.64c-1.14.97-1.12,2.74.03,3.69l36.3,52.47-65.33-14.34c-1.35-.19-2.59.79-2.72,2.15l-8.12,58.93-31.24-39.17c-.64-1.43-2.46-1.88-3.69-.91l-71.02,33.86,34.31-62.99c.73-1.43-.12-3.17-1.7-3.46L0,139.09l101.83-31.91c1.32-.42,2.02-1.87,1.52-3.16l-16.73-60.59,51.26,37.53c1.16.86,2.82.51,3.53-.75L186.76,0Z"></path><path class="cls-1" d="M137.23,137.36c-4.85,19.44-15.42,34.06-23.62,32.65-8.2-1.41-10.91-18.32-6.06-37.76,4.85-19.44,15.42-34.06,23.62-32.65,8.2,1.41,10.91,18.32,6.06,37.76Z"></path><path class="cls-1" d="M175.3,135.99c-6,20.92-18.33,36.3-27.52,34.36s-11.78-20.47-5.77-41.39c6-20.92,18.33-36.3,27.52-34.36,9.19,1.94,11.78,20.47,5.77,41.39Z"></path></g></g></svg></div></div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="bg-primary text-white px-container-margin border-t-4 border-accent-orange pt-12 pb-4">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 py-8 mb-10 gap-8">
+<div class="col-span-1 md:col-span-4 flex justify-center mb-8">
+</div>
+<div>
+<h4 class="font-label-caps uppercase text-white/50 mb-6" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 700;">Addikt</h4>
+<ul class="space-y-4 font-body-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">
+<li class=""><a class="hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}">À propos</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Carrières</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Blog</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Impact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps uppercase text-white/50 mb-6" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 700;">Vendre</h4>
+<ul class="space-y-4 font-body-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">
+<li class=""><a class="hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}">Vendre sur Addikt</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Devenir vendeur vérifié</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Règles de vente</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps uppercase text-white/50 mb-6" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 700;">Aide</h4>
+<ul class="space-y-4 font-body-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">
+<li class=""><a class="hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}">Centre d'aide</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Sécurité</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Statut du service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps uppercase text-white/50 mb-6" style="font-family: &quot;Google Sans&quot;, sans-serif; font-weight: 700;">Légal</h4>
+<ul class="space-y-4 font-body-sm" style="font-family: &quot;Google Sans&quot;, sans-serif;">
+<li class=""><a class="hover:text-accent-orange transition-colors" href="{{DATA:SCREEN:SCREEN_15}}">Conditions générales</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Confidentialité</a></li>
+<li class=""><a class="hover:text-accent-orange transition-colors" href="#">Cookies</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4 pt-4">
+<p class="font-body-sm text-white/50" style="font-family: &quot;Google Sans&quot;, sans-serif;">© 2024 Addikt. Made in Dakar.</p>
+<div class="flex gap-6 text-white/50">
+<span class="material-symbols-outlined hover:text-white cursor-pointer transition-colors">public</span>
+<span class="material-symbols-outlined hover:text-white cursor-pointer transition-colors">share</span>
+</div>
+</div>
+</footer>
+<script>
+    function setToggle(option) {
+        const indicator = document.getElementById('slider-indicator');
+        const btnAcheter = document.getElementById('btn-acheter');
+        const btnVendre = document.getElementById('btn-vendre');
+
+        if (option === 'acheter') {
+            indicator.style.transform = 'translateX(0)';
+            btnAcheter.classList.remove('text-white');
+            btnAcheter.classList.add('text-primary');
+            btnVendre.classList.remove('text-primary');
+            btnVendre.classList.add('text-white');
+        } else {
+            indicator.style.transform = 'translateX(100%)';
+            btnVendre.classList.remove('text-white');
+            btnVendre.classList.add('text-primary');
+            btnAcheter.classList.remove('text-primary');
+            btnAcheter.classList.add('text-white');
+        }
+    }
+    
+    // Carousel script
+    const slidesData = [
+        { title: "Sneakers de la semaine", subtitle: "Les paires les plus recherchées, en stock maintenant.", button: "Shop now", bg: "bg-accent-blue" },
+        { title: "Fresh DROP", subtitle: "Découvrez les pépites vintage sélectionnées pour vous.", button: "Explorer", bg: "bg-accent-purple" },
+        { title: "Looks Wax", subtitle: "Le motif qui ne se démode jamais.", button: "Découvrir", bg: "bg-accent-orange" }
+    ];
+
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    const titleEl = document.getElementById('carousel-title');
+    const subtitleEl = document.getElementById('carousel-subtitle');
+    const btnEl = document.getElementById('carousel-button');
+    const leftContent = document.getElementById('carousel-left-content');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.style.opacity = i === index ? '1' : '0';
+            slide.style.zIndex = i === index ? '10' : '0';
+        });
+        
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('bg-on-primary/30', i !== index);
+            dot.classList.toggle('bg-on-primary', i === index);
+        });
+
+        titleEl.textContent = slidesData[index].title;
+        subtitleEl.textContent = slidesData[index].subtitle;
+        btnEl.textContent = slidesData[index].button;
+        
+        leftContent.className = 'w-full md:w-1/3 p-10 flex flex-col justify-center items-start relative z-20 transition-colors duration-500 ' + slidesData[index].bg;
+
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        let next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+    }
+
+    if(document.getElementById('next-slide')) {
+        document.getElementById('next-slide').addEventListener('click', nextSlide);
+    }
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => showSlide(i));
+    });
+
+    setInterval(nextSlide, 5000);
+</script>
+
+
+</body></html>

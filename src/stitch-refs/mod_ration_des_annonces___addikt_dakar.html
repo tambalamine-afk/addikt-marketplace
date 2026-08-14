@@ -1,0 +1,235 @@
+<!DOCTYPE html><html class="light" lang="fr" style="width: 1280px; height: 409px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Addikt Dakar - Gestion des Annonces</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#626263",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "outline-variant": "#cfc4c5",
+                        "on-error-container": "#93000a",
+                        "border-base": "#E5E5E5",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container": "#eeeeee",
+                        "inverse-primary": "#c6c6c6",
+                        "primary": "#000000",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#1b1b1b",
+                        "secondary-container": "#e1dfdf",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary": "#5e5e5e",
+                        "surface-dim": "#dadada",
+                        "background": "#f9f9f9",
+                        "surface-bright": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#5e5e5e",
+                        "on-surface-variant": "#4c4546",
+                        "tertiary-fixed": "#e2e2e2",
+                        "status-danger": "#FF2300",
+                        "surface-container-highest": "#e2e2e2",
+                        "outline": "#7e7576",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-background": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1a1c1c",
+                        "primary-container": "#1b1b1b",
+                        "on-primary-container": "#848484",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary-container": "#848484",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "secondary-fixed": "#e4e2e2",
+                        "on-secondary-fixed-variant": "#464747",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "inverse-surface": "#2f3131",
+                        "surface": "#FFFFFF",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "status-success": "#007782",
+                        "on-primary-fixed-variant": "#474747",
+                        "tertiary": "#000000",
+                        "status-warning": "#FFB800"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "sidebar-width": "240px",
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "sidebar-collapsed": "64px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "table-data": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "table-data": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased flex h-screen overflow-hidden">
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 flex flex-col border-r border-border-base bg-surface">
+<div class="h-16 flex items-center px-4 border-b border-border-base">
+<span class="font-headline-md text-headline-md font-bold text-primary truncate">ADDIKT DAKAR</span>
+</div>
+<nav class="flex-1 overflow-y-auto py-4">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+                Tableau de bord
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-semibold border-l-[3px] border-primary bg-surface-container-low font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="storefront">storefront</span>
+                Annonces
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+                Utilisateurs
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="report_problem">report_problem</span>
+                Signalements
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="article">article</span>
+                Contenu
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-highest transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+                Paramètres
+            </a>
+</nav>
+<div class="p-4 border-t border-border-base">
+<p class="font-label-sm text-label-sm text-secondary uppercase">Marketplace Admin</p>
+</div>
+</aside>
+<main class="flex-1 flex flex-col ml-sidebar-width h-full w-[calc(100%-theme(spacing.sidebar-width))]">
+<header class="h-16 w-full sticky top-0 z-40 bg-surface border-b border-border-base flex justify-between items-center px-container-padding">
+<h1 class="font-headline-lg text-headline-lg text-primary">Gestion des Annonces</h1>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-border-base rounded font-body-md text-body-md text-primary focus:border-primary focus:ring-0 focus:outline-none transition-colors h-10" placeholder="Rechercher..." type="text">
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-border-base cursor-pointer hover:bg-surface-container-lowest transition-all p-2 rounded">
+<img class="w-8 h-8 rounded-full object-cover bg-surface-variant" data-alt="A small, professional avatar portrait of a modern administrator. Neutral studio lighting, clean background, high resolution, sober corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm6w9dy-AcDMkPxkgxaubLOeffDtK4wOg0UAgI2TOPVy2XxQkD3FbzYzeS1QIcQu2epqwoWKV2ID3EnooUtaTkHnZpilfXsnWdumq_PazLh8vw04RELpmG4myzR0H8rbxJAGvnFKnMjiLyr3K92glUL5yUd7HXPZ1KsuHPvQO6wHaOVlfdzs497lKUBuV9ILXJFRJZOj7LmKC-f-IEtRhXqXvAO2LTgVyABW98BBjcfVDjlvjf8C_4">
+<span class="font-body-md text-body-md text-secondary">Admin Name</span>
+</div>
+</div>
+</header>
+<div class="p-container-padding flex-1 overflow-y-auto">
+<div class="bg-surface border border-border-base rounded-DEFAULT flex flex-col h-full">
+<div class="p-4 border-b border-border-base flex gap-4 bg-surface-container-lowest">
+<select class="bg-surface border border-border-base rounded font-body-md text-body-md text-primary h-10 px-3 py-0 focus:border-primary focus:ring-0 cursor-pointer min-w-[150px]">
+<option>Status: Tous</option>
+<option>En attente</option>
+<option>Publiées</option>
+<option>Retirées</option>
+</select>
+<select class="bg-surface border border-border-base rounded font-body-md text-body-md text-primary h-10 px-3 py-0 focus:border-primary focus:ring-0 cursor-pointer min-w-[150px]">
+<option>Catégorie: Toutes</option>
+<option>Hauts</option>
+<option>Chaussures</option>
+</select>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-low z-10 border-b border-border-base">
+<tr>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider w-16">Photo</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider">Titre</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider">Vendeur</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider">Prix</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider">Catégorie</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider">Date</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider">Statut</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider text-right w-48">Actions</th>
+</tr>
+</thead>
+<tbody class="font-table-data text-table-data text-on-surface">
+<tr class="border-b border-border-base hover:bg-background transition-colors">
+<td class="py-2 px-4">
+<img class="w-10 h-10 object-cover rounded bg-surface-variant border border-border-base" data-alt="A vintage Nike jacket, flat lay product photography on a pristine white background. Studio lighting, sharp focus, e-commerce style, clear details of the fabric and logo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo67_xZeePeZRGygWiaCh5kCHufLB6-IPjUXk73_fBWBsYlNOLl4QlP2xZokJx76f7lPwDkVYbkLEgWUzYeMkSSdd06CfnsE62j7nDButeBNOtwfH-8lW-wFErC9bCfYJh7av5l2Nc37QE4exbBsB4nqqvBLV0-he7ee-r9ADiBXnwk1EaabbvmhKsQ-c02WjdzuW1mNI_t2KfdLN4MgFA_Taftj0dN2wkcnlukw-ePm16iAKo0yGt">
+</td>
+<td class="py-2 px-4 font-medium text-primary">Veste Nike Vintage</td>
+<td class="py-2 px-4 text-secondary">@Vintagedakar</td>
+<td class="py-2 px-4">25.000 F</td>
+<td class="py-2 px-4">Hauts</td>
+<td class="py-2 px-4 text-secondary">12/05/2024</td>
+<td class="py-2 px-4">
+<div class="inline-flex items-center gap-2 bg-surface-container-low px-2 py-1 rounded border border-border-base">
+<span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
+                                        En attente
+                                    </div>
+</td>
+<td class="py-2 px-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 bg-surface border border-border-base text-primary rounded font-body-md text-body-md hover:border-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-status-success">check</span>
+                                            Approuver
+                                        </button>
+<button class="px-3 py-1.5 bg-surface border border-status-danger text-status-danger rounded font-body-md text-body-md hover:bg-error-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">close</span>
+                                            Rejeter
+                                        </button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-border-base hover:bg-background transition-colors">
+<td class="py-2 px-4">
+<img class="w-10 h-10 object-cover rounded bg-surface-variant border border-border-base" data-alt="A pair of Jordan 1 sneakers, crisp product photography on a clean white background. High key lighting, modern streetwear aesthetic, sharp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAodjjtZE0DIjd0B8D3P0fNjGgXhDg8YNDTycH_lKdP6rLuiv-Quhdl3g3QT_516SxS7iA6cMGBekG0oA6rUUA0G856vzYZFonT_QyyF-lbmtt-TkmBQw8x9gmW4xuqejp2jAzI8FmNQvo2KrBuZNIrR8is0ifQXABg_SvcpOdB1gWZ-Wa2XsqqlhFCyj4tFgMhEua9Y-3eaSIGy7qoMQR2-MY0OCkJ-STW3hvp5ygPXhaHPUYuyrbB">
+</td>
+<td class="py-2 px-4 font-medium text-primary">Sneakers Jordan 1</td>
+<td class="py-2 px-4 text-secondary">@DakarPulse</td>
+<td class="py-2 px-4">85.000 F</td>
+<td class="py-2 px-4">Chaussures</td>
+<td class="py-2 px-4 text-secondary">10/05/2024</td>
+<td class="py-2 px-4">
+<div class="inline-flex items-center gap-2 bg-surface-container-low px-2 py-1 rounded border border-border-base">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                                        Publiée
+                                    </div>
+</td>
+<td class="py-2 px-4 text-right">
+<button class="px-3 py-1.5 bg-surface border border-border-base text-secondary rounded font-body-md text-body-md hover:border-primary hover:text-primary transition-colors">
+                                        Voir
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<div id="snapdom-sandbox" data-snapdom-sandbox="true" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

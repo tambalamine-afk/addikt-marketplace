@@ -1,0 +1,195 @@
+<!DOCTYPE html><html class="light" lang="fr" style="width: 1280px; height: 672px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Mon Profil - Addikt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&amp;f[]=satoshi@400,500,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Flatit+Quiet+Sans:wght@100..900&amp;family=Monument+Extended:wght@100..900&amp;family=Zalando+Sans+Expanded:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        /* Fallback fonts if custom ones fail to load */
+        @font-face {
+            font-family: 'Monument Extended';
+            src: local('Arial Black');
+            font-weight: 800;
+        }
+        @font-face {
+            font-family: 'Zalando Sans Expanded';
+            src: local('Arial');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Flatit Quiet Sans';
+            src: local('Arial');
+            font-weight: 600;
+        }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"primary-fixed-dim": "#c6c6c6", "on-primary-fixed-variant": "#474747", "on-secondary": "#ffffff", "trust-grey": "#F2F2F2", "surface-variant": "#e2e2e2", "on-tertiary-container": "#848484", "tertiary-container": "#1b1b1b", "secondary-fixed-dim": "#c6c6c7", "surface-container-lowest": "#ffffff", secondary: "#5d5f5f", "surface-container-low": "#f3f3f3", "surface-container-highest": "#e2e2e2", "on-secondary-container": "#616363", "on-surface": "#1b1b1b", "surface-dim": "#dadada", "on-surface-variant": "#4c4546", "tertiary-fixed-dim": "#c6c6c6", "primary-container": "#1b1b1b", "outline-variant": "#cfc4c5", "error-container": "#ffdad6", outline: "#7e7576", "on-secondary-fixed": "#1a1c1c", "primary-fixed": "#e2e2e2", "surface-tint": "#5e5e5e", "tertiary-fixed": "#e2e2e2", "on-secondary-fixed-variant": "#454747", "on-primary-fixed": "#1b1b1b", surface: "#f9f9f9", error: "#ba1a1a", "accent-orange": "#FF4D00", "on-error": "#ffffff", "surface-bright": "#f9f9f9", primary: "#000000", background: "#f9f9f9", tertiary: "#000000", "on-primary": "#ffffff", "on-error-container": "#93000a", "secondary-container": "#dfe0e0", "inverse-surface": "#303030", "on-tertiary-fixed-variant": "#474747", "accent-yellow": "#FFD700", "accent-rose": "#FF6B8B", "inverse-primary": "#c6c6c6", "accent-blue": "#0099FF", "inverse-on-surface": "#f1f1f1", "surface-container-high": "#e8e8e8", "on-tertiary": "#ffffff", "surface-container": "#eeeeee", "accent-purple": "#BF80FF", "on-tertiary-fixed": "#1b1b1b", "on-primary-container": "#848484", "secondary-fixed": "#e2e2e2", "on-background": "#1b1b1b"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-margin": "24px", "section-gap": "80px", "trust-band-padding": "40px", "grid-gutter": "16px"}, fontFamily: {"label-caps": ["Flatit Quiet Sans"], "nav-link": ["Flatit Quiet Sans"], "headline-lg-mobile": ["Monument Extended"], "button-text": ["Flatit Quiet Sans"], "headline-md": ["Monument Extended"], "body-lg": ["Zalando Sans Expanded"], "body-sm": ["Zalando Sans Expanded"], "headline-xl": ["Monument Extended"], "headline-lg": ["Monument Extended"], headline: ["Monument Extended"], display: ["Monument Extended"], body: ["Zalando Sans Expanded"], label: ["Flatit Quiet Sans"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.2", fontWeight: "700"}], "nav-link": ["16px", {lineHeight: "normal", fontWeight: "600"}], "headline-lg-mobile": ["32px", {lineHeight: "1.1", fontWeight: "800"}], "button-text": ["14px", {lineHeight: "1.0", fontWeight: "600"}], "headline-md": ["24px", {lineHeight: "1.2", fontWeight: "800"}], "body-lg": ["18px", {lineHeight: "1.5", fontWeight: "400"}], "body-sm": ["14px", {lineHeight: "1.4", fontWeight: "400"}], "headline-xl": ["80px", {lineHeight: "1.0", letterSpacing: "-0.02em", fontWeight: "900"}], "headline-lg": ["48px", {lineHeight: "1.1", fontWeight: "800"}]}}}};</script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- Desktop Header (Added) -->
+<nav class="bg-surface dark:bg-surface-container-lowest text-primary dark:text-on-surface border-b border-outline-variant dark:border-outline sticky top-0 z-50 w-full bg-surface-container-lowest"><div class="flex justify-between items-center w-full px-container-margin py-4 max-w-[1200px] mx-auto"><div class="flex items-center space-x-8"><a class="flex items-center h-8" href="#"><svg class="h-8 md:h-10 w-auto" data-name="Calque 2" id="Calque_2" viewBox="0 0 712.2 262.81" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1 { fill: #fdffff; }.cls-2 { fill: #191919; }.cls-3 { fill: #e20020; }</style></defs><g data-name="Calque 1" id="Calque_1-2"><g><g><path class="cls-3" d="M217.19,0l-4.39,98.66c-.1,1.9,1.69,3.35,3.53,2.85l58.57-19.58-36.11,61.22c-1.32,1.13-1.3,3.18.04,4.29l42.21,61.02-75.98-16.68c-1.57-.22-3.01.92-3.17,2.5l-9.45,68.54-36.33-45.55c-.74-1.67-2.86-2.19-4.29-1.06l-82.59,39.38,39.9-73.25c.85-1.66-.14-3.68-1.97-4.03L0,161.75l118.42-37.11c1.54-.49,2.35-2.17,1.76-3.68l-19.46-70.46,59.61,43.65c1.35,1,3.27.59,4.1-.88L217.19,0Z"></path><path class="cls-1" d="M159.6,159.75c-5.64,22.61-17.94,39.61-27.47,37.97-9.53-1.64-12.69-21.3-7.05-43.92,5.64-22.61,17.94-39.61,27.47-37.97,9.53,1.64,12.69,21.3,7.05,43.92Z"></path><path class="cls-1" d="M203.86,158.15c-6.98,24.33-21.31,42.22-32,39.96s-13.7-23.81-6.71-48.13c6.98-24.33,21.31-42.22,32-39.96,10.69,2.26,13.7,23.81,6.71,48.13Z"></path></g><g><path class="cls-2" d="M317.71,196.65h28.52l-40.72-84.51h-31.01l-40.84,84.51h26.39l7.44-16.33h42.79l7.41,16.33ZM276.14,161.38l12.8-28.1,12.76,28.1h-25.56Z"></path><path class="cls-2" d="M404.23,112.14v31.03c-1.06-1.04-2.27-2.06-3.67-3.04-2.53-1.78-5.68-3.21-9.47-4.32-3.79-1.1-8.25-1.66-13.38-1.66-3.32,0-6.55.41-9.71,1.24-3.16.83-6.1,2.07-8.82,3.73s-5.13,3.75-7.22,6.27c-2.09,2.53-3.71,5.52-4.85,9-1.15,3.47-1.72,7.38-1.72,11.72,0,7.26,1.54,13.28,4.62,18.05,3.08,4.78,7.08,8.33,12.01,10.65s10.16,3.49,15.68,3.49c4.34,0,8.36-.45,12.07-1.36,3.71-.91,6.98-2.23,9.82-3.97,1.76-1.07,3.28-2.3,4.62-3.65v7.32h25.21v-84.51h-25.21ZM401.87,174.69c-.87,1.22-1.97,2.31-3.31,3.26-1.34.95-2.9,1.68-4.68,2.19-1.78.51-3.77.77-5.98.77-3.71,0-6.83-.69-9.35-2.07-2.52-1.38-4.4-3.2-5.62-5.44-1.22-2.25-1.84-4.64-1.84-7.16,0-1.58.22-3.08.65-4.5.43-1.42,1.1-2.74,2.01-3.97.91-1.22,2.03-2.31,3.37-3.25,1.34-.95,2.92-1.68,4.73-2.19,1.81-.51,3.83-.77,6.04-.77,3.71,0,6.79.69,9.23,2.07,2.45,1.38,4.28,3.18,5.51,5.39,1.22,2.21,1.83,4.62,1.83,7.22,0,1.5-.22,2.98-.65,4.44s-1.09,2.8-1.95,4.02Z"></path><path class="cls-2" d="M496.44,112.14v31.03c-1.06-1.04-2.27-2.06-3.67-3.04-2.53-1.78-5.68-3.21-9.47-4.32-3.79-1.1-8.25-1.66-13.38-1.66-3.32,0-6.55.41-9.71,1.24-3.16.83-6.1,2.07-8.82,3.73s-5.13,3.75-7.22,6.27c-2.09,2.53-3.71,5.52-4.85,9-1.15,3.47-1.72,7.38-1.72,11.72,0,7.26,1.54,13.28,4.62,18.05,3.08,4.78,7.08,8.33,12.01,10.65s10.16,3.49,15.68,3.49c4.34,0,8.36-.45,12.07-1.36,3.71-.91,6.98-2.23,9.82-3.97,1.76-1.07,3.28-2.3,4.62-3.65v7.32h25.21v-84.51h-25.21ZM494.07,174.69c-.87,1.22-1.97,2.31-3.31,3.26-1.34.95-2.9,1.68-4.68,2.19-1.78.51-3.77.77-5.98.77-3.71,0-6.83-.69-9.35-2.07-2.52-1.38-4.4-3.2-5.62-5.44-1.22-2.25-1.84-4.64-1.84-7.16,0-1.58.22-3.08.65-4.5.43-1.42,1.1-2.74,2.01-3.97.91-1.22,2.03-2.31,3.37-3.25,1.34-.95,2.92-1.68,4.73-2.19,1.81-.51,3.83-.77,6.04-.77,3.71,0,6.79.69,9.23,2.07,2.45,1.38,4.28,3.18,5.51,5.39,1.22,2.21,1.83,4.62,1.83,7.22,0,1.5-.22,2.98-.65,4.44s-1.09,2.8-1.95,4.02Z"></path><path class="cls-2" d="M533.72,196.65v-60.84h25.21v60.84h-25.21ZM533.84,129.77v-17.63h25.09v17.63h-25.09Z"></path><path class="cls-2" d="M624.32,164.22c-1.54-1.5-3.49-2.76-5.86-3.79l32.43-24.62h-25.57l-33,25.88,8.74-49.55h-21.66l-14.91,84.51h21.66l2.38-13.27,9.69-7.2c2.05-1.5,4.24-2.23,6.57-2.19,2.33.04,4.16,1.32,5.5,3.85l10.77,18.82h24.03l-15.86-25.68c-1.74-3-3.37-5.25-4.91-6.75Z"></path><path class="cls-2" d="M712.2,151.67v-15.86h-20.95v-16.45h-25.21v16.45h-13.97v15.86h13.97v24.15c0,6.55,1.97,11.66,5.92,15.33,3.95,3.67,9.23,5.51,15.86,5.51h24.38v-16.22h-12.19c-3.08,0-5.31-.79-6.69-2.37-1.38-1.58-2.07-3.75-2.07-6.51v-19.89h20.95Z"></path></g></g></g></svg></a><div class="hidden md:flex items-center space-x-6"><a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: 'Google Sans', sans-serif; font-weight: 600;">Femmes</a><a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: 'Google Sans', sans-serif; font-weight: 600;">Hommes</a><a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: 'Google Sans', sans-serif; font-weight: 600;">Enfants</a><a class="font-nav-link text-nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity duration-200" href="#" style="font-family: 'Google Sans', sans-serif; font-weight: 600;">Marques</a></div></div><div class="hidden lg:flex flex-1 max-w-md mx-8 relative items-center"><div class="relative w-full"><input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2 px-6 pr-12 text-sm font-body-sm focus:outline-none focus:border-accent-orange transition-colors" placeholder="Cherchez ce que vous voulez" type="text"><button class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-accent-orange text-white p-1.5 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity"><span class="material-symbols-outlined text-[20px]">search</span></button></div></div><div class="flex items-center space-x-4"><button aria-label="favorite" class="text-primary hover:opacity-80 transition-opacity duration-200"><span class="material-symbols-outlined">favorite</span></button><button aria-label="shopping_bag" class="text-primary hover:opacity-80 transition-opacity duration-200"><span class="material-symbols-outlined">shopping_bag</span></button><button aria-label="person" class="text-primary hover:opacity-80 transition-opacity duration-200"><span class="material-symbols-outlined">person</span></button><a class="hidden md:flex bg-primary text-on-primary px-6 py-2 rounded-full font-button-text text-button-text hover:bg-primary/90 transition-colors" href="#" style="font-family: 'Google Sans', sans-serif; font-weight: 600;">Vendre</a></div></div></nav>
+<!-- Mobile Top App Bar (Hidden on Desktop) -->
+<header class="md:hidden bg-surface border-b border-surface-variant flex justify-between items-center px-container-margin py-4 w-full sticky top-0 z-50">
+<a class="font-headline-md text-headline-md font-black text-primary italic" href="#">Addikt</a>
+<div class="flex gap-4">
+<button aria-label="shopping_cart">
+<span class="material-symbols-outlined text-primary hover:text-accent-orange transition-colors" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button aria-label="favorite">
+<span class="material-symbols-outlined text-primary hover:text-accent-orange transition-colors" data-icon="favorite">favorite</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 relative w-full">
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex flex-col h-[calc(100vh-81px)] w-64 sticky top-[81px] bg-white border-r border-surface-variant p-6 space-y-8 z-40 overflow-y-auto">
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-primary">Dakar Streetwear</h2>
+<p class="font-label-caps text-label-caps text-secondary mt-1">Membre depuis 2024</p>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li class="">
+<a class="flex items-center gap-3 bg-primary text-on-primary rounded-full px-4 py-2 hover:bg-trust-grey transition-all translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">Mon Profil</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="package">package</span>
+<span class="font-label-caps text-label-caps">Commandes</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-label-caps text-label-caps">Favoris</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-caps text-label-caps">Paiements</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-secondary hover:text-primary px-4 py-2 hover:bg-trust-grey transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+<span class="font-label-caps text-label-caps">Sécurité</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto flex flex-col gap-4">
+<button class="bg-primary text-on-primary font-button-text text-button-text py-3 px-6 rounded-full w-full hover:bg-inverse-surface transition-colors">
+                Vendre un article
+            </button>
+<ul class="flex flex-col gap-2 border-t border-surface-variant pt-4">
+<li class="">
+</li>
+<li class="">
+<a class="flex items-center gap-3 text-accent-rose hover:text-error px-4 py-2 hover:bg-error-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-caps text-label-caps">Déconnexion</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-4xl mx-auto flex flex-col">
+<!-- Top Banner & Profile Header -->
+<div class="relative w-full">
+<div class="h-32 md:h-48 bg-accent-orange w-full relative overflow-hidden">
+<!-- Decorative Graphic -->
+<div class="absolute -bottom-10 -right-10 opacity-20">
+</div>
+</div>
+<div class="px-container-margin relative mb-8 flex flex-col md:flex-row gap-6 items-start md:items-end -mt-10">
+<div class="relative inline-block">
+<img class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-background object-cover bg-surface-variant" data-alt="A close up portrait of a young, stylish urbanite in Dakar wearing minimalist streetwear. The lighting is bright and high-contrast, fitting a modern brutalist UI design. White background, crisp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMwgCBKeBi4VqjSu6tIPJ8U80yA_W16AqOQ2omB13pitrAbUhsfRR0Q4YeZmFtOIYhXYXIfT8GNV2JUUUmJ8vjAWjOYSG_CW1lUiCvOUOr19pl17wlc_5Pq3yPYPw9bQ-e0QF-KLSvKZ07uRiq1efLZCrNrfT2RwYy_Q9IHIpaBnvVU_pFAgFTMKGw9Fejh9cFm88PqEkN-izHuhMr1-J8ckaePIkRe5mmmDdT3KAQb2c1-hePg4GQ">
+<button aria-label="Edit Profile" class="absolute bottom-0 right-0 bg-primary text-on-primary rounded-full p-2 border-2 border-background hover:bg-accent-orange transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="flex-1">
+<h1 class="text-headline-md md:text-headline-lg text-primary font-body-lg font-bold" style="font-family: &quot;Zalando Sans Expanded&quot;, sans-serif;">Ibrahima N.</h1>
+<div class="flex flex-wrap items-center gap-4 mt-2">
+<span class="font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
+                            Dakar Plateau
+                        </span>
+<span class="font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="calendar_month">calendar_month</span>
+                            Membre depuis Janvier 2024
+                        </span>
+<span class="font-body-sm text-body-sm text-primary flex items-center gap-1 bg-accent-yellow px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-caps text-label-caps text-primary">4.8</span>
+</span>
+</div>
+</div>
+<div class="w-full md:w-auto mt-4 md:mt-0">
+<button class="w-full md:w-auto border-2 border-primary text-primary font-button-text text-button-text py-2 px-6 rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+                        Modifier mon profil
+                    </button>
+</div>
+</div>
+</div>
+<!-- Stats Grid (Bento Style) -->
+<div class="px-container-margin mb-12">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-white border border-surface-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-trust-grey transition-colors">
+<span class="font-headline-md text-headline-md text-primary">42</span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Articles vendus</span>
+</div>
+<div class="bg-white border border-surface-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-trust-grey transition-colors">
+<span class="font-headline-md text-headline-md text-primary">95%</span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Taux de réponse</span>
+</div>
+<div class="bg-primary rounded-lg p-6 flex flex-col items-center justify-center shadow-lg transform -rotate-2 hover:rotate-0 transition-transform">
+<span class="font-headline-md text-headline-md text-accent-yellow">0 F</span>
+<span class="font-label-caps text-label-caps text-on-primary mt-1">Solde</span>
+</div>
+</div>
+</div>
+<!-- Vertical Navigation Menu -->
+<div class="px-container-margin pb-24"><div class="flex flex-col gap-8">
+<!-- Followers/Following Stats -->
+<!-- Tab Navigation -->
+<div class="flex flex-col">
+<div class="flex gap-8 border-b border-surface-variant">
+<button class="pb-4 border-b-2 border-primary">
+<span class="font-headline-md text-headline-md text-primary">Selling</span>
+</button>
+<button class="pb-4 hover:text-primary transition-colors">
+<span class="font-headline-md text-headline-md text-secondary">Likes</span>
+</button>
+<button class="pb-4 hover:text-primary transition-colors">
+<span class="font-headline-md text-headline-md text-secondary">Saves</span>
+</button>
+</div>
+</div>
+</div></div>
+</main>
+</div>
+<!-- Mobile Bottom Navigation (Visible only on mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-surface-variant flex justify-around items-center h-16 z-50">
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary border-t-2 border-primary w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+</a>
+</nav>
+<div aria-hidden="true" data-snapdom-sandbox="true" id="snapdom-sandbox" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

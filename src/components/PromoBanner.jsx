@@ -44,7 +44,7 @@ export default function PromoBanner() {
   return (
     <section className="w-full px-container-margin py-8">
       <div 
-        className="max-w-7xl mx-auto h-[260px] overflow-hidden flex flex-col md:flex-row shadow-sm relative group rounded-[40px]"
+        className="max-w-7xl mx-auto h-[260px] overflow-hidden flex flex-col md:flex-row shadow-sm relative group rounded-[30px]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

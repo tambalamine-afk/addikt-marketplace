@@ -55,14 +55,13 @@ export default function SellerProfile() {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex justify-center gap-4 mb-12">
           <button className="px-8 py-3 rounded-full border border-primary text-primary text-sm hover:bg-surface-container transition-colors duration-200 min-w-[140px] font-bold font-label-caps uppercase">
             Suivre
           </button>
-          <button className="px-8 py-3 rounded-full bg-primary text-on-primary text-sm hover:opacity-90 transition-opacity duration-200 min-w-[140px] font-bold font-label-caps uppercase">
+          <Link to="/messages/vendeur" className="px-8 py-3 rounded-full bg-primary text-on-primary text-sm hover:opacity-90 transition-opacity duration-200 min-w-[140px] font-bold font-label-caps uppercase flex items-center justify-center">
             Message
-          </button>
+          </Link>
         </div>
 
         {/* Navigation Tabs */}
@@ -83,10 +82,13 @@ export default function SellerProfile() {
             { title: "Sneakers Retro 90s", price: "35 000 FCFA", size: "42", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAOY-xslynltgfu1qq_nUMrzwFaAlw4Y6yj_DXtrd7XBGPZCzlyCDW1EG64BrvMBv31n0TKOSR43OoBJWFVsStRLgOvkcGt_qFgosHa74NVORyR7hPFOq2WFVvIzRgWz-e6cLCmIMAYIbBAstbRvBGHnXWAwVubUDohnv14J7IO8oGIkjsc6OlJW6wCcN9GdNQB9bEMVPfXKZsD8xDrfTUeuGy_hwGukv2Btp5fpeOs0DFFmFYgmIBn" },
             { title: "Beanie Orange Fluo", price: "5 000 FCFA", size: "TU", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCyO-kN_m73p3pqqhCbnRdmxNe9FtQeDDquiaAzsTzlzoiejxxA8D1l_-au8Y4pqOihWXWIGkMPUkmWMCDL0acGida0kHeMsCeR_ZR1ugeGaqMhLtvPCwPVhTHNiQXLjckfGXwo58IVUirP5fSRw-0l0fWCEyL5lSx2LjRSmDlp4coyJoOdRG6kuooGsPLPlg0YhOFWAlB1e5l9JTTbQ6AspAXH1dDHZglq2EuwbppxNfl5ZfeBVwzW" }
           ].map((item, idx) => (
-            <div key={idx} className="group relative flex flex-col cursor-pointer">
+            <Link key={idx} to={`/product/${idx + 20}`} className="group relative flex flex-col cursor-pointer">
               <div className="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
                 <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={item.title} src={item.img} />
-                <button className="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm p-1.5 rounded-full text-secondary hover:text-accent-rose transition-colors">
+                <button 
+                  onClick={(e) => { e.preventDefault(); }}
+                  className="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm p-1.5 rounded-full text-secondary hover:text-accent-rose transition-colors"
+                >
                   <span className="material-symbols-outlined text-[20px]">favorite</span>
                 </button>
                 <div className="absolute bottom-3 left-3 bg-surface-container-lowest px-2 py-1 rounded text-xs font-bold uppercase">
@@ -99,7 +101,7 @@ export default function SellerProfile() {
                   <p className="text-[16px] font-semibold text-on-surface mt-1">{item.price}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

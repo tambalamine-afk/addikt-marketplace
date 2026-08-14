@@ -1,9 +1,12 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 
 export default function Layout({ searchQuery, setSearchQuery, onSell, cartCount, likedCount }) {
+  const location = useLocation();
+  const isPublishPage = location.pathname === '/publish';
+
   return (
     <div className="app min-h-screen flex flex-col">
       <Header
@@ -16,7 +19,7 @@ export default function Layout({ searchQuery, setSearchQuery, onSell, cartCount,
       <main className="flex-1">
         <Outlet />
       </main>
-      <Footer />
+      {!isPublishPage && <Footer />}
     </div>
   );
 }

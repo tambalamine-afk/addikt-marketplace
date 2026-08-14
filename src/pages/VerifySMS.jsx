@@ -64,11 +64,11 @@ export default function VerifySMS() {
 
       {/* Main Content Area */}
       <main className="flex-grow flex flex-col justify-center items-center px-container-margin pt-20 pb-10 max-w-md mx-auto w-full relative z-10">
-        <div className="w-full mb-10">
-          <h1 className="text-[32px] text-primary uppercase leading-tight mb-4 tracking-tighter" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>
-            Entre le code<br/>reçu par SMS
+        <div className="w-full mb-10 min-w-max flex flex-col items-center text-center">
+          <h1 className="font-body-lg text-headline-md text-primary uppercase leading-tight mb-4 tracking-tighter font-bold whitespace-nowrap">
+            Entre le code reçu par SMS
           </h1>
-          <p className="text-[18px] text-on-surface-variant flex flex-col sm:flex-row sm:items-center gap-2">
+          <p className="font-body-lg text-body-lg text-on-surface-variant flex flex-col sm:flex-row sm:items-center gap-2 justify-center">
             <span>Code envoyé au <span className="font-bold text-primary">+221 77 123 45 67</span></span>
             <Link to="/login" className="text-accent-blue font-bold hover:underline">Modifier</Link>
           </p>
@@ -84,8 +84,7 @@ export default function VerifySMS() {
                 value={digit}
                 onChange={(e) => handleChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
-                className="w-12 h-14 sm:w-16 sm:h-16 text-center text-[24px] text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors"
-                style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}
+                className="w-12 h-14 sm:w-16 sm:h-16 text-center font-headline-md text-headline-md text-primary bg-trust-grey border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg outline-none transition-colors"
                 inputMode="numeric"
                 maxLength={1}
                 type="text"
@@ -100,12 +99,11 @@ export default function VerifySMS() {
           <button 
             onClick={handleResend}
             disabled={timeLeft > 0}
-            className={`text-[14px] transition-colors ${timeLeft > 0 ? 'text-secondary opacity-50 cursor-not-allowed' : 'text-primary font-bold hover:opacity-80'}`}
-            style={{ fontFamily: '"Flatit Quiet Sans", sans-serif', fontWeight: 600 }}
+            className={`font-button-text text-button-text transition-colors ${timeLeft > 0 ? 'text-secondary opacity-50 cursor-not-allowed' : 'text-primary font-bold hover:opacity-80'}`}
           >
             Renvoyer le code
           </button>
-          <span className={`text-[14px] font-bold ${timeLeft > 0 ? 'text-primary' : 'text-secondary'}`}>
+          <span className={`font-body-sm text-body-sm font-bold ${timeLeft > 0 ? 'text-primary' : 'text-secondary'}`}>
             00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
           </span>
         </div>
@@ -114,8 +112,7 @@ export default function VerifySMS() {
         <div className="w-full mt-auto">
           <button 
             onClick={handleVerify}
-            className="w-full py-4 bg-tertiary text-on-tertiary text-[14px] rounded-full uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all"
-            style={{ fontFamily: '"Flatit Quiet Sans", sans-serif', fontWeight: 600 }}
+            className="w-full py-4 bg-tertiary text-on-tertiary font-button-text text-button-text rounded-full uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all"
           >
             Vérifier
           </button>
