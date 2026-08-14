@@ -1,9 +1,97 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
+const SUGGESTIONS = [
+  "robe wax taille M",
+  "sneakers Nike 42",
+  "boubou homme XL",
+  "jean vintage taille 38",
+  "sac à main cuir",
+  "veste jean femme",
+  "ensemble Ankara",
+  "chemise streetwear",
+  "chaussures New Balance",
+  "jupe midi wax"
+];
+
+function TypewriterSearch() {
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  
+  const [suggestionIndex, setSuggestionIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isFocused || inputValue) return;
+
+    let timer;
+    const currentSuggestion = SUGGESTIONS[suggestionIndex];
+
+    if (isPaused) {
+      timer = setTimeout(() => {
+        setIsPaused(false);
+        setIsDeleting(true);
+      }, 1800); // pause 1.8s
+    } else if (isDeleting) {
+      if (charIndex > 0) {
+        timer = setTimeout(() => setCharIndex(c => c - 1), 25);
+      } else {
+        setIsDeleting(false);
+        setSuggestionIndex((prev) => (prev + 1) % SUGGESTIONS.length);
+      }
+    } else {
+      if (charIndex < currentSuggestion.length) {
+        timer = setTimeout(() => setCharIndex(c => c + 1), 50); // 50ms typing speed
+      } else {
+        setIsPaused(true);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [charIndex, isDeleting, isPaused, suggestionIndex, isFocused, inputValue]);
+
+  return (
+    <div className="relative w-full">
+      <input 
+        type="text" 
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        aria-label="Rechercher un article, une marque, un style…"
+        className="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2.5 px-11 text-[13px] sm:text-sm focus:outline-none focus:border-primary transition-colors"
+        style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 400 }}
+      />
+      <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">search</span>
+      
+      {!(isFocused || inputValue) && (
+        <label 
+          className="absolute left-11 top-1/2 -translate-y-1/2 pointer-events-none flex items-center text-[13px] sm:text-sm text-outline/70"
+          style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 400 }}
+        >
+          {SUGGESTIONS.map((sugg, idx) => (
+            <span key={idx} style={{ display: idx === suggestionIndex ? 'inline' : 'none' }}>
+              {idx === suggestionIndex ? sugg.substring(0, charIndex) : ''}
+            </span>
+          ))}
+          <style>{`
+            @keyframes blink {
+              50% { opacity: 0; }
+            }
+          `}</style>
+          <span className="inline-block w-[1.5px] h-[1.2em] bg-outline/70 ml-[2px]" style={{ animation: 'blink 0.8s step-start infinite' }}></span>
+        </label>
+      )}
+    </div>
+  );
+}
 
 export default function Header() {
   const location = useLocation();
   const isPublishPage = location.pathname === '/publish';
+  const isLoggedIn = true; // Simuler l'état connecté pour l'UI
 
   return (
     <header className="bg-surface sticky top-0 z-50 border-b border-outline-variant w-full">
@@ -19,14 +107,17 @@ export default function Header() {
         
         {/* Search Bar */}
         <div className="hidden lg:flex flex-1 max-w-2xl mx-8 relative items-center">
-          <div className="relative w-full">
-            <input type="text" placeholder="Rechercher des articles ou marques" className="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2.5 px-11 text-sm font-body-sm focus:outline-none focus:border-primary transition-colors" />
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
-          </div>
+          <TypewriterSearch />
         </div>
 
         {/* Icons and Auth Buttons */}
         <div className="flex items-center gap-4">
+          {/* Icône Messagerie (visible si connecté) */}
+          {isLoggedIn && (
+            <Link to="/messages" aria-label="Messages" className="text-primary hover:opacity-80 transition-opacity duration-200 flex items-center">
+              <span className="material-symbols-outlined text-[24px]">mail</span>
+            </Link>
+          )}
           <button aria-label="Favorites" className="text-primary hover:opacity-80 transition-opacity duration-200 flex items-center">
             <span className="material-symbols-outlined text-[24px]">favorite_border</span>
           </button>
@@ -38,12 +129,20 @@ export default function Header() {
             <Link to="/publish" className="bg-primary text-on-primary border border-primary px-5 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-opacity">
               Vendre
             </Link>
-            <Link to="/register" className="bg-white border border-outline-variant text-primary px-5 py-2 rounded-full font-bold text-sm hover:bg-surface-variant transition-colors">
-              S'inscrire
-            </Link>
-            <Link to="/login" className="text-primary px-3 py-2 font-bold text-sm hover:underline">
-              Se connecter
-            </Link>
+            {!isLoggedIn ? (
+              <>
+                <Link to="/register" className="bg-white border border-outline-variant text-primary px-5 py-2 rounded-full font-bold text-sm hover:bg-surface-variant transition-colors">
+                  S'inscrire
+                </Link>
+                <Link to="/login" className="text-primary px-3 py-2 font-bold text-sm hover:underline">
+                  Se connecter
+                </Link>
+              </>
+            ) : (
+              <Link to="/profile/me" className="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant hover:opacity-80 transition-opacity ml-2">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="Mon Profil" className="w-full h-full object-cover" />
+              </Link>
+            )}
           </div>
         </div>
       </div>

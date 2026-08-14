@@ -180,11 +180,11 @@ export default function LandingPage() {
 
             {/* 4. Button */}
             {toggleState === 'acheter' ? (
-              <button className="bg-primary text-white px-8 py-3.5 rounded-sm font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+              <button className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
                 Découvrir
               </button>
             ) : (
-              <button className="bg-primary text-white px-8 py-3.5 rounded-sm font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+              <button className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
                 Sell now
               </button>
             )}
@@ -360,7 +360,12 @@ export default function LandingPage() {
                   <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
                     <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtwTDV42ZbLuj6QnBR9UKGkIimOcFACHMlO1CrulKBFpUaODHdGeQmQoH1PEfulBizSgnWvcfEL-5xd3vS-NHbshmy_vhcmNfz4xu2D8ICH-g2mwtZk0zxFg5WMKUygm_WCqWTvSKXB3LEi_myz00VAIc8lZqkONlQS6_FHTv1aHqAtBjHtvfatTCoQaFfn0111IYJdkrD3uRIzXz8_yQe_tZhXW2l2EqEaPDMUfSpbrfSKNmPTMNZ6WDo" style={{ objectPosition: '0% 0%', scale: '2' }} />
                   </div>
-                  <span className="font-headline-md text-xl text-primary">{boutique.handle.replace('@', '')}</span>
+                  <div className="flex flex-col">
+                    <span className="font-headline-md text-xl text-primary leading-tight">{boutique.handle.replace('@', '')}</span>
+                    <div className="flex gap-0.5 text-[#F59E0B] text-sm mt-0.5">
+                      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                  </div>
                 </div>
                 <button className="hover:text-error transition-colors"><span className="material-symbols-outlined">favorite</span></button>
               </div>

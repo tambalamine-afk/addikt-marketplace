@@ -42,10 +42,13 @@ export default function Register() {
         </div>
         
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="font-headline-lg-mobile text-3xl md:text-4xl text-primary uppercase tracking-tighter" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>
-            REJOINS LES<br /><span className="italic text-accent-rose">ADDIKTS</span>
+        <div className="text-center mb-8 flex flex-col items-center gap-1">
+          <h1 className="text-3xl md:text-4xl text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+            Rejoins les
           </h1>
+          <span className="text-3xl md:text-4xl italic text-[#e20020]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>
+            ADDIKT
+          </span>
         </div>
         
         {/* Form */}
