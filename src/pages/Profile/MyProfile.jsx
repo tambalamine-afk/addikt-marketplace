@@ -3,78 +3,66 @@ import { Link } from 'react-router-dom';
 
 export default function MyProfile() {
   return (
-    <main className="flex-1 w-full max-w-4xl mx-auto flex flex-col font-body-sm bg-background text-on-background">
-      {/* Top Banner & Profile Header */}
-      <div className="relative w-full">
-        <div className="h-32 md:h-48 bg-accent-orange w-full relative overflow-hidden">
-        </div>
-        <div className="px-container-margin relative mb-8 flex flex-col md:flex-row gap-6 items-start md:items-end -mt-10">
-          <div className="relative inline-block">
-            <img className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-background object-cover bg-surface-variant" alt="Profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMwgCBKeBi4VqjSu6tIPJ8U80yA_W16AqOQ2omB13pitrAbUhsfRR0Q4YeZmFtOIYhXYXIfT8GNV2JUUUmJ8vjAWjOYSG_CW1lUiCvOUOr19pl17wlc_5Pq3yPYPw9bQ-e0QF-KLSvKZ07uRiq1efLZCrNrfT2RwYy_Q9IHIpaBnvVU_pFAgFTMKGw9Fejh9cFm88PqEkN-izHuhMr1-J8ckaePIkRe5mmmDdT3KAQb2c1-hePg4GQ" />
-            <Link to="/profile/settings" aria-label="Edit Profile" className="absolute bottom-0 right-0 bg-primary text-on-primary rounded-full p-2 border-2 border-background hover:bg-accent-orange transition-colors">
-              <span className="material-symbols-outlined text-[16px]">edit</span>
-            </Link>
+    <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-10 flex flex-col bg-white" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+      
+      {/* Profile Header */}
+      <div className="flex flex-col gap-6 mb-10">
+        <div className="flex items-center gap-6">
+          <div className="w-[100px] h-[100px] rounded-full bg-[#757575] flex items-center justify-center text-white text-[22px] font-bold">
+            MU
           </div>
-          <div className="flex-1">
-            <h1 className="text-[24px] md:text-[48px] text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Ibrahima N.</h1>
-            <div className="flex flex-wrap items-center gap-4 mt-2">
-              <span className="text-[14px] text-secondary flex items-center gap-1" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-                <span className="material-symbols-outlined text-[16px]">location_on</span>
-                Dakar Plateau
-              </span>
-              <span className="text-[14px] text-secondary flex items-center gap-1" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-                <span className="material-symbols-outlined text-[16px]">calendar_month</span>
-                Membre depuis Janvier 2024
-              </span>
-              <span className="text-[14px] text-primary flex items-center gap-1 bg-accent-yellow px-2 py-1 rounded" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-                <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="text-[12px] font-bold text-primary" style={{ fontFamily: '"Flatit Quiet Sans", sans-serif' }}>4.8</span>
-              </span>
+          <div className="flex flex-col gap-1.5">
+            <h1 className="text-[22px] font-bold text-gray-900 leading-none" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>tambc</h1>
+            <div className="flex items-center gap-2 mt-0.5 text-gray-300 text-sm">
+              <div className="flex gap-0.5">
+                {[1, 2, 3, 4, 5].map(i => (
+                  <span key={i} className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                ))}
+              </div>
+              <span className="text-gray-500 font-medium">(0)</span>
+            </div>
+            <div className="text-gray-500 text-sm mt-0.5">
+              Active today
             </div>
           </div>
-          <div className="w-full md:w-auto mt-4 md:mt-0">
-            <Link to="/profile/settings" className="block w-full md:w-auto border-2 border-primary text-primary text-[14px] text-center py-2 px-6 rounded-full hover:bg-primary hover:text-on-primary transition-colors" style={{ fontFamily: '"Flatit Quiet Sans", sans-serif', fontWeight: 600 }}>
-              Modifier mon profil
-            </Link>
-          </div>
         </div>
-      </div>
-      
-      {/* Stats Grid (Bento Style) */}
-      <div className="px-container-margin mb-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white border border-surface-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-trust-grey transition-colors">
-            <span className="text-[24px] text-primary" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>42</span>
-            <span className="text-[12px] font-bold text-secondary mt-1" style={{ fontFamily: '"Flatit Quiet Sans", sans-serif' }}>Articles vendus</span>
-          </div>
-          <div className="bg-white border border-surface-variant rounded-lg p-6 flex flex-col items-center justify-center hover:bg-trust-grey transition-colors">
-            <span className="text-[24px] text-primary" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>95%</span>
-            <span className="text-[12px] font-bold text-secondary mt-1" style={{ fontFamily: '"Flatit Quiet Sans", sans-serif' }}>Taux de réponse</span>
-          </div>
-          <div className="bg-primary rounded-lg p-6 flex flex-col items-center justify-center shadow-lg transform -rotate-2 hover:rotate-0 transition-transform">
-            <span className="text-[24px] text-accent-yellow" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>0 F</span>
-            <span className="text-[12px] font-bold text-white mt-1" style={{ fontFamily: '"Flatit Quiet Sans", sans-serif' }}>Solde</span>
-          </div>
+        
+        <div className="flex gap-6 text-[15px]">
+          <div><span className="font-bold text-gray-900 text-[18px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>0</span> <span className="text-gray-500">Followers</span></div>
+          <div><span className="font-bold text-gray-900 text-[18px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>0</span> <span className="text-gray-500">Following</span></div>
         </div>
       </div>
       
       {/* Navigation Tabs */}
-      <div className="px-container-margin pb-24">
-        <div className="flex flex-col gap-8">
-          <div className="flex flex-col">
-            <div className="flex gap-8 border-b border-surface-variant">
-              <button className="pb-4 border-b-2 border-primary">
-                <span className="text-[24px] text-primary" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>Selling</span>
-              </button>
-              <button className="pb-4 hover:text-primary transition-colors">
-                <span className="text-[24px] text-secondary" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>Likes</span>
-              </button>
-              <button className="pb-4 hover:text-primary transition-colors">
-                <span className="text-[24px] text-secondary" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>Saves</span>
-              </button>
-            </div>
-          </div>
+      <div className="border-b border-gray-200 mb-12">
+        <div className="flex gap-8">
+          <button className="pb-3 border-b-[3px] border-gray-900 font-bold text-gray-900 text-[15px] transition-colors" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+            Selling
+          </button>
+          <button className="pb-3 font-medium text-gray-500 hover:text-gray-900 transition-colors text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+            Likes
+          </button>
+          <button className="pb-3 font-medium text-gray-500 hover:text-gray-900 transition-colors text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+            Saves
+          </button>
         </div>
+      </div>
+
+      {/* Content Area */}
+      <div className="w-full max-w-[460px] mx-auto bg-white rounded-sm p-10 flex flex-col items-center justify-center text-center" style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+        <div className="mb-4 text-gray-800">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+            <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" strokeLinecap="round" strokeLinejoin="round"></path>
+            <circle cx="15.5" cy="15.5" r="3.5" fill="black" stroke="none"></circle>
+            <path d="M15.5 13.5v4M13.5 15.5h4" stroke="white" strokeWidth="1.5" strokeLinecap="round"></path>
+          </svg>
+        </div>
+        <p className="text-gray-500 text-[15px] mb-6 font-medium">
+          Start selling today and turn your clothes into cash
+        </p>
+        <Link to="/publish" className="bg-[#1b1b1b] text-white font-bold py-2.5 px-6 rounded-sm text-[15px] hover:bg-black transition-colors">
+          List an item
+        </Link>
       </div>
     </main>
   );
