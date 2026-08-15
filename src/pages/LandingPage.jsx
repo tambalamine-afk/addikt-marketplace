@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdCarousel from '../components/AdCarousel';
-import TopSellers from '../components/TopSellers';
+import TopSellers, { TOP_SELLERS } from '../components/TopSellers';
 import AppPromoBanner from '../components/AppPromoBanner';
 
 const slideData = [
@@ -152,13 +152,14 @@ export default function LandingPage() {
               <button 
                 className={`relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 tracking-wide text-[15px] py-1.5 ${toggleState === 'acheter' ? 'text-primary' : 'text-white'}`}
                 onClick={() => setToggleState('acheter')}
+                style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}
               >
                 Acheter
               </button>
               <button 
                 className={`relative z-10 w-1/2 font-button-text font-bold transition-colors duration-300 tracking-wide text-[15px] py-1.5 ${toggleState === 'vendre' ? 'text-primary' : 'text-white'}`}
                 onClick={() => setToggleState('vendre')}
-                style={{ fontFamily: '"Mona Sans Expanded", sans-serif', fontWeight: 700 }}
+                style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}
               >
                 Vendre
               </button>
@@ -180,11 +181,11 @@ export default function LandingPage() {
 
             {/* 4. Button */}
             {toggleState === 'acheter' ? (
-              <Link to="/category" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+              <Link to="/category" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                 Découvrir
               </Link>
             ) : (
-              <Link to="/publish" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12">
+              <Link to="/publish" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                 Sell now
               </Link>
             )}
@@ -284,7 +285,7 @@ export default function LandingPage() {
           <div className="w-full md:w-1/3 p-12 flex flex-col justify-center items-start text-white transition-colors duration-500 z-10 absolute left-0 top-0 bottom-0" style={{ backgroundColor: slideData[currentSlide].color }}>
             <h3 className="text-3xl mb-2 font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>{slideData[currentSlide].title}</h3>
             <p className="mb-6 opacity-90 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>{slideData[currentSlide].subtitle}</p>
-            <button className="bg-white text-black px-6 py-2 rounded-full hover:opacity-90 transition-opacity font-bold text-sm">
+            <button className="bg-white text-black px-6 py-2 rounded-full hover:opacity-90 transition-opacity font-bold text-sm" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
               Shop now
             </button>
           </div>
@@ -327,13 +328,13 @@ export default function LandingPage() {
           {PRODUCTS_GRID.map((item, idx) => (
             <Link key={idx} to={`/product/p${(idx % 12) + 1}`} className="flex flex-col gap-3 group cursor-pointer">
               <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
-                <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); /* Like logic here */ }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
+                <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
                 <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} />
               </div>
               <div className="flex justify-between items-end">
                 <div className="flex flex-col">
                   <span className="font-headline-md text-[18px] text-primary">{item.title}</span>
-                  <span className="font-body-sm text-accent-orange font-bold">{item.price}</span>
+                  <span className="font-body-sm text-black font-bold">{item.price}</span>
                 </div>
                 <span className="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">{item.size}</span>
               </div>
@@ -347,29 +348,29 @@ export default function LandingPage() {
         <div className="flex items-center gap-4 mb-10">
           <h2 className="text-headline-md text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Top Boutik</h2>
         </div>
-        <div className="flex flex-row justify-between gap-8 w-full">
-          {BOUTIQUES.map((boutique, idx) => (
-            <Link to={`/seller/${idx + 1}`} key={idx} className="flex flex-col gap-3 p-4 bg-surface-container-low rounded-3xl border border-outline-variant/50 hover:shadow-xl transition-shadow cursor-pointer block">
-              <div className="grid grid-cols-2 gap-2 mb-2 w-full rounded-2xl overflow-hidden">
-                {boutique.images.map((img, imgIdx) => (
-                  <img key={imgIdx} className="aspect-[4/3] object-cover" src={img} alt="" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {TOP_SELLERS.slice(0, 3).map(seller => (
+            <div key={seller.id} className="bg-white border border-outline-variant/50 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {seller.images.map((img, idx) => (
+                  <div key={idx} className="aspect-square bg-surface-container rounded-lg overflow-hidden">
+                    <img src={img} alt="Product" className="w-full h-full object-cover" />
+                  </div>
                 ))}
               </div>
-              <div className="flex justify-between items-center w-full px-2">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
-                    <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtwTDV42ZbLuj6QnBR9UKGkIimOcFACHMlO1CrulKBFpUaODHdGeQmQoH1PEfulBizSgnWvcfEL-5xd3vS-NHbshmy_vhcmNfz4xu2D8ICH-g2mwtZk0zxFg5WMKUygm_WCqWTvSKXB3LEi_myz00VAIc8lZqkONlQS6_FHTv1aHqAtBjHtvfatTCoQaFfn0111IYJdkrD3uRIzXz8_yQe_tZhXW2l2EqEaPDMUfSpbrfSKNmPTMNZ6WDo" style={{ objectPosition: '0% 0%', scale: '2' }} />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-headline-md text-xl text-primary leading-tight">{boutique.handle.replace('@', '')}</span>
-                    <div className="flex gap-0.5 text-[#F59E0B] text-sm mt-0.5">
-                      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                    </div>
+                  <img src={seller.avatar} alt={seller.name} className="w-10 h-10 rounded-full object-cover bg-surface-container" />
+                  <div>
+                    <h3 className="font-bold text-sm text-primary leading-tight">{seller.name}</h3>
+                    <p className="text-xs text-secondary">@{seller.handle}</p>
                   </div>
                 </div>
-                <button className="hover:text-error transition-colors" onClick={(e) => e.preventDefault()}><span className="material-symbols-outlined">favorite</span></button>
+                <Link to={`/seller/${seller.id}`} className="bg-black text-white font-button-text font-bold text-xs px-4 py-2 rounded-md hover:bg-black/90 transition-colors uppercase">
+                  SHOP
+                </Link>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
@@ -526,7 +527,12 @@ const VendreContent = () => (
     <section className="py-16 px-container-margin">
       <div className="max-w-7xl mx-auto rounded-[2rem] p-12 flex flex-col gap-8 items-start relative overflow-hidden" style={{ backgroundColor: 'rgb(226, 0, 32)' }}>
         <h2 className="text-headline-md text-white relative z-10" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Keep fashion circular</h2>
-        <button className="bg-primary text-white px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:opacity-90 transition-opacity relative z-10">Sell now</button>
+        <button 
+          className="bg-primary text-white px-8 py-3 rounded-full uppercase tracking-wide hover:opacity-90 transition-opacity relative z-10"
+          style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}
+        >
+          Sell now
+        </button>
         <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden md:block opacity-50">
           <svg height="93" viewBox="0 0 241.67 225.99" width="100" xmlns="http://www.w3.org/2000/svg">
             <path d="M186.76,0l-3.77,84.84c-.09,1.64,1.45,2.88,3.03,2.45l50.37-16.84-31.05,52.64c-1.14.97-1.12,2.74.03,3.69l36.3,52.47-65.33-14.34c-1.35-.19-2.59.79-2.72,2.15l-8.12,58.93-31.24-39.17c-.64-1.43-2.46-1.88-3.69-.91l-71.02,33.86,34.31-62.99c.73-1.43-.12-3.17-1.7-3.46L0,139.09l101.83-31.91c1.32-.42,2.02-1.87,1.52-3.16l-16.73-60.59,51.26,37.53c1.16.86,2.82.51,3.53-.75L186.76,0Z" fill="#e20020"></path>

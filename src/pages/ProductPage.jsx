@@ -15,7 +15,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
     return (
       <div className="max-w-[1200px] mx-auto px-6 py-20 text-center">
         <h2 className="text-2xl font-bold mb-4">Produit introuvable</h2>
-        <Link to="/" className="text-accent-orange underline">Retour à l'accueil</Link>
+        <Link to="/" className="text-black underline">Retour à l'accueil</Link>
       </div>
     );
   }
@@ -74,7 +74,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
                 >
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: product.liked ? "'FILL' 1" : "'FILL' 0", color: product.liked ? 'var(--color-accent-rose)' : 'inherit' }}>favorite</span>
                 </button>
-                <button className="w-12 h-12 flex items-center justify-center text-primary hover:text-accent-blue hover:scale-110 transition-all drop-shadow-md">
+                <button className="w-12 h-12 flex items-center justify-center text-primary hover:text-accent-blue hover:scale-110 transition-all drop-shadow-md" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}>
                   <span className="material-symbols-outlined">bookmark</span>
                 </button>
               </div>
@@ -209,7 +209,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
             <div className="bg-surface-container-low p-6 rounded-2xl text-center border border-dashed border-outline/50 relative overflow-hidden group">
               <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
               <p className="font-headline text-sm uppercase text-primary mb-3 relative z-10 font-bold">Toi aussi tu as un article comme celui-ci?</p>
-              <Link className="font-label text-sm text-primary underline decoration-2 underline-offset-4 hover:text-accent-orange transition-colors relative z-10" to="/publish">Publier une annonce similaire</Link>
+              <Link className="font-label text-sm text-primary underline decoration-2 underline-offset-4 hover:text-black transition-colors relative z-10" to="/publish">Publier une annonce similaire</Link>
             </div>
           </div>
         </div>

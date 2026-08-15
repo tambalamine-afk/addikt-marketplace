@@ -83,7 +83,7 @@ export default function SuggestedSection({ onSelect }) {
             <div className="flex justify-between items-end">
               <div className="flex flex-col">
                 <span className="font-headline-md text-[18px] text-primary">{product.title}</span>
-                <span className="font-body-sm text-accent-orange font-bold">{product.price} F</span>
+                <span className="font-body-sm text-black font-bold">{product.price} F</span>
               </div>
               <span className="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">{product.size}</span>
             </div>

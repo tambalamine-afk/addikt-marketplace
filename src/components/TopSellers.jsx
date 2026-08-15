@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const TOP_SELLERS = [
+export const TOP_SELLERS = [
   {
     id: 1,
     name: "The Vintage Block",

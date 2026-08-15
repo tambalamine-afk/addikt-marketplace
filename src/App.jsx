@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
 import ProductPage from './pages/ProductPage';
+import AuthModal from './components/AuthModal';
 import { PRODUCTS } from './data/mockData';
 
 import Login from './pages/Auth/Login';
@@ -30,14 +31,7 @@ export default function App() {
   };
 
   const toggleLike = (id) => {
-    setProducts(prev => prev.map(p => {
-      if (p.id === id) {
-        const next = !p.liked;
-        if (next) addToast('Ajouté à tes favoris ❤️');
-        return { ...p, liked: next };
-      }
-      return p;
-    }));
+    window.dispatchEvent(new Event('openAuthModal'));
   };
 
   const likedCount = products.filter(p => p.liked).length;
@@ -48,6 +42,7 @@ export default function App() {
 
   return (
     <Router>
+      <AuthModal />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
