@@ -91,15 +91,11 @@ export default function SellerProfile() {
                 >
                   <span className="material-symbols-outlined text-[20px]">favorite</span>
                 </button>
-                <div className="absolute bottom-3 left-3 bg-surface-container-lowest px-2 py-1 rounded text-xs font-bold uppercase">
-                  {item.size}
-                </div>
               </div>
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-[14px] text-secondary line-clamp-1">{item.title}</p>
-                  <p className="text-[16px] font-semibold text-on-surface mt-1">{item.price}</p>
-                </div>
+              <div className="flex flex-col mt-2">
+                <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
+                <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
+                <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
               </div>
             </Link>
           ))}

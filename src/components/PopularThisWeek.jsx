@@ -80,12 +80,10 @@ export default function PopularThisWeek({ onSelect }) {
                 <div className="aspect-[3/4] rounded-xl overflow-hidden">
                   <img alt={product.title} className="w-full h-full object-cover hover:scale-105 transition-transform" src={product.image} />
                 </div>
-                <div className="flex flex-col gap-1 px-1">
-                  <span className="font-bold uppercase text-white text-sm truncate" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.title}</span>
-                  <div className="flex justify-between items-center">
-                    <span className="font-bold text-white" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.price} F</span>
-                    <span className="text-white/80 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.size}</span>
-                  </div>
+                <div className="flex flex-col px-1 mt-2">
+                  <span className="text-[15px] text-white leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.title}</span>
+                  <span className="text-[14px] text-white/70 leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.size}</span>
+                  <span className="text-[16px] text-white font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.price} F</span>
                 </div>
               </div>
             ))}

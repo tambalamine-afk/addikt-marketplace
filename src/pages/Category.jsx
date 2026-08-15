@@ -174,12 +174,12 @@ export default function Category({ products, handleSelect }) {
                     </svg>
                   </button>
                 </div>
-                <div className="pt-3 flex flex-col gap-0.5 text-left" style={{ fontFamily: '"Google Sans", sans-serif' }}>
-                  <span className="text-[15px] text-[#222] font-normal truncate">{product.name || product.title}</span>
+                <div className="pt-3 flex flex-col mt-2 text-left">
+                  <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.name || product.title}</span>
                   {product.size && (
-                    <span className="text-[14px] text-[#555] font-normal">{product.size}</span>
+                    <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.size}</span>
                   )}
-                  <span className="text-[16px] font-semibold text-black tracking-tight mt-0.5">{product.price.toLocaleString('fr-SN')} FCFA</span>
+                  <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.price.toLocaleString('fr-SN')} FCFA</span>
                 </div>
               </div>
             ))}

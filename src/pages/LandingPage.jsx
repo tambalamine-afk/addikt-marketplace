@@ -140,9 +140,9 @@ export default function LandingPage() {
   return (
     <main>
       {/* 2. HERO SECTION */}
-      <section className={`w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-20 mx-auto max-w-full ${toggleState === 'acheter' ? 'bg-accent-orange' : 'bg-[#00a6fb]'}`}>
+      <section className={`w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-8 md:py-20 mx-auto max-w-full ${toggleState === 'acheter' ? 'bg-accent-orange' : 'bg-[#00a6fb]'}`}>
         <div className="max-w-7xl mx-auto w-full px-container-margin grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-          <div className="flex flex-col justify-center items-start pt-8 md:pt-0">
+          <div className="flex flex-col justify-center items-center text-center md:items-start md:text-left pt-0">
             {/* 1. Toggle */}
             <div className="relative bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-1 flex items-center transition-colors duration-300 border border-white/20 w-48 mb-6">
               <div 
@@ -175,17 +175,17 @@ export default function LandingPage() {
             </h1>
             
             {/* 3. Subtitle */}
-            <p className="text-on-primary/90 font-body-lg mb-8 text-[18px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+            <p className="text-on-primary/90 font-body-lg mb-6 text-[18px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
               Ensemble, rendons la mode circulaire.
             </p>
 
             {/* 4. Button */}
             {toggleState === 'acheter' ? (
-              <Link to="/category" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+              <Link to="/category" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-8" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                 Découvrir
               </Link>
             ) : (
-              <Link to="/publish" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+              <Link to="/publish" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-8" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                 Sell now
               </Link>
             )}
@@ -229,7 +229,7 @@ export default function LandingPage() {
               </div>
             )}
           </div>
-          <div className="relative h-[450px] flex justify-center items-center mt-8 md:mt-0">
+          <div className="relative h-[450px] flex justify-center items-center mt-2 md:mt-0">
             <div className="absolute w-56 h-[320px] transform -rotate-[15deg] -translate-x-36 overflow-hidden z-0" style={{ backgroundColor: 'rgb(249, 249, 249)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
               <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600" className="w-full h-full object-cover"/>
             </div>
@@ -281,23 +281,18 @@ export default function LandingPage() {
 
       {/* 3. TRUST BAND / PROMO CAROUSEL */}
       <section className="w-full px-container-margin py-8">
-        <div className="max-w-7xl mx-auto h-[260px] overflow-hidden flex flex-col md:flex-row shadow-sm relative group rounded-[30px]">
-          <div className="w-full md:w-1/3 p-12 flex flex-col justify-center items-start text-white transition-colors duration-500 z-10 absolute left-0 top-0 bottom-0" style={{ backgroundColor: slideData[currentSlide].color }}>
-            <h3 className="text-3xl mb-2 font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>{slideData[currentSlide].title}</h3>
-            <p className="mb-6 opacity-90 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>{slideData[currentSlide].subtitle}</p>
-            <button className="bg-white text-black px-6 py-2 rounded-full hover:opacity-90 transition-opacity font-bold text-sm" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row shadow-sm relative group rounded-[20px] md:rounded-[30px] overflow-hidden md:h-[260px]">
+          
+          {/* Text Container (Bottom on Mobile, Left on Desktop) */}
+          <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center items-center md:items-start text-center md:text-left text-white transition-colors duration-500 z-10 order-2 md:order-1 relative" style={{ backgroundColor: slideData[currentSlide].color }}>
+            <h3 className="text-2xl md:text-3xl mb-2 font-bold leading-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>{slideData[currentSlide].title}</h3>
+            <p className="mb-6 opacity-90 text-sm md:text-base font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>{slideData[currentSlide].subtitle}</p>
+            <button className="bg-white text-black px-6 py-2.5 rounded-full hover:opacity-90 transition-opacity font-bold text-sm mb-6 md:mb-0" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
               Shop now
             </button>
-          </div>
-          <div className="w-full md:w-2/3 absolute right-0 top-0 bottom-0">
-            <div className="flex h-full w-full transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-              {slideData.map((slide, index) => (
-                <div key={index} className="w-full h-full shrink-0">
-                  <img alt={slide.title} className="w-full h-full object-cover" src={slide.image} />
-                </div>
-              ))}
-            </div>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            
+            {/* Dots */}
+            <div className="flex gap-2 z-10 md:absolute md:bottom-4 md:left-1/2 md:-translate-x-1/2 mt-2 md:mt-0">
               {slideData.map((_, index) => (
                 <button 
                   key={index}
@@ -308,9 +303,21 @@ export default function LandingPage() {
               ))}
             </div>
           </div>
+          
+          {/* Image Container (Top on Mobile, Right on Desktop) */}
+          <div className="w-full md:w-2/3 h-[250px] md:h-full relative order-1 md:order-2 overflow-hidden bg-gray-100">
+            <div className="flex h-full w-full transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+              {slideData.map((slide, index) => (
+                <div key={index} className="w-full h-full shrink-0">
+                  <img alt={slide.title} className="w-full h-full object-cover" src={slide.image} />
+                </div>
+              ))}
+            </div>
+          </div>
+          
           <button 
             aria-label="Next slide"
-            className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center text-black shadow-md hover:bg-gray-100 transition-colors z-20"
+            className="hidden md:flex absolute right-4 md:right-6 top-1/2 md:top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full items-center justify-center text-black shadow-md hover:bg-gray-100 transition-colors z-20"
             onClick={() => setCurrentSlide((prev) => (prev + 1) % slideData.length)}
           >
             <span className="material-symbols-outlined">chevron_right</span>
@@ -331,12 +338,10 @@ export default function LandingPage() {
                 <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
                 <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} />
               </div>
-              <div className="flex justify-between items-end">
-                <div className="flex flex-col">
-                  <span className="font-headline-md text-[18px] text-primary">{item.title}</span>
-                  <span className="font-body-sm text-black font-bold">{item.price}</span>
-                </div>
-                <span className="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">{item.size}</span>
+              <div className="flex flex-col mt-2">
+                <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
+                <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
+                <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
               </div>
             </Link>
           ))}
@@ -393,12 +398,10 @@ export default function LandingPage() {
                   <div className="aspect-[3/4] overflow-hidden">
                     <img alt={item.title.toUpperCase()} className="w-full h-full object-cover" src={item.img} />
                   </div>
-                  <div className="flex flex-col gap-1 px-1">
-                    <span className="font-bold text-sm text-black" style={{ fontFamily: '"Google Sans", sans-serif', fontWeight: 400 }}>{item.title}</span>
-                    <div className="flex justify-between items-center">
-                      <span className="font-bold text-black" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
-                      <span className="text-black/60 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
-                    </div>
+                  <div className="flex flex-col mt-2">
+                    <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
+                    <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
+                    <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
                   </div>
                 </Link>
               ))}

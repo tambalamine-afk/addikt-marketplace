@@ -80,12 +80,10 @@ export default function SuggestedSection({ onSelect }) {
               </div>
               <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
             </div>
-            <div className="flex justify-between items-end">
-              <div className="flex flex-col">
-                <span className="font-headline-md text-[18px] text-primary">{product.title}</span>
-                <span className="font-body-sm text-black font-bold">{product.price} F</span>
-              </div>
-              <span className="font-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">{product.size}</span>
+            <div className="flex flex-col mt-2">
+              <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.title}</span>
+              <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.size}</span>
+              <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.price} F</span>
             </div>
           </div>
         ))}

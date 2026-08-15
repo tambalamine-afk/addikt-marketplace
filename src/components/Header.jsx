@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import MobileMenu from './MobileMenu';
 
 const MEGAMENU_DATA = {
   Femmes: {
@@ -131,6 +132,7 @@ export default function Header() {
   });
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const dropdownRef = useRef(null);
 
@@ -161,9 +163,16 @@ export default function Header() {
     <header className="bg-surface sticky top-0 z-50 border-b border-outline-variant w-full">
       {/* Top Row */}
       <div className="flex justify-between items-center px-container-margin w-full max-w-7xl mx-auto py-2.5">
-        <Link to="/" className="flex items-center hover:opacity-90 transition-opacity">
-          <svg className="h-[40px] md:h-[45px] w-auto" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 712.2 262.81">
-            <defs>
+        
+        {/* Mobile Hamburger & Logo (Left) */}
+        <div className="flex lg:hidden flex-1 justify-start items-center">
+          <button aria-label="Open mobile menu" onClick={() => setIsMobileMenuOpen(true)} className="p-2 -ml-2 mr-1 text-primary">
+            <span className="material-symbols-outlined text-[28px]">menu</span>
+          </button>
+          <Link to="/" className="flex items-center hover:opacity-90 transition-opacity">
+            <svg className="h-[36px] w-auto" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 712.2 262.81">
+              <defs>
+
               <style>
                 {`
                   .cls-1 { fill: #fdffff; }
@@ -190,27 +199,67 @@ export default function Header() {
               </g>
             </g>
           </svg>
-        </Link>
+          </Link>
+        </div>
         
-        {/* Search Bar */}
+        {/* Logo Desktop */}
+        <div className="hidden lg:flex lg:flex-none justify-start">
+          <Link to="/" className="flex items-center hover:opacity-90 transition-opacity">
+            <svg className="h-[45px] w-auto" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 712.2 262.81">
+              <defs>
+                <style>
+                  {`
+                    .cls-1 { fill: #fdffff; }
+                    .cls-2 { fill: #191919; }
+                    .cls-3 { fill: #e20020; }
+                  `}
+                </style>
+              </defs>
+              <g id="Calque_1-2" data-name="Calque 1">
+                <g>
+                  <g>
+                    <path className="cls-3" d="M217.19,0l-4.39,98.66c-.1,1.9,1.69,3.35,3.53,2.85l58.57-19.58-36.11,61.22c-1.32,1.13-1.3,3.18.04,4.29l42.21,61.02-75.98-16.68c-1.57-.22-3.01.92-3.17,2.5l-9.45,68.54-36.33-45.55c-.74-1.67-2.86-2.19-4.29-1.06l-82.59,39.38,39.9-73.25c.85-1.66-.14-3.68-1.97-4.03L0,161.75l118.42-37.11c1.54-.49,2.35-2.17,1.76-3.68l-19.46-70.46,59.61,43.65c1.35,1,3.27.59,4.1-.88L217.19,0Z"/>
+                    <path className="cls-1" d="M159.6,159.75c-5.64,22.61-17.94,39.61-27.47,37.97-9.53-1.64-12.69-21.3-7.05-43.92,5.64-22.61,17.94-39.61,27.47-37.97,9.53,1.64,12.69,21.3,7.05,43.92Z"/>
+                    <path className="cls-1" d="M203.86,158.15c-6.98,24.33-21.31,42.22-32,39.96s-13.7-23.81-6.71-48.13c6.98-24.33,21.31-42.22,32-39.96,10.69,2.26,13.7,23.81,6.71,48.13Z"/>
+                  </g>
+                  <g>
+                    <path className="cls-2" d="M317.71,196.65h28.52l-40.72-84.51h-31.01l-40.84,84.51h26.39l7.44-16.33h42.79l7.41,16.33ZM276.14,161.38l12.8-28.1,12.76,28.1h-25.56Z"/>
+                    <path className="cls-2" d="M404.23,112.14v31.03c-1.06-1.04-2.27-2.06-3.67-3.04-2.53-1.78-5.68-3.21-9.47-4.32-3.79-1.1-8.25-1.66-13.38-1.66-3.32,0-6.55.41-9.71,1.24-3.16.83-6.1,2.07-8.82,3.73s-5.13,3.75-7.22,6.27c-2.09,2.53-3.71,5.52-4.85,9-1.15,3.47-1.72,7.38-1.72,11.72,0,7.26,1.54,13.28,4.62,18.05,3.08,4.78,7.08,8.33,12.01,10.65s10.16,3.49,15.68,3.49c4.34,0,8.36-.45,12.07-1.36,3.71-.91,6.98-2.23,9.82-3.97,1.76-1.07,3.28-2.3,4.62-3.65v7.32h25.21v-84.51h-25.21ZM401.87,174.69c-.87,1.22-1.97,2.31-3.31,3.26-1.34.95-2.9,1.68-4.68,2.19-1.78.51-3.77.77-5.98.77-3.71,0-6.83-.69-9.35-2.07-2.52-1.38-4.4-3.2-5.62-5.44-1.22-2.25-1.84-4.64-1.84-7.16,0-1.58.22-3.08.65-4.5.43-1.42,1.1-2.74,2.01-3.97.91-1.22,2.03-2.31,3.37-3.25,1.34-.95,2.92-1.68,4.73-2.19,1.81-.51,3.83-.77,6.04-.77,3.71,0,6.79.69,9.23,2.07,2.45,1.38,4.28,3.18,5.51,5.39,1.22,2.21,1.83,4.62,1.83,7.22,0,1.5-.22,2.98-.65,4.44s-1.09,2.8-1.95,4.02Z"/>
+                    <path className="cls-2" d="M496.44,112.14v31.03c-1.06-1.04-2.27-2.06-3.67-3.04-2.53-1.78-5.68-3.21-9.47-4.32-3.79-1.1-8.25-1.66-13.38-1.66-3.32,0-6.55.41-9.71,1.24-3.16.83-6.1,2.07-8.82,3.73s-5.13,3.75-7.22,6.27c-2.09,2.53-3.71,5.52-4.85,9-1.15,3.47-1.72,7.38-1.72,11.72,0,7.26,1.54,13.28,4.62,18.05,3.08,4.78,7.08,8.33,12.01,10.65s10.16,3.49,15.68,3.49c4.34,0,8.36-.45,12.07-1.36,3.71-.91,6.98-2.23,9.82-3.97,1.76-1.07,3.28-2.3,4.62-3.65v7.32h25.21v-84.51h-25.21ZM494.07,174.69c-.87,1.22-1.97,2.31-3.31,3.26-1.34.95-2.9,1.68-4.68,2.19-1.78.51-3.77.77-5.98.77-3.71,0-6.83-.69-9.35-2.07-2.52-1.38-4.4-3.2-5.62-5.44-1.22-2.25-1.84-4.64-1.84-7.16,0-1.58.22-3.08.65-4.5.43-1.42,1.1-2.74,2.01-3.97.91-1.22,2.03-2.31,3.37-3.25,1.34-.95,2.92-1.68,4.73-2.19,1.81-.51,3.83-.77,6.04-.77,3.71,0,6.79.69,9.23,2.07,2.45,1.38,4.28,3.18,5.51,5.39,1.22,2.21,1.83,4.62,1.83,7.22,0,1.5-.22,2.98-.65,4.44s-1.09,2.8-1.95,4.02Z"/>
+                    <path className="cls-2" d="M533.72,196.65v-60.84h25.21v60.84h-25.21ZM533.84,129.77v-17.63h25.09v17.63h-25.09Z"/>
+                    <path className="cls-2" d="M624.32,164.22c-1.54-1.5-3.49-2.76-5.86-3.79l32.43-24.62h-25.57l-33,25.88,8.74-49.55h-21.66l-14.91,84.51h21.66l2.38-13.27,9.69-7.2c2.05-1.5,4.24-2.23,6.57-2.19,2.33.04,4.16,1.32,5.5,3.85l10.77,18.82h24.03l-15.86-25.68c-1.74-3-3.37-5.25-4.91-6.75Z"/>
+                    <path className="cls-2" d="M712.2,151.67v-15.86h-20.95v-16.45h-25.21v16.45h-13.97v15.86h13.97v24.15c0,6.55,1.97,11.66,5.92,15.33,3.95,3.67,9.23,5.51,15.86,5.51h24.38v-16.22h-12.19c-3.08,0-5.31-.79-6.69-2.37-1.38-1.58-2.07-3.75-2.07-6.51v-19.89h20.95Z"/>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </Link>
+        </div>
+        
+        {/* Search Bar (Desktop only) */}
         <div className="hidden lg:flex flex-1 max-w-2xl mx-8 relative items-center">
           <TypewriterSearch />
         </div>
 
-        {/* Icons and Auth Buttons */}
-        <div className="flex items-center gap-4">
+        {/* Icons and Auth Buttons (Right) */}
+        <div className="flex items-center gap-2 md:gap-4 flex-1 lg:flex-none justify-end">
           {/* Icône Messagerie (visible si connecté) */}
           {isLoggedIn && (
-            <Link to="/messages" aria-label="Messages" className="text-primary hover:opacity-80 transition-opacity duration-200 flex items-center">
+            <Link to="/messages" aria-label="Messages" className="hidden sm:flex text-primary hover:opacity-80 transition-opacity duration-200 items-center">
               <span className="material-symbols-outlined text-[24px]">mail</span>
             </Link>
           )}
-          <button aria-label="Favorites" className="text-primary hover:opacity-80 transition-opacity duration-200 flex items-center">
+          <button aria-label="Favorites" className="hidden sm:flex text-primary hover:opacity-80 transition-opacity duration-200 items-center">
             <span className="material-symbols-outlined text-[24px]">favorite_border</span>
           </button>
+          
           <button aria-label="Shopping Bag" className="text-primary hover:opacity-80 transition-opacity duration-200 flex items-center">
             <span className="material-symbols-outlined text-[24px]">shopping_bag</span>
           </button>
+          
+          <Link to="/register" className="lg:hidden bg-[#1b1b1b] text-white px-3 py-1.5 rounded text-sm font-bold ml-1" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+            Sign up
+          </Link>
           
           <div className="hidden md:flex items-center gap-2 ml-2">
             <Link to="/publish" className="bg-primary text-on-primary border border-primary px-5 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-opacity" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
@@ -262,10 +311,15 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Mobile Search Bar Row */}
+      <div className="lg:hidden px-container-margin w-full pb-3 relative z-40 bg-surface">
+        <TypewriterSearch />
+      </div>
+
       {/* Bottom Row: Categories */}
       {!hideCategories && (
         <div 
-          className="w-full border-t border-black/10 relative bg-white" 
+          className="hidden lg:block w-full border-t border-black/10 relative bg-white" 
           onMouseLeave={() => setHoveredCategory(null)}
         >
           <div className="max-w-7xl mx-auto px-container-margin h-[50px]">
@@ -334,6 +388,9 @@ export default function Header() {
           )}
         </div>
       )}
+
+      {/* Mobile Menu Overlay */}
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
     </header>
   );
 }
