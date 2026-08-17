@@ -1,5 +1,6 @@
+"use client";
+import Link from 'next/link';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -25,7 +26,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-3 text-[11px] opacity-80 font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>
               <li className="hover:text-accent-orange cursor-pointer transition-colors">Vendre sur Addikt</li>
               <li>
-                <Link to="/top-seller" className="hover:text-accent-orange cursor-pointer transition-colors block w-full">Programme Top vendeur</Link>
+                <Link href="/top-seller" className="hover:text-accent-orange cursor-pointer transition-colors block w-full">Programme Top vendeur</Link>
               </li>
               <li className="hover:text-accent-orange cursor-pointer transition-colors">Devenir vendeur vérifié</li>
               <li className="hover:text-accent-orange cursor-pointer transition-colors">Guide du bon vendeur</li>
@@ -101,7 +102,7 @@ export default function Footer() {
             </div>
           </button>
           
-          <Link to="/register" className="bg-[#3B82F6] text-white w-48 h-12 rounded-full flex items-center justify-between px-1.5 hover:scale-105 active:scale-95 transition-all duration-200">
+          <Link href="/register" className="bg-[#3B82F6] text-white w-48 h-12 rounded-full flex items-center justify-between px-1.5 hover:scale-105 active:scale-95 transition-all duration-200">
             <span className="font-bold text-sm ml-5" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>S'inscrire</span>
             <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-white">
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>

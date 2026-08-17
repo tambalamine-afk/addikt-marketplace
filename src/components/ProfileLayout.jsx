@@ -1,10 +1,12 @@
+"use client";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 
 export default function ProfileLayout() {
-  const location = useLocation();
-  const currentPath = location.pathname;
+  const pathname = usePathname();
+  const currentPath = pathname;
 
   return (
     <div className="bg-background text-on-background antialiased min-h-screen font-sans flex flex-col">
@@ -19,19 +21,19 @@ export default function ProfileLayout() {
 
       {/* Mobile Bottom Navigation (Visible only on mobile) */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-surface-variant flex justify-around items-center h-16 z-50">
-        <Link to="/" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
+        <Link href="/" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
           <span className="material-symbols-outlined">home</span>
         </Link>
-        <Link to="/search" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
+        <Link href="/search" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
           <span className="material-symbols-outlined">search</span>
         </Link>
-        <Link to="/publish" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
+        <Link href="/publish" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
           <span className="material-symbols-outlined">add_circle</span>
         </Link>
-        <Link to="/messages" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
+        <Link href="/messages" className="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors w-full h-full">
           <span className="material-symbols-outlined">chat</span>
         </Link>
-        <Link to="/profile/me" className="flex flex-col items-center justify-center text-primary border-t-2 border-primary w-full h-full">
+        <Link href="/profile/me" className="flex flex-col items-center justify-center text-primary border-t-2 border-primary w-full h-full">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>person</span>
         </Link>
       </nav>

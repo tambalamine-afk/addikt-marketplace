@@ -1,7 +1,8 @@
+"use client";
+import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { Link } from 'react-router-dom';
 
 const MOCK_BANNERS = [
   {
@@ -71,7 +72,7 @@ export default function AdCarousel() {
                     </div>
                   </a>
                 ) : (
-                  <Link to={banner.link} className="block w-full aspect-[2/1] rounded-xl overflow-hidden relative group">
+                  <Link href={banner.link} className="block w-full aspect-[2/1] rounded-xl overflow-hidden relative group">
                     <img src={banner.image} alt={banner.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-black/30 flex items-center justify-center p-6 text-center">
                       <h3 className="text-white font-headline-md md:text-3xl text-xl" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>{banner.title}</h3>

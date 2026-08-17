@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { X, Star, MapPin, CheckCircle, Package } from 'lucide-react';
 import ProductCard from './ProductCard';

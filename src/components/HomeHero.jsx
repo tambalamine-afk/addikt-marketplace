@@ -1,10 +1,11 @@
+"use client";
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { ShieldCheck, Tags, Users } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 export default function HomeHero({ onShopNow }) {
   const [activeTab, setActiveTab] = useState('Buy');
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   return (
     <section className="bg-accent-orange w-full min-h-[500px] flex items-center justify-center relative overflow-hidden py-16 mx-auto max-w-[98%] mt-4 rounded-[40px]">

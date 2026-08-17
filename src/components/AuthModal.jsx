@@ -1,5 +1,6 @@
+"use client";
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 export default function AuthModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +41,7 @@ export default function AuthModal() {
         {/* Buttons */}
         <div className="w-full flex flex-col gap-3 mb-6">
           <Link 
-            to="/register" 
+            href="/register" 
             onClick={() => setIsOpen(false)}
             className="w-full bg-black text-white font-button-text font-bold text-center py-3.5 rounded-full hover:bg-black/90 transition-colors"
             style={{ fontFamily: '"Google Sans", sans-serif' }}
@@ -48,7 +49,7 @@ export default function AuthModal() {
             S'inscrire
           </Link>
           <Link 
-            to="/login" 
+            href="/login" 
             onClick={() => setIsOpen(false)}
             className="w-full bg-white text-black border-2 border-black font-button-text font-bold text-center py-3.5 rounded-full hover:bg-black/5 transition-colors"
             style={{ fontFamily: '"Google Sans", sans-serif' }}

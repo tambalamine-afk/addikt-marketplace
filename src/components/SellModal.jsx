@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { X, Camera, Info } from 'lucide-react';
 import { CATEGORIES } from '../data/mockData';

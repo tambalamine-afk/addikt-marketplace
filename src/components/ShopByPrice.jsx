@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { PRICE_RANGES } from '../data/mockData';
 

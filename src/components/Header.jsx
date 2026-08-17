@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+"use client";
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import MobileMenu from './MobileMenu';
+import { AppContext } from './Providers';
 
 const MEGAMENU_DATA = {
   Femmes: {
@@ -49,7 +52,7 @@ const SUGGESTIONS = [
 function TypewriterSearch() {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const navigate = useNavigate();
+  const navigate = useRouter();
   
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && inputValue.trim()) {
@@ -132,15 +135,13 @@ function TypewriterSearch() {
 }
 
 export default function Header() {
-  const location = useLocation();
-  const isPublishPage = location.pathname === '/publish';
-  const isProfilePage = location.pathname.startsWith('/profile');
+  const pathname = usePathname();
+  const isPublishPage = pathname === '/publish';
+  const isProfilePage = pathname.startsWith('/profile');
   const hideCategories = isPublishPage || isProfilePage;
   
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const saved = localStorage.getItem('isLoggedIn');
-    return saved !== 'false';
-  });
+  const { user, supabase } = useContext(AppContext);
+  const isLoggedIn = !!user;
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -157,17 +158,16 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    localStorage.setItem('isLoggedIn', 'false');
-    setIsLoggedIn(false);
+    await supabase.auth.signOut();
     setIsDropdownOpen(false);
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    localStorage.setItem('isLoggedIn', 'true');
-    setIsLoggedIn(true);
+    // Open AuthModal by dispatching custom event
+    window.dispatchEvent(new Event('openAuthModal'));
   };
 
   return (
@@ -180,7 +180,7 @@ export default function Header() {
           <button aria-label="Open mobile menu" onClick={() => setIsMobileMenuOpen(true)} className="p-2 -ml-2 mr-1 text-primary">
             <span className="material-symbols-outlined text-[28px]">menu</span>
           </button>
-          <Link to="/" className="flex items-center hover:opacity-90 transition-opacity">
+          <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
             <svg className="h-[36px] w-auto" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 712.2 262.81">
               <defs>
 
@@ -215,7 +215,7 @@ export default function Header() {
         
         {/* Logo Desktop */}
         <div className="hidden lg:flex lg:flex-none justify-start">
-          <Link to="/" className="flex items-center hover:opacity-90 transition-opacity">
+          <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
             <svg className="h-[45px] w-auto" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 712.2 262.81">
               <defs>
                 <style>
@@ -256,7 +256,7 @@ export default function Header() {
         <div className="flex items-center gap-2 md:gap-4 flex-1 lg:flex-none justify-end">
           {/* Icône Messagerie (visible si connecté) */}
           {isLoggedIn && (
-            <Link to="/messages" aria-label="Messages" className="hidden sm:flex text-primary hover:opacity-80 transition-opacity duration-200 items-center">
+            <Link href="/messages" aria-label="Messages" className="hidden sm:flex text-primary hover:opacity-80 transition-opacity duration-200 items-center">
               <span className="material-symbols-outlined text-[24px]">mail</span>
             </Link>
           )}
@@ -268,17 +268,17 @@ export default function Header() {
             <span className="material-symbols-outlined text-[24px]">shopping_bag</span>
           </button>
           
-          <Link to="/register" className="lg:hidden bg-[#1b1b1b] text-white px-3 py-1.5 rounded text-sm font-bold ml-1" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+          <Link href="/register" className="lg:hidden bg-[#1b1b1b] text-white px-3 py-1.5 rounded text-sm font-bold ml-1" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
             Sign up
           </Link>
           
           <div className="hidden md:flex items-center gap-2 ml-2">
-            <Link to="/publish" className="bg-primary text-on-primary border border-primary px-5 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-opacity" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+            <Link href="/publish" className="bg-primary text-on-primary border border-primary px-5 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-opacity" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
               Vendre
             </Link>
             {!isLoggedIn ? (
               <>
-                <Link to="/register" className="bg-white border border-outline-variant text-primary px-5 py-2 rounded-full font-bold text-sm hover:bg-surface-variant transition-colors" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+                <Link href="/register" className="bg-white border border-outline-variant text-primary px-5 py-2 rounded-full font-bold text-sm hover:bg-surface-variant transition-colors" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                   S'inscrire
                 </Link>
                 <button onClick={handleLogin} className="text-primary px-3 py-2 font-bold text-sm hover:underline" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
@@ -291,24 +291,24 @@ export default function Header() {
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="flex items-center gap-1 hover:opacity-80 transition-opacity focus:outline-none"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#6B7280] flex items-center justify-center text-white font-bold text-sm">
-                    MU
+                  <div className="w-10 h-10 rounded-full bg-[#6B7280] flex items-center justify-center text-white font-bold text-sm uppercase">
+                    {user?.user_metadata?.full_name?.substring(0, 2) || user?.email?.substring(0, 2) || 'MU'}
                   </div>
                   <span className="material-symbols-outlined text-[20px] text-primary">expand_more</span>
                 </button>
 
                 {isDropdownOpen && (
                   <div className="absolute right-0 top-[120%] mt-1 w-[220px] bg-white shadow-lg border border-black/10 z-50 flex flex-col font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>
-                    <Link to="/profile/me" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
+                    <Link href="/profile/me" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
                       Ton profil
                     </Link>
-                    <Link to="/publish" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
+                    <Link href="/publish" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
                       Ton espace vendeur
                     </Link>
-                    <Link to="/purchases" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
+                    <Link href="/purchases" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
                       Achats
                     </Link>
-                    <Link to="/profile/settings" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
+                    <Link href="/profile/settings" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
                       Paramètres
                     </Link>
                     <button onClick={handleLogout} className="px-5 py-3 text-left text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
@@ -342,7 +342,7 @@ export default function Header() {
                   onMouseEnter={() => setHoveredCategory(cat)}
                 >
                   <Link 
-                    to={`/category/${cat.toLowerCase()}`} 
+                    href={`/category/${cat.toLowerCase()}`} 
                     className={`h-full flex items-center px-6 transition-colors whitespace-nowrap ${hoveredCategory === cat ? 'bg-[#1b1b1b] text-white' : 'text-primary hover:bg-[#1b1b1b] hover:text-white'}`} 
                     style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700, fontSize: '15px' }}
                   >
@@ -351,7 +351,7 @@ export default function Header() {
                 </div>
               ))}
               <div className="h-full" onMouseEnter={() => setHoveredCategory(null)}>
-                <Link to="/promos" className="h-full flex items-center px-6 text-error hover:bg-error hover:text-white transition-colors whitespace-nowrap" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700, fontSize: '15px' }}>
+                <Link href="/promos" className="h-full flex items-center px-6 text-error hover:bg-error hover:text-white transition-colors whitespace-nowrap" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700, fontSize: '15px' }}>
                   Promos
                 </Link>
               </div>
@@ -368,7 +368,7 @@ export default function Header() {
                     <h3 className="font-bold text-[16px] text-black mb-6" style={{ fontFamily: '"Google Sans", sans-serif' }}>Shop by category</h3>
                     <div className="grid grid-cols-2 gap-x-12 gap-y-4">
                       {(MEGAMENU_DATA[hoveredCategory] || MEGAMENU_DATA['Femmes']).shopByCategory.map((item) => (
-                        <Link key={item} to={`/category/${hoveredCategory.toLowerCase()}`} className="text-[#333] hover:underline text-[14px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                        <Link key={item} href={`/category/${hoveredCategory.toLowerCase()}`} className="text-[#333] hover:underline text-[14px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
                           {item}
                         </Link>
                       ))}
@@ -380,7 +380,7 @@ export default function Header() {
                     <h3 className="font-bold text-[16px] text-black mb-6" style={{ fontFamily: '"Google Sans", sans-serif' }}>Featured</h3>
                     <div className="flex flex-col gap-4">
                       {(MEGAMENU_DATA[hoveredCategory] || MEGAMENU_DATA['Femmes']).featured.map((item) => (
-                        <Link key={item} to={`/category/${hoveredCategory.toLowerCase()}`} className="text-[#333] hover:underline text-[14px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                        <Link key={item} href={`/category/${hoveredCategory.toLowerCase()}`} className="text-[#333] hover:underline text-[14px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
                           {item}
                         </Link>
                       ))}
@@ -390,7 +390,7 @@ export default function Header() {
                 
                 {/* See all link */}
                 <div className="mt-8 pt-4">
-                  <Link to={`/category/${hoveredCategory.toLowerCase()}`} className="font-bold text-black text-[15px] hover:underline" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                  <Link href={`/category/${hoveredCategory.toLowerCase()}`} className="font-bold text-black text-[15px] hover:underline" style={{ fontFamily: '"Google Sans", sans-serif' }}>
                     See all {hoveredCategory.toLowerCase()}
                   </Link>
                 </div>

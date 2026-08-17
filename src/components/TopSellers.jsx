@@ -1,5 +1,6 @@
+"use client";
+import Link from 'next/link';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export const TOP_SELLERS = [
   {
@@ -64,7 +65,7 @@ export default function TopSellers() {
                   <p className="text-xs text-secondary">@{seller.handle}</p>
                 </div>
               </div>
-              <Link to={`/seller/${seller.id}`} className="bg-primary text-white text-xs font-bold px-4 py-2 rounded uppercase tracking-wider hover:bg-black transition-colors">
+              <Link href={`/seller/${seller.id}`} className="bg-primary text-white text-xs font-bold px-4 py-2 rounded uppercase tracking-wider hover:bg-black transition-colors">
                 SHOP
               </Link>
             </div>

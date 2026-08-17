@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { X, Heart, ShoppingBag, Sparkles, Tag } from 'lucide-react';
 import { FIT_CHECK_POSTS } from '../data/mockData';

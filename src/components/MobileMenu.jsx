@@ -1,5 +1,6 @@
+"use client";
+import Link from 'next/link';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export default function MobileMenu({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -26,7 +27,7 @@ export default function MobileMenu({ isOpen, onClose }) {
       <div className="fixed top-0 left-0 bottom-0 w-[85vw] max-w-[350px] bg-white z-[100] flex flex-col h-[100dvh] overflow-y-auto">
       {/* Header */}
       <div className="flex justify-between items-center px-4 py-4 border-b border-black/10">
-        <Link to="/" onClick={onClose} className="flex items-center">
+        <Link href="/" onClick={onClose} className="flex items-center">
           {/* Logo Addikt SVG */}
           <svg className="h-[36px] w-auto" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 712.2 262.81">
             <defs>
@@ -64,10 +65,10 @@ export default function MobileMenu({ isOpen, onClose }) {
 
       {/* Auth & Action Buttons */}
       <div className="flex flex-col px-4 py-6 gap-3">
-        <Link to="/publish" onClick={onClose} className="w-full bg-[#1b1b1b] text-white font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+        <Link href="/publish" onClick={onClose} className="w-full bg-[#1b1b1b] text-white font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
           Sell now
         </Link>
-        <Link to="/register" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+        <Link href="/register" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
           Sign up
         </Link>
         <button onClick={() => {
@@ -85,7 +86,7 @@ export default function MobileMenu({ isOpen, onClose }) {
         {categories.map((cat, idx) => (
           <Link 
             key={idx} 
-            to={cat.link}
+            href={cat.link}
             onClick={onClose}
             className={`flex justify-between items-center px-4 py-3 border-b border-black/5 ${cat.isRed ? 'text-error' : 'text-black'}`}
           >
@@ -110,10 +111,10 @@ export default function MobileMenu({ isOpen, onClose }) {
           <div className="flex flex-col flex-1">
             <span className="text-[#333] text-[13px] mb-2" style={{ fontFamily: '"Google Sans", sans-serif' }}>Buy, sell & discover on the go</span>
             <div className="flex gap-2">
-              <Link to="#">
+              <Link href="#">
                 <img src="/app-store-badge.svg" alt="Download on the App Store" className="h-[36px] w-auto" />
               </Link>
-              <Link to="#">
+              <Link href="#">
                 <img src="/google-play-badge.svg" alt="Get it on Google Play" className="h-[36px] w-auto" />
               </Link>
             </div>
@@ -125,16 +126,16 @@ export default function MobileMenu({ isOpen, onClose }) {
       <div className="px-4 py-6 border-t border-black/10 text-sm">
         <h3 className="font-bold mb-4" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Plus sur Addikt</h3>
         <div className="grid grid-cols-2 gap-y-4 gap-x-4 mb-2 text-[#333]">
-          <Link to="#">À propos</Link>
-          <Link to="#">Notre mission</Link>
-          <Link to="/blog">Blog</Link>
-          <Link to="#">Rejoindre l'équipe</Link>
-          <Link to="/publish">Vendre sur Addikt</Link>
-          <Link to="#">Programme Top vendeur</Link>
-          <Link to="#">Devenir vendeur vérifié</Link>
-          <Link to="#">Guide du bon vendeur</Link>
-          <Link to="#">Devenir ambassadeur</Link>
-          <Link to="#">Groupe WhatsApp</Link>
+          <Link href="#">À propos</Link>
+          <Link href="#">Notre mission</Link>
+          <Link href="/blog">Blog</Link>
+          <Link href="#">Rejoindre l'équipe</Link>
+          <Link href="/publish">Vendre sur Addikt</Link>
+          <Link href="#">Programme Top vendeur</Link>
+          <Link href="#">Devenir vendeur vérifié</Link>
+          <Link href="#">Guide du bon vendeur</Link>
+          <Link href="#">Devenir ambassadeur</Link>
+          <Link href="#">Groupe WhatsApp</Link>
         </div>
       </div>
       
