@@ -181,7 +181,7 @@ export default function LandingPage() {
 
             {/* 4. Button */}
             {toggleState === 'acheter' ? (
-              <Link to="/category" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-8" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+              <Link to="/category/nouveautes" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-8" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                 Découvrir
               </Link>
             ) : (
@@ -251,35 +251,32 @@ export default function LandingPage() {
             {/* AD CAROUSEL SECTION */}
             <AdCarousel />
             
-            {/* 2.5. NOS SÉLECTIONS */}
-      <section className="w-full max-w-7xl mx-auto px-container-margin py-12 overflow-hidden">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="font-headline-lg text-primary text-3xl" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>Nos sélections</h2>
-          <div className="hidden md:flex gap-2">
-            <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
-              <span className="material-symbols-outlined">chevron_left</span>
-            </button>
-            <button className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
-              <span className="material-symbols-outlined">chevron_right</span>
-            </button>
-          </div>
+      {/* (L'ancienne section Nos sélections a été déplacée plus bas) */}
+
+      {/* 4. SUGGÉRÉ POUR TOI (DÉPLACÉ EN HAUT) */}
+      <section className="w-full max-w-7xl mx-auto px-container-margin relative py-8">
+        <div className="flex items-center justify-between mb-6 relative z-10">
+          <h2 className="font-headline-lg text-primary text-3xl" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>Pour toi</h2>
+          <Link to="/category" className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2 text-sm font-bold flex items-center justify-center">Tout voir</Link>
         </div>
-        <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x pb-4">
-          {NOS_SELECTIONS.map((item, idx) => (
-            <div key={idx} className="min-w-[300px] md:min-w-[350px] aspect-[3/4] rounded-[40px] bg-[#F3EFE9] p-6 flex flex-col snap-start transition-transform duration-500 hover:scale-[1.02] cursor-pointer group">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-black leading-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{item.title}</h3>
-                <p className="text-black/60 text-sm mt-1">{item.subtitle}</p>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
+          {PRODUCTS_GRID.map((item, idx) => (
+            <Link key={idx} to={`/product/p${(idx % 12) + 1}`} className="flex flex-col gap-3 group cursor-pointer">
+              <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+                <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
+                <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} />
               </div>
-              <div className="relative flex-1 w-full rounded-3xl overflow-hidden">
-                <img alt={item.title} className="w-full h-full object-cover" src={item.img} />
+              <div className="flex flex-col mt-2">
+                <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
+                <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
+                <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* 3. TRUST BAND / PROMO CAROUSEL */}
+      {/* 3. TRUST BAND / PROMO CAROUSEL (DÉPLACÉ ICI) */}
       <section className="w-full px-container-margin py-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row shadow-sm relative group rounded-[20px] md:rounded-[30px] overflow-hidden md:h-[260px]">
           
@@ -325,33 +322,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 4. SUGGÉRÉ POUR TOI */}
-      <section className="w-full max-w-7xl mx-auto px-container-margin relative py-12">
-        <div className="flex items-center justify-between mb-10 relative z-10">
-          <h2 className="font-headline-lg text-primary text-3xl" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>Pour toi</h2>
-          <button className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2">Tout voir</button>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
-          {PRODUCTS_GRID.map((item, idx) => (
-            <Link key={idx} to={`/product/p${(idx % 12) + 1}`} className="flex flex-col gap-3 group cursor-pointer">
-              <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
-                <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
-                <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} />
-              </div>
-              <div className="flex flex-col mt-2">
-                <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
-                <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
-                <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
       {/* 5. TOP BOUTIQUES */}
-      <section className="w-full max-w-7xl mx-auto px-container-margin py-12">
-        <div className="flex items-center gap-4 mb-10">
+      <section className="w-full max-w-7xl mx-auto px-container-margin py-8">
+        <div className="flex items-center justify-between gap-4 mb-6">
           <h2 className="text-headline-md text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Top Boutik</h2>
+          <Link to="/category" className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2 text-sm font-bold flex items-center justify-center">Tout voir</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {TOP_SELLERS.slice(0, 3).map(seller => (
@@ -381,14 +356,14 @@ export default function LandingPage() {
       </section>
 
       {/* 6. NEW DROP */}
-      <section className="w-full max-w-[98%] mx-auto bg-white rounded-[40px] px-container-margin py-16 relative overflow-hidden my-12" style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '18px' }}>
+      <section className="w-full max-w-[98%] mx-auto bg-white rounded-[40px] px-container-margin py-10 relative overflow-hidden my-8" style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '18px' }}>
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex items-center justify-between gap-4 mb-10">
+          <div className="flex items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-4">
               <h2 className="font-headline-lg text-black" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600, fontSize: '24px' }}>Fresh DROP</h2>
               <svg className="text-black" fill="currentColor" height="40" viewBox="0 0 100 100" width="40"><path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path></svg>
             </div>
-            <button className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:block">Explore</button>
+            <Link to="/category" className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:flex items-center justify-center font-bold">Explore</Link>
           </div>
           <div className="relative flex items-center group">
             <button className="absolute -left-4 z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
@@ -411,11 +386,61 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* 2.5. NOS SÉLECTIONS (NOUVEAU DESIGN 3 CADRES - DÉPLACÉ ICI SANS TITRE) */}
+      <section className="w-full max-w-7xl mx-auto px-container-margin py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* 1er Cadre : Sneakers (Gauche) */}
+          <Link to="/category/sneakers" className="bg-gray-100 rounded-[30px] overflow-hidden relative group block h-[400px] md:h-[520px]">
+            <img src={NOS_SELECTIONS[3].img} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Sneakers" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div className="absolute bottom-8 left-8 right-8">
+              <h3 className="text-white text-2xl md:text-3xl font-bold mb-1" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Sneakers</h3>
+              <p className="text-white/90 text-sm md:text-base mb-4" style={{ fontFamily: '"Google Sans", sans-serif' }}>Pépites de collection & exclusivités</p>
+              <div className="flex flex-wrap gap-4">
+                <span className="bg-black text-white px-6 py-2.5 rounded-full font-bold text-sm group-hover:bg-white group-hover:text-black transition-colors inline-block" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Découvrir</span>
+              </div>
+            </div>
+          </Link>
 
+          {/* Colonne Droite */}
+          <div className="flex flex-col gap-4">
+            
+            {/* 2ème Cadre : Streetwear Dakar (Haut Droite) */}
+            <Link to="/category" className="bg-[#A0704F] rounded-[30px] overflow-hidden relative group block h-[250px] md:h-[304px]">
+              <img src={NOS_SELECTIONS[1].img} className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" alt="Streetwear Dakar" />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+              
+              <div className="absolute bottom-6 left-6">
+                <h3 className="text-white text-xl md:text-2xl font-bold mb-0.5" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Streetwear Dakar</h3>
+                <p className="text-white/90 text-sm" style={{ fontFamily: '"Google Sans", sans-serif' }}>L'énergie urbaine • Nouveautés</p>
+              </div>
+            </Link>
+
+            {/* 3ème Cadre : Rejoindre la Team Addikt (Bas Droite) */}
+            <div className="bg-[#00a6fb] rounded-[30px] p-6 flex flex-col justify-between group cursor-pointer h-[200px] relative overflow-hidden">
+              <div className="flex justify-between items-start relative z-10">
+                <Link to="/register" className="bg-white text-black font-bold px-6 py-2.5 rounded-full text-sm shadow-sm hover:scale-105 transition-transform inline-block" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>S'inscrire</Link>
+                <div className="flex -space-x-3">
+                   <img className="w-12 h-12 rounded-full border-2 border-[#00a6fb] object-cover bg-white" src="https://i.pravatar.cc/100?img=1" alt="User 1" />
+                   <img className="w-12 h-12 rounded-full border-2 border-[#00a6fb] object-cover bg-white" src="https://i.pravatar.cc/100?img=2" alt="User 2" />
+                   <img className="w-12 h-12 rounded-full border-2 border-[#00a6fb] object-cover bg-white" src="https://i.pravatar.cc/100?img=3" alt="User 3" />
+                </div>
+              </div>
+              <div className="flex justify-between items-end mt-4 relative z-10">
+                <p className="text-white font-bold text-lg md:text-xl max-w-[75%] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>Rejoins la Team Addikt</p>
+                <Link to="/register" className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-md flex-shrink-0">
+                  <span className="material-symbols-outlined text-white text-[20px]">arrow_outward</span>
+                </Link>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* Decorative Categories SVG Section */}
-      <section className="w-full py-16 flex flex-col items-center justify-center overflow-hidden min-h-[600px] bg-surface">
-        <h2 className="font-headline-lg text-primary text-center mb-24 relative z-20" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Catégories</h2>
+      <section className="w-full py-10 flex flex-col items-center justify-center overflow-hidden min-h-[500px] bg-surface">
+        <h2 className="font-headline-lg text-primary text-center mb-12 relative z-20" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Catégories</h2>
         <div className="w-full max-w-7xl mx-auto px-container-margin relative z-10 mt-[-50px]">
           <svg className="w-full h-auto" viewBox="-100 -50 1490.71 460.67" xmlns="http://www.w3.org/2000/svg">
             <defs><style>{`.cls-cat-1 { fill: #c77dff; } .cls-cat-16 { fill: #ff4313; } .cls-cat-17 { fill: #00b2ae; } .cls-cat-18 { fill: #00a6fb; } .cls-cat-14 { fill: #fd7f91; } .cls-cat-15 { fill: #fdcf65; }`}</style></defs>

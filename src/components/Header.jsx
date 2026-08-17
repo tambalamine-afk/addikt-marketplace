@@ -87,6 +87,7 @@ function TypewriterSearch() {
   return (
     <div className="relative w-full">
       <input 
+        id="header-search-input"
         type="text" 
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}

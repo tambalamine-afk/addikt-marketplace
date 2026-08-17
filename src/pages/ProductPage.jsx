@@ -39,7 +39,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
         </div>
       </div>
       <h4 className="font-label text-sm text-primary truncate mb-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{p.title}</h4>
-      <p className="text-sm font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{p.price.toLocaleString('fr-SN')} F</p>
+      <p className="text-sm font-bold text-primary" style={{ fontFamily: '"Google Sans", sans-serif' }}>{p.price.toLocaleString('fr-SN')} FCFA</p>
     </Link>
   );
 
@@ -102,12 +102,12 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           <div className="w-full md:w-[45%] flex flex-col pt-2 lg:pt-8">
             {/* Header */}
             <div className="mb-6">
-              <h1 className="text-[32px] md:text-[40px] font-semibold leading-[1.1] tracking-tighter mb-4 text-primary uppercase font-body" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>
+              <h1 className="text-[20px] md:text-[24px] font-semibold leading-[1.1] tracking-tighter mb-4 text-primary uppercase font-body" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>
                 {product.title}
               </h1>
               <div className="flex items-end gap-3 mb-2">
-                <span className="text-[28px] font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{product.price.toLocaleString('fr-SN')} F</span>
-                <span className="text-[18px] text-outline line-through mb-1 font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{(product.price * 1.15).toLocaleString('fr-SN')} F</span>
+                <span className="text-[28px] font-bold text-primary" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.price.toLocaleString('fr-SN')} FCFA</span>
+                <span className="text-[18px] text-outline line-through mb-1 font-bold" style={{ fontFamily: '"Google Sans", sans-serif' }}>{(product.price * 1.15).toLocaleString('fr-SN')} FCFA</span>
                 <span className="bg-accent-orange text-white font-label text-xs px-2 py-1 rounded-sm mb-1 uppercase font-bold transform -rotate-3">-15%</span>
               </div>
               <p className="font-body text-sm text-secondary" style={{ fontFamily: '"Google Sans", sans-serif' }}>Taille {product.size || 'M'} · Très bon état</p>
@@ -182,7 +182,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
             
             {/* Reviews */}
             <div className="mb-8">
-              <h3 className="font-headline text-lg uppercase mb-4 text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Avis récents</h3>
+              <h3 className="font-headline text-lg mb-4 text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Avis récents</h3>
               <div className="flex flex-col gap-4">
                 <div className="bg-surface-container-low p-4 rounded-2xl border border-outline-variant/30">
                   <div className="flex justify-between items-start mb-2">
@@ -221,7 +221,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           {/* More from seller */}
           <div className="mb-16">
             <div className="flex justify-between items-end mb-6">
-              <h2 className="font-headline text-2xl font-bold uppercase text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Plus de ce vendeur</h2>
+              <h2 className="font-headline text-2xl font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Plus de ce vendeur</h2>
               <a className="font-label text-sm text-secondary hover:text-primary transition-colors underline decoration-1 underline-offset-4" href="#">Tout voir</a>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -232,7 +232,7 @@ export default function ProductPage({ products, toggleLike, addToast }) {
           {/* You might also like */}
           <div>
             <div className="flex justify-between items-end mb-6">
-              <h2 className="font-headline text-2xl font-bold uppercase text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Tu pourrais aimer</h2>
+              <h2 className="font-headline text-2xl font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Tu pourrais aimer</h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {products.slice(5, 10).map((p, i) => renderProductCard(p, i, i === 1, i === 3))}

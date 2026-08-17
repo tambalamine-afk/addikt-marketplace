@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        "surface": "#f9f9f9",
+        "surface": "#ffffff",
         "surface-dim": "#dadada",
-        "surface-bright": "#f9f9f9",
+        "surface-bright": "#ffffff",
         "surface-container-lowest": "#ffffff",
         "surface-container-low": "#f3f3f3",
         "surface-container": "#eeeeee",
@@ -52,7 +52,7 @@ export default {
         "tertiary-fixed-dim": "#ffb59e",
         "on-tertiary-fixed": "#3a0b00",
         "on-tertiary-fixed-variant": "#852400",
-        "background": "#f9f9f9",
+        "background": "#ffffff",
         "on-background": "#1a1c1c",
         "surface-variant": "#e2e2e2",
         

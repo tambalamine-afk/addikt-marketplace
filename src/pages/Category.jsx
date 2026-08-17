@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 export default function Category({ products, handleSelect }) {
   const { id } = useParams();
-  const categoryId = id ? id.toLowerCase() : 'femmes';
+  const categoryId = id ? id.toLowerCase() : 'nouveautes';
   
   if (categoryId === 'beauté' || categoryId === 'beaute' || categoryId === 'beauty') {
     const beautySections = [
@@ -33,7 +33,7 @@ export default function Category({ products, handleSelect }) {
               {[1, 2, 3, 4, 5, 6].map((idx) => {
                 const price = 5000 + (idx * 1500);
                 return (
-                  <div key={`${section.id}-${idx}`} className="group relative flex flex-col bg-transparent transition-all cursor-pointer">
+                  <Link key={`${section.id}-${idx}`} to="/product/1" className="group relative flex flex-col bg-transparent transition-all cursor-pointer">
                     <div className="relative w-full aspect-[3/4] bg-surface-container-low rounded-md overflow-hidden">
                       <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={section.title} src={section.image} />
                       <button className="absolute top-2 right-2 transition-opacity z-10 hover:scale-110">
@@ -46,7 +46,7 @@ export default function Category({ products, handleSelect }) {
                       <span className="text-[15px] text-[#222] font-normal truncate">{section.title} Item {idx}</span>
                       <span className="text-[16px] font-semibold text-black tracking-tight mt-0.5">{price.toLocaleString('fr-SN')} FCFA</span>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -68,10 +68,19 @@ export default function Category({ products, handleSelect }) {
       title = 'Enfants';
       subcategories = ['Bébé', 'Filles (2-14 ans)', 'Garçons (2-14 ans)', 'Chaussures', 'Jouets', 'Livres', 'Puériculture', 'Accessoires'];
       break;
+    case 'sneakers':
+      title = 'Sneakers';
+      subcategories = ['Basses', 'Montantes', 'Running', 'Lifestyle', 'Vintage', 'Éditions limitées', 'Accessoires'];
+      break;
     case 'femmes':
-    default:
       title = 'Femmes';
       subcategories = ['Robes', 'Hauts', 'Bas', 'Boubous & tenues trad', 'Vestes & manteaux', 'Chaussures', 'Sacs & accessoires', 'Bijoux', 'Vintage'];
+      break;
+    case 'nouveautes':
+    case 'nouveautés':
+    default:
+      title = 'Nouveautés';
+      subcategories = ['Femmes', 'Hommes', 'Enfants', 'Sneakers', 'Beauté', 'Vintage', 'Accessoires'];
       break;
   }
 
@@ -79,24 +88,66 @@ export default function Category({ products, handleSelect }) {
   subcategories = ['Tous', ...subcategories];
 
   const [activeSubcategory, setActiveSubcategory] = useState(subcategories[0]);
+  const [activeFilters, setActiveFilters] = useState([
+    { id: 'size-m', type: 'size', label: 'Taille M', value: 'M' },
+    { id: 'price-10k', type: 'maxPrice', label: 'Moins de 10 000 FCFA', value: 10000 }
+  ]);
+  const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [sortOrder, setSortOrder] = useState('recent');
 
   // Réinitialiser le filtre actif quand on change de catégorie
   useEffect(() => {
     setActiveSubcategory(subcategories[0]);
   }, [categoryId]);
 
-  // Filtrer les produits en fonction du sous-catégorie actif
-  const filteredProducts = products.filter(product => {
-    if (!activeSubcategory || activeSubcategory === 'Tous') return true;
-    const term = activeSubcategory.toLowerCase();
+  const removeFilter = (id) => {
+    setActiveFilters(prev => prev.filter(f => f.id !== id));
+  };
+
+  const addFilter = (filter) => {
+    // Prevent duplicates of the same type if it's maxPrice, or just add it
+    setActiveFilters(prev => {
+      const existing = prev.find(f => f.type === filter.type && f.value === filter.value);
+      if (existing) return prev;
+      return [...prev.filter(f => f.type !== filter.type || filter.type === 'size'), filter]; // Only 1 maxPrice
+    });
+    setShowFilterMenu(false);
+  };
+
+  // Filtrer et trier les produits
+  let finalProducts = products.filter(product => {
+    // 1. Sous-catégorie
+    let matchSub = false;
+    if (!activeSubcategory || activeSubcategory === 'Tous') {
+      matchSub = true;
+    } else {
+      const term = activeSubcategory.toLowerCase();
+      matchSub = product.category.toLowerCase().includes(term) ||
+                 product.title.toLowerCase().includes(term) ||
+                 product.tags.some(tag => term.includes(tag.toLowerCase())) ||
+                 term.includes(product.category.toLowerCase());
+    }
+    if (!matchSub) return false;
+
+    // 2. Filtres actifs
+    for (const filter of activeFilters) {
+      if (filter.type === 'size') {
+        if (!product.size || product.size.toLowerCase() !== filter.value.toLowerCase()) return false;
+      }
+      if (filter.type === 'maxPrice') {
+        if (product.price > filter.value) return false;
+      }
+    }
     
-    // Essayer de trouver une correspondance dans la catégorie, le titre ou les tags
-    return (
-      product.category.toLowerCase().includes(term) ||
-      product.title.toLowerCase().includes(term) ||
-      product.tags.some(tag => term.includes(tag.toLowerCase())) ||
-      term.includes(product.category.toLowerCase())
-    );
+    return true;
+  });
+
+  // Tri
+  finalProducts.sort((a, b) => {
+    if (sortOrder === 'asc') return a.price - b.price;
+    if (sortOrder === 'desc') return b.price - a.price;
+    if (sortOrder === 'popular') return (b.liked ? 1 : 0) - (a.liked ? 1 : 0);
+    return 0; // recent (default, keep original order)
   });
 
   return (
@@ -125,47 +176,80 @@ export default function Category({ products, handleSelect }) {
 
       {/* Filters and Sorting Row */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        {/* Filter Button */}
-        <button className="flex items-center gap-2 border-2 border-primary rounded-full px-6 py-2 hover:bg-surface-variant transition-colors group">
-          <span className="material-symbols-outlined text-primary group-hover:text-accent-blue transition-colors">tune</span>
-          <span className="font-button-text text-button-text">Filtres</span>
-        </button>
+        {/* Filter Button & Menu */}
+        <div className="relative">
+          <button 
+            onClick={() => setShowFilterMenu(!showFilterMenu)}
+            className="flex items-center gap-2 border-2 border-primary rounded-full px-6 py-2 hover:bg-surface-variant transition-colors group"
+          >
+            <span className="material-symbols-outlined text-primary group-hover:text-accent-blue transition-colors">tune</span>
+            <span className="font-button-text text-button-text">Filtres</span>
+          </button>
+          
+          {showFilterMenu && (
+            <div className="absolute top-full mt-2 left-0 w-64 bg-white shadow-lg border border-outline-variant/30 rounded-xl z-50 p-4 flex flex-col gap-4">
+              <div>
+                <h4 className="font-label text-sm font-bold mb-2">Taille</h4>
+                <div className="flex gap-2 flex-wrap">
+                  {(categoryId === 'enfants' ? ['0-2 ans', '3-5 ans', '6-8 ans', '9-14 ans'] : ['S', 'M', 'L', 'XL']).map(size => (
+                    <button key={size} onClick={() => addFilter({ id: `size-${size.toLowerCase().replace(/\s+/g, '-')}`, type: 'size', label: `Taille ${size}`, value: size })} className="px-3 py-1 border border-outline-variant rounded hover:bg-black hover:text-white transition-colors text-sm">
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-label text-sm font-bold mb-2">Prix Max</h4>
+                <div className="flex gap-2 flex-wrap">
+                  {[5000, 10000, 20000, 50000].map(price => (
+                    <button key={price} onClick={() => addFilter({ id: `price-${price}`, type: 'maxPrice', label: `Moins de ${price.toLocaleString('fr-SN')} FCFA`, value: price })} className="px-3 py-1 border border-outline-variant rounded hover:bg-black hover:text-white transition-colors text-sm">
+                      &lt; {price / 1000}k
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         
         {/* Active Filter Chips */}
         <div className="flex flex-wrap gap-2 flex-grow">
-          <div className="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-1">
-            <span className="font-label-caps text-label-caps">Taille M</span>
-            <button className="material-symbols-outlined text-[16px] hover:text-accent-rose">close</button>
-          </div>
-          <div className="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-1">
-            <span className="font-label-caps text-label-caps">Moins de 10 000 F</span>
-            <button className="material-symbols-outlined text-[16px] hover:text-accent-rose">close</button>
-          </div>
+          {activeFilters.map(filter => (
+            <div key={filter.id} className="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-1">
+              <span className="font-label-caps text-label-caps">{filter.label}</span>
+              <button onClick={() => removeFilter(filter.id)} className="material-symbols-outlined text-[16px] hover:text-accent-rose">close</button>
+            </div>
+          ))}
         </div>
 
         {/* Sort Selector */}
         <div className="flex items-center gap-2">
           <span className="font-label-caps text-label-caps text-on-surface-variant">Trier par:</span>
-          <select className="bg-transparent border-none font-button-text text-button-text focus:ring-0 p-0 text-primary cursor-pointer hover:text-accent-blue outline-none">
-            <option>Plus récent</option>
-            <option>Prix croissant</option>
-            <option>Prix décroissant</option>
-            <option>Populaire</option>
+          <select 
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="bg-transparent border-none font-button-text text-button-text focus:ring-0 p-0 text-primary cursor-pointer hover:text-accent-blue outline-none"
+          >
+            <option value="recent">Plus récent</option>
+            <option value="asc">Prix croissant</option>
+            <option value="desc">Prix décroissant</option>
+            <option value="popular">Populaire</option>
           </select>
         </div>
       </div>
 
       {/* Product Grid or Empty State */}
-      {filteredProducts.length > 0 ? (
+      {finalProducts.length > 0 ? (
         <>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mb-section-gap">
-            {filteredProducts.slice(0, 12).map((product) => (
-              <div key={product.id} className="group relative flex flex-col bg-transparent transition-all cursor-pointer" onClick={() => handleSelect(product)}>
+            {finalProducts.slice(0, 12).map((product) => (
+              <Link key={product.id} to={`/product/${product.id}`} className="group relative flex flex-col bg-transparent transition-all cursor-pointer">
                 <div className="relative w-full aspect-[3/4] bg-surface-container-low rounded-md overflow-hidden">
                   <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.name} src={product.image} />
                   <button 
                     className="absolute top-2 right-2 transition-opacity z-10 hover:scale-110"
                     onClick={(e) => {
+                      e.preventDefault();
                       e.stopPropagation();
                     }}
                   >
@@ -181,7 +265,7 @@ export default function Category({ products, handleSelect }) {
                   )}
                   <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.price.toLocaleString('fr-SN')} FCFA</span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           

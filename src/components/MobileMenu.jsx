@@ -125,29 +125,51 @@ export default function MobileMenu({ isOpen, onClose }) {
       <div className="px-4 py-6 border-t border-black/10 text-sm">
         <h3 className="font-bold mb-4" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Plus sur Addikt</h3>
         <div className="grid grid-cols-2 gap-y-4 gap-x-4 mb-2 text-[#333]">
+          <Link to="#">À propos</Link>
+          <Link to="#">Notre mission</Link>
           <Link to="/blog">Blog</Link>
-          <Link to="/support">Support</Link>
-          <Link to="/about">À propos</Link>
-          <Link to="/terms">Conditions</Link>
-          <Link to="/sell-info">Vendre sur Addikt</Link>
-          <Link to="/privacy">Confidentialité</Link>
-          <Link to="/affiliates">Affiliation</Link>
-          <Link to="/safety">Sécurité</Link>
-          <Link to="/jobs">Emplois</Link>
-          <Link to="/sitemaps">Plan du site</Link>
-          <Link to="/news">Actualités</Link>
-          <Link to="/cookies">Cookies</Link>
-          <Link to="/app">Obtenir l'app</Link>
+          <Link to="#">Rejoindre l'équipe</Link>
+          <Link to="/publish">Vendre sur Addikt</Link>
+          <Link to="#">Programme Top vendeur</Link>
+          <Link to="#">Devenir vendeur vérifié</Link>
+          <Link to="#">Guide du bon vendeur</Link>
+          <Link to="#">Devenir ambassadeur</Link>
+          <Link to="#">Groupe WhatsApp</Link>
         </div>
       </div>
       
       {/* Bottom Footer: Social & Location */}
       <div className="px-4 py-6 pb-12 border-t border-black/10 flex flex-col gap-6">
-        <div className="flex gap-4 items-center text-black">
-          {/* Social Icons using text or material icons */}
-          <Link to="#"><span className="material-symbols-outlined text-[22px]">photo_camera</span></Link>
-          <Link to="#"><span className="material-symbols-outlined text-[22px]">flutter_dash</span></Link>
-          <Link to="#"><span className="material-symbols-outlined text-[22px]">facebook</span></Link>
+        <div className="flex items-center w-[200px]">
+          <svg id="Calque_2_mobile" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250.16 27.06" className="w-full h-auto">
+            <defs>
+              <style>{`.soc-mob-1, .soc-mob-2 { fill: #333; transition: fill 0.2s; } a:hover .soc-mob-1, a:hover .soc-mob-2 { fill: #00a6fb; } .soc-mob-2 { fill-rule: evenodd; }`}</style>
+            </defs>
+            <g id="Calque_1-2-mobile" data-name="Calque 1">
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
+                <path className="soc-mob-1" d="M250.16,10.1c0-3.19-2.58-5.77-5.77-5.77h-14.76c-3.19,0-5.77,2.58-5.77,5.77v6.87c0,3.19,2.58,5.77,5.77,5.77h14.76c3.19,0,5.77-2.58,5.77-5.77v-6.87ZM241.48,14.04l-6.62,3.28c-.26.14-1.14-.05-1.14-.34v-6.72c0-.3.89-.49,1.15-.34l6.34,3.45c.27.15.54.54.28.68Z"/>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <g>
+                  <path className="soc-mob-1" d="M59.18,5.88c-.77,0-1.4.62-1.4,1.4s.62,1.4,1.4,1.4,1.4-.62,1.4-1.4-.62-1.4-1.4-1.4Z"/>
+                  <path className="soc-mob-1" d="M52.97,7.67c-3.23,0-5.86,2.63-5.86,5.86s2.63,5.86,5.86,5.86,5.86-2.63,5.86-5.86-2.63-5.86-5.86-5.86ZM52.97,17.28c-2.07,0-3.75-1.68-3.75-3.75s1.68-3.75,3.75-3.75,3.75,1.68,3.75,3.75-1.68,3.75-3.75,3.75Z"/>
+                  <path className="soc-mob-1" d="M57.63,25.43h-9.5c-3.94,0-7.15-3.21-7.15-7.15v-9.5c0-3.94,3.21-7.15,7.15-7.15h9.5c3.94,0,7.15,3.21,7.15,7.15v9.5c0,3.94-3.21,7.15-7.15,7.15ZM48.12,3.87c-2.71,0-4.91,2.2-4.91,4.91v9.5c0,2.71,2.2,4.91,4.91,4.91h9.5c2.71,0,4.91-2.2,4.91-4.91v-9.5c0-2.71-2.2-4.91-4.91-4.91h-9.5Z"/>
+                </g>
+              </a>
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
+                <path className="soc-mob-1" d="M9.06,26.3v-11.18h3.73l.71-4.62h-4.44v-3c0-1.26.62-2.5,2.61-2.5h2.02V1.07s-1.83-.31-3.58-.31c-3.65,0-6.04,2.21-6.04,6.22v3.52H0v4.62h4.06v11.18h5Z"/>
+              </a>
+              <a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="TikTok">
+                <path className="soc-mob-2" d="M189.3,17.55c-.02.08-.04.14-.06.2-.97,3.8-1.08,4.65-2.08,6.41-.48.84-1.01,1.63-1.6,2.4-.07.09-.13.2-.26.17-.15-.03-.16-.16-.17-.28-.16-1.15-.25-2.31-.21-3.48.05-1.52.24-2.04,2.2-10.28.03-.13,0-.23-.05-.34-.47-1.26-.56-2.55-.15-3.85.89-2.81,4.07-3.02,4.63-.71.34,1.43-.56,3.31-1.26,6.08-.58,2.29,2.12,3.91,4.42,2.24,2.12-1.54,2.95-5.23,2.79-7.85-.31-5.22-6.03-6.34-9.66-4.66-4.16,1.92-5.11,7.08-3.23,9.44.24.3.42.48.34.79-.12.47-.23.95-.36,1.42-.1.35-.39.48-.74.33-.69-.28-1.27-.72-1.74-1.3-1.6-1.98-2.05-5.88.06-9.19,2.34-3.66,6.68-5.15,10.65-4.7,4.74.54,7.73,3.78,8.3,7.45.26,1.67.07,5.8-2.28,8.72-2.7,3.35-7.08,3.57-9.1,1.52-.16-.16-.28-.34-.43-.53Z"/>
+              </a>
+              <a href="https://pinterest.com" target="_blank" rel="noreferrer" aria-label="Pinterest">
+                <path className="soc-mob-1" d="M156.52,10.95c-.22.02-.44.03-.67.03-2.44,0-4.71-1.23-6.04-3.27v11.12c0,4.54-3.68,8.22-8.22,8.22s-8.22-3.68-8.22-8.22,3.68-8.22,8.22-8.22h0c.17,0,.34.02.51.03v4.05c-.17-.02-.33-.05-.51-.05-2.32,0-4.2,1.88-4.2,4.2s1.88,4.2,4.2,4.2,4.36-1.83,4.36-4.14l.04-18.89h3.88c.37,3.48,3.17,6.19,6.65,6.45v4.5"/>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="X">
+                <path className="soc-mob-1" d="M100.81,12.97l7.44-8.65h-1.76l-6.46,7.51-5.16-7.51h-5.95l7.8,11.36-7.8,9.07h1.76l6.82-7.93,5.45,7.93h5.95l-8.09-11.78h0ZM98.39,15.78l-.79-1.13-6.29-9h2.71l5.08,7.26.79,1.13,6.6,9.44h-2.71l-5.38-7.7h0Z"/>
+              </a>
+            </g>
+          </svg>
         </div>
         <div className="w-full border border-black/30 rounded p-2 flex flex-col relative">
           <span className="text-[10px] text-gray-500 mb-1">Select Location</span>

@@ -86,23 +86,19 @@ export default function AdCarousel() {
         <button
           onClick={scrollPrev}
           disabled={prevBtnDisabled}
-          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white shadow-lg transition-all z-10 ${prevBtnDisabled ? 'opacity-30 cursor-default' : 'hover:bg-black hover:scale-105'}`}
+          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-black border border-black/10 shadow-sm transition-all z-10 ${prevBtnDisabled ? 'opacity-0 cursor-default' : 'hover:bg-gray-50'}`}
           aria-label="Voir la bannière précédente"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <span className="material-symbols-outlined text-[20px]">chevron_left</span>
         </button>
 
         <button
           onClick={scrollNext}
           disabled={nextBtnDisabled}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white shadow-lg transition-all z-10 ${nextBtnDisabled ? 'opacity-30 cursor-default' : 'hover:bg-black hover:scale-105'}`}
+          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-black border border-black/10 shadow-sm transition-all z-10 ${nextBtnDisabled ? 'opacity-0 cursor-default' : 'hover:bg-gray-50'}`}
           aria-label="Voir la bannière suivante"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <span className="material-symbols-outlined text-[20px]">chevron_right</span>
         </button>
       </div>
     </section>
