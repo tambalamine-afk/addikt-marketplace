@@ -17,6 +17,7 @@ import Settings from './pages/Profile/Settings';
 import SellerProfile from './pages/Profile/SellerProfile';
 import Category from './pages/Category';
 import PublishAd from './pages/PublishAd';
+import TopSellerProgram from './pages/TopSellerProgram';
 
 export default function App() {
   const [products, setProducts] = useState(PRODUCTS);
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/messages" element={<Inbox />} />
           <Route path="/seller/:id" element={<SellerProfile />} />
           <Route path="/publish" element={<PublishAd />} />
+          <Route path="/top-seller" element={<TopSellerProgram />} />
         </Route>
         
         {/* Profile Routes with dedicated Sidebar Layout */}

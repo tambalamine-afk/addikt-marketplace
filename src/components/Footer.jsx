@@ -24,7 +24,9 @@ export default function Footer() {
             <h3 className="font-headline-md text-xs uppercase mb-2 tracking-wider" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>VENDRE</h3>
             <ul className="flex flex-col gap-3 text-[11px] opacity-80 font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>
               <li className="hover:text-accent-orange cursor-pointer transition-colors">Vendre sur Addikt</li>
-              <li className="hover:text-accent-orange cursor-pointer transition-colors">Programme Top vendeur</li>
+              <li>
+                <Link to="/top-seller" className="hover:text-accent-orange cursor-pointer transition-colors block w-full">Programme Top vendeur</Link>
+              </li>
               <li className="hover:text-accent-orange cursor-pointer transition-colors">Devenir vendeur vérifié</li>
               <li className="hover:text-accent-orange cursor-pointer transition-colors">Guide du bon vendeur</li>
             </ul>

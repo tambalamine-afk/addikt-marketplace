@@ -192,39 +192,39 @@ export default function LandingPage() {
 
             {/* 5. Stats Cards */}
             {toggleState === 'acheter' ? (
-              <div className="flex gap-4 w-full overflow-x-auto hide-scrollbar pb-2">
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
-                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">checkroom</span>
-                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '16px' }}>1M+</span>
-                  <span className="text-on-surface-variant text-xs mt-0.5">Articles en vente</span>
+              <div className="flex gap-2 md:gap-4 w-full pb-2 justify-between">
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
+                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">checkroom</span>
+                  <span className="font-bold text-primary text-[14px] md:text-[16px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>1M+</span>
+                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Articles en vente</span>
                 </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
-                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">auto_awesome</span>
-                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '16px' }}>10K+</span>
-                  <span className="text-on-surface-variant text-xs mt-0.5">Nouveautés / jour</span>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
+                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">auto_awesome</span>
+                  <span className="font-bold text-primary text-[14px] md:text-[16px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>10K+</span>
+                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Nouveautés / jour</span>
                 </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
-                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">verified_user</span>
-                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Sécurité</span>
-                  <span className="text-on-surface-variant text-xs mt-0.5 underline cursor-pointer">Protection Addikt</span>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
+                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">verified_user</span>
+                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Sécurité</span>
+                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 underline cursor-pointer leading-tight">Protection Addikt</span>
                 </div>
               </div>
             ) : (
-              <div className="flex gap-4 w-full overflow-x-auto hide-scrollbar pb-2">
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
-                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">verified_user</span>
-                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Vends en sécurité</span>
-                  <span className="text-on-surface-variant text-xs mt-0.5 underline cursor-pointer">Protection Addikt</span>
+              <div className="flex gap-2 md:gap-4 w-full pb-2 justify-between">
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
+                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">verified_user</span>
+                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Sécurité</span>
+                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 underline cursor-pointer leading-tight">Protection Addikt</span>
                 </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
-                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">auto_awesome</span>
-                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Publie vite</span>
-                  <span className="text-on-surface-variant text-xs mt-0.5">Annonces intelligentes</span>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
+                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">auto_awesome</span>
+                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Publie vite</span>
+                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Annonces intelligentes</span>
                 </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col min-w-[130px] shadow-sm flex-1">
-                  <span className="material-symbols-outlined text-primary mb-2 text-[22px]">local_shipping</span>
-                  <span className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontSize: '15px' }}>Expédie facile</span>
-                  <span className="text-on-surface-variant text-xs mt-0.5">Sans imprimante</span>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
+                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">local_shipping</span>
+                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Expédie facile</span>
+                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Sans imprimante</span>
                 </div>
               </div>
             )}
@@ -243,6 +243,55 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* NEW TEXT BANNER */}
+      {toggleState === 'acheter' && (
+        <div className="w-full bg-white py-20 md:py-40 overflow-x-clip flex flex-col items-center justify-center border-b border-outline-variant/30 text-[#1c1c1c] uppercase tracking-tight leading-[0.85]" style={{ fontFamily: '"Mango Grotesque", sans-serif', fontWeight: 'bold' }}>
+          
+          {/* LINE 1 */}
+        <div className="relative inline-block text-[13vw] md:text-[13vw] z-10 whitespace-nowrap">
+          {/* Teal shape - Top Left */}
+          <div className="absolute -left-[5%] md:-left-[20%] -top-[10%] w-24 md:w-56 opacity-90 mix-blend-multiply pointer-events-none -z-10">
+            <svg viewBox="-50 0 250 350" className="overflow-visible" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(-100, 0)"><path fill="#00b2ae" d="M206.55,187.13c-24.11,83.01-87.83,150.31-142.31,150.31S-14.86,270.15,9.26,187.13C33.37,104.12,97.09,36.82,151.57,36.82s79.1,67.3,54.98,150.31Z"></path></g>
+            </svg>
+          </div>
+          
+          <span className="relative z-20">LE TOP #1</span>
+          
+          {/* Orange shape - Top Right */}
+          <div className="absolute -right-[5%] md:-right-[25%] -top-[15%] w-24 md:w-52 opacity-95 mix-blend-multiply pointer-events-none -z-10">
+            <svg viewBox="500 -20 300 400" className="overflow-visible" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(100, 0)"><path fill="#ff4313" d="M651.31,226.37c27.59-27.6,7.04-92.89-45.92-145.85-52.95-52.95-118.25-73.51-145.85-45.92-21.47,21.47-13.78,65.78,15.64,109.33-20.45-3.73-38.03-.5-49.31,10.77-27.59,27.59-7.04,92.89,45.92,145.85,52.95,52.95,118.25,73.51,145.85,45.92,21.47-21.47,13.78-65.78-15.64-109.33,20.45,3.73,38.03.51,49.31-10.77Z"></path></g>
+            </svg>
+          </div>
+        </div>
+
+        {/* LINE 2 */}
+        <div className="relative inline-block text-[13vw] md:text-[13vw] z-10 whitespace-nowrap mt-[-2%] md:mt-0">
+          <span className="relative z-20">MARKETPLACE MODE</span>
+        </div>
+
+        {/* LINE 3 */}
+        <div className="relative inline-block text-[13vw] md:text-[13vw] z-10 whitespace-nowrap mt-[-2%] md:mt-0">
+          {/* Pink shape - Bottom Left */}
+          <div className="absolute -left-[10%] md:-left-[40%] -bottom-[20%] w-28 md:w-56 opacity-95 mix-blend-multiply pointer-events-none -z-10">
+            <svg viewBox="750 -50 260 410" className="overflow-visible" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(150, 0)"><path fill="#fd7f91" d="M798.46,0c74.9-.31,99.3,108.8,32.32,141.46,24.75,35.96,26.68,84.46.64,120.28,25.74,191.51-267.7,69.29-148.23-66.65C609.1,102.36,695.94,2.43,798.46,0Z"></path></g>
+            </svg>
+          </div>
+          
+          <span className="relative z-20">WESTAF</span>
+          
+          {/* Blue shape - Bottom Right */}
+          <div className="absolute -right-[10%] md:-right-[35%] -bottom-[10%] w-24 md:w-44 opacity-95 mix-blend-multiply pointer-events-none -z-10">
+            <svg viewBox="200 20 240 300" className="overflow-visible" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(0, 0)"><path fill="#00a6fb" d="M402.49,149.22c-5.07-5.57-11.09-9.96-17.8-13.19-9.06-59.14-48.45-102.49-90.61-98.11-44.05,4.58-74.43,59.52-67.86,122.73,1.48,14.25,4.72,27.69,9.34,39.93-23.27,37.23-25.92,78.64-3.23,103.56,29.81,32.75,92.07,24.61,139.06-18.16,46.99-42.78,60.92-104,31.11-136.75Z"></path></g>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+      )}
 
       {/* MAIN CONTENT AREA */}
       <div className="w-full">
