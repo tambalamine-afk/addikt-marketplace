@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MobileMenu from './MobileMenu';
 
 const MEGAMENU_DATA = {
@@ -49,6 +49,15 @@ const SUGGESTIONS = [
 function TypewriterSearch() {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && inputValue.trim()) {
+      navigate(`/category/nouveautes?search=${encodeURIComponent(inputValue.trim())}`);
+      setIsFocused(false);
+      e.target.blur(); // Remove focus
+    }
+  };
   
   const [suggestionIndex, setSuggestionIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -93,6 +102,7 @@ function TypewriterSearch() {
         onChange={(e) => setInputValue(e.target.value)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        onKeyDown={handleKeyDown}
         aria-label="Rechercher un article, une marque, un style…"
         className="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2.5 px-11 text-[13px] sm:text-sm focus:outline-none focus:border-primary transition-colors"
         style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 400 }}

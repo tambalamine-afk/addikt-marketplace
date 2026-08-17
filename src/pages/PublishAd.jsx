@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function PublishAd() {
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedCondition, setSelectedCondition] = useState('');
+  const [photos, setPhotos] = useState([]);
+  const fileInputRef = useRef(null);
 
-  const categories = [
-    'Hauts', 'Bas', 'Robes', 'Boubous & tenues trad', 
-    'Vestes & manteaux', 'Chaussures', 'Sacs & accessoires', 
-    'Bijoux', 'Vintage'
-  ];
+  const handlePhotoUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    
+    // Create object URLs for the uploaded files to display them
+    const newPhotos = files.map(file => URL.createObjectURL(file));
+    setPhotos(prev => [...prev, ...newPhotos].slice(0, 5)); // Max 5 photos
+  };
+
+  const categoriesData = {
+    'Femmes': ['Hauts', 'Bas', 'Robes', 'Boubous & tenues trad', 'Vestes & manteaux', 'Chaussures', 'Sacs & accessoires', 'Bijoux', 'Vintage'],
+    'Hommes': ['T-shirts & Polos', 'Pantalons', 'Sweats & Pulls', 'Vestes & Manteaux', 'Costumes', 'Chaussures', 'Accessoires', 'Sneakers', 'Vintage'],
+    'Enfants': ['Bébé', 'Filles (2-14 ans)', 'Garçons (2-14 ans)', 'Chaussures', 'Jouets', 'Livres', 'Puériculture', 'Accessoires'],
+    'Sneakers': ['Basses', 'Montantes', 'Running', 'Lifestyle', 'Vintage', 'Éditions limitées', 'Accessoires'],
+    'Beauté': ['Maquillage', 'Soins visage', 'Soins corps', 'Parfums', 'Accessoires beauté']
+  };
 
   const navigate = useNavigate();
 
@@ -22,7 +37,21 @@ export default function PublishAd() {
     }, 1000);
   };
 
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Taille unique'];
+  let sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Taille unique'];
+  if (selectedCategory === 'Enfants') {
+    sizes = ['0-2 ans', '3-5 ans', '6-8 ans', '9-14 ans', 'Taille unique'];
+  } else if (selectedCategory === 'Sneakers' || selectedSubcategory === 'Chaussures') {
+    sizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47+'];
+  } else if (selectedCategory === 'Beauté') {
+    sizes = []; // No sizes for beauty, or we hide it
+  }
+
+  let brands = [];
+  if (selectedCategory === 'Sneakers') {
+    brands = ['Air Jordan', 'Nike Dunk', 'Yeezy', 'New Balance', 'Converse', 'Asics', 'Salomon', 'Vans', 'Puma', 'Balenciaga', 'Autre'];
+  } else if (selectedCategory === 'Femmes' || selectedCategory === 'Hommes') {
+    brands = ['Zara', 'H&M', 'Mango', 'Asos', 'Autre'];
+  }
 
   const conditions = [
     { label: 'Neuf avec étiquette', color: 'bg-primary' },
@@ -50,18 +79,35 @@ export default function PublishAd() {
             </div>
             <p className="text-[14px] text-on-surface-variant font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>Ajoute jusqu'à 5 photos. La première sera ta photo de couverture.</p>
             <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
+              <input 
+                type="file" 
+                accept="image/*" 
+                multiple 
+                className="hidden" 
+                ref={fileInputRef} 
+                onChange={handlePhotoUpload} 
+              />
+              
               {/* Zone 1: Cover Photo */}
-              <div className="aspect-square bg-surface-container rounded-2xl flex flex-col items-center justify-center relative cursor-pointer hover:bg-surface-dim transition-colors group overflow-hidden border border-dashed border-outline-variant">
-                <span className="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary transition-colors mb-1">add_a_photo</span>
+              <div onClick={() => fileInputRef.current?.click()} className="aspect-square bg-surface-container rounded-2xl flex flex-col items-center justify-center relative cursor-pointer hover:bg-surface-dim transition-colors group overflow-hidden border border-dashed border-outline-variant">
+                {photos[0] ? (
+                  <img src={photos[0]} alt="Couverture" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary transition-colors mb-1">add_a_photo</span>
+                )}
                 <div className="absolute bottom-0 inset-x-0 bg-primary/80 backdrop-blur-sm py-1 px-2 text-center">
                   <span className="text-[10px] text-white font-bold uppercase tracking-wider">Couverture</span>
                 </div>
               </div>
               
               {/* Other Zones */}
-              {[2, 3, 4, 5].map((num) => (
-                <div key={num} className={`aspect-square bg-surface-container rounded-2xl flex items-center justify-center cursor-pointer hover:bg-surface-dim transition-colors group border border-dashed border-outline-variant ${num === 5 ? 'hidden sm:flex' : ''}`}>
-                  <span className="material-symbols-outlined text-2xl text-on-surface-variant group-hover:text-primary transition-colors">add</span>
+              {[1, 2, 3, 4].map((index) => (
+                <div key={index} onClick={() => fileInputRef.current?.click()} className={`aspect-square bg-surface-container rounded-2xl flex items-center justify-center cursor-pointer hover:bg-surface-dim transition-colors group overflow-hidden border border-dashed border-outline-variant ${index === 4 ? 'hidden sm:flex' : ''}`}>
+                  {photos[index] ? (
+                    <img src={photos[index]} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="material-symbols-outlined text-2xl text-on-surface-variant group-hover:text-primary transition-colors">add</span>
+                  )}
                 </div>
               ))}
             </div>
@@ -75,13 +121,25 @@ export default function PublishAd() {
 
           {/* Category Section */}
           <section className="space-y-4">
-            <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Catégorie</h2>
+            <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Département</h2>
             <div className="flex flex-wrap gap-3">
-              {categories.map((cat) => (
+              {Object.keys(categoriesData).map((cat) => (
                 <button 
                   key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-6 py-2.5 rounded-full border text-[14px] transition-colors font-medium bg-white ${selectedCategory === cat ? 'bg-primary text-white border-primary chip-active' : 'border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'}`} 
+                  onClick={() => { 
+                    if (selectedCategory === cat) {
+                      setSelectedCategory('');
+                      setSelectedSubcategory('');
+                      setSelectedBrand('');
+                      setSelectedSize('');
+                    } else {
+                      setSelectedCategory(cat); 
+                      setSelectedSubcategory(''); 
+                      setSelectedBrand('');
+                      setSelectedSize(''); 
+                    }
+                  }}
+                  className={`px-6 py-2.5 rounded-full border text-[14px] transition-colors font-medium ${selectedCategory === cat ? 'bg-primary text-white border-primary chip-active' : 'bg-white border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'}`} 
                   style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 300 }} 
                   type="button"
                 >
@@ -89,25 +147,74 @@ export default function PublishAd() {
                 </button>
               ))}
             </div>
+
+            {selectedCategory && (
+              <div className="pt-4">
+                <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold mb-3" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Sous-catégorie</h2>
+                <div className="flex flex-wrap gap-3">
+                  {categoriesData[selectedCategory].map((sub) => (
+                    <button 
+                      key={sub}
+                      onClick={() => { 
+                        if (selectedSubcategory === sub) {
+                          setSelectedSubcategory('');
+                          setSelectedSize('');
+                        } else {
+                          setSelectedSubcategory(sub); 
+                          setSelectedSize(''); 
+                        }
+                      }}
+                      className={`px-6 py-2.5 rounded-full border text-[14px] transition-colors font-medium ${selectedSubcategory === sub ? 'bg-primary text-white border-primary chip-active' : 'bg-white border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'}`} 
+                      style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 300 }} 
+                      type="button"
+                    >
+                      {sub}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
 
+          {/* Brand Section */}
+          {brands.length > 0 && (
+            <section className="space-y-4">
+              <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Marque</h2>
+              <div className="flex flex-wrap gap-3">
+                {brands.map((brand) => (
+                  <button 
+                    key={brand}
+                    onClick={() => setSelectedBrand(selectedBrand === brand ? '' : brand)}
+                    className={`px-6 py-2.5 rounded-full border text-[14px] transition-colors font-medium ${selectedBrand === brand ? 'bg-primary text-white border-primary chip-active' : 'bg-white border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'}`} 
+                    style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 300 }} 
+                    type="button"
+                  >
+                    {brand}
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Size Section */}
-          <section className="space-y-4">
-            <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Taille</h2>
-            <div className="flex flex-wrap gap-3">
-              {sizes.map((size) => (
-                <button 
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={`px-6 py-2.5 rounded-full border text-[14px] transition-colors font-medium bg-white ${selectedSize === size ? 'bg-primary text-white border-primary chip-active' : 'border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'}`} 
-                  style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 300 }} 
-                  type="button"
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </section>
+          {sizes.length > 0 && (
+            <section className="space-y-4">
+              <h2 className="font-headline-md text-headline-md text-primary uppercase font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Taille</h2>
+              <div className="flex flex-wrap gap-3">
+                {sizes.map((size) => (
+                  <button 
+                    key={size}
+                    onClick={() => setSelectedSize(selectedSize === size ? '' : size)}
+                    className={`px-6 py-2.5 rounded-full border text-[14px] transition-colors font-medium ${selectedSize === size ? 'bg-primary text-white border-primary chip-active' : 'bg-white border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'}`} 
+                    style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 300 }} 
+                    type="button"
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Condition Section */}
           <section className="space-y-4">

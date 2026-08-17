@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 export default function Category({ products, handleSelect }) {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search');
   const categoryId = id ? id.toLowerCase() : 'nouveautes';
   
   if (categoryId === 'beauté' || categoryId === 'beaute' || categoryId === 'beauty') {
@@ -88,16 +90,14 @@ export default function Category({ products, handleSelect }) {
   subcategories = ['Tous', ...subcategories];
 
   const [activeSubcategory, setActiveSubcategory] = useState(subcategories[0]);
-  const [activeFilters, setActiveFilters] = useState([
-    { id: 'size-m', type: 'size', label: 'Taille M', value: 'M' },
-    { id: 'price-10k', type: 'maxPrice', label: 'Moins de 10 000 FCFA', value: 10000 }
-  ]);
+  const [activeFilters, setActiveFilters] = useState([]);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [sortOrder, setSortOrder] = useState('recent');
 
   // Réinitialiser le filtre actif quand on change de catégorie
   useEffect(() => {
     setActiveSubcategory(subcategories[0]);
+    setActiveFilters([]);
   }, [categoryId]);
 
   const removeFilter = (id) => {
@@ -116,6 +116,16 @@ export default function Category({ products, handleSelect }) {
 
   // Filtrer et trier les produits
   let finalProducts = products.filter(product => {
+    // 0. Search Query
+    if (searchQuery) {
+      const sq = searchQuery.toLowerCase();
+      if (!product.title?.toLowerCase().includes(sq) && 
+          !product.category?.toLowerCase().includes(sq) &&
+          !product.tags?.some(tag => tag.toLowerCase().includes(sq))) {
+        return false;
+      }
+    }
+
     // 1. Sous-catégorie
     let matchSub = false;
     if (!activeSubcategory || activeSubcategory === 'Tous') {
@@ -136,6 +146,10 @@ export default function Category({ products, handleSelect }) {
       }
       if (filter.type === 'maxPrice') {
         if (product.price > filter.value) return false;
+      }
+      if (filter.type === 'brand') {
+        const term = filter.value.toLowerCase();
+        if (!product.title?.toLowerCase().includes(term) && !product.tags?.some(t => t.toLowerCase().includes(term))) return false;
       }
     }
     
@@ -191,9 +205,19 @@ export default function Category({ products, handleSelect }) {
               <div>
                 <h4 className="font-label text-sm font-bold mb-2">Taille</h4>
                 <div className="flex gap-2 flex-wrap">
-                  {(categoryId === 'enfants' ? ['0-2 ans', '3-5 ans', '6-8 ans', '9-14 ans'] : ['S', 'M', 'L', 'XL']).map(size => (
+                  {(categoryId === 'enfants' ? ['0-2 ans', '3-5 ans', '6-8 ans', '9-14 ans'] : categoryId === 'sneakers' ? ['38', '39', '40', '41', '42', '43', '44', '45', '46'] : ['S', 'M', 'L', 'XL']).map(size => (
                     <button key={size} onClick={() => addFilter({ id: `size-${size.toLowerCase().replace(/\s+/g, '-')}`, type: 'size', label: `Taille ${size}`, value: size })} className="px-3 py-1 border border-outline-variant rounded hover:bg-black hover:text-white transition-colors text-sm">
                       {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-label text-sm font-bold mb-2">Marque</h4>
+                <div className="flex gap-2 flex-wrap">
+                  {(categoryId === 'sneakers' ? ['Air Jordan', 'Nike Dunk', 'Yeezy', 'New Balance'] : ['Zara', 'H&M', 'Mango', 'Asos']).map(brand => (
+                    <button key={brand} onClick={() => addFilter({ id: `brand-${brand.toLowerCase().replace(/\s+/g, '-')}`, type: 'brand', label: brand, value: brand })} className="px-3 py-1 border border-outline-variant rounded hover:bg-black hover:text-white transition-colors text-sm">
+                      {brand}
                     </button>
                   ))}
                 </div>
