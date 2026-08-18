@@ -25,11 +25,9 @@ export default function Settings() {
   
   const [formData, setFormData] = useState({
     username: '',
-    email: '', // Usually read-only from auth
-    first_name: '',
-    last_name: '',
+    email: '',
+    full_name: '',
     bio: '',
-    website: '',
     country: 'Senegal',
     avatar_url: ''
   });
@@ -56,10 +54,8 @@ export default function Settings() {
         setFormData(prev => ({
           ...prev,
           username: data.username || '',
-          first_name: data.first_name || '',
-          last_name: data.last_name || '',
+          full_name: data.full_name || '',
           bio: data.bio || '',
-          website: data.website || '',
           country: data.location || 'Senegal',
           avatar_url: data.avatar_url || ''
         }));
@@ -117,18 +113,14 @@ export default function Settings() {
         avatarUrlToSave = publicUrl;
       }
       
-      // Update profile
       const { error: updateError } = await supabase
         .from('profiles')
         .update({
           username: formData.username,
-          first_name: formData.first_name,
-          last_name: formData.last_name,
+          full_name: formData.full_name,
           bio: formData.bio,
-          website: formData.website,
           location: formData.country,
-          avatar_url: avatarUrlToSave,
-          updated_at: new Date().toISOString()
+          avatar_url: avatarUrlToSave
         })
         .eq('id', user.id);
         
@@ -295,26 +287,15 @@ export default function Settings() {
                   <h2 className="text-[20px] font-bold text-[#111] mb-6" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>About me</h2>
                   <div className="flex flex-col gap-5">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[13px] text-gray-500" style={{ fontFamily: '"Google Sans", sans-serif' }}>First name</label>
+                      <label className="text-[13px] text-gray-500" style={{ fontFamily: '"Google Sans", sans-serif' }}>Full name</label>
                       <input 
                         type="text" 
-                        name="first_name"
-                        value={formData.first_name}
+                        name="full_name"
+                        value={formData.full_name}
                         onChange={handleInputChange}
                         className="w-full border border-gray-300 px-3 py-2.5 outline-none focus:border-black transition-colors text-[15px] text-[#333]" style={{ fontFamily: '"Google Sans", sans-serif' }} 
+                        placeholder="John Doe"
                       />
-                    </div>
-                    <div className="flex flex-col gap-1.5 relative">
-                      <label className="text-[13px] text-gray-500" style={{ fontFamily: '"Google Sans", sans-serif' }}>Last name</label>
-                      <div className="relative">
-                        <input 
-                          type="text" 
-                          name="last_name"
-                          value={formData.last_name}
-                          onChange={handleInputChange}
-                          className="w-full border border-gray-300 px-3 py-2.5 outline-none focus:border-black transition-colors text-[15px] text-[#333]" style={{ fontFamily: '"Google Sans", sans-serif' }} 
-                        />
-                      </div>
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="text-[13px] text-gray-500" style={{ fontFamily: '"Google Sans", sans-serif' }}>Bio</label>
@@ -326,16 +307,6 @@ export default function Settings() {
                         className="w-full border border-gray-300 px-3 py-2.5 outline-none focus:border-black transition-colors resize-none text-[15px] text-[#333]" style={{ fontFamily: '"Google Sans", sans-serif' }}
                         placeholder="Parlez-nous un peu de vous et de ce que vous vendez..."
                       ></textarea>
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[13px] text-gray-500" style={{ fontFamily: '"Google Sans", sans-serif' }}>My website</label>
-                      <input 
-                        type="text" 
-                        name="website"
-                        value={formData.website}
-                        onChange={handleInputChange}
-                        className="w-full border border-gray-300 px-3 py-2.5 outline-none focus:border-black transition-colors text-[15px] text-[#333]" style={{ fontFamily: '"Google Sans", sans-serif' }} 
-                      />
                     </div>
                     <div className="flex flex-col gap-1.5 relative">
                       <label className="text-[13px] text-gray-500" style={{ fontFamily: '"Google Sans", sans-serif' }}>Country</label>
