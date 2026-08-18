@@ -2,8 +2,8 @@
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import React, { useEffect, useState, useContext } from 'react';
-import { AppContext } from '../../components/Providers';
-import ProductCard from '../../components/ProductCard';
+import { AppContext } from '../components/Providers';
+import ProductCard from '../components/ProductCard';
 
 export default function ProductPage() {
   const { id } = useParams();
