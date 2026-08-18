@@ -286,13 +286,12 @@ export default function Category({ handleSelect }) {
           ))}
         </div>
 
-        {/* Sort Selector */}
-        <div className="flex items-center gap-2">
-          <span className="font-label-caps text-label-caps text-on-surface-variant">Trier par:</span>
+        {/* Sort Dropdown */}
+        <div className="relative flex-shrink-0">
           <select 
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
-            className="bg-transparent border-none font-button-text text-button-text focus:ring-0 p-0 text-primary cursor-pointer hover:text-accent-blue outline-none"
+            className="appearance-none bg-white border border-gray-300 rounded-full px-6 py-2 pr-10 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer"
           >
             <option value="recent">Plus récent</option>
             <option value="asc">Prix croissant</option>
