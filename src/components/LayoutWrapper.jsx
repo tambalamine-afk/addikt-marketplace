@@ -6,6 +6,7 @@ import Footer from './Footer';
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
   const isAuthPage = pathname === '/login' || pathname === '/register';
+  const noFooterPage = isAuthPage || pathname === '/publish';
 
   return (
     <div className="app min-h-screen flex flex-col">
@@ -13,7 +14,7 @@ export default function LayoutWrapper({ children }) {
       <main className="flex-1">
         {children}
       </main>
-      {!isAuthPage && <Footer />}
+      {!noFooterPage && <Footer />}
     </div>
   );
 }
