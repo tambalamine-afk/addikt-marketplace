@@ -442,8 +442,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 6. NEW DROP */}
-      <section className="w-full max-w-[98%] mx-auto bg-white rounded-[40px] px-container-margin py-10 relative overflow-hidden my-8" style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '18px' }}>
+      {/* 6. FRESH DROP */}
+      <section className="w-full max-w-[98%] mx-auto bg-white rounded-[40px] px-container-margin py-10 relative overflow-hidden my-8" style={{ borderRadius: '18px' }}>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-4">
@@ -452,23 +452,9 @@ export default function LandingPage() {
             </div>
             <Link href="/fresh-drop" className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:flex items-center justify-center font-bold">Explore</Link>
           </div>
-          <div className="relative flex items-center group">
-            <button className="absolute -left-4 z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
-            <div className="flex gap-[10px] overflow-x-auto hide-scrollbar snap-x w-full pb-4">
-              {NEW_DROP.map((item, idx) => (
-                <Link key={idx} href="/fresh-drop" className="min-w-[220px] md:min-w-[calc(25%-10px)] flex flex-col gap-3 snap-start">
-                  <div className="aspect-[3/4] overflow-hidden">
-                    <img alt={item.title.toUpperCase()} className="w-full h-full object-cover" src={item.img} />
-                  </div>
-                  <div className="flex flex-col mt-2">
-                    <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
-                    <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
-                    <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <button className="absolute -right-4 z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors"><span className="material-symbols-outlined">chevron_right</span></button>
+          <div className="flex flex-col items-center justify-center py-10 text-center gap-3">
+            <span className="material-symbols-outlined text-5xl text-on-surface-variant" style={{ fontVariationSettings: "'FILL' 0" }}>new_releases</span>
+            <p className="text-on-surface-variant text-sm font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>Aucun article pour le moment</p>
           </div>
         </div>
       </section>
