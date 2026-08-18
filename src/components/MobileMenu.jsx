@@ -75,15 +75,15 @@ export default function MobileMenu({ isOpen, onClose }) {
       {/* Auth & Action Buttons */}
       <div className="flex flex-col px-4 py-6 gap-3">
         <Link href="/publish" onClick={onClose} className="w-full bg-[#1b1b1b] text-white font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-          Sell now
+          Vendre
         </Link>
         {!isLoggedIn ? (
           <>
             <Link href="/register" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-              Sign up
+              S'inscrire
             </Link>
             <Link href="/login" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-              Log in
+              Se connecter
             </Link>
           </>
         ) : (
