@@ -148,6 +148,51 @@ export default function ProductPage() {
     navigate.push(`/product/${p.id}`);
   };
 
+  const handleContactSeller = async () => {
+    if (!user) {
+      addToast("Connecte-toi pour contacter le vendeur");
+      return;
+    }
+    
+    if (user.id === product.seller_id) {
+      addToast("Ceci est ta propre annonce !");
+      return;
+    }
+    
+    try {
+      // 1. Check if conversation exists
+      const { data: existingConv } = await supabase
+        .from('conversations')
+        .select('id')
+        .eq('listing_id', product.id)
+        .eq('buyer_id', user.id)
+        .maybeSingle();
+        
+      if (existingConv) {
+        navigate.push(`/messages/${existingConv.id}`);
+        return;
+      }
+      
+      // 2. Create new conversation
+      const { data: newConv, error } = await supabase
+        .from('conversations')
+        .insert({
+          listing_id: product.id,
+          buyer_id: user.id,
+          seller_id: product.seller_id
+        })
+        .select('id')
+        .single();
+        
+      if (error) throw error;
+      navigate.push(`/messages/${newConv.id}`);
+      
+    } catch (err) {
+      console.error(err);
+      addToast("Erreur lors de la création de la conversation");
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex-1 w-full flex items-center justify-center min-h-[70vh]">
@@ -247,13 +292,19 @@ export default function ProductPage() {
             
             {/* Actions */}
             <div className="flex flex-col gap-3 mb-8">
-              <button 
-                onClick={() => navigate.push(`/messages/${product.seller_id}`)}
-                className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200"
-                style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
-              >
-                Envoyer un message
-              </button>
+              {user?.id !== product.seller_id ? (
+                <button 
+                  onClick={handleContactSeller}
+                  className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200"
+                  style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
+                >
+                  Envoyer un message
+                </button>
+              ) : (
+                <div className="w-full bg-surface-container-high text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full text-center" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+                  Ceci est ton annonce
+                </div>
+              )}
               <button className="w-full bg-white border border-primary text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-surface-container-low transition-colors duration-200" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
                 Faire une offre
               </button>

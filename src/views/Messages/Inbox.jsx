@@ -1,45 +1,86 @@
 "use client";
 import Link from 'next/link';
-import React, { useState } from 'react';
-
-const MOCK_CONVERSATIONS = [
-  {
-    id: 1,
-    name: 'Aminata D.',
-    time: '14:32',
-    lastMessage: 'Dispo ce soir pour la remise en main propre ?',
-    unread: true,
-    online: true,
-    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD9fv8I1n-4_fRzqCiOFadnpJRGbulRM4dLAEkEEwK_If-eS1LEyJIAK4MqqAeY7kFRPDMFxbEom2KzstSRcozxYVVZRP5fj6KYU6XTpdzaP3BPiYEIvqsJ6_pqKMy_Ml2AVoPl9g3MJPlkSnXdY8WaSUBcVv8cGsuNpBxgZ0kcPHjmK2HWf9waHYo7IxesMOSAl-5wnXvj0TsE5sUGFOV_D2h3YPVF_pojnzRT16aCigQ2tm1YUphg',
-    productImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDJP0WYvYHbjjy9GZ_jB8LCmJb8U6OQRY65sIy61EH5kAk-WpxAj57Ah4EblCPkUerumutoimgIvmP7_gaIqGmxSNWAjXM3SskwG3wxQdfcgCasHaI79gvE4JC-lvAUEkbPBgpUKMwTchV5WlqGiuux8UwyihOT9tNX-lBf0pcOK2TwzTi5AmY45THXBZjdrKB7CtCLkioQ8ghdoo3Fxd_I8oIdXi45N50cWzjXVGduhUv6pL0Ptzx2'
-  },
-  {
-    id: 2,
-    name: 'SneakerHead_221',
-    time: 'Hier',
-    lastMessage: 'C\'est parfait, je te confirme ça demain.',
-    unread: false,
-    online: false,
-    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC64mWMYRwQxWJulZKPappUn5EjYkAFzuJ0bERGFD9waoIz-QOJCWP-a-C1qXJuYs6ZOkPJpIVCmahtBmbmY0ce_D-wdrT1p8leHC8wVy62Q66r5iT5UYFy4azTJYOF5frfE6RfNsOe0Vk0tvFnxX7o_t_62FD38jWA_YhSI9IETiNuBbzS7V5DEKASkkfmaJkizccQ0RZAOwbYTBnM3Oq5cQblXUFSEPeHmR0sjM4bjXKWA1jQJx9X',
-    productImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCsurcIpbcG5_ubyJ7GyO7wI0t593S9zDi6ia0xu-IN3_YUKUl_l-i5alGLOW5iYLINjhnJ1tI2kW93fHe1eCoOQPPMsPuKAl9KlgJuToNQT7gZJRIrFvfur7Al4cZtTiZOcI-Y8id1Oj4VUcJgZwbytFfP2Rhf1xWB8i29a1weWZ8Q8-g2EEaGeSkAymvc73VVdGG2PklqGFK0mngnrYqTkuGYnsJOQi8SPN-6CS8OAcIOCFIsCdVJ'
-  },
-  {
-    id: 3,
-    name: 'VintageDakar',
-    time: 'Lun.',
-    lastMessage: 'Merci pour l\'achat ! Le colis part aujourd\'hui.',
-    unread: false,
-    online: true,
-    avatarUrl: null,
-    avatarInitial: 'V',
-    productImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBcCRrAbZDHH67Qm00jTYTNmH8Zm6J1HY_Cf5sWDUVR2Qzb1BLEMy-9U0NpLZe_DYNIkViUufgJBk_PFOK21yRcJqygrdubN4GY7d_Y92hsL5dxJY8GlukS9mtASQIkC4WI_mnrvmL4hYgpL1Kz3CKXwJU5thOLVR-RZfbCJ_lrEZ4A5mC7wZ9r_NftLvudnys4IZmdIxupRq1lfTPfFfBKUuQ5YPSXXSkNkzhRjyC4omgfhsLx-wH6'
-  }
-];
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../../components/Providers';
 
 export default function Inbox() {
+  const { user, supabase } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState('');
+  const [conversations, setConversations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  const filteredConversations = MOCK_CONVERSATIONS.filter(conv => 
+  useEffect(() => {
+    async function fetchConversations() {
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
+      setIsLoading(true);
+      
+      const { data, error } = await supabase
+        .from('conversations')
+        .select(`
+          id, 
+          created_at, 
+          buyer_id, 
+          seller_id,
+          buyer:profiles!buyer_id(username, avatar_url),
+          seller:profiles!seller_id(username, avatar_url),
+          listing:listings(title, listing_images(url)),
+          messages(content, created_at, sender_id, read_at)
+        `)
+        .or(`buyer_id.eq.${user.id},seller_id.eq.${user.id}`);
+        
+      if (error) {
+        console.error("Error fetching conversations:", error);
+      } else if (data) {
+        const formatted = data.map(conv => {
+          const isBuyer = conv.buyer_id === user.id;
+          const otherUser = isBuyer ? conv.seller : conv.buyer;
+          const sortedImages = conv.listing?.listing_images?.sort((a,b) => a.position - b.position) || [];
+          
+          const sortedMessages = (conv.messages || []).sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+          const lastMessage = sortedMessages.length > 0 ? sortedMessages[0] : null;
+          
+          let lastMessageText = 'Nouvelle conversation';
+          let time = new Date(conv.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          let sortDate = new Date(conv.created_at);
+          let unread = false;
+          
+          if (lastMessage) {
+            lastMessageText = lastMessage.content;
+            sortDate = new Date(lastMessage.created_at);
+            time = sortDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            if (lastMessage.sender_id !== user.id && !lastMessage.read_at) {
+              unread = true;
+            }
+          }
+          
+          return {
+            id: conv.id,
+            name: otherUser?.username || 'Utilisateur',
+            time,
+            sortDate,
+            lastMessage: lastMessageText,
+            unread,
+            online: false,
+            avatarUrl: otherUser?.avatar_url || null,
+            avatarInitial: otherUser?.username ? otherUser.username.charAt(0).toUpperCase() : 'U',
+            productImage: sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/100x100/eaeaea/a0a0a0'
+          };
+        });
+        
+        // Sort by most recent activity
+        formatted.sort((a, b) => b.sortDate - a.sortDate);
+        setConversations(formatted);
+      }
+      setIsLoading(false);
+    }
+    
+    fetchConversations();
+  }, [user, supabase]);
+
+  const filteredConversations = conversations.filter(conv => 
     conv.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -66,7 +107,11 @@ export default function Inbox() {
       </div>
       
       {/* Conversation List */}
-      {filteredConversations.length > 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center py-20">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : filteredConversations.length > 0 ? (
         <div className="flex flex-col border-t border-outline-variant">
           {filteredConversations.map((conv) => (
             <Link key={conv.id} href={`/messages/${conv.id}`} className="group flex items-center p-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors relative">
@@ -109,7 +154,7 @@ export default function Inbox() {
         <div className="flex flex-col items-center justify-center py-20 relative overflow-hidden">
           <div className="relative z-10 flex flex-col items-center text-center space-y-6">
             <span className="material-symbols-outlined text-6xl text-primary" style={{ fontVariationSettings: '"FILL" 0' }}>chat_bubble_outline</span>
-            <h3 className="font-headline-md text-2xl text-primary" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>Aucun message</h3>
+            <h3 className="font-headline-md text-2xl text-primary" style={{ fontFamily: '"Monument Extended", sans-serif', fontWeight: 800 }}>Aucune conversation</h3>
             <p className="font-body-sm text-sm text-[#848484] max-w-sm">Dès que vous commencerez à discuter avec des acheteurs ou des vendeurs, vos conversations apparaîtront ici.</p>
             <Link href="/" className="mt-4 px-8 py-3 bg-primary text-on-primary rounded-full font-button-text text-sm uppercase tracking-widest hover:opacity-80 transition-colors">
               Explorer la boutique
