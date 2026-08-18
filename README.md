@@ -1,16 +1,19 @@
-# React + Vite
+# Addikt Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Bienvenue sur Addikt Marketplace ! Ce projet est propulsé par Next.js et TailwindCSS.
 
-Currently, two official plugins are available:
+## Démarrage rapide
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Pour lancer le serveur de développement :
 
-## React Compiler
+```bash
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir le résultat.
 
-## Expanding the Oxlint configuration
+## Base de données
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Ce projet utilise Supabase. Assurez-vous d'avoir configuré vos variables d'environnement dans Vercel/Netlify :
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
