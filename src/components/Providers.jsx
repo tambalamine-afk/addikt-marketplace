@@ -36,8 +36,12 @@ export default function Providers({ children }) {
     <AppContext.Provider value={{ addToast, user, isLoadingAuth, supabase }}>
       {children}
       <AuthModal />
-      <div className="toast-container">
-        {toasts.map(t => <div key={t.id} className="toast">{t.msg}</div>)}
+      <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none w-full max-w-sm px-4">
+        {toasts.map(t => (
+          <div key={t.id} className="bg-black text-white px-6 py-3 rounded-xl shadow-2xl text-[14px] font-bold text-center animate-bounce" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+            {t.msg}
+          </div>
+        ))}
       </div>
     </AppContext.Provider>
   );
