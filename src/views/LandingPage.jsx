@@ -450,13 +450,13 @@ export default function LandingPage() {
               <h2 className="font-headline-lg text-black" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600, fontSize: '24px' }}>Fresh DROP</h2>
               <svg className="text-black" fill="currentColor" height="40" viewBox="0 0 100 100" width="40"><path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path></svg>
             </div>
-            <Link href="/category" className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:flex items-center justify-center font-bold">Explore</Link>
+            <Link href="/fresh-drop" className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:flex items-center justify-center font-bold">Explore</Link>
           </div>
           <div className="relative flex items-center group">
             <button className="absolute -left-4 z-20 w-10 h-10 flex items-center justify-center border border-black/20 rounded-full text-black hover:bg-black/5 transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
             <div className="flex gap-[10px] overflow-x-auto hide-scrollbar snap-x w-full pb-4">
               {NEW_DROP.map((item, idx) => (
-                <Link key={idx} href={`/product/p${(idx % 12) + 1}`} className="min-w-[220px] md:min-w-[calc(25%-10px)] flex flex-col gap-3 snap-start">
+                <Link key={idx} href="/fresh-drop" className="min-w-[220px] md:min-w-[calc(25%-10px)] flex flex-col gap-3 snap-start">
                   <div className="aspect-[3/4] overflow-hidden">
                     <img alt={item.title.toUpperCase()} className="w-full h-full object-cover" src={item.img} />
                   </div>
