@@ -404,43 +404,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 5. TOP BOUTIQUES */}
-      <section className="w-full max-w-7xl mx-auto px-container-margin py-8">
-        <div className="flex items-center justify-between gap-4 mb-6">
-          <h2 className="text-headline-md text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Top Boutik</h2>
-          <Link href="/category" className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2 text-sm font-bold flex items-center justify-center">Tout voir</Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recentListings.length > 0 ? TOP_SELLERS.slice(0, 3).map(seller => (
-            <div key={seller.id} className="bg-white border border-outline-variant/50 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
-              <div className="grid grid-cols-4 gap-2 mb-4">
-                {seller.images.map((img, idx) => (
-                  <div key={idx} className="aspect-square bg-surface-container rounded-lg overflow-hidden">
-                    <img src={img} alt="Product" className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <img src={seller.avatar} alt={seller.name} className="w-10 h-10 rounded-full object-cover bg-surface-container" />
-                  <div>
-                    <h3 className="font-bold text-sm text-primary leading-tight">{seller.name}</h3>
-                    <p className="text-xs text-secondary">@{seller.handle}</p>
-                  </div>
-                </div>
-                <Link href={`/seller/${seller.id}`} className="bg-black text-white font-button-text font-bold text-xs px-4 py-2 rounded-md hover:bg-black/90 transition-colors uppercase">
-                  SHOP
-                </Link>
-              </div>
-            </div>
-          )) : (
-            <div className="col-span-full py-8 flex flex-col items-center justify-center text-center">
-              <span className="material-symbols-outlined text-5xl text-gray-300 mb-4">storefront</span>
-              <h3 className="text-lg font-bold text-primary mb-1">Aucune boutique pour le moment</h3>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* 6. FRESH DROP */}
       <section className="w-full max-w-[98%] mx-auto bg-white rounded-[40px] px-container-margin py-10 relative overflow-hidden my-8" style={{ borderRadius: '18px' }}>

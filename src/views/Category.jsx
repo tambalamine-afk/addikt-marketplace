@@ -134,6 +134,10 @@ export default function Category({ handleSelect }) {
       if (catId) {
         query = query.eq('category_id', catId);
       }
+      
+      if (searchQuery) {
+        query = query.ilike('title', `%${searchQuery}%`);
+      }
 
       const { data, error } = await query;
       if (data) setProducts(data);
@@ -141,7 +145,7 @@ export default function Category({ handleSelect }) {
     if (dbCategories.length > 0 || categoryId === 'nouveautes' || categoryId === 'nouveautés') {
       fetchProducts();
     }
-  }, [categoryId, title, dbCategories, supabase]);
+  }, [categoryId, title, dbCategories, supabase, searchQuery]);
 
   // Réinitialiser le filtre actif quand on change de catégorie
   useEffect(() => {
@@ -204,7 +208,7 @@ export default function Category({ handleSelect }) {
     <main className="flex-grow w-full max-w-[1440px] mx-auto px-container-margin py-8 bg-background text-on-background font-body-sm">
       {/* Category Header */}
       <div className="mb-section-gap pt-8">
-        <h1 className="text-5xl md:text-[6rem] lg:text-[7.5rem] text-primary mb-2 font-bold leading-none tracking-tighter" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 800, opacity: 1 }}>{title}</h1>
+        <h1 className="text-5xl md:text-[6rem] lg:text-[7.5rem] text-primary mb-2 font-bold leading-none tracking-tighter truncate" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 800, opacity: 1 }}>{searchQuery ? `"${searchQuery}"` : title}</h1>
         <p className="font-body-lg text-body-lg text-on-surface-variant md:ml-2 md:-mt-3">1 240 articles</p>
       </div>
 
