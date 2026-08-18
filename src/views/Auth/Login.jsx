@@ -10,7 +10,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   
-  const navigate = useRouter();
+  const router = useRouter();
   const supabase = createClient();
 
   const handleLogin = async (e) => {
@@ -27,7 +27,7 @@ export default function Login() {
       setErrorMsg(error.message);
       setIsLoading(false);
     } else {
-      navigate('/');
+      router.push('/');
     }
   };
   return (

@@ -15,7 +15,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   
-  const navigate = useRouter();
+  const router = useRouter();
   const supabase = createClient();
 
   const handleSubmit = async (e) => {
@@ -42,7 +42,7 @@ export default function Register() {
         setIsSuccess(true);
         setIsLoading(false);
         setTimeout(() => {
-          navigate('/'); // Redirection vers l'accueil ou le dashboard
+          router.push('/'); // Redirection vers l'accueil ou le dashboard
         }, 1500);
       }
     }
