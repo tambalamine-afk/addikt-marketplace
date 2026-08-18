@@ -56,7 +56,7 @@ function TypewriterSearch() {
   
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && inputValue.trim()) {
-      navigate(`/category/nouveautes?search=${encodeURIComponent(inputValue.trim())}`);
+      navigate(`/search?q=${encodeURIComponent(inputValue.trim())}`);
       setIsFocused(false);
       e.target.blur(); // Remove focus
     }
