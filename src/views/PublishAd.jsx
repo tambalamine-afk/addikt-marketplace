@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { AppContext } from '../components/Providers';
+import ProductCard from '../components/ProductCard';
+import confetti from 'canvas-confetti';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function PublishAd() {
   const { user, supabase, addToast } = useContext(AppContext);
@@ -14,6 +17,7 @@ export default function PublishAd() {
   const [photos, setPhotos] = useState([]);
   const [dbCategories, setDbCategories] = useState([]);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [publishedListing, setPublishedListing] = useState(null);
   
   const fileInputRef = useRef(null);
   const titleRef = useRef(null);
@@ -109,24 +113,38 @@ export default function PublishAd() {
           .from('listing-images')
           .getPublicUrl(fileName);
 
-        // 3. Insert listing_image
-        await supabase
-          .from('listing_images')
-          .insert({
-            listing_id: listing.id,
-            url: publicUrl,
-            position: i
-          });
-      }
-
-      addToast("Annonce publiée avec succès ! 🎉");
-      navigate.push('/');
-    } catch (err) {
-      console.error(err);
-      addToast("Erreur lors de la publication : " + err.message);
-    } finally {
-      setIsPublishing(false);
+      // 3. Insert listing_image
+      await supabase
+        .from('listing_images')
+        .insert({
+          listing_id: listing.id,
+          url: publicUrl,
+          position: i
+        });
     }
+
+    const { data: { publicUrl: firstImageUrl } } = supabase.storage
+      .from('listing-images')
+      .getPublicUrl(`${listing.id}/0-`); // Actually we already have publicUrl of the last uploaded, let's just use the first photo's object URL or just publicUrl of the first loop
+    
+    // Set published data for success screen
+    setPublishedListing({
+      id: listing.id,
+      title: title,
+      price: parseInt(price, 10),
+      size: selectedSize || '',
+      brand: selectedBrand || '',
+      condition: selectedCondition || '',
+      image: photos[0].preview,
+      liked: false
+    });
+
+  } catch (err) {
+    console.error(err);
+    addToast("Erreur lors de la publication : " + err.message);
+  } finally {
+    setIsPublishing(false);
+  }
   };
 
   let sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Taille unique'];
@@ -151,6 +169,76 @@ export default function PublishAd() {
     { label: 'Bon état', color: 'bg-accent-yellow' },
     { label: 'Usé', color: 'bg-accent-orange' }
   ];
+
+  // Trigger confetti when published
+  useEffect(() => {
+    if (publishedListing) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#e20020', '#191919', '#ffffff'] // Brand colors roughly
+      });
+    }
+  }, [publishedListing]);
+
+  if (publishedListing) {
+    const shareText = encodeURIComponent(`Découvre mon annonce sur Addikt : ${publishedListing.title} à ${publishedListing.price.toLocaleString('fr-FR')}F !`);
+    const whatsappUrl = `https://wa.me/?text=${shareText}%20https://addikt.com/product/${publishedListing.id}`;
+
+    return (
+      <div className="antialiased flex flex-col min-h-screen bg-background text-on-background font-body-sm overflow-x-hidden">
+        <main className="flex-1 w-full max-w-md mx-auto px-container-margin py-12 pb-40 flex flex-col items-center">
+          
+          <div className="animate-[scaleIn_0.5s_ease-out_forwards] mb-6">
+            <CheckCircle2 size={80} className="text-accent-orange mx-auto drop-shadow-md" />
+          </div>
+
+          <h1 className="text-[32px] text-primary text-center uppercase tracking-tight font-bold mb-2" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 800 }}>
+            Ta pépite est en ligne !
+          </h1>
+          
+          <p className="text-[16px] text-on-surface-variant text-center mb-10" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+            Plus qu'à attendre le premier message d'un acheteur intéressé.
+          </p>
+
+          <div className="w-[180px] sm:w-[200px] mb-12">
+            <ProductCard 
+              product={publishedListing} 
+              onSelect={() => {}} 
+              onToggleLike={() => {}} 
+            />
+          </div>
+
+          <div className="w-full flex flex-col gap-3">
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="w-full bg-[#1b1b1b] text-white font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+              Partager sur WhatsApp
+            </a>
+            
+            <button onClick={() => setPublishedListing(null)} className="w-full bg-white text-black border-2 border-[#1b1b1b] font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+              Publier une autre annonce
+            </button>
+            
+            <Link href={`/product/${publishedListing.id}`} className="mt-4 text-center font-bold text-[15px] underline" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+              Voir mon annonce
+            </Link>
+            
+            <Link href="/" className="mt-6 text-center text-on-surface-variant text-[14px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+              Retour à l'accueil
+            </Link>
+          </div>
+        </main>
+
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+        `}} />
+      </div>
+    );
+  }
 
   return (
     <div className="antialiased flex flex-col min-h-screen bg-background text-on-background font-body-sm overflow-x-hidden">
