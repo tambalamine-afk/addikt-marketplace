@@ -1,23 +1,42 @@
 "use client";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
+import { AppContext } from '../components/Providers';
 
 export default function PublishAd() {
+  const { user, supabase, addToast } = useContext(AppContext);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedCondition, setSelectedCondition] = useState('');
   const [photos, setPhotos] = useState([]);
+  const [dbCategories, setDbCategories] = useState([]);
+  const [isPublishing, setIsPublishing] = useState(false);
+  
   const fileInputRef = useRef(null);
+  const titleRef = useRef(null);
+  const priceRef = useRef(null);
+  const descRef = useRef(null);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const { data, error } = await supabase.from('categories').select('*');
+      if (data) setDbCategories(data);
+    }
+    fetchCategories();
+  }, [supabase]);
 
   const handlePhotoUpload = (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
     
     // Create object URLs for the uploaded files to display them
-    const newPhotos = files.map(file => URL.createObjectURL(file));
+    const newPhotos = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
     setPhotos(prev => [...prev, ...newPhotos].slice(0, 5)); // Max 5 photos
   };
 
@@ -31,12 +50,83 @@ export default function PublishAd() {
 
   const navigate = useRouter();
 
-  const handlePublish = (e) => {
+  const handlePublish = async (e) => {
     e.preventDefault();
-    // Simulate API call
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);
+    if (!user) {
+      addToast("Tu dois être connecté pour publier une annonce.");
+      return;
+    }
+    
+    const title = titleRef.current?.value;
+    const price = priceRef.current?.value;
+    const description = descRef.current?.value;
+
+    if (!title || !price || !selectedCategory || photos.length === 0) {
+      addToast("Remplis le titre, le prix, la catégorie et au moins 1 photo !");
+      return;
+    }
+
+    setIsPublishing(true);
+
+    try {
+      // Find category UUID
+      const cat = dbCategories.find(c => c.name.toLowerCase() === selectedCategory.toLowerCase());
+      const category_id = cat ? cat.id : null;
+
+      // 1. Insert listing
+      const { data: listing, error: listingError } = await supabase
+        .from('listings')
+        .insert({
+          seller_id: user.id,
+          title,
+          description,
+          category_id,
+          brand: selectedBrand || null,
+          size: selectedSize || null,
+          condition: selectedCondition || null,
+          price: parseInt(price, 10),
+          status: 'active'
+        })
+        .select()
+        .single();
+
+      if (listingError) throw listingError;
+
+      // 2. Upload photos
+      for (let i = 0; i < photos.length; i++) {
+        const { file } = photos[i];
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${listing.id}/${i}-${Date.now()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('listing-images')
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('listing-images')
+          .getPublicUrl(fileName);
+
+        // 3. Insert listing_image
+        await supabase
+          .from('listing_images')
+          .insert({
+            listing_id: listing.id,
+            url: publicUrl,
+            position: i
+          });
+      }
+
+      addToast("Annonce publiée avec succès ! 🎉");
+      navigate.push('/');
+    } catch (err) {
+      console.error(err);
+      addToast("Erreur lors de la publication : " + err.message);
+    } finally {
+      setIsPublishing(false);
+    }
   };
 
   let sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Taille unique'];
@@ -93,7 +183,7 @@ export default function PublishAd() {
               {/* Zone 1: Cover Photo */}
               <div onClick={() => fileInputRef.current?.click()} className="aspect-square bg-surface-container rounded-2xl flex flex-col items-center justify-center relative cursor-pointer hover:bg-surface-dim transition-colors group overflow-hidden border border-dashed border-outline-variant">
                 {photos[0] ? (
-                  <img src={photos[0]} alt="Couverture" className="w-full h-full object-cover" />
+                  <img src={photos[0].preview} alt="Couverture" className="w-full h-full object-cover" />
                 ) : (
                   <span className="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary transition-colors mb-1">add_a_photo</span>
                 )}
@@ -106,7 +196,7 @@ export default function PublishAd() {
               {[1, 2, 3, 4].map((index) => (
                 <div key={index} onClick={() => fileInputRef.current?.click()} className={`aspect-square bg-surface-container rounded-2xl flex items-center justify-center cursor-pointer hover:bg-surface-dim transition-colors group overflow-hidden border border-dashed border-outline-variant ${index === 4 ? 'hidden sm:flex' : ''}`}>
                   {photos[index] ? (
-                    <img src={photos[index]} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
+                    <img src={photos[index].preview} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
                   ) : (
                     <span className="material-symbols-outlined text-2xl text-on-surface-variant group-hover:text-primary transition-colors">add</span>
                   )}
@@ -118,7 +208,7 @@ export default function PublishAd() {
           {/* Title Section */}
           <section className="space-y-4">
             <label className="font-headline-md text-headline-md text-primary uppercase block font-bold" htmlFor="title" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Titre de l'annonce</label>
-            <input className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 text-[16px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all font-medium outline-none" id="title" placeholder="Ex: Robe wax imprimé, taille M" type="text" style={{ fontFamily: '"Google Sans", sans-serif' }} />
+            <input ref={titleRef} className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 text-[16px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all font-medium outline-none" id="title" placeholder="Ex: Robe wax imprimé, taille M" type="text" style={{ fontFamily: '"Google Sans", sans-serif' }} />
           </section>
 
           {/* Category Section */}
@@ -241,7 +331,7 @@ export default function PublishAd() {
             <div className="space-y-4">
               <label className="font-headline-md text-headline-md text-primary uppercase block font-bold" htmlFor="price" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Prix de vente</label>
               <div className="relative max-w-[200px]">
-                <input className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 pr-12 text-[20px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all font-bold outline-none" id="price" placeholder="0" type="number" style={{ fontFamily: '"Google Sans", sans-serif' }} />
+                <input ref={priceRef} className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 pr-12 text-[20px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all font-bold outline-none" id="price" placeholder="0" type="number" style={{ fontFamily: '"Google Sans", sans-serif' }} />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                   <span className="text-[20px] text-primary font-bold" style={{ fontFamily: '"Google Sans", sans-serif' }}>F</span>
                 </div>
@@ -267,7 +357,7 @@ export default function PublishAd() {
           {/* Description */}
           <section className="space-y-4">
             <label className="font-headline-md text-headline-md text-primary uppercase block font-bold" htmlFor="description" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 500 }}>Description</label>
-            <textarea className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 text-[16px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none font-medium outline-none" id="description" placeholder="Décris ton article, dis ce qui le rend spécial, précise les défauts éventuels..." rows="6" style={{ fontFamily: '"Google Sans", sans-serif' }}></textarea>
+            <textarea ref={descRef} className="w-full bg-surface-container border border-outline-variant/50 rounded-2xl p-4 text-[16px] text-primary placeholder-on-surface-variant focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none font-medium outline-none" id="description" placeholder="Décris ton article, dis ce qui le rend spécial, précise les défauts éventuels..." rows="6" style={{ fontFamily: '"Google Sans", sans-serif' }}></textarea>
           </section>
         </form>
       </main>
@@ -276,12 +366,13 @@ export default function PublishAd() {
       <div className="fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant/30 p-4 px-container-margin z-50">
         <div className="max-w-3xl mx-auto flex justify-center">
           <button 
+            disabled={isPublishing}
             onClick={handlePublish}
-            className="w-full md:w-auto md:min-w-[400px] bg-primary text-white font-headline-md font-bold text-[16px] py-4 px-8 rounded-full uppercase tracking-wider hover:bg-black/80 transition-colors shadow-lg" 
+            className={`w-full md:w-auto md:min-w-[400px] text-white font-headline-md font-bold text-[16px] py-4 px-8 rounded-full uppercase tracking-wider transition-colors shadow-lg ${isPublishing ? 'bg-primary/50 cursor-not-allowed' : 'bg-primary hover:bg-black/80'}`} 
             style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }} 
             type="button"
           >
-            Publier l'annonce
+            {isPublishing ? 'Publication en cours...' : "Publier l'annonce"}
           </button>
         </div>
       </div>

@@ -71,12 +71,9 @@ export default function MobileMenu({ isOpen, onClose }) {
         <Link href="/register" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
           Sign up
         </Link>
-        <button onClick={() => {
-          // Trigger login logic or open login modal
-          onClose();
-        }} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+        <Link href="/login" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
           Log in
-        </button>
+        </Link>
       </div>
 
       <div className="h-[1px] w-full bg-black/10"></div>

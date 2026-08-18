@@ -2,8 +2,9 @@
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
+import { createClient } from '../lib/supabase/client';
 
-export default function Category({ products, handleSelect }) {
+export default function Category({ handleSelect }) {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search');
@@ -95,6 +96,52 @@ export default function Category({ products, handleSelect }) {
   const [activeFilters, setActiveFilters] = useState([]);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [sortOrder, setSortOrder] = useState('recent');
+  const [products, setProducts] = useState([]);
+  const [dbCategories, setDbCategories] = useState([]);
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const { data } = await supabase.from('categories').select('*');
+      if (data) setDbCategories(data);
+    }
+    fetchCategories();
+  }, [supabase]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      // Find category UUID if not 'nouveautes'
+      let catId = null;
+      if (categoryId !== 'nouveautes' && categoryId !== 'nouveautés' && dbCategories.length > 0) {
+        const cat = dbCategories.find(c => c.name.toLowerCase() === title.toLowerCase());
+        if (cat) catId = cat.id;
+      }
+
+      let query = supabase
+        .from('listings')
+        .select(`
+          id,
+          title,
+          price,
+          size,
+          brand,
+          created_at,
+          listing_images (url),
+          categories (name)
+        `)
+        .eq('status', 'active');
+      
+      if (catId) {
+        query = query.eq('category_id', catId);
+      }
+
+      const { data, error } = await query;
+      if (data) setProducts(data);
+    }
+    if (dbCategories.length > 0 || categoryId === 'nouveautes' || categoryId === 'nouveautés') {
+      fetchProducts();
+    }
+  }, [categoryId, title, dbCategories, supabase]);
 
   // Réinitialiser le filtre actif quand on change de catégorie
   useEffect(() => {
@@ -122,25 +169,12 @@ export default function Category({ products, handleSelect }) {
     if (searchQuery) {
       const sq = searchQuery.toLowerCase();
       if (!product.title?.toLowerCase().includes(sq) && 
-          !product.category?.toLowerCase().includes(sq) &&
-          !product.tags?.some(tag => tag.toLowerCase().includes(sq))) {
+          !product.categories?.name?.toLowerCase().includes(sq)) {
         return false;
       }
     }
 
-    // 1. Sous-catégorie
-    let matchSub = false;
-    if (!activeSubcategory || activeSubcategory === 'Tous') {
-      matchSub = true;
-    } else {
-      const term = activeSubcategory.toLowerCase();
-      matchSub = product.category.toLowerCase().includes(term) ||
-                 product.title.toLowerCase().includes(term) ||
-                 product.tags.some(tag => term.includes(tag.toLowerCase())) ||
-                 term.includes(product.category.toLowerCase());
-    }
-    if (!matchSub) return false;
-
+    // 1. Sous-catégorie (Ignoré pour Supabase MVP sauf si on a des mots clés)
     // 2. Filtres actifs
     for (const filter of activeFilters) {
       if (filter.type === 'size') {
@@ -151,7 +185,7 @@ export default function Category({ products, handleSelect }) {
       }
       if (filter.type === 'brand') {
         const term = filter.value.toLowerCase();
-        if (!product.title?.toLowerCase().includes(term) && !product.tags?.some(t => t.toLowerCase().includes(term))) return false;
+        if (!product.brand?.toLowerCase().includes(term) && !product.title?.toLowerCase().includes(term)) return false;
       }
     }
     
@@ -162,8 +196,8 @@ export default function Category({ products, handleSelect }) {
   finalProducts.sort((a, b) => {
     if (sortOrder === 'asc') return a.price - b.price;
     if (sortOrder === 'desc') return b.price - a.price;
-    if (sortOrder === 'popular') return (b.liked ? 1 : 0) - (a.liked ? 1 : 0);
-    return 0; // recent (default, keep original order)
+    // if (sortOrder === 'popular') return ...
+    return new Date(b.created_at) - new Date(a.created_at); // recent
   });
 
   return (
@@ -271,7 +305,7 @@ export default function Category({ products, handleSelect }) {
             {finalProducts.slice(0, 12).map((product) => (
               <Link key={product.id} href={`/product/${product.id}`} className="group relative flex flex-col bg-transparent transition-all cursor-pointer">
                 <div className="relative w-full aspect-[3/4] bg-surface-container-low rounded-md overflow-hidden">
-                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.name} src={product.image} />
+                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.title} src={product.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
                   <button 
                     className="absolute top-2 right-2 transition-opacity z-10 hover:scale-110"
                     onClick={(e) => {
@@ -279,13 +313,13 @@ export default function Category({ products, handleSelect }) {
                       e.stopPropagation();
                     }}
                   >
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill={product.liked ? '#e20020' : 'rgba(40,40,40,0.8)'} stroke="white" strokeWidth="1.5">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill={'rgba(40,40,40,0.8)'} stroke="white" strokeWidth="1.5">
                       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
                   </button>
                 </div>
                 <div className="pt-3 flex flex-col mt-2 text-left">
-                  <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.name || product.title}</span>
+                  <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.title}</span>
                   {product.size && (
                     <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{product.size}</span>
                   )}

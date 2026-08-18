@@ -281,9 +281,9 @@ export default function Header() {
                 <Link href="/register" className="bg-white border border-outline-variant text-primary px-5 py-2 rounded-full font-bold text-sm hover:bg-surface-variant transition-colors" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                   S'inscrire
                 </Link>
-                <button onClick={handleLogin} className="text-primary px-3 py-2 font-bold text-sm hover:underline" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+                <Link href="/login" className="text-primary px-3 py-2 font-bold text-sm hover:underline" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
                   Se connecter
-                </button>
+                </Link>
               </>
             ) : (
               <div className="relative ml-2" ref={dropdownRef}>

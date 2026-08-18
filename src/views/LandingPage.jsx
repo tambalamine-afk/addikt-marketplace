@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import AdCarousel from '../components/AdCarousel';
 import TopSellers, { TOP_SELLERS } from '../components/TopSellers';
 import AppPromoBanner from '../components/AppPromoBanner';
+import { createClient } from '../lib/supabase/client';
 
 const slideData = [
   { title: "Vintage Vibes", subtitle: "Des pièces uniques, à ne pas laisser filer.", color: "#A8A29E", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxLgjMfUFExwuaqPvDCm-TZviw8WL3U4SHmcp7u3cvkhIIx1CpjzohYsejzpqx_abQIvviLLh-u45yYfgh_hvuQqGR_uNzEaNNknvcQYjk7yZzKeKCyqXCiJNsTTAWoIotGVgPFW8y0rXgsx3x_2aFs7ZFN9R9fC7JozICwJWPfycH1Wfvfw-gJ-RTdAU6GGl74MzC8MNCDCw1VhRymfJ91lUqOIXJ1YdwF_jIBxYLJEnSyT5OIvlK" },
@@ -130,6 +131,8 @@ const CATEGORIES = [
 export default function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [toggleState, setToggleState] = useState('acheter');
+  const [recentListings, setRecentListings] = useState([]);
+  const supabase = createClient();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -137,6 +140,28 @@ export default function LandingPage() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    async function fetchListings() {
+      const { data, error } = await supabase
+        .from('listings')
+        .select(`
+          id,
+          title,
+          price,
+          size,
+          listing_images (url)
+        `)
+        .eq('status', 'active')
+        .order('created_at', { ascending: false })
+        .limit(10);
+      
+      if (data) {
+        setRecentListings(data);
+      }
+    }
+    fetchListings();
+  }, [supabase]);
 
   return (
     <main>
@@ -310,19 +335,26 @@ export default function LandingPage() {
           <Link href="/category" className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2 text-sm font-bold flex items-center justify-center">Tout voir</Link>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
-          {PRODUCTS_GRID.map((item, idx) => (
-            <Link key={idx} href={`/product/p${(idx % 12) + 1}`} className="flex flex-col gap-3 group cursor-pointer">
+          {recentListings.length > 0 ? recentListings.map((item) => (
+            <Link key={item.id} href={`/product/${item.id}`} className="flex flex-col gap-3 group cursor-pointer">
               <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
                 <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}><span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
-                <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} />
+                <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
               </div>
               <div className="flex flex-col mt-2">
                 <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
-                <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size}</span>
-                <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price}</span>
+                <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size || 'Unique'}</span>
+                <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price.toLocaleString('fr-FR')} F</span>
               </div>
             </Link>
-          ))}
+          )) : (
+            <div className="col-span-full py-12 flex flex-col items-center justify-center text-center">
+              <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">inventory_2</span>
+              <h3 className="text-xl font-bold text-primary mb-2">Aucun article pour le moment</h3>
+              <p className="text-gray-500 max-w-md">Soyez le premier à publier une annonce !</p>
+              <Link href="/publish" className="mt-6 bg-black text-white px-6 py-3 rounded-full font-bold">Vendre un article</Link>
+            </div>
+          )}
         </div>
       </section>
 
@@ -379,7 +411,7 @@ export default function LandingPage() {
           <Link href="/category" className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2 text-sm font-bold flex items-center justify-center">Tout voir</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {TOP_SELLERS.slice(0, 3).map(seller => (
+          {recentListings.length > 0 ? TOP_SELLERS.slice(0, 3).map(seller => (
             <div key={seller.id} className="bg-white border border-outline-variant/50 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
               <div className="grid grid-cols-4 gap-2 mb-4">
                 {seller.images.map((img, idx) => (
@@ -401,7 +433,12 @@ export default function LandingPage() {
                 </Link>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className="col-span-full py-8 flex flex-col items-center justify-center text-center">
+              <span className="material-symbols-outlined text-5xl text-gray-300 mb-4">storefront</span>
+              <h3 className="text-lg font-bold text-primary mb-1">Aucune boutique pour le moment</h3>
+            </div>
+          )}
         </div>
       </section>
 
