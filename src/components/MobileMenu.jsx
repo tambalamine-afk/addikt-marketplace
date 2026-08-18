@@ -4,12 +4,22 @@ import React, { useContext } from 'react';
 import { AppContext } from './Providers';
 
 export default function MobileMenu({ isOpen, onClose }) {
-  const { user, supabase } = useContext(AppContext);
+  const { user, profile, supabase } = useContext(AppContext);
   const isLoggedIn = !!user;
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     onClose();
+  };
+
+  const getInitials = () => {
+    if (profile?.full_name) {
+      return profile.full_name.substring(0, 2).toUpperCase();
+    }
+    if (profile?.username) {
+      return profile.username.substring(0, 2).toUpperCase();
+    }
+    return user?.email?.substring(0, 2).toUpperCase() || 'MO';
   };
 
   if (!isOpen) return null;
@@ -86,10 +96,10 @@ export default function MobileMenu({ isOpen, onClose }) {
         <div className="flex flex-col w-full border-b border-black">
           <Link href="/profile/me" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
             <span className="text-[#333] text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Mon profil</span>
-            {isLoggedIn && user?.user_metadata?.avatar_url ? (
-               <img src={user.user_metadata.avatar_url} alt="Avatar" className="w-6 h-6 rounded-full" />
+            {isLoggedIn && profile?.avatar_url ? (
+               <img src={profile.avatar_url} alt="Avatar" className="w-6 h-6 rounded-full object-cover" />
             ) : isLoggedIn ? (
-               <div className="w-6 h-6 rounded-full bg-gray-500 text-white flex items-center justify-center text-[10px] font-bold">MO</div>
+               <div className="w-6 h-6 rounded-full bg-gray-500 text-white flex items-center justify-center text-[10px] font-bold">{getInitials()}</div>
             ) : null}
           </Link>
           <Link href="/publish" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">

@@ -8,19 +8,30 @@ export const AppContext = React.createContext();
 export default function Providers({ children }) {
   const [toasts, setToasts] = useState([]);
   const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const supabase = createClient();
 
   useEffect(() => {
     // Récupérer la session actuelle
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
+        if (data) setProfile(data);
+      }
       setIsLoadingAuth(false);
     });
 
     // Écouter les changements d'état (connexion/déconnexion)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
+        if (data) setProfile(data);
+      } else {
+        setProfile(null);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -33,7 +44,7 @@ export default function Providers({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{ addToast, user, isLoadingAuth, supabase }}>
+    <AppContext.Provider value={{ addToast, user, profile, setProfile, isLoadingAuth, supabase }}>
       {children}
       <AuthModal />
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none w-full max-w-sm px-4">

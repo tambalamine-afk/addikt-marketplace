@@ -140,7 +140,7 @@ export default function Header() {
   const isProfilePage = pathname.startsWith('/profile');
   const hideCategories = isPublishPage || isProfilePage;
   
-  const { user, supabase } = useContext(AppContext);
+  const { user, profile, supabase } = useContext(AppContext);
   const isLoggedIn = !!user;
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -168,6 +168,16 @@ export default function Header() {
     e.preventDefault();
     // Open AuthModal by dispatching custom event
     window.dispatchEvent(new Event('openAuthModal'));
+  };
+
+  const getInitials = () => {
+    if (profile?.full_name) {
+      return profile.full_name.substring(0, 2).toUpperCase();
+    }
+    if (profile?.username) {
+      return profile.username.substring(0, 2).toUpperCase();
+    }
+    return user?.email?.substring(0, 2).toUpperCase() || 'MO';
   };
 
   return (
@@ -304,8 +314,14 @@ export default function Header() {
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="flex items-center gap-1 hover:opacity-80 transition-opacity focus:outline-none"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#6B7280] flex items-center justify-center text-white font-bold text-sm uppercase">
-                    {user?.user_metadata?.full_name?.substring(0, 2) || user?.email?.substring(0, 2) || 'MU'}
+                  <div className="w-10 h-10 rounded-full bg-[#6B7280] flex items-center justify-center overflow-hidden">
+                    {profile?.avatar_url ? (
+                      <img src={profile.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-white font-bold text-sm uppercase">
+                        {getInitials()}
+                      </span>
+                    )}
                   </div>
                   <span className="material-symbols-outlined text-[20px] text-primary">expand_more</span>
                 </button>
