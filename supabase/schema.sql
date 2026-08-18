@@ -9,6 +9,18 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- 1. TABLES
 -- ==============================================================================
 
+-- Nettoyage de l'existant pour éviter les erreurs "relation already exists"
+DROP TABLE IF EXISTS reviews CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS addresses CASCADE;
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS conversations CASCADE;
+DROP TABLE IF EXISTS favorites CASCADE;
+DROP TABLE IF EXISTS listing_images CASCADE;
+DROP TABLE IF EXISTS listings CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS profiles CASCADE;
+
 -- Table: profiles (liée à auth.users)
 CREATE TABLE profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
