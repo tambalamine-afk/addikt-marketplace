@@ -1,8 +1,17 @@
 "use client";
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from './Providers';
 
 export default function MobileMenu({ isOpen, onClose }) {
+  const { user, supabase } = useContext(AppContext);
+  const isLoggedIn = !!user;
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   const categories = [
@@ -68,12 +77,25 @@ export default function MobileMenu({ isOpen, onClose }) {
         <Link href="/publish" onClick={onClose} className="w-full bg-[#1b1b1b] text-white font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
           Sell now
         </Link>
-        <Link href="/register" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-          Sign up
-        </Link>
-        <Link href="/login" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-          Log in
-        </Link>
+        {!isLoggedIn ? (
+          <>
+            <Link href="/register" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+              Sign up
+            </Link>
+            <Link href="/login" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+              Log in
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/profile/me" onClick={onClose} className="w-full bg-white text-black border border-black/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+              Mon Profil
+            </Link>
+            <button onClick={handleLogout} className="w-full bg-white text-error border border-error/20 font-bold py-3.5 rounded-full text-center text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+              Déconnexion
+            </button>
+          </>
+        )}
       </div>
 
       <div className="h-[1px] w-full bg-black/10"></div>
