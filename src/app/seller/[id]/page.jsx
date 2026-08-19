@@ -1,5 +1,6 @@
 import SellerProfile from '../../../views/Profile/SellerProfile';
 
-export default function Page() {
-  return <SellerProfile />;
+export default async function Page({ params }) {
+  const { id } = await params;
+  return <SellerProfile sellerId={id} />;
 }
