@@ -132,6 +132,7 @@ export default function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [toggleState, setToggleState] = useState('acheter');
   const [recentListings, setRecentListings] = useState([]);
+  const [topBoutiques, setTopBoutiques] = useState([]);
   const supabase = createClient();
 
   useEffect(() => {
@@ -161,6 +162,28 @@ export default function LandingPage() {
       }
     }
     fetchListings();
+
+    async function fetchTopBoutiques() {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select(`
+          id,
+          username,
+          avatar_url,
+          listings (
+            listing_images (url)
+          )
+        `)
+        .eq('is_top_boutique', true)
+        .limit(6);
+        
+      if (!error && data) {
+        setTopBoutiques(data);
+      } else if (error) {
+        console.error("Top boutiques error (la colonne is_top_boutique n'existe peut-être pas encore):", error);
+      }
+    }
+    fetchTopBoutiques();
   }, [supabase]);
 
   return (
@@ -412,10 +435,43 @@ export default function LandingPage() {
           <Link href="/category" className="font-button-text rounded-full hover:bg-accent-orange transition-colors bg-transparent text-primary border border-primary/20 px-4 py-2 text-sm font-bold flex items-center justify-center">Tout voir</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="col-span-full py-8 flex flex-col items-center justify-center text-center">
-            <span className="material-symbols-outlined text-5xl text-gray-300 mb-4">storefront</span>
-            <h3 className="text-lg font-bold text-primary mb-1">Aucune boutique pour le moment</h3>
-          </div>
+          {topBoutiques.length > 0 ? topBoutiques.map(seller => (
+            <div key={seller.id} className="bg-white border border-outline-variant/50 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {[0, 1, 2, 3].map(idx => {
+                  const imageSrc = seller.listings?.[idx]?.listing_images?.[0]?.url;
+                  return (
+                    <div key={idx} className="aspect-square bg-surface-container rounded-lg overflow-hidden">
+                      {imageSrc ? (
+                        <img src={imageSrc} alt="Product" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-300">
+                          <span className="material-symbols-outlined text-sm">inventory_2</span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <img src={seller.avatar_url || 'https://via.placeholder.com/100'} alt={seller.username} className="w-10 h-10 rounded-full object-cover bg-surface-container border border-gray-200" />
+                  <div>
+                    <h3 className="font-bold text-sm text-primary leading-tight">{seller.username || 'Boutique'}</h3>
+                    <p className="text-xs text-secondary">@{seller.username ? seller.username.toLowerCase().replace(/\s+/g, '') : 'boutique'}</p>
+                  </div>
+                </div>
+                <Link href={`/profile/${seller.id}`} className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-accent-orange transition-colors">
+                  VOIR
+                </Link>
+              </div>
+            </div>
+          )) : (
+            <div className="col-span-full py-8 flex flex-col items-center justify-center text-center">
+              <span className="material-symbols-outlined text-5xl text-gray-300 mb-4">storefront</span>
+              <h3 className="text-lg font-bold text-primary mb-1">Aucune boutique pour le moment</h3>
+            </div>
+          )}
         </div>
       </section>
 
@@ -429,10 +485,31 @@ export default function LandingPage() {
             </div>
             <Link href="/fresh-drop" className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:flex items-center justify-center font-bold">Explore</Link>
           </div>
-          <div className="flex flex-col items-center justify-center py-10 text-center gap-3">
-            <span className="material-symbols-outlined text-5xl text-on-surface-variant" style={{ fontVariationSettings: "'FILL' 0" }}>new_releases</span>
-            <p className="text-on-surface-variant text-sm font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>Aucun article pour le moment</p>
-          </div>
+          
+          {recentListings && recentListings.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {recentListings.slice(0, 5).map((item) => (
+                <Link key={`fresh-${item.id}`} href={`/product/${item.id}`} className="flex flex-col gap-3 group cursor-pointer">
+                  <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
+                    <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}>
+                      <span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span>
+                    </div>
+                    <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
+                  </div>
+                  <div className="flex flex-col mt-2">
+                    <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
+                    <span className="text-[14px] text-[#555] leading-tight mt-[1px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.size || 'Unique'}</span>
+                    <span className="text-[16px] text-black font-bold leading-tight mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.price.toLocaleString('fr-FR')} F</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-10 text-center gap-3">
+              <span className="material-symbols-outlined text-5xl text-on-surface-variant" style={{ fontVariationSettings: "'FILL' 0" }}>new_releases</span>
+              <p className="text-on-surface-variant text-sm font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>Aucun article pour le moment</p>
+            </div>
+          )}
         </div>
       </section>
 
