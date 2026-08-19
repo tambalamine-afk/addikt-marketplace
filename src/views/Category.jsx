@@ -178,7 +178,55 @@ export default function Category({ handleSelect }) {
       }
     }
 
-    // 1. Sous-catégorie (Ignoré pour Supabase MVP sauf si on a des mots clés)
+    // 1. Sous-catégorie
+    if (activeSubcategory !== 'Tous') {
+      const sub = activeSubcategory.toLowerCase();
+      let match = false;
+      const title = (product.title || '').toLowerCase();
+      const desc = (product.description || '').toLowerCase();
+      
+      const keywordsMap = {
+        't-shirts & polos': ['t-shirt', 'tshirt', 'polo', 'chemise', 'haut'],
+        'pantalons': ['pantalon', 'jean', 'jogging', 'short', 'bas'],
+        'sweats & pulls': ['sweat', 'pull', 'hoodie', 'gilet'],
+        'vestes & manteaux': ['veste', 'manteau', 'blouson', 'doudoune', 'trench', 'jacket'],
+        'costumes': ['costume', 'tailleur', 'smoking', 'veston'],
+        'chaussures': ['chaussure', 'sneaker', 'basket', 'botte', 'mocassin', 'talon', 'sandale', 'claquette'],
+        'accessoires': ['montre', 'lunette', 'sac', 'bijou', 'ceinture', 'casquette', 'chapeau', 'bonnet', 'echarpe', 'accessoire', 'bracelet', 'collier', 'bague', 'foulard'],
+        'sneakers': ['sneaker', 'basket', 'nike', 'jordan', 'yeezy', 'adidas', 'puma', 'new balance', 'asics'],
+        'vintage': ['vintage', 'retro', 'ancien', '90s', '80s', 'y2k'],
+        'bébé': ['bébé', 'bebe', 'body', 'pyjama', 'naissance', 'layette'],
+        'filles (2-14 ans)': ['fille', 'robe', 'jupe', 't-shirt fille', 'pantalon fille'],
+        'garçons (2-14 ans)': ['garcon', 'garçon', 't-shirt garçon', 'pantalon garçon'],
+        'jouets': ['jouet', 'jeu', 'peluche', 'poupée', 'lego', 'figurine'],
+        'livres': ['livre', 'bd', 'manga', 'roman', 'conte'],
+        'puériculture': ['poussette', 'siège', 'biberon', 'couche', 'bain', 'lit', 'chaise'],
+        'basses': ['basse', 'low'],
+        'montantes': ['montante', 'high', 'mid'],
+        'running': ['running', 'course', 'asics', 'salomon', 'new balance'],
+        'lifestyle': ['lifestyle', 'dunk', 'force', 'casual', 'ville'],
+        'éditions limitées': ['limité', 'limited', 'collab', 'exclusive', 'rare'],
+        'robes': ['robe', 'tunique'],
+        'hauts': ['haut', 'top', 'blouse', 'chemise', 't-shirt', 'caraco', 'débardeur'],
+        'bas': ['bas', 'pantalon', 'jean', 'jupe', 'short', 'legging'],
+        'boubous & tenues trad': ['boubou', 'traditionnel', 'bazin', 'wax', 'pagne', 'tailleur africain', 'thioup'],
+        'sacs & accessoires': ['sac', 'pochette', 'montre', 'lunette', 'ceinture', 'bijou', 'foulard'],
+        'bijoux': ['bijou', 'collier', 'bracelet', 'bague', 'boucle', 'montre'],
+        'beauté': ['beauté', 'maquillage', 'soin', 'parfum', 'cheveux', 'cosmétique', 'crème', 'lotion']
+      };
+
+      const keywords = keywordsMap[sub] || [sub];
+      
+      for (const kw of keywords) {
+        if (title.includes(kw) || desc.includes(kw)) {
+          match = true;
+          break;
+        }
+      }
+      
+      if (!match) return false;
+    }
+
     // 2. Filtres actifs
     for (const filter of activeFilters) {
       if (filter.type === 'size') {
@@ -209,7 +257,7 @@ export default function Category({ handleSelect }) {
       {/* Category Header */}
       <div className="mb-section-gap pt-8">
         <h1 className="text-5xl md:text-[6rem] lg:text-[7.5rem] text-primary mb-2 font-bold leading-none tracking-tighter truncate" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 800, opacity: 1 }}>{searchQuery ? `"${searchQuery}"` : title}</h1>
-        <p className="font-body-lg text-body-lg text-on-surface-variant md:ml-2 md:-mt-3">1 240 articles</p>
+        <p className="font-body-lg text-body-lg text-on-surface-variant md:ml-2 md:-mt-3">{finalProducts.length} article{finalProducts.length !== 1 ? 's' : ''}</p>
       </div>
 
       {/* Subcategories (Scrollable Chips) */}
