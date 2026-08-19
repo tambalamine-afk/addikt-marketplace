@@ -436,7 +436,7 @@ export default function LandingPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {topBoutiques.length > 0 ? topBoutiques.map(seller => (
-            <div key={seller.id} className="bg-white border border-outline-variant/50 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
+            <Link key={seller.id} href={`/seller/${seller.id}`} className="bg-white border border-outline-variant/50 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer block">
               <div className="grid grid-cols-4 gap-2 mb-4">
                 {[0, 1, 2, 3].map(idx => {
                   const imageSrc = seller.listings?.[idx]?.listing_images?.[0]?.url;
@@ -461,11 +461,11 @@ export default function LandingPage() {
                     <p className="text-xs text-secondary">@{seller.username ? seller.username.toLowerCase().replace(/\s+/g, '') : 'boutique'}</p>
                   </div>
                 </div>
-                <Link href={`/seller/${seller.id}`} className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-accent-orange transition-colors">
+                <span className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-accent-orange transition-colors">
                   VOIR
-                </Link>
+                </span>
               </div>
-            </div>
+            </Link>
           )) : (
             <div className="col-span-full py-8 flex flex-col items-center justify-center text-center">
               <span className="material-symbols-outlined text-5xl text-gray-300 mb-4">storefront</span>
