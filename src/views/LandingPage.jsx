@@ -170,7 +170,7 @@ export default function LandingPage() {
           id,
           username,
           avatar_url,
-          listings (
+          listings!listings_seller_id_fkey (
             listing_images (url)
           )
         `)
@@ -180,7 +180,7 @@ export default function LandingPage() {
       if (!error && data) {
         setTopBoutiques(data);
       } else if (error) {
-        console.error("Top boutiques error (la colonne is_top_boutique n'existe peut-être pas encore):", error);
+        console.error("Top boutiques error:", error);
       }
     }
     fetchTopBoutiques();
