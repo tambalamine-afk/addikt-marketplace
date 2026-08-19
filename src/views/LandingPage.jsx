@@ -461,7 +461,7 @@ export default function LandingPage() {
                     <p className="text-xs text-secondary">@{seller.username ? seller.username.toLowerCase().replace(/\s+/g, '') : 'boutique'}</p>
                   </div>
                 </div>
-                <Link href={`/profile/${seller.id}`} className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-accent-orange transition-colors">
+                <Link href={`/seller/${seller.id}`} className="bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-accent-orange transition-colors">
                   VOIR
                 </Link>
               </div>
