@@ -112,9 +112,19 @@ export default function Category({ handleSelect }) {
     async function fetchProducts() {
       // Find category UUID if not 'nouveautes'
       let catId = null;
+      let isCategoryMissing = false;
       if (categoryId !== 'nouveautes' && categoryId !== 'nouveautés' && dbCategories.length > 0) {
         const cat = dbCategories.find(c => c.name.toLowerCase() === title.toLowerCase());
-        if (cat) catId = cat.id;
+        if (cat) {
+          catId = cat.id;
+        } else {
+          isCategoryMissing = true;
+        }
+      }
+
+      if (isCategoryMissing) {
+        setProducts([]);
+        return;
       }
 
       let query = supabase

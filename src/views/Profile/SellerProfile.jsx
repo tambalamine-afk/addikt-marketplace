@@ -83,12 +83,12 @@ export default function SellerProfile({ sellerId }) {
           <div className="mt-4 flex items-center gap-2">
             <h1 className="text-headline-lg-mobile md:text-headline-lg text-on-surface uppercase tracking-tight font-display">{seller.username || 'Utilisateur'}</h1>
             {seller.is_top_boutique && (
-              <span className="material-symbols-outlined text-accent-blue text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
+              <span className="material-symbols-outlined text-black text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
             )}
           </div>
           
           {/* Meta Info */}
-          <div className="flex items-center gap-4 mt-2 text-secondary text-[14px]">
+          <div className="flex items-center gap-4 mt-2 text-black text-[14px]">
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">location_on</span> Sénégal
             </span>
@@ -104,7 +104,7 @@ export default function SellerProfile({ sellerId }) {
           <div className="flex items-center gap-2 mt-3 bg-surface-container-low px-4 py-1.5 rounded-full">
             <span className="material-symbols-outlined text-accent-yellow text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
             <span className="font-bold text-on-surface">5.0</span>
-            <span className="text-secondary">(0 avis)</span>
+            <span className="text-black">(0 avis)</span>
           </div>
         </div>
 
@@ -112,15 +112,15 @@ export default function SellerProfile({ sellerId }) {
         <div className="flex justify-center items-center gap-4 md:gap-12 mb-8 border-outline-variant py-6">
           <div className="text-center">
             <div className="text-headline-md text-on-surface font-display">0</div>
-            <div className="text-sm text-secondary mt-1 font-body">Abonnés</div>
+            <div className="text-sm text-black mt-1 font-body">Abonnés</div>
           </div>
           <div className="text-center">
             <div className="text-headline-md text-on-surface font-display">{listings.length}</div>
-            <div className="text-sm text-secondary mt-1 font-body">Articles en vente</div>
+            <div className="text-sm text-black mt-1 font-body">Articles en vente</div>
           </div>
           <div className="text-center">
             <div className="text-headline-md text-on-surface font-display">100%</div>
-            <div className="text-sm text-secondary mt-1 font-body">de réponses</div>
+            <div className="text-sm text-black mt-1 font-body">de réponses</div>
           </div>
         </div>
 
@@ -178,11 +178,11 @@ export default function SellerProfile({ sellerId }) {
             <div className="flex items-center gap-1">
               <span className="material-symbols-outlined text-accent-yellow text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
               <span className="font-bold font-body">5.0</span>
-              <span className="text-secondary text-sm font-body">(0 avis)</span>
+              <span className="text-black text-sm font-body">(0 avis)</span>
             </div>
           </div>
           <div className="space-y-8">
-            <div className="py-6 text-center text-secondary border-t border-outline-variant">
+            <div className="py-6 text-center text-black border-t border-outline-variant">
               Aucun avis pour le moment.
             </div>
           </div>

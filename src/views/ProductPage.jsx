@@ -248,6 +248,33 @@ export default function ProductPage() {
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100">Pas d'image</div>
               )}
+              {/* Image Navigation Arrows */}
+              {images.length > 1 && (
+                <>
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const currentIndex = images.indexOf(mainImage);
+                      const prevIndex = (currentIndex - 1 + images.length) % images.length;
+                      setMainImage(images[prevIndex]);
+                    }}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-black hover:bg-white transition-colors z-20 shadow-md"
+                  >
+                    <span className="material-symbols-outlined">chevron_left</span>
+                  </button>
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const currentIndex = images.indexOf(mainImage);
+                      const nextIndex = (currentIndex + 1) % images.length;
+                      setMainImage(images[nextIndex]);
+                    }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-black hover:bg-white transition-colors z-20 shadow-md"
+                  >
+                    <span className="material-symbols-outlined">chevron_right</span>
+                  </button>
+                </>
+              )}
               {/* Overlays */}
               <div className="absolute top-4 right-4 flex flex-col gap-3">
                 <button 
@@ -349,9 +376,9 @@ export default function ProductPage() {
                   <div>
                     <h3 className="font-label text-lg text-primary flex items-center gap-1 font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
                       {seller?.username || 'Utilisateur'}
-                      <span className="material-symbols-outlined filled text-accent-blue text-[18px]">verified</span>
+                      <span className="material-symbols-outlined filled text-black text-[18px]">verified</span>
                     </h3>
-                    <p className="font-body text-xs text-secondary" style={{ fontFamily: '"Google Sans", sans-serif' }}>Membre depuis {new Date(seller?.created_at).getFullYear()}</p>
+                    <p className="font-body text-xs text-black" style={{ fontFamily: '"Google Sans", sans-serif' }}>Membre depuis {new Date(seller?.created_at).getFullYear()}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
@@ -370,7 +397,7 @@ export default function ProductPage() {
             <div className="mb-8">
               <h3 className="font-headline text-lg mb-4 text-primary font-bold" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Avis récents</h3>
               <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 text-center">
-                <p className="text-secondary font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>Ce vendeur n'a pas encore reçu d'avis.</p>
+                <p className="text-black font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>Ce vendeur n'a pas encore reçu d'avis.</p>
               </div>
             </div>
             
