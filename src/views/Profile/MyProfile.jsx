@@ -11,6 +11,8 @@ export default function MyProfile() {
 
   const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState('selling'); // 'selling', 'favorites', 'sold'
+  const [phone, setPhone] = useState('');
+  const [isEditingPhone, setIsEditingPhone] = useState(false);
   
   const [listings, setListings] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -36,7 +38,10 @@ export default function MyProfile() {
           .eq('id', user.id)
           .single();
         
-        if (profileData) setProfile(profileData);
+        if (profileData) {
+          setProfile(profileData);
+          if (profileData.phone) setPhone(profileData.phone);
+        }
 
         // 2. Fetch Active Listings
         const { data: activeData } = await supabase
@@ -117,6 +122,19 @@ export default function MyProfile() {
 
   const handleSelectProduct = (product) => {
     router.push(`/product/${product.id}`);
+  };
+
+  const handleSavePhone = async () => {
+    try {
+      const { error } = await supabase.from('profiles').update({ phone }).eq('id', user.id);
+      if (error) throw error;
+      setProfile(prev => ({ ...prev, phone }));
+      setIsEditingPhone(false);
+      addToast("Numéro WhatsApp mis à jour");
+    } catch (err) {
+      console.error(err);
+      addToast("Erreur lors de la mise à jour du numéro");
+    }
   };
 
   const handleToggleLike = async (productId) => {
@@ -215,6 +233,26 @@ export default function MyProfile() {
             <div className="text-gray-500 text-sm mt-0.5 flex flex-col">
               <span>Actif aujourd'hui</span>
               <span className="text-[12px] opacity-70">Membre depuis {new Date(profile?.created_at || user?.created_at).getFullYear()}</span>
+            </div>
+            <div className="text-gray-500 text-sm mt-2 flex flex-col items-start gap-2">
+              {isEditingPhone ? (
+                <div className="flex gap-2 items-center">
+                  <input 
+                    type="text" 
+                    value={phone} 
+                    onChange={e => setPhone(e.target.value)}
+                    placeholder="Ex: +221..."
+                    className="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-black text-black"
+                  />
+                  <button onClick={handleSavePhone} className="bg-black text-white px-3 py-1 rounded text-xs font-bold">Enregistrer</button>
+                  <button onClick={() => setIsEditingPhone(false)} className="text-gray-500 text-xs underline">Annuler</button>
+                </div>
+              ) : (
+                <div className="flex gap-2 items-center">
+                  <span className="font-medium text-black">WhatsApp : {profile?.phone || 'Non renseigné'}</span>
+                  <button onClick={() => setIsEditingPhone(true)} className="text-blue-600 text-xs underline">{profile?.phone ? 'Modifier' : 'Ajouter'}</button>
+                </div>
+              )}
             </div>
           </div>
         </div>
