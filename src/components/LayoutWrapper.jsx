@@ -2,6 +2,7 @@
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
+import CartDrawer from './CartDrawer';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
@@ -15,6 +16,7 @@ export default function LayoutWrapper({ children }) {
         {children}
       </main>
       {!noFooterPage && <Footer />}
+      <CartDrawer />
     </div>
   );
 }

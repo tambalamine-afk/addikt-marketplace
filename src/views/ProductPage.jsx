@@ -8,7 +8,7 @@ import ProductCard from '../components/ProductCard';
 export default function ProductPage() {
   const { id } = useParams();
   const navigate = useRouter();
-  const { user, supabase, addToast } = useContext(AppContext);
+  const { user, supabase, addToast, addToCart } = useContext(AppContext);
 
   const [product, setProduct] = useState(null);
   const [seller, setSeller] = useState(null);
@@ -322,7 +322,7 @@ export default function ProductPage() {
               {user?.id !== product.seller_id ? (
                 <>
                   <button 
-                    onClick={() => addToast("L'article a été ajouté au panier !")}
+                    onClick={() => addToCart(product)}
                     className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200"
                     style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
                   >

@@ -10,6 +10,10 @@ export default function Providers({ children }) {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  
+  const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   const supabase = createClient();
 
   useEffect(() => {
@@ -43,8 +47,21 @@ export default function Providers({ children }) {
     setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3500);
   };
 
+  const addToCart = (product) => {
+    setCart(prev => {
+      if (prev.find(item => item.id === product.id)) return prev;
+      return [...prev, product];
+    });
+    setIsCartOpen(true);
+    addToast("Ajouté au panier !");
+  };
+
+  const removeFromCart = (id) => {
+    setCart(prev => prev.filter(item => item.id !== id));
+  };
+
   return (
-    <AppContext.Provider value={{ addToast, user, profile, setProfile, isLoadingAuth, supabase }}>
+    <AppContext.Provider value={{ addToast, user, profile, setProfile, isLoadingAuth, supabase, cart, isCartOpen, setIsCartOpen, addToCart, removeFromCart }}>
       {children}
       <AuthModal />
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none w-full max-w-sm px-4">

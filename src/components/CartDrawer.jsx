@@ -1,208 +1,115 @@
 "use client";
-import React, { useState } from 'react';
-import { X, Trash2, ShoppingBag, ArrowRight, CheckCircle } from 'lucide-react';
+import React, { useContext, useEffect } from 'react';
+import { AppContext } from './Providers';
+import { X, Trash2 } from 'lucide-react';
 
-export default function CartDrawer({ cart, onClose, onRemoveFromCart, onClearCart, addToast }) {
-  const [promoCode, setPromoCode] = useState('');
-  const [discount, setDiscount] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState('WAVE');
-  const [isSuccess, setIsSuccess] = useState(false);
+export default function CartDrawer() {
+  const { cart, isCartOpen, setIsCartOpen, removeFromCart } = useContext(AppContext);
 
-  const subtotal = cart.reduce((acc, item) => acc + (item.price || 0), 0);
-  const shippingFee = cart.length > 0 ? 2000 : 0; // 2000 FCFA Dakar delivery
-  const discountAmount = Math.round((subtotal * discount) / 100);
-  const total = Math.max(0, subtotal + shippingFee - discountAmount);
-
-  const handleApplyPromo = (e) => {
-    e.preventDefault();
-    if (promoCode.trim().toUpperCase() === 'ADDIKT10') {
-      setDiscount(10);
-      addToast('Code promo ADDIKT10 appliqué (-10%) ! 🎉');
+  // Prevent background scrolling when open
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = 'hidden';
     } else {
-      addToast('Code promo invalide (Essaye ADDIKT10)');
+      document.body.style.overflow = '';
     }
-  };
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isCartOpen]);
 
-  const handleCheckout = () => {
-    if (cart.length === 0) return;
-    setIsSuccess(true);
-    setTimeout(() => {
-      onClearCart();
-      addToast('Commande confirmée ! Tu recevras un SMS de livraison. 🚚');
-    }, 1500);
-  };
+  const total = cart?.reduce((sum, item) => sum + (item.price || 0), 0) || 0;
+  const safeCart = cart || [];
 
   return (
-    <div className="modal-backdrop" onClick={onClose} style={{ justifyContent: 'flex-end', padding: 0 }}>
+    <>
+      {/* Backdrop */}
       <div 
-        onClick={(e) => e.stopPropagation()} 
-        style={{
-          backgroundColor: '#FFFFFF',
-          width: '100%',
-          maxWidth: '460px',
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: 'var(--shadow-lg)',
-          animation: 'slideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
-        }}
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] transition-opacity duration-300 ${isCartOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsCartOpen(false)}
+      />
+
+      {/* Drawer */}
+      <div 
+        className={`fixed top-0 right-0 h-full w-[400px] max-w-[100vw] bg-surface z-[201] shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        {/* Header */}
-        <div style={{ padding: '20px 24px', borderBottom: '1px solid #EEE', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <ShoppingBag size={22} />
-            <h2 style={{ fontSize: '20px', fontWeight: 900, textTransform: 'uppercase' }}>MON PANIER ({cart.length})</h2>
-          </div>
-          <button className="icon-btn" onClick={onClose}>
-            <X size={20} />
+        <div className="flex items-center justify-between p-6 border-b border-outline-variant/30 bg-white">
+          <h2 className="text-[20px] font-bold text-primary uppercase tracking-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+            Ton Panier ({safeCart.length})
+          </h2>
+          <button 
+            onClick={() => setIsCartOpen(false)}
+            className="p-2 hover:bg-surface-container rounded-full transition-colors text-primary"
+          >
+            <X size={24} />
           </button>
         </div>
 
-        {/* Success screen */}
-        {isSuccess ? (
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px', textAlign: 'center' }}>
-            <CheckCircle size={64} color="var(--brand-orange)" style={{ marginBottom: '20px' }} />
-            <h3 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '10px' }}>COMMANDE VALIDÉE !</h3>
-            <p style={{ fontSize: '14px', color: '#666', marginBottom: '24px' }}>
-              Paiement via <strong>{paymentMethod}</strong> pris en compte. Ton livreur Addikt te contactera très rapidement.
-            </p>
-            <button className="btn-primary-hero" onClick={onClose}>
-              CONTINUER MES ACHATS
+        <div className="flex-1 overflow-y-auto p-6 bg-surface-container-low flex flex-col gap-4">
+          {safeCart.length === 0 ? (
+            <div className="flex-1 flex flex-col items-center justify-center text-center text-on-surface-variant h-full py-20">
+              <span className="material-symbols-outlined text-[64px] mb-4 opacity-50">shopping_bag</span>
+              <p className="text-[16px] font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>Ton panier est vide pour le moment.</p>
+              <button 
+                onClick={() => setIsCartOpen(false)}
+                className="mt-6 px-6 py-3 bg-white border-2 border-primary text-primary rounded-full font-bold uppercase text-[14px] hover:bg-surface-variant transition-colors"
+                style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
+              >
+                Continuer mes achats
+              </button>
+            </div>
+          ) : (
+            safeCart.map((item, idx) => {
+              const image = item.listing_images?.[0]?.url || item.image || 'https://placehold.co/150x200/eaeaea/a0a0a0?text=Pas+d%27image';
+              return (
+                <div key={`${item.id}-${idx}`} className="flex gap-4 bg-white p-4 rounded-2xl shadow-sm border border-outline-variant/30">
+                  <div className="w-[80px] h-[100px] bg-surface-container rounded-xl overflow-hidden flex-shrink-0">
+                    <img src={image} alt={item.title} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex-1 flex flex-col justify-between py-1">
+                    <div>
+                      <div className="flex justify-between items-start gap-2">
+                        <h3 className="font-bold text-primary text-[14px] line-clamp-2" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+                          {item.title}
+                        </h3>
+                        <button 
+                          onClick={() => removeFromCart(item.id)}
+                          className="text-on-surface-variant hover:text-error transition-colors p-1"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                      <p className="text-[13px] text-secondary mt-1" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                        {item.size && `Taille ${item.size}`} {item.brand && `• ${item.brand}`}
+                      </p>
+                    </div>
+                    <p className="font-bold text-primary text-[16px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                      {item.price?.toLocaleString('fr-FR')} FCFA
+                    </p>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {safeCart.length > 0 && (
+          <div className="p-6 bg-white border-t border-outline-variant/30">
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-[16px] font-medium text-secondary" style={{ fontFamily: '"Google Sans", sans-serif' }}>Total</span>
+              <span className="text-[24px] font-bold text-primary" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                {total.toLocaleString('fr-FR')} FCFA
+              </span>
+            </div>
+            <button 
+              className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200 shadow-lg"
+              style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
+            >
+              Commander
             </button>
           </div>
-        ) : (
-          <>
-            {/* Cart Items List */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {cart.length === 0 ? (
-                <div style={{ textAlign: 'center', color: '#888', marginTop: '60px' }}>
-                  <ShoppingBag size={48} strokeWidth={1} style={{ marginBottom: '12px', opacity: 0.5 }} />
-                  <p style={{ fontWeight: 700 }}>Ton panier est vide pour l'instant</p>
-                  <p style={{ fontSize: '13px' }}>Ajoute des pièces depuis le feed!</p>
-                </div>
-              ) : (
-                cart.map((item, idx) => (
-                  <div key={idx} style={{ display: 'flex', gap: '14px', alignItems: 'center', padding: '12px', borderRadius: '12px', backgroundColor: '#F9F9F9', border: '1px solid #EFEFEF' }}>
-                    <img src={item.images?.[0]} alt={item.title} style={{ width: '64px', height: '64px', borderRadius: '10px', objectFit: 'cover' }} />
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '14px', fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</div>
-                      <div style={{ fontSize: '12px', color: '#666' }}>Taille: {item.size} • @{item.seller?.handle}</div>
-                      <div style={{ fontSize: '14px', fontWeight: 900, color: 'var(--brand-orange)', marginTop: '4px' }}>
-                        {item.price?.toLocaleString('fr-FR')} FCFA
-                      </div>
-                    </div>
-                    <button onClick={() => onRemoveFromCart(idx)} style={{ color: '#999', padding: '6px' }} title="Supprimer">
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-
-            {/* Checkout Footer */}
-            {cart.length > 0 && (
-              <div style={{ padding: '24px', borderTop: '1px solid #EEE', backgroundColor: '#FAFAFA' }}>
-                {/* Promo Input */}
-                <form onSubmit={handleApplyPromo} style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-                  <input 
-                    type="text" 
-                    placeholder="Code promo (ex: ADDIKT10)" 
-                    value={promoCode}
-                    onChange={(e) => setPromoCode(e.target.value)}
-                    style={{ flex: 1, padding: '10px 14px', borderRadius: '8px', border: '1px solid #CCC', fontSize: '13px' }}
-                  />
-                  <button type="submit" className="btn-secondary-hero" style={{ padding: '10px 16px', color: '#000', borderColor: '#000', fontSize: '12px' }}>
-                    Appliquer
-                  </button>
-                </form>
-
-                {/* Payment Selector */}
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                    MODE DE PAIEMENT SÉNÉGAL 🇸🇳
-                  </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-                    <button 
-                      type="button" 
-                      onClick={() => setPaymentMethod('WAVE')}
-                      style={{ 
-                        padding: '10px', 
-                        borderRadius: '8px', 
-                        fontSize: '12px', 
-                        fontWeight: 800,
-                        border: paymentMethod === 'WAVE' ? '2px solid #1DC5D8' : '1px solid #DDD',
-                        backgroundColor: paymentMethod === 'WAVE' ? '#E0F7FA' : '#FFF'
-                      }}
-                    >
-                      🌊 WAVE
-                    </button>
-                    <button 
-                      type="button" 
-                      onClick={() => setPaymentMethod('ORANGE MONEY')}
-                      style={{ 
-                        padding: '10px', 
-                        borderRadius: '8px', 
-                        fontSize: '12px', 
-                        fontWeight: 800,
-                        border: paymentMethod === 'ORANGE MONEY' ? '2px solid #FF6600' : '1px solid #DDD',
-                        backgroundColor: paymentMethod === 'ORANGE MONEY' ? '#FFF3E0' : '#FFF'
-                      }}
-                    >
-                      🍊 OM
-                    </button>
-                    <button 
-                      type="button" 
-                      onClick={() => setPaymentMethod('CARTE BANCAIRE')}
-                      style={{ 
-                        padding: '10px', 
-                        borderRadius: '8px', 
-                        fontSize: '12px', 
-                        fontWeight: 800,
-                        border: paymentMethod === 'CARTE BANCAIRE' ? '2px solid #000' : '1px solid #DDD',
-                        backgroundColor: paymentMethod === 'CARTE BANCAIRE' ? '#F0F0F0' : '#FFF'
-                      }}
-                    >
-                      💳 CARTE
-                    </button>
-                  </div>
-                </div>
-
-                {/* Calculation breakdown */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '13px', marginBottom: '16px', borderTop: '1px dashed #DDD', paddingTop: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', color: '#666' }}>
-                    <span>Sous-total:</span>
-                    <span>{subtotal.toLocaleString('fr-FR')} FCFA</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', color: '#666' }}>
-                    <span>Livraison Dakar express:</span>
-                    <span>{shippingFee.toLocaleString('fr-FR')} FCFA</span>
-                  </div>
-                  {discount > 0 && (
-                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--brand-orange)', fontWeight: 700 }}>
-                      <span>Réduction ({discount}%):</span>
-                      <span>-{discountAmount.toLocaleString('fr-FR')} FCFA</span>
-                    </div>
-                  )}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '18px', fontWeight: 900, marginTop: '6px', color: '#000' }}>
-                    <span>TOTAL:</span>
-                    <span>{total.toLocaleString('fr-FR')} FCFA</span>
-                  </div>
-                </div>
-
-                {/* Checkout button */}
-                <button 
-                  className="btn-primary-hero" 
-                  style={{ width: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '8px' }}
-                  onClick={handleCheckout}
-                >
-                  <span>PASSER LA COMMANDE</span>
-                  <ArrowRight size={18} />
-                </button>
-              </div>
-            )}
-          </>
         )}
       </div>
-    </div>
+    </>
   );
 }
