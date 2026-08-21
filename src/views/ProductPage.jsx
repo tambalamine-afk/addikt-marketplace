@@ -344,13 +344,19 @@ export default function ProductPage() {
                   )}
                 </>
               ) : (
-                <div className="w-full bg-surface-container-high text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full text-center" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-                  Ceci est ton annonce
+                <div className="flex flex-col gap-3">
+                  <button 
+                    onClick={() => navigate.push(`/edit/${product.id}`)}
+                    className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200 text-center" 
+                    style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
+                  >
+                    Modifier l'annonce
+                  </button>
+                  <button className="w-full bg-white border border-primary text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-surface-container-low transition-colors duration-200" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+                    Supprimer l'annonce
+                  </button>
                 </div>
               )}
-              <button className="w-full bg-white border border-primary text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-surface-container-low transition-colors duration-200" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
-                Faire une offre
-              </button>
             </div>
             
             {/* Reassurance */}
