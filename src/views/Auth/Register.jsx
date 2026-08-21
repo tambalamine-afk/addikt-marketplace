@@ -203,7 +203,7 @@ export default function Register() {
           </div>
           
           {/* Phone Login */}
-          <Link href="/" className="w-full bg-white border-2 border-black text-primary rounded-full py-4 px-6 font-button-text uppercase tracking-widest hover:bg-trust-grey transition-colors flex justify-center items-center gap-3 font-semibold whitespace-nowrap mb-4" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+          <Link href="/phone-login" className="w-full bg-white border-2 border-black text-primary rounded-full py-4 px-6 font-button-text uppercase tracking-widest hover:bg-trust-grey transition-colors flex justify-center items-center gap-3 font-semibold whitespace-nowrap mb-4" style={{ fontFamily: '"Google Sans", sans-serif' }}>
             <span className="material-symbols-outlined shrink-0 text-xl">smartphone</span>
             S'inscrire par téléphone
           </Link>

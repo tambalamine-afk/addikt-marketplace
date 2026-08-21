@@ -131,10 +131,10 @@ export default function Register() {
           </div>
           
           {/* Phone Login */}
-          <button className="w-full bg-white border-2 border-black text-primary rounded-full py-4 px-6 font-button-text text-button-text uppercase tracking-widest hover:bg-trust-grey transition-colors flex justify-center items-center gap-3 mb-4" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }} type="button">
+          <Link href="/phone-login" className="w-full bg-white border-2 border-black text-primary rounded-full py-4 px-6 font-button-text text-button-text uppercase tracking-widest hover:bg-trust-grey transition-colors flex justify-center items-center gap-3 mb-4" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
             <span className="material-symbols-outlined text-xl">smartphone</span>
             S'inscrire par téléphone
-          </button>
+          </Link>
           
           {/* Google Login */}
           <button className="w-full bg-white border-2 border-black text-primary rounded-full py-4 px-6 font-button-text text-button-text uppercase tracking-widest hover:bg-trust-grey transition-colors flex justify-center items-center gap-3" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }} type="button">

@@ -1,12 +1,20 @@
 "use client";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
+import { createClient } from '../../lib/supabase/client';
 
 export default function VerifySMS() {
   const [timeLeft, setTimeLeft] = useState(30);
-  const [otp, setOtp] = useState(['', '', '', '', '']); // 5 inputs matching stitch
+  const [otp, setOtp] = useState(['', '', '', '', '', '']); // 6 inputs for Supabase
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
   const inputRefs = useRef([]);
-  const navigate = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const phone = searchParams.get('phone') || '';
+  
+  const supabase = createClient();
 
   useEffect(() => {
     if (timeLeft <= 0) return;
@@ -25,7 +33,7 @@ export default function VerifySMS() {
     setOtp(newOtp);
 
     // Auto-focus next input
-    if (value !== '' && index < 4) {
+    if (value !== '' && index < 5) {
       inputRefs.current[index + 1].focus();
     }
   };
@@ -36,9 +44,36 @@ export default function VerifySMS() {
     }
   };
 
-  const handleVerify = () => {
-    // Navigate back to home or a success page
-    navigate('/');
+  const handleVerify = async () => {
+    const token = otp.join('');
+    if (token.length < 6) {
+      setErrorMsg("Veuillez entrer le code à 6 chiffres.");
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMsg('');
+
+    const { error } = await supabase.auth.verifyOtp({
+      phone,
+      token,
+      type: 'sms',
+    });
+
+    if (error) {
+      setErrorMsg(error.message);
+      setIsLoading(false);
+    } else {
+      router.push('/');
+    }
+  };
+
+  const resendCode = async () => {
+    setTimeLeft(30);
+    setErrorMsg('');
+    await supabase.auth.signInWithOtp({
+      phone,
+    });
   };
 
   return (
@@ -47,7 +82,7 @@ export default function VerifySMS() {
       <main className="flex-grow flex flex-col justify-center items-center px-container-margin max-w-md mx-auto w-full relative z-10">
         
         <header className="flex justify-between items-center w-full bg-surface dark:bg-surface z-10 mb-4 pb-4">
-          <button onClick={() => navigate(-1)} className="text-primary hover:opacity-80 transition-opacity">
+          <button onClick={() => router.back()} className="text-primary hover:opacity-80 transition-opacity">
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>
           <div className="text-headline-md font-black text-primary italic font-body-lg" style={{ fontFamily: '"Monument Extended", sans-serif' }}>
@@ -61,10 +96,16 @@ export default function VerifySMS() {
             Entre le code reçu par SMS
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant flex flex-col sm:flex-row sm:items-center gap-2 justify-center" style={{ fontFamily: '"Google Sans", sans-serif' }}>
-            <span>Code envoyé au <span className="font-bold text-primary">+221 77 123 45 67</span></span>
-            <button onClick={() => navigate(-1)} className="text-accent-blue font-bold hover:underline">Modifier</button>
+            <span>Code envoyé au <span className="font-bold text-primary">{phone || '+221...'}</span></span>
+            <button onClick={() => router.back()} className="text-accent-blue font-bold hover:underline">Modifier</button>
           </p>
         </div>
+        
+        {errorMsg && (
+          <div className="w-full bg-error/10 text-error p-3 text-sm font-bold border border-error/20 mb-6">
+            {errorMsg}
+          </div>
+        )}
         
         {/* Verification Code Inputs */}
         <div className="w-full mb-8">
@@ -91,7 +132,7 @@ export default function VerifySMS() {
           <button 
             className={`font-button-text text-button-text hover:text-primary transition-colors ${timeLeft <= 0 ? 'text-primary font-bold' : 'text-secondary opacity-50 cursor-not-allowed'}`}
             disabled={timeLeft > 0}
-            onClick={() => setTimeLeft(30)}
+            onClick={resendCode}
             style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
           >
             Renvoyer le code
@@ -105,10 +146,11 @@ export default function VerifySMS() {
         <div className="w-full">
           <button 
             onClick={handleVerify}
-            className="w-full py-4 bg-tertiary text-on-tertiary font-button-text text-button-text rounded-full uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all"
+            disabled={isLoading}
+            className="w-full py-4 bg-tertiary text-on-tertiary font-button-text text-button-text rounded-full uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all disabled:opacity-50"
             style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
           >
-            Vérifier
+            {isLoading ? 'Vérification...' : 'Vérifier'}
           </button>
         </div>
       </main>
