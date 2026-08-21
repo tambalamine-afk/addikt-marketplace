@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { createClient } from '../../lib/supabase/client';
 
 export default function PhoneLogin() {
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState('+221 ');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   

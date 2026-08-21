@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
-  const isAuthPage = pathname === '/login' || pathname === '/register';
+  const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/phone-login' || pathname === '/verify-sms';
   const noFooterPage = isAuthPage || pathname === '/publish';
 
   return (
