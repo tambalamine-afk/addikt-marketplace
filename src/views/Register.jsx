@@ -130,6 +130,12 @@ export default function Register() {
             <div className="flex-grow border-t-2 border-outline-variant"></div>
           </div>
           
+          {/* Phone Login */}
+          <button className="w-full bg-white border-2 border-black text-primary rounded-full py-4 px-6 font-button-text text-button-text uppercase tracking-widest hover:bg-trust-grey transition-colors flex justify-center items-center gap-3 mb-4" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }} type="button">
+            <span className="material-symbols-outlined text-xl">smartphone</span>
+            S'inscrire par téléphone
+          </button>
+          
           {/* Google Login */}
           <button className="w-full bg-white border-2 border-black text-primary rounded-full py-4 px-6 font-button-text text-button-text uppercase tracking-widest hover:bg-trust-grey transition-colors flex justify-center items-center gap-3" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }} type="button">
             <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
