@@ -1,9 +1,11 @@
 "use client";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { createClient } from '../../lib/supabase/client';
 
 export default function SellerProfile({ sellerId }) {
+  const router = useRouter();
   const [seller, setSeller] = useState(null);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -208,9 +210,18 @@ export default function SellerProfile({ sellerId }) {
               {isTogglingFollow ? '...' : (isFollowing ? 'Suivi' : 'Suivre')}
             </button>
           )}
-          <Link href={`/messages/vendeur?id=${seller.id}`} className="px-8 py-3 rounded-full bg-primary text-on-primary text-sm hover:opacity-90 transition-opacity duration-200 min-w-[140px] font-bold font-label-caps uppercase flex items-center justify-center">
+          <button 
+            onClick={() => {
+              if (!currentUser) {
+                window.dispatchEvent(new Event('openAuthModal'));
+              } else {
+                router.push(`/messages/vendeur?id=${seller.id}`);
+              }
+            }}
+            className="px-8 py-3 rounded-full bg-primary text-on-primary text-sm hover:opacity-90 transition-opacity duration-200 min-w-[140px] font-bold font-label-caps uppercase flex items-center justify-center"
+          >
             Message
-          </Link>
+          </button>
         </div>
 
         {/* Navigation Tabs */}
