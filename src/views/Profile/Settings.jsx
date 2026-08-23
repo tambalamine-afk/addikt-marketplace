@@ -22,6 +22,7 @@ export default function Settings() {
   // Profile State
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [currentHost, setCurrentHost] = useState('');
   
   const [formData, setFormData] = useState({
     username: '',
@@ -64,6 +65,9 @@ export default function Settings() {
     }
     
     loadProfile();
+    if (typeof window !== 'undefined') {
+      setCurrentHost(window.location.host);
+    }
   }, [user, supabase]);
 
   const handleInputChange = (e) => {
@@ -207,7 +211,9 @@ export default function Settings() {
 
         <div className="px-4 mt-2">
           <h3 className="font-bold text-black mb-2 text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>My Addikt link</h3>
-          <a href="#" className="text-[#2A5AAB] hover:underline text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>addikt.com/tambc</a>
+          <a href={`/seller/${user?.id}`} className="text-[#2A5AAB] hover:underline text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+            {currentHost ? `${currentHost}/seller/${user?.id}` : '...'}
+          </a>
         </div>
 
         <div className="px-4">
