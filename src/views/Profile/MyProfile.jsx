@@ -6,7 +6,7 @@ import { AppContext } from '../../components/Providers';
 import ProductCard from '../../components/ProductCard';
 
 export default function MyProfile() {
-  const { user, supabase, isLoadingAuth, addToast } = useContext(AppContext);
+  const { user, supabase, isLoadingAuth, addToast, likedItems } = useContext(AppContext);
   const router = useRouter();
 
   const [profile, setProfile] = useState(null);
@@ -66,27 +66,18 @@ export default function MyProfile() {
         }
 
         // 4. Fetch Favorites
-        const { data: favData } = await supabase
-          .from('favorites')
-          .select(`
-            listing_id,
-            listings (
-              *,
-              listing_images (url, position)
-            )
-          `)
-          .eq('user_id', user.id);
+        if (likedItems && likedItems.length > 0) {
+          const { data: favData } = await supabase
+            .from('listings')
+            .select(`*, listing_images (url, position)`)
+            .in('id', likedItems);
 
-        if (favData) {
-          // Flatten the favorites structure
-          const formattedFavs = favData
-            .filter(f => f.listings) // In case the listing was deleted
-            .map(f => {
-              const formatted = formatListing(f.listings);
-              formatted.liked = true;
-              return formatted;
-            });
-          setFavorites(formattedFavs);
+          if (favData) {
+            const formattedFavs = formatListings(favData).map(f => ({...f, liked: true}));
+            setFavorites(formattedFavs);
+          }
+        } else {
+          setFavorites([]);
         }
 
       } catch (err) {
@@ -97,7 +88,7 @@ export default function MyProfile() {
     }
 
     fetchData();
-  }, [user, isLoadingAuth, supabase]);
+  }, [user, isLoadingAuth, supabase, likedItems]);
 
   // Format Helper
   const formatListing = (item) => {

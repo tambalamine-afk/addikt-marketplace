@@ -4,7 +4,7 @@ import { AppContext } from './Providers';
 import { X, Trash2 } from 'lucide-react';
 
 export default function CartDrawer() {
-  const { cart, isCartOpen, setIsCartOpen, removeFromCart } = useContext(AppContext);
+  const { cart, isCartOpen, setIsCartOpen, removeFromCart, addToast } = useContext(AppContext);
 
   // Prevent background scrolling when open
   useEffect(() => {
@@ -102,6 +102,7 @@ export default function CartDrawer() {
               </span>
             </div>
             <button 
+              onClick={() => addToast("Le système de paiement arrive bientôt !")}
               className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200 shadow-lg"
               style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
             >

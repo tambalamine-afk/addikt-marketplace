@@ -11,6 +11,7 @@ export default function Register() {
   const [errorMsg, setErrorMsg] = useState('');
   
   const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
@@ -30,6 +31,7 @@ export default function Register() {
         options: {
           data: {
             full_name: fullName,
+            username: username,
             location: neighborhood,
           }
         }
@@ -105,6 +107,16 @@ export default function Register() {
               value={fullName} onChange={(e) => setFullName(e.target.value)}
               className="w-full border-2 border-outline-variant bg-transparent focus:outline-none focus:border-black transition-all font-body-sm p-4 text-on-surface placeholder:text-outline-variant" 
               id="fullName" name="fullName" placeholder="Ton blaze..." required type="text" 
+            />
+          </div>
+          
+          {/* Nom d'utilisateur */}
+          <div className="space-y-2">
+            <label className="block font-label-caps text-xs text-on-surface uppercase tracking-widest font-bold" htmlFor="username" style={{ fontFamily: '"Google Sans", sans-serif' }}>Nom d'utilisateur</label>
+            <input 
+              value={username} onChange={(e) => setUsername(e.target.value)}
+              className="w-full border-2 border-outline-variant bg-transparent focus:outline-none focus:border-black transition-all font-body-sm p-4 text-on-surface placeholder:text-outline-variant" 
+              id="username" name="username" placeholder="ton_pseudo" required type="text" 
             />
           </div>
           

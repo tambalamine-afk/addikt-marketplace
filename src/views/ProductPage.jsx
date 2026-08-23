@@ -93,7 +93,21 @@ export default function ProductPage() {
     }
 
     fetchProduct();
-  }, [id, supabase, user]);
+  }, [id, supabase]);
+
+  const handleDeleteListing = async () => {
+    if (window.confirm("Es-tu sûr de vouloir supprimer cette annonce ? Cette action est irréversible.")) {
+      try {
+        const { error } = await supabase.from('listings').delete().eq('id', id);
+        if (error) throw error;
+        addToast("Annonce supprimée avec succès.");
+        navigate.push('/profile');
+      } catch (error) {
+        addToast("Erreur lors de la suppression de l'annonce.");
+        console.error("Error deleting listing:", error);
+      }
+    }
+  };
 
   const formatListings = (data) => {
     return data.map(item => {
@@ -340,7 +354,11 @@ export default function ProductPage() {
                   >
                     Modifier l'annonce
                   </button>
-                  <button className="w-full bg-white border border-primary text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-surface-container-low transition-colors duration-200" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+                  <button 
+                    onClick={handleDeleteListing}
+                    className="w-full bg-white border border-primary text-primary font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-surface-container-low transition-colors duration-200" 
+                    style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
+                  >
                     Supprimer l'annonce
                   </button>
                 </div>

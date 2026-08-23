@@ -80,12 +80,19 @@ export default function Login() {
           </div>
 
           {/* Password Input */}
-          <div className="flex items-center border-2 border-outline-variant focus-within:border-primary transition-colors bg-surface-container-lowest h-14">
-            <input 
-              value={password} onChange={(e) => setPassword(e.target.value)}
-              className="flex-1 bg-transparent border-none focus:ring-0 px-4 py-2 font-body-sm outline-none placeholder-secondary h-full" 
-              placeholder="Mot de passe" type="password" required
-            />
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center border-2 border-outline-variant focus-within:border-primary transition-colors bg-surface-container-lowest h-14">
+              <input 
+                value={password} onChange={(e) => setPassword(e.target.value)}
+                className="flex-1 bg-transparent border-none focus:ring-0 px-4 py-2 font-body-sm outline-none placeholder-secondary h-full" 
+                placeholder="Mot de passe" type="password" required
+              />
+            </div>
+            <div className="flex justify-end">
+              <Link href="/forgot-password" className="text-xs text-secondary hover:text-primary transition-colors hover:underline font-medium">
+                Mot de passe oublié ?
+              </Link>
+            </div>
           </div>
           
           {errorMsg && (

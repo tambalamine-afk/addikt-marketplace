@@ -25,6 +25,8 @@ export default function Providers({ children }) {
       if (session?.user) {
         const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
         if (data) setProfile(data);
+        fetchUnreadMessages(session.user.id);
+        fetchFavorites(session.user.id);
       }
       setIsLoadingAuth(false);
     });
@@ -46,6 +48,23 @@ export default function Providers({ children }) {
 
     return () => subscription.unsubscribe();
   }, [supabase]);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedCart = localStorage.getItem('addikt_cart');
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      }
+    } catch (e) {
+      console.error('Failed to load cart from local storage', e);
+    }
+  }, []);
+
+  // Save cart to localStorage on change
+  useEffect(() => {
+    localStorage.setItem('addikt_cart', JSON.stringify(cart));
+  }, [cart]);
 
   const fetchFavorites = async (userId) => {
     const { data, error } = await supabase.from('favorites').select('listing_id').eq('user_id', userId);

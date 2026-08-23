@@ -81,6 +81,14 @@ export default function Category({ handleSelect }) {
       title = 'Femmes';
       subcategories = ['Robes', 'Hauts', 'Bas', 'Boubous & tenues trad', 'Vestes & manteaux', 'Chaussures', 'Sacs & accessoires', 'Bijoux', 'Vintage'];
       break;
+    case 'marques':
+      title = 'Marques';
+      subcategories = ['Nike', 'Zara', 'Levi\'s', 'Tongoro Studio', 'Adidas', 'Puma', 'Mango', 'Asos'];
+      break;
+    case 'sports':
+      title = 'Sports';
+      subcategories = ['Running', 'Fitness', 'Football', 'Basketball', 'Vêtements', 'Chaussures', 'Accessoires'];
+      break;
     case 'nouveautes':
     case 'nouveautés':
     default:
