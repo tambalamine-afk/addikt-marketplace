@@ -8,13 +8,13 @@ import ProductCard from '../components/ProductCard';
 export default function ProductPage() {
   const { id } = useParams();
   const navigate = useRouter();
-  const { user, supabase, addToast, addToCart } = useContext(AppContext);
+  const { user, supabase, addToast, addToCart, likedItems, toggleFavorite } = useContext(AppContext);
 
   const [product, setProduct] = useState(null);
   const [seller, setSeller] = useState(null);
   const [images, setImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
-  const [isLiked, setIsLiked] = useState(false);
+  const isLiked = likedItems?.includes(id);
   const [relatedSellerProducts, setRelatedSellerProducts] = useState([]);
   const [relatedCategoryProducts, setRelatedCategoryProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,16 +61,6 @@ export default function ProductPage() {
           .single();
         
         if (sellerData) setSeller(sellerData);
-
-        // 3. Fetch Like Status if user logged in
-        if (user) {
-          const { data: favData } = await supabase
-            .from('favorites')
-            .select('*')
-            .match({ user_id: user.id, listing_id: id })
-            .single();
-          if (favData) setIsLiked(true);
-        }
 
         // 4. Fetch Related Seller Products (limit 5)
         const { data: sellerProducts } = await supabase
@@ -121,27 +111,12 @@ export default function ProductPage() {
     });
   };
 
-  const handleLike = async (e) => {
-    if (e) e.preventDefault();
-    if (!user) {
-      window.dispatchEvent(new Event('openAuthModal'));
-      return;
+  const handleLike = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
-    
-    try {
-      if (isLiked) {
-        await supabase.from('favorites').delete().match({ user_id: user.id, listing_id: id });
-        setIsLiked(false);
-        addToast("Retiré des favoris");
-      } else {
-        await supabase.from('favorites').insert({ user_id: user.id, listing_id: id });
-        setIsLiked(true);
-        addToast("Ajouté aux favoris");
-      }
-    } catch (error) {
-      console.error(error);
-      addToast("Une erreur est survenue");
-    }
+    toggleFavorite(id);
   };
 
   const handleSelectProduct = (p) => {
@@ -458,7 +433,7 @@ export default function ProductPage() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {relatedSellerProducts.map((p) => (
-                  <ProductCard key={p.id} product={p} onSelect={handleSelectProduct} onToggleLike={() => {}} />
+                  <ProductCard key={p.id} product={p} onSelect={handleSelectProduct} />
                 ))}
               </div>
             </div>
@@ -472,7 +447,7 @@ export default function ProductPage() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {relatedCategoryProducts.map((p) => (
-                  <ProductCard key={p.id} product={p} onSelect={handleSelectProduct} onToggleLike={() => {}} />
+                  <ProductCard key={p.id} product={p} onSelect={handleSelectProduct} />
                 ))}
               </div>
             </div>

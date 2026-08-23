@@ -1,8 +1,9 @@
 "use client";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { createClient } from '../../lib/supabase/client';
+import { AppContext } from '../../components/Providers';
 
 export default function SellerProfile({ sellerId }) {
   const router = useRouter();
@@ -14,6 +15,8 @@ export default function SellerProfile({ sellerId }) {
   const [isFollowing, setIsFollowing] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isTogglingFollow, setIsTogglingFollow] = useState(false);
+  
+  const { likedItems, toggleFavorite } = useContext(AppContext);
   
   const supabase = createClient();
 
@@ -242,10 +245,10 @@ export default function SellerProfile({ sellerId }) {
                 <div className="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
                   <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={item.title} src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
                   <button 
-                    onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(item.id); }}
                     className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110"
                   >
-                    <span className="material-symbols-outlined text-[24px] text-white hover:text-[#e20020] transition-colors cursor-pointer drop-shadow-md">favorite</span>
+                    <span className="material-symbols-outlined text-[24px] transition-colors cursor-pointer drop-shadow-md" style={{ color: likedItems?.includes(item.id) ? '#e20020' : 'white', fontVariationSettings: likedItems?.includes(item.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
                   </button>
                 </div>
                 <div className="flex flex-col mt-2">

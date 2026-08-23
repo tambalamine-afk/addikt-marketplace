@@ -4,9 +4,10 @@ import { Heart } from 'lucide-react';
 import { AppContext } from './Providers';
 
 export default function ProductCard({ product, onSelect, onToggleLike }) {
-  const { user } = useContext(AppContext);
+  const { user, likedItems, toggleFavorite } = useContext(AppContext);
   const priceStr = product.price?.toLocaleString('fr-FR') + ' F';
   const oldPriceStr = product.oldPrice ? product.oldPrice.toLocaleString('fr-FR') + ' F' : null;
+  const isLiked = product.liked !== undefined ? product.liked : likedItems?.includes(product.id);
 
   return (
     <div className="flex flex-col cursor-pointer group w-full" onClick={() => onSelect(product)}>
@@ -21,19 +22,24 @@ export default function ProductCard({ product, onSelect, onToggleLike }) {
           className="absolute bottom-2 right-2 p-1.5 transition-transform hover:scale-110 z-20"
           onClick={(e) => { 
             e.stopPropagation(); 
+            e.preventDefault();
             if (!user) {
               window.dispatchEvent(new Event('openAuthModal'));
               return;
             }
-            if (onToggleLike) onToggleLike(product.id); 
+            if (onToggleLike) {
+              onToggleLike(product.id); 
+            } else {
+              toggleFavorite(product.id);
+            }
           }}
           title="Favoris"
         >
           <Heart 
             size={24} 
-            stroke={product.liked ? '#e20020' : 'white'} 
+            stroke={isLiked ? '#e20020' : 'white'} 
             strokeWidth={2} 
-            fill={product.liked ? '#e20020' : 'none'} 
+            fill={isLiked ? '#e20020' : 'none'} 
             className="drop-shadow-md"
           />
         </button>

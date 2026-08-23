@@ -11,6 +11,7 @@ export default function Providers({ children }) {
   const [profile, setProfile] = useState(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
+  const [likedItems, setLikedItems] = useState([]);
   
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -35,14 +36,41 @@ export default function Providers({ children }) {
         const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
         if (data) setProfile(data);
         fetchUnreadMessages(session.user.id);
+        fetchFavorites(session.user.id);
       } else {
         setProfile(null);
         setUnreadMessagesCount(0);
+        setLikedItems([]);
       }
     });
 
     return () => subscription.unsubscribe();
   }, [supabase]);
+
+  const fetchFavorites = async (userId) => {
+    const { data, error } = await supabase.from('favorites').select('listing_id').eq('user_id', userId);
+    if (!error && data) {
+      setLikedItems(data.map(f => f.listing_id));
+    }
+  };
+
+  const toggleFavorite = async (listingId) => {
+    if (!user) {
+      window.dispatchEvent(new Event('openAuthModal'));
+      return;
+    }
+    const isLiked = likedItems.includes(listingId);
+    
+    if (isLiked) {
+      setLikedItems(prev => prev.filter(id => id !== listingId));
+      await supabase.from('favorites').delete().match({ user_id: user.id, listing_id: listingId });
+      addToast("Retiré des favoris");
+    } else {
+      setLikedItems(prev => [...prev, listingId]);
+      await supabase.from('favorites').insert({ user_id: user.id, listing_id: listingId });
+      addToast("Ajouté aux favoris");
+    }
+  };
 
   const fetchUnreadMessages = async (userId) => {
     // We want messages where read_at is null, sender_id is not the current user
@@ -81,7 +109,12 @@ export default function Providers({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{ addToast, user, profile, setProfile, isLoadingAuth, supabase, cart, isCartOpen, setIsCartOpen, addToCart, removeFromCart, unreadMessagesCount, setUnreadMessagesCount }}>
+    <AppContext.Provider value={{ 
+      addToast, user, profile, setProfile, isLoadingAuth, supabase, 
+      cart, isCartOpen, setIsCartOpen, addToCart, removeFromCart, 
+      unreadMessagesCount, setUnreadMessagesCount,
+      likedItems, toggleFavorite
+    }}>
       {children}
       <AuthModal />
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none w-full max-w-sm px-4">

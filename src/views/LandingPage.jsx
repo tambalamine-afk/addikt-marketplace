@@ -131,7 +131,7 @@ const CATEGORIES = [
 ];
 
 export default function LandingPage() {
-  const { user } = useContext(AppContext);
+  const { user, likedItems, toggleFavorite } = useContext(AppContext);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [toggleState, setToggleState] = useState('acheter');
   const [recentListings, setRecentListings] = useState([]);
@@ -364,7 +364,9 @@ export default function LandingPage() {
           {recentListings.length > 0 ? recentListings.map((item) => (
             <Link key={item.id} href={`/product/${item.id}`} className="flex flex-col gap-3 group cursor-pointer">
               <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
-                <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); if (!user) window.dispatchEvent(new Event('openAuthModal')); }}><span className="material-symbols-outlined text-[24px] text-white hover:text-[#e20020] transition-colors cursor-pointer drop-shadow-md">favorite</span></div>
+                <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(item.id); }}>
+                  <span className="material-symbols-outlined text-[24px] transition-colors cursor-pointer drop-shadow-md" style={{ color: likedItems?.includes(item.id) ? '#e20020' : 'white', fontVariationSettings: likedItems?.includes(item.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
+                </div>
                 <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
               </div>
               <div className="flex flex-col mt-2">
@@ -494,8 +496,8 @@ export default function LandingPage() {
               {recentListings.slice(0, 5).map((item) => (
                 <Link key={`fresh-${item.id}`} href={`/product/${item.id}`} className="flex flex-col gap-3 group cursor-pointer">
                   <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
-                    <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); if (!user) window.dispatchEvent(new Event('openAuthModal')); }}>
-                      <span className="material-symbols-outlined text-[24px] text-white hover:text-[#e20020] transition-colors cursor-pointer drop-shadow-md">favorite</span>
+                    <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(item.id); }}>
+                      <span className="material-symbols-outlined text-[24px] transition-colors cursor-pointer drop-shadow-md" style={{ color: likedItems?.includes(item.id) ? '#e20020' : 'white', fontVariationSettings: likedItems?.includes(item.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
                     </div>
                     <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
                   </div>
