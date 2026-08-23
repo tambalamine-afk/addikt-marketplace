@@ -63,11 +63,13 @@ export default function Providers({ children }) {
     
     if (isLiked) {
       setLikedItems(prev => prev.filter(id => id !== listingId));
-      await supabase.from('favorites').delete().match({ user_id: user.id, listing_id: listingId });
+      const { error } = await supabase.from('favorites').delete().match({ user_id: user.id, listing_id: listingId });
+      if (error) console.error("Error removing favorite:", error);
       addToast("Retiré des favoris");
     } else {
       setLikedItems(prev => [...prev, listingId]);
-      await supabase.from('favorites').insert({ user_id: user.id, listing_id: listingId });
+      const { error } = await supabase.from('favorites').insert({ user_id: user.id, listing_id: listingId });
+      if (error) console.error("Error adding favorite:", error);
       addToast("Ajouté aux favoris");
     }
   };

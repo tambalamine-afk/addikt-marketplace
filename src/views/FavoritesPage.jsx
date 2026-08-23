@@ -5,7 +5,7 @@ import { AppContext } from '../components/Providers';
 import ProductCard from '../components/ProductCard';
 
 export default function FavoritesPage() {
-  const { user, supabase, isLoadingAuth } = useContext(AppContext);
+  const { user, supabase, isLoadingAuth, likedItems } = useContext(AppContext);
   const router = useRouter();
   
   const [products, setProducts] = useState([]);
@@ -21,24 +21,24 @@ export default function FavoritesPage() {
     
     async function fetchFavorites() {
       setIsLoading(true);
+      
+      if (!likedItems || likedItems.length === 0) {
+        setProducts([]);
+        setIsLoading(false);
+        return;
+      }
+      
       const { data, error } = await supabase
-        .from('favorites')
+        .from('listings')
         .select(`
-          listing_id,
-          listings (
-            *,
-            listing_images(url, position),
-            profiles(username, avatar_url)
-          )
+          *,
+          listing_images(url, position),
+          profiles(username, avatar_url)
         `)
-        .eq('user_id', user.id);
+        .in('id', likedItems);
 
       if (data) {
-        // filter out null listings (in case listing was deleted but fav remains)
-        const validFavs = data.filter(fav => fav.listings);
-        
-        const formatted = validFavs.map(fav => {
-          const item = fav.listings;
+        const formatted = data.map(item => {
           const sortedImages = item.listing_images?.sort((a, b) => a.position - b.position) || [];
           return {
             id: item.id,
@@ -55,13 +55,13 @@ export default function FavoritesPage() {
         });
         setProducts(formatted);
       } else {
-        console.error(error);
+        console.error("Favorites fetch error:", error);
       }
       setIsLoading(false);
     }
 
     fetchFavorites();
-  }, [user, supabase, isLoadingAuth]);
+  }, [user, supabase, isLoadingAuth, likedItems]);
 
   const handleSelectProduct = (p) => {
     router.push(`/product/${p.id}`);
