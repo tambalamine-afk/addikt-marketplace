@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS addresses CASCADE;
 DROP TABLE IF EXISTS messages CASCADE;
 DROP TABLE IF EXISTS conversations CASCADE;
 DROP TABLE IF EXISTS favorites CASCADE;
+DROP TABLE IF EXISTS followers CASCADE;
 DROP TABLE IF EXISTS listing_images CASCADE;
 DROP TABLE IF EXISTS listings CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
@@ -78,6 +79,14 @@ CREATE TABLE favorites (
   listing_id UUID REFERENCES listings(id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   PRIMARY KEY (user_id, listing_id)
+);
+
+-- Table: followers
+CREATE TABLE followers (
+  follower_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  following_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  PRIMARY KEY (follower_id, following_id)
 );
 
 -- Table: conversations
@@ -147,6 +156,7 @@ ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE listings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE listing_images ENABLE ROW LEVEL SECURITY;
 ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
+ALTER TABLE followers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE conversations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE addresses ENABLE ROW LEVEL SECURITY;
@@ -175,6 +185,11 @@ CREATE POLICY "Authenticated users can insert images" ON listing_images FOR INSE
 CREATE POLICY "Users can view their own favorites." ON favorites FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert their own favorites." ON favorites FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can delete their own favorites." ON favorites FOR DELETE USING (auth.uid() = user_id);
+
+-- Followers: tout le monde peut voir qui suit qui, seul l'utilisateur peut s'abonner/se désabonner
+CREATE POLICY "Followers are viewable by everyone." ON followers FOR SELECT USING (true);
+CREATE POLICY "Users can insert their own follows." ON followers FOR INSERT WITH CHECK (auth.uid() = follower_id);
+CREATE POLICY "Users can delete their own follows." ON followers FOR DELETE USING (auth.uid() = follower_id);
 
 -- Conversations & Messages: seuls les participants (acheteur/vendeur) peuvent y accéder
 CREATE POLICY "Participants can view conversations." ON conversations FOR SELECT USING (auth.uid() = buyer_id OR auth.uid() = seller_id);

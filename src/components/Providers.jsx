@@ -10,6 +10,7 @@ export default function Providers({ children }) {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
   
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -33,13 +34,32 @@ export default function Providers({ children }) {
       if (session?.user) {
         const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
         if (data) setProfile(data);
+        fetchUnreadMessages(session.user.id);
       } else {
         setProfile(null);
+        setUnreadMessagesCount(0);
       }
     });
 
     return () => subscription.unsubscribe();
   }, [supabase]);
+
+  const fetchUnreadMessages = async (userId) => {
+    // We want messages where read_at is null, sender_id is not the current user
+    // To do this simply without complex joins in the client:
+    // Actually we need messages in conversations where the user is a participant.
+    // The policy already restricts 'messages' to conversations where the user is a participant.
+    // So we just count messages where sender_id != user.id and read_at is.null
+    const { count, error } = await supabase
+      .from('messages')
+      .select('*', { count: 'exact', head: true })
+      .neq('sender_id', userId)
+      .is('read_at', null);
+      
+    if (!error && count !== null) {
+      setUnreadMessagesCount(count);
+    }
+  };
 
   const addToast = (msg) => {
     const id = Date.now();
@@ -61,7 +81,7 @@ export default function Providers({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{ addToast, user, profile, setProfile, isLoadingAuth, supabase, cart, isCartOpen, setIsCartOpen, addToCart, removeFromCart }}>
+    <AppContext.Provider value={{ addToast, user, profile, setProfile, isLoadingAuth, supabase, cart, isCartOpen, setIsCartOpen, addToCart, removeFromCart, unreadMessagesCount, setUnreadMessagesCount }}>
       {children}
       <AuthModal />
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none w-full max-w-sm px-4">

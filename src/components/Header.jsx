@@ -140,7 +140,7 @@ export default function Header() {
   const isProfilePage = pathname.startsWith('/profile');
   const hideCategories = isPublishPage || isProfilePage;
   
-  const { user, profile, supabase } = useContext(AppContext);
+  const { user, profile, supabase, unreadMessagesCount } = useContext(AppContext);
   const isLoggedIn = !!user;
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -268,10 +268,15 @@ export default function Header() {
         <div className="flex items-center gap-2 md:gap-4 flex-1 lg:flex-none justify-end">
           {/* Icône Messagerie (visible si connecté) */}
           {isLoggedIn && (
-            <Link href="/messages" aria-label="Messages" className="hidden sm:flex text-primary hover:opacity-80 transition-opacity duration-200 items-center">
+            <Link href="/messages" aria-label="Messages" className="hidden sm:flex relative text-primary hover:opacity-80 transition-opacity duration-200 items-center">
               <svg viewBox="-5 -5 145 125" className="w-[26px] h-auto fill-primary">
                 <path d="M132.92,27.45c-2.55-11.53-13.74-22.1-25.3-24.35C100.85,1.75,82.43.09,69.46.09c-.53,0-1.04,0-1.55,0-.51,0-1.02,0-1.55,0C53.4.09,34.98,1.75,28.21,3.11,16.64,5.35,5.46,15.92,2.9,27.45,1.45,34.46.02,43.98,0,56.99c.02,13.01,1.45,22.53,2.9,29.54,2.55,11.53,13.74,22.1,25.3,24.35,6.78,1.35,25.19,3.01,38.16,3.01.53,0,1.04,0,1.55,0,.51,0,1.02,0,1.55,0,12.97,0,31.39-1.66,38.16-3.01,11.57-2.24,22.75-12.81,25.3-24.35,1.45-7,2.88-16.53,2.9-29.54-.02-13.01-1.45-22.53-2.9-29.54h0ZM30.13,13s.04,0,.06-.01c5.68-1.14,23.37-2.82,36.19-2.82.49,0,.97,0,1.44,0h.22c.47,0,.94,0,1.42,0h.01c12.81,0,30.5,1.68,36.18,2.82.02,0,.04,0,.06.01,6.94,1.35,14.03,7.58,16.64,14.25l-54.43,24.73L13.48,27.25c2.61-6.67,9.71-12.91,16.64-14.25h0ZM123.07,84.41c-1.69,7.49-9.63,15.07-17.37,16.57-.02,0-.04,0-.06.01-5.68,1.14-23.37,2.82-36.18,2.82-.49,0-.97,0-1.44,0h-.22c-.47,0-.95,0-1.44,0-12.81,0-30.51-1.68-36.19-2.82-.02,0-.04,0-.06-.01-7.74-1.5-15.68-9.08-17.37-16.57-1.81-8.74-2.66-17.46-2.68-27.41.01-7.01.44-13.4,1.32-19.61l54.43,24.73c.66.3,1.37.45,2.09.45s1.42-.15,2.09-.45l54.43-24.73c.88,6.22,1.31,12.6,1.32,19.61-.02,9.96-.87,18.68-2.68,27.41h0Z"/>
               </svg>
+              {unreadMessagesCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-accent-rose text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                  {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
+                </span>
+              )}
             </Link>
           )}
           <Link href="/favorites" aria-label="Favorites" className="hidden sm:flex text-primary hover:opacity-80 transition-opacity duration-200 items-center">

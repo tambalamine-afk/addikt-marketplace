@@ -7,12 +7,22 @@ export default function SellerProfile({ sellerId }) {
   const [seller, setSeller] = useState(null);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  const [followerCount, setFollowerCount] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isTogglingFollow, setIsTogglingFollow] = useState(false);
+  
   const supabase = createClient();
 
   useEffect(() => {
     async function fetchSellerData() {
       if (!sellerId) return;
-      
+      // Get current user session
+      const { data: { session } } = await supabase.auth.getSession();
+      const user = session?.user;
+      if (user) setCurrentUser(user);
+
       // Fetch profile
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
@@ -22,6 +32,28 @@ export default function SellerProfile({ sellerId }) {
         
       if (profileData) {
         setSeller(profileData);
+      }
+
+      // Fetch followers count
+      const { count: followersCount } = await supabase
+        .from('followers')
+        .select('*', { count: 'exact', head: true })
+        .eq('following_id', sellerId);
+      
+      setFollowerCount(followersCount || 0);
+
+      // Check if current user is following
+      if (user) {
+        const { data: followData } = await supabase
+          .from('followers')
+          .select('*')
+          .eq('follower_id', user.id)
+          .eq('following_id', sellerId)
+          .single();
+          
+        if (followData) {
+          setIsFollowing(true);
+        }
       }
 
       // Fetch listings
@@ -46,6 +78,40 @@ export default function SellerProfile({ sellerId }) {
     }
     fetchSellerData();
   }, [sellerId, supabase]);
+
+  const handleToggleFollow = async () => {
+    if (!currentUser) {
+      window.dispatchEvent(new Event('openAuthModal'));
+      return;
+    }
+    if (isTogglingFollow) return;
+    
+    setIsTogglingFollow(true);
+    if (isFollowing) {
+      // Unfollow
+      const { error } = await supabase
+        .from('followers')
+        .delete()
+        .eq('follower_id', currentUser.id)
+        .eq('following_id', sellerId);
+        
+      if (!error) {
+        setIsFollowing(false);
+        setFollowerCount(prev => Math.max(0, prev - 1));
+      }
+    } else {
+      // Follow
+      const { error } = await supabase
+        .from('followers')
+        .insert([{ follower_id: currentUser.id, following_id: sellerId }]);
+        
+      if (!error) {
+        setIsFollowing(true);
+        setFollowerCount(prev => prev + 1);
+      }
+    }
+    setIsTogglingFollow(false);
+  };
 
   if (loading) {
     return (
@@ -111,7 +177,7 @@ export default function SellerProfile({ sellerId }) {
         {/* Stats Row */}
         <div className="flex justify-center items-center gap-4 md:gap-12 mb-8 border-outline-variant py-6">
           <div className="text-center">
-            <div className="text-headline-md text-on-surface font-display">0</div>
+            <div className="text-headline-md text-on-surface font-display">{followerCount}</div>
             <div className="text-sm text-black mt-1 font-body">Abonnés</div>
           </div>
           <div className="text-center">
@@ -125,9 +191,15 @@ export default function SellerProfile({ sellerId }) {
         </div>
 
         <div className="flex justify-center gap-4 mb-12">
-          <button className="px-8 py-3 rounded-full border border-primary text-primary text-sm hover:bg-surface-container transition-colors duration-200 min-w-[140px] font-bold font-label-caps uppercase">
-            Suivre
-          </button>
+          {currentUser?.id !== seller.id && (
+            <button 
+              onClick={handleToggleFollow}
+              disabled={isTogglingFollow}
+              className={`px-8 py-3 rounded-full border text-sm transition-colors duration-200 min-w-[140px] font-bold font-label-caps uppercase ${isFollowing ? 'border-outline-variant text-secondary bg-surface-container hover:bg-surface-container-high' : 'border-primary text-primary hover:bg-surface-container'}`}
+            >
+              {isTogglingFollow ? '...' : (isFollowing ? 'Suivi' : 'Suivre')}
+            </button>
+          )}
           <Link href={`/messages/vendeur?id=${seller.id}`} className="px-8 py-3 rounded-full bg-primary text-on-primary text-sm hover:opacity-90 transition-opacity duration-200 min-w-[140px] font-bold font-label-caps uppercase flex items-center justify-center">
             Message
           </Link>
