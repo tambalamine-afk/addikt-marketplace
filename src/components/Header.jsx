@@ -29,10 +29,6 @@ const MEGAMENU_DATA = {
   Sports: {
     shopByCategory: ['Running', 'Fitness & Training', 'Football', 'Basketball', 'Natation', 'Yoga & Pilates', 'Randonnée', 'Cyclisme', 'Sports de raquette', 'Vêtements', 'Chaussures', 'Accessoires'],
     featured: ['Nouveautés sport', 'Essentiels fitness', 'Meilleurs équipements', 'Tenues de match', 'Marques de sport']
-  },
-  Tendances: {
-    shopByCategory: ['Y2K', 'Streetwear', 'Minimaliste', 'Vintage 90s', 'Bohème', 'Preppy', 'Gorpcore', 'Grunge', 'Pastel', 'Imprimés animaliers', 'Couleurs fluo', 'Denim sur denim'],
-    featured: ['Les looks du moment', 'Inspirations influenceurs', 'Les pièces virales', 'Sélection vintage', 'Style urbain']
   }
 };
 
@@ -371,7 +367,7 @@ export default function Header() {
         >
           <div className="max-w-7xl mx-auto px-container-margin h-[50px]">
             <nav className="flex items-center justify-center h-full overflow-x-auto hide-scrollbar">
-              {['Femmes', 'Hommes', 'Enfants', 'Beauté', 'Marques', 'Sports', 'Tendances'].map((cat) => (
+              {['Femmes', 'Hommes', 'Enfants', 'Beauté', 'Marques', 'Sports'].map((cat) => (
                 <div 
                   key={cat} 
                   className="h-full"

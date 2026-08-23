@@ -29,7 +29,6 @@ export default function MobileMenu({ isOpen, onClose }) {
     { title: 'Hommes', link: '/category/hommes' },
     { title: 'Enfants', link: '/category/enfants' },
     { title: 'Marques', link: '/category/marques' },
-    { title: 'Tendances', link: '/category/tendances' },
     { title: 'Promos', link: '/promos', isRed: true }
   ];
 

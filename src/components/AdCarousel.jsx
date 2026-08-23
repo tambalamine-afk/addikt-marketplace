@@ -16,7 +16,7 @@ const MOCK_BANNERS = [
     id: 2,
     title: "Fresh DROP de la semaine",
     image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1200&q=80",
-    link: "/category/tendances",
+    link: "/fresh-drop",
     alt: "Fresh DROP de la semaine"
   },
   {
