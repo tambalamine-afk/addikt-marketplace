@@ -1,8 +1,10 @@
 "use client";
-import React from 'react';
+import React, { useContext } from 'react';
 import { Heart } from 'lucide-react';
+import { AppContext } from './Providers';
 
 export default function ProductCard({ product, onSelect, onToggleLike }) {
+  const { user } = useContext(AppContext);
   const priceStr = product.price?.toLocaleString('fr-FR') + ' F';
   const oldPriceStr = product.oldPrice ? product.oldPrice.toLocaleString('fr-FR') + ' F' : null;
 
@@ -16,11 +18,24 @@ export default function ProductCard({ product, onSelect, onToggleLike }) {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <button
-          className="absolute bottom-2 right-2 p-1.5 bg-white/80 hover:bg-white rounded-full shadow-sm transition-colors"
-          onClick={(e) => { e.stopPropagation(); onToggleLike(product.id); }}
+          className="absolute bottom-2 right-2 p-1.5 transition-transform hover:scale-110 z-20"
+          onClick={(e) => { 
+            e.stopPropagation(); 
+            if (!user) {
+              window.dispatchEvent(new Event('openAuthModal'));
+              return;
+            }
+            if (onToggleLike) onToggleLike(product.id); 
+          }}
           title="Favoris"
         >
-          <Heart size={18} fill={product.liked ? '#e20020' : 'none'} className={product.liked ? 'text-error' : 'text-primary'} />
+          <Heart 
+            size={24} 
+            stroke={product.liked ? '#e20020' : 'white'} 
+            strokeWidth={2} 
+            fill={product.liked ? '#e20020' : 'none'} 
+            className="drop-shadow-md"
+          />
         </button>
       </div>
       <div className="flex flex-col px-1">

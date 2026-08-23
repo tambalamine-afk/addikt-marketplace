@@ -60,8 +60,8 @@ export default function FreshDropPage() {
             {listings.map((item) => (
               <Link key={item.id} href={`/product/${item.id}`} className="flex flex-col gap-3 group cursor-pointer">
                 <div className="aspect-[3/4] bg-surface-container rounded-2xl w-full mb-2 overflow-hidden relative">
-                  <div className="absolute top-2 right-2 z-20" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}>
-                    <span className="material-symbols-outlined text-xl text-on-surface hover:text-error transition-colors cursor-pointer drop-shadow-md">favorite</span>
+                  <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}>
+                    <span className="material-symbols-outlined text-[24px] text-white hover:text-[#e20020] transition-colors cursor-pointer drop-shadow-md">favorite</span>
                   </div>
                   <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
                 </div>

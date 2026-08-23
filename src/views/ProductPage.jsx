@@ -124,7 +124,7 @@ export default function ProductPage() {
   const handleLike = async (e) => {
     if (e) e.preventDefault();
     if (!user) {
-      addToast("Connecte-toi pour ajouter aux favoris");
+      window.dispatchEvent(new Event('openAuthModal'));
       return;
     }
     
@@ -279,9 +279,17 @@ export default function ProductPage() {
               <div className="absolute top-4 right-4 flex flex-col gap-3">
                 <button 
                   onClick={handleLike}
-                  className="w-12 h-12 flex items-center justify-center bg-white/80 hover:bg-white rounded-full text-primary hover:text-accent-rose hover:scale-110 transition-all shadow-md border border-outline-variant/30"
+                  className="p-2 flex items-center justify-center hover:scale-110 transition-all z-20"
                 >
-                  <span className="material-symbols-outlined" style={{ fontVariationSettings: isLiked ? "'FILL' 1" : "'FILL' 0", color: isLiked ? 'var(--color-accent-rose)' : 'inherit' }}>favorite</span>
+                  <span 
+                    className="material-symbols-outlined text-[32px] drop-shadow-md" 
+                    style={{ 
+                      fontVariationSettings: isLiked ? "'FILL' 1" : "'FILL' 0", 
+                      color: isLiked ? '#e20020' : 'white'
+                    }}
+                  >
+                    favorite
+                  </span>
                 </button>
               </div>
             </div>

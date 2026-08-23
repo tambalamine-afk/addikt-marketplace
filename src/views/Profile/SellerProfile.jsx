@@ -231,10 +231,10 @@ export default function SellerProfile({ sellerId }) {
                 <div className="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
                   <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={item.title} src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
                   <button 
-                    onClick={(e) => { e.preventDefault(); }}
-                    className="absolute top-3 right-3 bg-surface-container-lowest/80 backdrop-blur-sm p-1.5 rounded-full text-secondary hover:text-accent-rose transition-colors z-20"
+                    onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openAuthModal')); }}
+                    className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110"
                   >
-                    <span className="material-symbols-outlined text-[20px]">favorite</span>
+                    <span className="material-symbols-outlined text-[24px] text-white hover:text-[#e20020] transition-colors cursor-pointer drop-shadow-md">favorite</span>
                   </button>
                 </div>
                 <div className="flex flex-col mt-2">
