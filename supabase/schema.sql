@@ -28,6 +28,7 @@ CREATE TABLE profiles (
   username TEXT UNIQUE NOT NULL,
   full_name TEXT,
   avatar_url TEXT,
+  cover_url TEXT,
   bio TEXT,
   phone TEXT,
   location TEXT,
@@ -213,12 +214,13 @@ CREATE POLICY "Buyers can insert orders." ON orders FOR INSERT WITH CHECK (auth.
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger AS $$
 BEGIN
-  INSERT INTO public.profiles (id, username, full_name, avatar_url)
+  INSERT INTO public.profiles (id, username, full_name, avatar_url, cover_url)
   VALUES (
     new.id,
     COALESCE(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
     new.raw_user_meta_data->>'full_name',
-    new.raw_user_meta_data->>'avatar_url'
+    new.raw_user_meta_data->>'avatar_url',
+    new.raw_user_meta_data->>'cover_url'
   );
   RETURN new;
 END;

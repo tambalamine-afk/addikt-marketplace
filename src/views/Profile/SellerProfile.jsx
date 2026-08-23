@@ -134,7 +134,15 @@ export default function SellerProfile({ sellerId }) {
   return (
     <main className="w-full bg-surface-container-lowest text-on-surface font-semibold font-body text-sm">
       {/* Banner */}
-      <div className="w-full h-48 md:h-64 bg-accent-orange relative"></div>
+      <div className="w-full bg-surface-container-lowest">
+        <div className="w-full max-w-[1200px] mx-auto h-[250px] md:h-[350px] md:rounded-b-2xl overflow-hidden bg-accent-orange relative">
+          {seller.cover_url ? (
+            <img src={seller.cover_url} alt="Couverture" className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-r from-accent-orange to-accent-rose opacity-90"></div>
+          )}
+        </div>
+      </div>
       
       {/* Main Profile Container */}
       <div className="max-w-[1200px] mx-auto px-container-margin relative pb-section-gap">
