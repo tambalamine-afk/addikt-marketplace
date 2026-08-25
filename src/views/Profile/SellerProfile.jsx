@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useContext } from 'react';
-import { createClient } from '../../lib/supabase/client';
 import { AppContext } from '../../components/Providers';
 
 export default function SellerProfile({ sellerId }) {
@@ -13,20 +12,13 @@ export default function SellerProfile({ sellerId }) {
   
   const [followerCount, setFollowerCount] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
   const [isTogglingFollow, setIsTogglingFollow] = useState(false);
   
-  const { likedItems, toggleFavorite } = useContext(AppContext);
-  
-  const supabase = createClient();
+  const { likedItems, toggleFavorite, user: currentUser, supabase, addToast } = useContext(AppContext);
 
   useEffect(() => {
     async function fetchSellerData() {
       if (!sellerId) return;
-      // Get current user session
-      const { data: { session } } = await supabase.auth.getSession();
-      const user = session?.user;
-      if (user) setCurrentUser(user);
 
       // Fetch profile
       const { data: profileData, error: profileError } = await supabase
@@ -48,11 +40,11 @@ export default function SellerProfile({ sellerId }) {
       setFollowerCount(followersCount || 0);
 
       // Check if current user is following
-      if (user) {
+      if (currentUser) {
         const { data: followData } = await supabase
           .from('followers')
           .select('*')
-          .eq('follower_id', user.id)
+          .eq('follower_id', currentUser.id)
           .eq('following_id', sellerId)
           .maybeSingle();
           
@@ -82,7 +74,7 @@ export default function SellerProfile({ sellerId }) {
       setLoading(false);
     }
     fetchSellerData();
-  }, [sellerId, supabase]);
+  }, [sellerId, supabase, currentUser]);
 
   const handleToggleFollow = async () => {
     if (!currentUser) {
@@ -222,7 +214,8 @@ export default function SellerProfile({ sellerId }) {
               if (!currentUser) {
                 window.dispatchEvent(new Event('openAuthModal'));
               } else {
-                router.push(`/messages/vendeur?id=${seller.id}`);
+                if (addToast) addToast("Veuillez sélectionner un article ci-dessous pour démarrer une discussion.");
+                window.scrollTo({ top: document.body.scrollHeight / 3, behavior: 'smooth' });
               }
             }}
             className="px-8 py-3 rounded-full bg-primary text-on-primary text-sm hover:opacity-90 transition-opacity duration-200 min-w-[140px] font-bold font-label-caps uppercase flex items-center justify-center"
