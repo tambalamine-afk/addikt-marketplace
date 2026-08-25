@@ -590,7 +590,7 @@ export default function LandingPage() {
           </div>
         ) : (
           <div>
-            <VendreContent />
+            <VendreContent topBoutiques={topBoutiques} />
           </div>
         )}
       </div>
@@ -598,25 +598,31 @@ export default function LandingPage() {
   );
 }
 
-const VendreContent = () => (
+const VendreContent = ({ topBoutiques }) => (
   <div className="w-full mb-12">
     {/* SIMPLICITY SECTION */}
     <section className="bg-surface-container-lowest py-16 px-container-margin my-8">
       <div className="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div className="order-2 md:order-1 flex justify-center">
-          <div className="relative w-[300px] h-[600px] border-8 border-primary rounded-[3rem] overflow-hidden shadow-xl bg-surface">
-            <div className="absolute top-0 w-full h-8 bg-primary rounded-b-3xl flex justify-center items-end pb-1">
-              <div className="w-20 h-4 bg-primary-container rounded-full"></div>
-            </div>
-            <div className="p-6 pt-12 h-full flex flex-col gap-4">
-              <div className="w-full h-48 bg-surface-container-high rounded-xl mb-4 flex items-center justify-center">
-                <span className="material-symbols-outlined text-4xl text-outline">add_a_photo</span>
-              </div>
-              <div className="h-4 bg-surface-container-high rounded w-3/4"></div>
-              <div className="h-4 bg-surface-container-high rounded w-1/2"></div>
-              <div className="mt-auto space-y-2">
-                <div className="h-10 bg-primary rounded-full w-full"></div>
-              </div>
+          <div className="relative w-[280px] md:w-[320px] mx-auto drop-shadow-2xl">
+            <img 
+              src="/iphone-mock-no-camera.webp" 
+              alt="iPhone Mockup" 
+              className="relative w-full h-auto z-10 pointer-events-none" 
+            />
+            {/* Ajustez les pourcentages top/bottom/left/right selon les bordures de votre image mockup */}
+            <div className="absolute top-[2.5%] bottom-[2.5%] left-[5.5%] right-[5.5%] z-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-surface-container flex items-center justify-center">
+               <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  className="w-full h-full object-cover"
+               >
+                 {/* Mettez le vrai nom de votre vidéo ici (par ex. src="/capture-ecran.mp4") */}
+                 <source src="/votre-video-demo.mp4" type="video/mp4" />
+                 <div className="p-4 text-center text-sm text-gray-500">Vidéo de démo ici</div>
+               </video>
             </div>
           </div>
         </div>
@@ -656,7 +662,7 @@ const VendreContent = () => (
 
     <AppPromoBanner />
     
-    <TopSellers />
+    <TopSellers topBoutiques={topBoutiques} />
 
     {/* TESTIMONIALS SECTION */}
     <section className="py-16 px-container-margin bg-surface-container-low mb-12">
