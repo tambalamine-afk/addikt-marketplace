@@ -8,58 +8,7 @@ export default function Category({ handleSelect }) {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search');
-  const categoryId = id ? id.toLowerCase() : 'nouveautes';
-  
-  if (categoryId === 'beauté' || categoryId === 'beaute' || categoryId === 'beauty') {
-    const beautySections = [
-      { id: 'bath', title: 'Bath & body', image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500' },
-      { id: 'fragrance', title: 'Fragrance', image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=500' },
-      { id: 'hair', title: 'Hair care', image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=500' },
-      { id: 'makeup', title: 'Makeup', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500' },
-      { id: 'skin', title: 'Skin care', image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500' },
-      { id: 'tools', title: 'Tools & accessories', image: 'https://images.unsplash.com/photo-1590156546946-cb567ea321d2?w=500' },
-      { id: 'other', title: 'Other', image: 'https://images.unsplash.com/photo-1588145459345-0d7031da90fb?w=500' }
-    ];
-
-    return (
-      <main className="flex-grow w-full max-w-[1440px] mx-auto px-container-margin py-8 bg-white text-on-background">
-        <div className="flex items-baseline gap-3 mb-12">
-          <h1 className="text-3xl font-bold text-[#222]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Beauty</h1>
-          <span className="text-[13px] text-gray-500 font-normal" style={{ fontFamily: '"Google Sans", sans-serif' }}>1000+ results</span>
-        </div>
-
-        {beautySections.map((section) => (
-          <div key={section.id} className="mb-14">
-            <div className="flex items-center gap-4 mb-4">
-              <h2 className="text-[18px] font-bold text-[#222]" style={{ fontFamily: '"Google Sans", sans-serif' }}>{section.title}</h2>
-              <Link href={`/category/beauté?section=${section.id}`} className="text-blue-600 text-[13px] font-medium hover:underline" style={{ fontFamily: '"Google Sans", sans-serif' }}>See all</Link>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-              {[1, 2, 3, 4, 5, 6].map((idx) => {
-                const price = 5000 + (idx * 1500);
-                return (
-                  <Link key={`${section.id}-${idx}`} href="/product/1" className="group relative flex flex-col bg-transparent transition-all cursor-pointer">
-                    <div className="relative w-full aspect-[3/4] bg-surface-container-low rounded-md overflow-hidden">
-                      <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={section.title} src={section.image} />
-                      <button className="absolute top-2 right-2 transition-opacity z-10 hover:scale-110">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="rgba(40,40,40,0.8)" stroke="white" strokeWidth="1.5">
-                          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="pt-3 flex flex-col gap-0.5 text-left" style={{ fontFamily: '"Google Sans", sans-serif' }}>
-                      <span className="text-[15px] text-[#222] font-normal truncate">{section.title} Item {idx}</span>
-                      <span className="text-[16px] font-semibold text-black tracking-tight mt-0.5">{price.toLocaleString('fr-SN')} FCFA</span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </main>
-    );
-  }
+  const categoryId = id ? decodeURIComponent(id).toLowerCase() : 'nouveautes';
 
   let title = 'Femmes';
   let subcategories = [];
@@ -88,6 +37,12 @@ export default function Category({ handleSelect }) {
     case 'sports':
       title = 'Sports';
       subcategories = ['Running', 'Fitness', 'Football', 'Basketball', 'Vêtements', 'Chaussures', 'Accessoires'];
+      break;
+    case 'beaute':
+    case 'beauté':
+    case 'beauty':
+      title = 'Beauté';
+      subcategories = ['Maquillage', 'Soins du visage', 'Soins du corps', 'Parfums', 'Cheveux', 'Outils & Accessoires', 'Hommes', 'Naturel & Bio'];
       break;
     case 'nouveautes':
     case 'nouveautés':
@@ -230,7 +185,15 @@ export default function Category({ handleSelect }) {
         'boubous & tenues trad': ['boubou', 'traditionnel', 'bazin', 'wax', 'pagne', 'tailleur africain', 'thioup'],
         'sacs & accessoires': ['sac', 'pochette', 'montre', 'lunette', 'ceinture', 'bijou', 'foulard'],
         'bijoux': ['bijou', 'collier', 'bracelet', 'bague', 'boucle', 'montre'],
-        'beauté': ['beauté', 'maquillage', 'soin', 'parfum', 'cheveux', 'cosmétique', 'crème', 'lotion']
+        'beauté': ['beauté', 'maquillage', 'soin', 'parfum', 'cheveux', 'cosmétique', 'crème', 'lotion'],
+        'maquillage': ['maquillage', 'makeup', 'rouge à lèvres', 'mascara', 'fond de teint', 'fard', 'palette'],
+        'soins du visage': ['visage', 'crème', 'sérum', 'nettoyant', 'masque', 'anti-âge', 'hydratant', 'skin care'],
+        'soins du corps': ['corps', 'bain', 'douche', 'lotion', 'gommage', 'hydratant', 'body', 'savon'],
+        'parfums': ['parfum', 'eau de toilette', 'fragrance', 'brume'],
+        'cheveux': ['cheveux', 'shampoing', 'après-shampoing', 'masque cheveux', 'huile', 'hair care', 'perruque', 'mèche'],
+        'outils & accessoires': ['pinceau', 'éponge', 'miroir', 'trousse', 'brosse', 'lisseur', 'sèche-cheveux'],
+        'hommes': ['homme', 'barbe', 'rasage', 'soin homme', 'men'],
+        'naturel & bio': ['bio', 'naturel', 'vegan', 'organique', 'karité', 'coco']
       };
 
       const keywords = keywordsMap[sub] || [sub];
