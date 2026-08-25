@@ -54,7 +54,7 @@ export default function SellerProfile({ sellerId }) {
           .select('*')
           .eq('follower_id', user.id)
           .eq('following_id', sellerId)
-          .single();
+          .maybeSingle();
           
         if (followData) {
           setIsFollowing(true);
@@ -103,6 +103,8 @@ export default function SellerProfile({ sellerId }) {
       if (!error) {
         setIsFollowing(false);
         setFollowerCount(prev => Math.max(0, prev - 1));
+      } else {
+        console.error("Error unfollowing:", error);
       }
     } else {
       // Follow
@@ -113,6 +115,8 @@ export default function SellerProfile({ sellerId }) {
       if (!error) {
         setIsFollowing(true);
         setFollowerCount(prev => prev + 1);
+      } else {
+        console.error("Error following:", error);
       }
     }
     setIsTogglingFollow(false);

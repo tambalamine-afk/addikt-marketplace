@@ -3,6 +3,7 @@ import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
 import CartDrawer from './CartDrawer';
+import AuthModal from './AuthModal';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
@@ -17,6 +18,7 @@ export default function LayoutWrapper({ children }) {
       </main>
       {!noFooterPage && <Footer />}
       <CartDrawer />
+      <AuthModal />
     </div>
   );
 }
