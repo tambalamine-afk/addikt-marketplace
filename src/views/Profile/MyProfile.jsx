@@ -39,8 +39,15 @@ export default function MyProfile() {
           .single();
         
         if (profileData) {
-          setProfile(profileData);
-          if (profileData.phone) setPhone(profileData.phone);
+          // Le téléphone vit dans profile_private, lisible uniquement par son propriétaire
+          const { data: privateData } = await supabase
+            .from('profile_private')
+            .select('phone')
+            .eq('id', user.id)
+            .maybeSingle();
+          const savedPhone = privateData?.phone || '';
+          setProfile({ ...profileData, phone: savedPhone });
+          if (savedPhone) setPhone(savedPhone);
         }
 
         // 2. Fetch Active Listings
@@ -117,7 +124,9 @@ export default function MyProfile() {
 
   const handleSavePhone = async () => {
     try {
-      const { error } = await supabase.from('profiles').update({ phone }).eq('id', user.id);
+      const { error } = await supabase
+        .from('profile_private')
+        .upsert({ id: user.id, phone, updated_at: new Date().toISOString() }, { onConflict: 'id' });
       if (error) throw error;
       setProfile(prev => ({ ...prev, phone }));
       setIsEditingPhone(false);

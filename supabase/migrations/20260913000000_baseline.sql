@@ -1,5 +1,13 @@
 -- ==============================================================================
--- ADDIKT MARKETPLACE - Schéma de base de données Supabase
+-- ADDIKT MARKETPLACE - Migration initiale (état de la base au 13/09/2026)
+-- ==============================================================================
+-- Reprend l'ancien supabase/schema.sql SANS les DROP TABLE, plus la colonne
+-- profiles.is_top_boutique ajoutée directement en production.
+--
+-- Cette migration décrit des tables qui existent DÉJÀ en production.
+-- Ne pas l'exécuter sur la prod : la marquer comme appliquée avec
+--   npx supabase migration repair --status applied 20260913000000
+-- Elle sert à recréer la base à l'identique en local ou sur un nouveau projet.
 -- ==============================================================================
 
 -- Activer l'extension pour les UUIDs
@@ -8,19 +16,6 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ==============================================================================
 -- 1. TABLES
 -- ==============================================================================
-
--- Nettoyage de l'existant pour éviter les erreurs "relation already exists"
-DROP TABLE IF EXISTS reviews CASCADE;
-DROP TABLE IF EXISTS orders CASCADE;
-DROP TABLE IF EXISTS addresses CASCADE;
-DROP TABLE IF EXISTS messages CASCADE;
-DROP TABLE IF EXISTS conversations CASCADE;
-DROP TABLE IF EXISTS favorites CASCADE;
-DROP TABLE IF EXISTS followers CASCADE;
-DROP TABLE IF EXISTS listing_images CASCADE;
-DROP TABLE IF EXISTS listings CASCADE;
-DROP TABLE IF EXISTS categories CASCADE;
-DROP TABLE IF EXISTS profiles CASCADE;
 
 -- Table: profiles (liée à auth.users)
 CREATE TABLE profiles (
@@ -36,6 +31,9 @@ CREATE TABLE profiles (
   rating_count INTEGER DEFAULT 0,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Colonne ajoutée en production hors fichier (utilisée par la home et le profil vendeur)
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_top_boutique BOOLEAN NOT NULL DEFAULT false;
 
 -- Table: categories
 CREATE TABLE categories (
@@ -151,7 +149,6 @@ CREATE TABLE reviews (
 -- 2. POLITIQUES DE SÉCURITÉ (RLS)
 -- ==============================================================================
 
--- Activer RLS sur toutes les tables
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE listings ENABLE ROW LEVEL SECURITY;
@@ -164,35 +161,27 @@ ALTER TABLE addresses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 
--- Profiles: tout le monde peut lire, seul l'utilisateur peut modifier son profil
 CREATE POLICY "Public profiles are viewable by everyone." ON profiles FOR SELECT USING (true);
 CREATE POLICY "Users can insert their own profile." ON profiles FOR INSERT WITH CHECK (auth.uid() = id);
 CREATE POLICY "Users can update own profile." ON profiles FOR UPDATE USING (auth.uid() = id);
 
--- Categories: tout le monde peut lire
 CREATE POLICY "Categories are viewable by everyone." ON categories FOR SELECT USING (true);
 
--- Listings: tout le monde peut voir les annonces actives, seul le vendeur peut modifier
 CREATE POLICY "Active listings are viewable by everyone." ON listings FOR SELECT USING (status = 'active' OR auth.uid() = seller_id);
 CREATE POLICY "Users can insert their own listings." ON listings FOR INSERT WITH CHECK (auth.uid() = seller_id);
 CREATE POLICY "Users can update own listings." ON listings FOR UPDATE USING (auth.uid() = seller_id);
 
--- Listing Images: tout le monde peut voir
 CREATE POLICY "Listing images are viewable by everyone." ON listing_images FOR SELECT USING (true);
--- Simplification : si on peut insérer l'annonce, on peut insérer l'image (nécessiterait un join ou trigger en prod)
 CREATE POLICY "Authenticated users can insert images" ON listing_images FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
--- Favorites: seul l'utilisateur voit ses favoris
 CREATE POLICY "Users can view their own favorites." ON favorites FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert their own favorites." ON favorites FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can delete their own favorites." ON favorites FOR DELETE USING (auth.uid() = user_id);
 
--- Followers: tout le monde peut voir qui suit qui, seul l'utilisateur peut s'abonner/se désabonner
 CREATE POLICY "Followers are viewable by everyone." ON followers FOR SELECT USING (true);
 CREATE POLICY "Users can insert their own follows." ON followers FOR INSERT WITH CHECK (auth.uid() = follower_id);
 CREATE POLICY "Users can delete their own follows." ON followers FOR DELETE USING (auth.uid() = follower_id);
 
--- Conversations & Messages: seuls les participants (acheteur/vendeur) peuvent y accéder
 CREATE POLICY "Participants can view conversations." ON conversations FOR SELECT USING (auth.uid() = buyer_id OR auth.uid() = seller_id);
 CREATE POLICY "Users can insert conversations." ON conversations FOR INSERT WITH CHECK (auth.uid() = buyer_id);
 
@@ -203,14 +192,20 @@ CREATE POLICY "Participants can view messages." ON messages FOR SELECT USING (
 );
 CREATE POLICY "Senders can insert messages." ON messages FOR INSERT WITH CHECK (auth.uid() = sender_id);
 
--- Orders: visible par l'acheteur et le vendeur
 CREATE POLICY "Participants can view orders." ON orders FOR SELECT USING (auth.uid() = buyer_id OR auth.uid() = seller_id);
 CREATE POLICY "Buyers can insert orders." ON orders FOR INSERT WITH CHECK (auth.uid() = buyer_id);
+
+CREATE POLICY "Users can view their own addresses." ON addresses FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert their own addresses." ON addresses FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update their own addresses." ON addresses FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete their own addresses." ON addresses FOR DELETE USING (auth.uid() = user_id);
+
+CREATE POLICY "Reviews are viewable by everyone." ON reviews FOR SELECT USING (true);
+CREATE POLICY "Users can insert their own reviews." ON reviews FOR INSERT WITH CHECK (auth.uid() = reviewer_id);
 
 -- ==============================================================================
 -- 3. TRIGGERS (Création auto du profil)
 -- ==============================================================================
--- Ce trigger crée une ligne dans `profiles` chaque fois qu'un utilisateur s'inscrit
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger AS $$
 BEGIN
@@ -231,9 +226,9 @@ CREATE OR REPLACE TRIGGER on_auth_user_created
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 
 -- ==============================================================================
--- 4. DONNÉES DE TEST (SEED) - Catégories principales
+-- 4. DONNÉES DE RÉFÉRENCE - Catégories principales
 -- ==============================================================================
-INSERT INTO categories (name, slug) VALUES 
+INSERT INTO categories (name, slug) VALUES
 ('Femmes', 'femmes'),
 ('Hommes', 'hommes'),
 ('Enfants', 'enfants'),
@@ -241,3 +236,8 @@ INSERT INTO categories (name, slug) VALUES
 ('Marques', 'marques'),
 ('Sports', 'sports')
 ON CONFLICT (slug) DO NOTHING;
+
+-- ==============================================================================
+-- 5. REALTIME (messagerie)
+-- ==============================================================================
+ALTER PUBLICATION supabase_realtime ADD TABLE messages;

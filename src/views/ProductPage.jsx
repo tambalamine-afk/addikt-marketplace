@@ -15,6 +15,7 @@ export default function ProductPage() {
   const [images, setImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
   const isLiked = likedItems?.includes(id);
+  const [sellerPhone, setSellerPhone] = useState(null);
   const [relatedSellerProducts, setRelatedSellerProducts] = useState([]);
   const [relatedCategoryProducts, setRelatedCategoryProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -94,6 +95,17 @@ export default function ProductPage() {
 
     fetchProduct();
   }, [id, supabase]);
+
+  // Le numéro du vendeur n'est plus public : il n'est révélé qu'aux membres connectés.
+  useEffect(() => {
+    if (!user || !id || !supabase?.rpc) {
+      setSellerPhone(null);
+      return;
+    }
+    supabase
+      .rpc('get_seller_phone', { p_listing_id: id })
+      .then(({ data }) => setSellerPhone(data || null));
+  }, [user, id, supabase]);
 
   const handleDeleteListing = async () => {
     if (window.confirm("Es-tu sûr de vouloir supprimer cette annonce ? Cette action est irréversible.")) {
@@ -333,9 +345,15 @@ export default function ProductPage() {
                     Envoyer un message
                   </button>
                   <a 
-                    href={seller?.phone ? `https://wa.me/${seller.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}` : `https://wa.me/?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}`}
+                    href={sellerPhone ? `https://wa.me/${sellerPhone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}` : `https://wa.me/?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => {
+                      if (!user) {
+                        e.preventDefault();
+                        window.dispatchEvent(new Event('openAuthModal'));
+                      }
+                    }}
                     className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-[#20bd5a] transition-all duration-200"
                     style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
                   >
