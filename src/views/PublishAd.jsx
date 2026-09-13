@@ -6,6 +6,7 @@ import { AppContext } from '../components/Providers';
 import ProductCard from '../components/ProductCard';
 import confetti from 'canvas-confetti';
 import { CheckCircle2 } from 'lucide-react';
+import { prepareSelectedPhotos } from '../lib/images';
 
 export default function PublishAd() {
   const { user, supabase, addToast } = useContext(AppContext);
@@ -32,15 +33,14 @@ export default function PublishAd() {
     fetchCategories();
   }, [supabase]);
 
-  const handlePhotoUpload = (e) => {
+  const handlePhotoUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
     
     // Create object URLs for the uploaded files to display them
-    const newPhotos = files.map(file => ({
-      file,
-      preview: URL.createObjectURL(file)
-    }));
+    // Photos compressées dès la sélection : erreurs signalées tout de suite, envoi léger ensuite
+    e.target.value = '';
+    const newPhotos = await prepareSelectedPhotos(files, addToast);
     setPhotos(prev => [...prev, ...newPhotos].slice(0, 5)); // Max 5 photos
   };
 
@@ -49,7 +49,8 @@ export default function PublishAd() {
     'Hommes': ['T-shirts & Polos', 'Pantalons', 'Sweats & Pulls', 'Vestes & Manteaux', 'Costumes', 'Chaussures', 'Accessoires', 'Sneakers', 'Vintage'],
     'Enfants': ['Bébé', 'Filles (2-14 ans)', 'Garçons (2-14 ans)', 'Chaussures', 'Jouets', 'Livres', 'Puériculture', 'Accessoires'],
     'Sneakers': ['Basses', 'Montantes', 'Running', 'Lifestyle', 'Vintage', 'Éditions limitées', 'Accessoires'],
-    'Beauté': ['Maquillage', 'Soins visage', 'Soins corps', 'Parfums', 'Accessoires beauté']
+    'Beauté': ['Maquillage', 'Soins visage', 'Soins corps', 'Parfums', 'Accessoires beauté'],
+    'Accessoires': ['Sacs', 'Bijoux', 'Montres', 'Lunettes', 'Ceintures', 'Chapeaux & casquettes', 'Autres accessoires']
   };
 
   const navigate = useRouter();
@@ -61,14 +62,19 @@ export default function PublishAd() {
       return;
     }
     
-    const title = titleRef.current?.value;
-    const price = priceRef.current?.value;
-    const description = descRef.current?.value;
+    const title = titleRef.current?.value?.trim();
+    const price = Number(priceRef.current?.value);
+    const description = descRef.current?.value?.trim();
 
     if (!title || !price || !selectedCategory || photos.length === 0) {
       addToast("Remplis le titre, le prix, la catégorie et au moins 1 photo !");
       return;
     }
+    if (!Number.isInteger(price) || price <= 0) {
+      addToast("Le prix doit être un nombre entier de FCFA, supérieur à 0.");
+      return;
+    }
+    let createdListingId = null;
 
     setIsPublishing(true);
 
@@ -88,23 +94,24 @@ export default function PublishAd() {
           brand: selectedBrand || null,
           size: selectedSize || null,
           condition: selectedCondition || null,
-          price: parseInt(price, 10),
-          status: 'active'
+          price,
+          // Brouillon tant que les photos ne sont pas toutes envoyées
+          status: 'draft'
         })
         .select()
         .single();
 
       if (listingError) throw listingError;
+      createdListingId = listing.id;
 
       // 2. Upload photos
       for (let i = 0; i < photos.length; i++) {
-        const { file } = photos[i];
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${listing.id}/${i}-${Date.now()}.${fileExt}`;
+        const { file, extension, contentType } = photos[i];
+        const fileName = `${listing.id}/${i}-${Date.now()}.${extension}`;
         
         const { error: uploadError } = await supabase.storage
           .from('listing-images')
-          .upload(fileName, file);
+          .upload(fileName, file, { contentType });
 
         if (uploadError) throw uploadError;
 
@@ -114,24 +121,28 @@ export default function PublishAd() {
           .getPublicUrl(fileName);
 
       // 3. Insert listing_image
-      await supabase
+      const { error: imageError } = await supabase
         .from('listing_images')
         .insert({
           listing_id: listing.id,
           url: publicUrl,
           position: i
         });
+      if (imageError) throw imageError;
     }
 
-    const { data: { publicUrl: firstImageUrl } } = supabase.storage
-      .from('listing-images')
-      .getPublicUrl(`${listing.id}/0-`); // Actually we already have publicUrl of the last uploaded, let's just use the first photo's object URL or just publicUrl of the first loop
+    // Toutes les photos sont en ligne : l'annonce devient visible
+    const { error: activateError } = await supabase
+      .from('listings')
+      .update({ status: 'active' })
+      .eq('id', listing.id);
+    if (activateError) throw activateError;
     
     // Set published data for success screen
     setPublishedListing({
       id: listing.id,
       title: title,
-      price: parseInt(price, 10),
+      price,
       size: selectedSize || '',
       brand: selectedBrand || '',
       condition: selectedCondition || '',
@@ -141,7 +152,11 @@ export default function PublishAd() {
 
   } catch (err) {
     console.error(err);
-    addToast("Erreur lors de la publication : " + err.message);
+    // Une annonce incomplète ne doit jamais rester en ligne ni en brouillon
+    if (createdListingId) {
+      await supabase.from('listings').update({ status: 'deleted' }).eq('id', createdListingId);
+    }
+    addToast("La publication a échoué et rien n'a été mis en ligne. Vérifie ta connexion et réessaie.");
   } finally {
     setIsPublishing(false);
   }

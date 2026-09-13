@@ -133,9 +133,6 @@ export default function MobileMenu({ isOpen, onClose }) {
           <Link href="/profile/me" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
             <span className="text-[#333] text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Espace vendeur</span>
           </Link>
-          <Link href="/profile/me" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
-            <span className="text-[#333] text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Mes achats</span>
-          </Link>
           <Link href="/profile/settings" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
             <span className="text-[#333] text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Paramètres</span>
           </Link>
@@ -187,12 +184,11 @@ export default function MobileMenu({ isOpen, onClose }) {
           </div>
 
           <div className="grid grid-cols-2 gap-y-4 gap-x-4 mb-2 text-[#333] text-[14px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
-            <Link href="/blog">Blog</Link>
             <Link href="#">Support</Link>
             <Link href="#">À propos</Link>
-            <Link href="#">CGV</Link>
+            <Link href="/terms" onClick={onClose}>Conditions d'utilisation</Link>
             <Link href="/publish">Vendre sur Addikt</Link>
-            <Link href="#">Confidentialité</Link>
+            <Link href="/privacy" onClick={onClose}>Confidentialité</Link>
             <Link href="#">Notre mission</Link>
             <Link href="#">Programme Top vendeur</Link>
             <Link href="#">Devenir ambassadeur</Link>

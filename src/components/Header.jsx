@@ -337,9 +337,6 @@ export default function Header() {
                     <Link href="/publish" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
                       Ton espace vendeur
                     </Link>
-                    <Link href="/purchases" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
-                      Achats
-                    </Link>
                     <Link href="/profile/settings" className="px-5 py-3 border-b border-black/5 text-[#333] hover:bg-[#2A5AAB] hover:text-white transition-colors text-sm">
                       Paramètres
                     </Link>

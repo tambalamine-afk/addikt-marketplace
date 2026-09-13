@@ -44,6 +44,10 @@ export default function Category({ handleSelect }) {
       title = 'Beauté';
       subcategories = ['Maquillage', 'Soins du visage', 'Soins du corps', 'Parfums', 'Cheveux', 'Outils & Accessoires', 'Hommes', 'Naturel & Bio'];
       break;
+    case 'accessoires':
+      title = 'Accessoires';
+      subcategories = ['Sacs', 'Bijoux', 'Montres', 'Lunettes', 'Ceintures', 'Chapeaux & casquettes', 'Autres accessoires'];
+      break;
     case 'nouveautes':
     case 'nouveautés':
     default:
@@ -73,11 +77,12 @@ export default function Category({ handleSelect }) {
 
   useEffect(() => {
     async function fetchProducts() {
-      // Find category UUID if not 'nouveautes'
+      // Retrouve la catégorie par son slug ("Beauté" → "beaute"), sauf pour Nouveautés
       let catId = null;
       let isCategoryMissing = false;
-      if (categoryId !== 'nouveautes' && categoryId !== 'nouveautés' && dbCategories.length > 0) {
-        const cat = dbCategories.find(c => c.name.toLowerCase() === title.toLowerCase());
+      if (title !== 'Nouveautés' && dbCategories.length > 0) {
+        const slug = title.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+        const cat = dbCategories.find(c => c.slug === slug);
         if (cat) {
           catId = cat.id;
         } else {

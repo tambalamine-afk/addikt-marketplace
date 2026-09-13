@@ -7,7 +7,7 @@ import AuthModal from './AuthModal';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
-  const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/phone-login' || pathname === '/verify-sms';
+  const isAuthPage = ['/login', '/register', '/phone-login', '/verify-sms', '/forgot-password', '/reset-password'].includes(pathname);
   const noFooterPage = isAuthPage || pathname === '/publish';
 
   return (

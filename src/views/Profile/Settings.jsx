@@ -1,4 +1,5 @@
 "use client";
+import { compressImage } from '../../lib/images';
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { AppContext } from '../../components/Providers';
 
@@ -96,12 +97,12 @@ export default function Settings() {
       
       // Upload new avatar if selected
       if (avatarFile) {
-        const fileExt = avatarFile.name.split('.').pop();
+        const { blob: avatarBlob, extension: fileExt, contentType } = await compressImage(avatarFile);
         const fileName = `${user.id}-${Date.now()}.${fileExt}`;
         
         const { error: uploadError } = await supabase.storage
           .from('avatars')
-          .upload(fileName, avatarFile);
+          .upload(fileName, avatarBlob, { contentType });
           
         if (uploadError) {
           // If 'avatars' bucket doesn't exist, it might fail here. 

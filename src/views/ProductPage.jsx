@@ -42,7 +42,7 @@ export default function ProductPage() {
           .eq('id', id)
           .single();
 
-        if (listingError || !listingData) {
+        if (listingError || !listingData || listingData.status === 'deleted') {
           setNotFound(true);
           return;
         }
@@ -110,10 +110,16 @@ export default function ProductPage() {
   const handleDeleteListing = async () => {
     if (window.confirm("Es-tu sûr de vouloir supprimer cette annonce ? Cette action est irréversible.")) {
       try {
-        const { error } = await supabase.from('listings').delete().eq('id', id);
+        // Suppression logique : les conversations et commandes liées restent consultables
+        const { data, error } = await supabase
+          .from('listings')
+          .update({ status: 'deleted' })
+          .eq('id', id)
+          .select('id');
         if (error) throw error;
-        addToast("Annonce supprimée avec succès.");
-        navigate.push('/profile');
+        if (!data?.length) throw new Error('Aucune annonce modifiée');
+        addToast("Annonce supprimée.");
+        navigate.push('/profile/me');
       } catch (error) {
         addToast("Erreur lors de la suppression de l'annonce.");
         console.error("Error deleting listing:", error);

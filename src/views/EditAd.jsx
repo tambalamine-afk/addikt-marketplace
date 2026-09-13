@@ -1,4 +1,5 @@
 "use client";
+import { prepareSelectedPhotos } from '../lib/images';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import React, { useState, useRef, useContext, useEffect } from 'react';
@@ -61,14 +62,12 @@ export default function EditAd() {
     fetchData();
   }, [id, supabase]);
 
-  const handlePhotoUpload = (e) => {
+  const handlePhotoUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
     
-    const newPhotos = files.map(file => ({
-      file,
-      preview: URL.createObjectURL(file)
-    }));
+    e.target.value = '';
+    const newPhotos = await prepareSelectedPhotos(files, addToast);
     
     // Max 5 photos total (existing + new)
     const availableSlots = 5 - existingPhotos.length;
@@ -77,7 +76,9 @@ export default function EditAd() {
 
   const removeExistingPhoto = async (photoId) => {
     try {
-      await supabase.from('listing_images').delete().eq('id', photoId);
+      const { data, error } = await supabase.from('listing_images').delete().eq('id', photoId).select('id');
+      if (error) throw error;
+      if (!data?.length) throw new Error('Photo non supprimée');
       setExistingPhotos(prev => prev.filter(p => p.id !== photoId));
     } catch (err) {
       console.error(err);
@@ -94,7 +95,8 @@ export default function EditAd() {
     'Hommes': ['T-shirts & Polos', 'Pantalons', 'Sweats & Pulls', 'Vestes & Manteaux', 'Costumes', 'Chaussures', 'Accessoires', 'Sneakers', 'Vintage'],
     'Enfants': ['Bébé', 'Filles (2-14 ans)', 'Garçons (2-14 ans)', 'Chaussures', 'Jouets', 'Livres', 'Puériculture', 'Accessoires'],
     'Sneakers': ['Basses', 'Montantes', 'Running', 'Lifestyle', 'Vintage', 'Éditions limitées', 'Accessoires'],
-    'Beauté': ['Maquillage', 'Soins visage', 'Soins corps', 'Parfums', 'Accessoires beauté']
+    'Beauté': ['Maquillage', 'Soins visage', 'Soins corps', 'Parfums', 'Accessoires beauté'],
+    'Accessoires': ['Sacs', 'Bijoux', 'Montres', 'Lunettes', 'Ceintures', 'Chapeaux & casquettes', 'Autres accessoires']
   };
 
   const handleUpdate = async (e) => {
@@ -104,12 +106,16 @@ export default function EditAd() {
       return;
     }
     
-    const title = titleRef.current?.value;
-    const price = priceRef.current?.value;
-    const description = descRef.current?.value;
+    const title = titleRef.current?.value?.trim();
+    const price = Number(priceRef.current?.value);
+    const description = descRef.current?.value?.trim();
 
     if (!title || !price || !selectedCategory) {
       addToast("Remplis le titre, le prix et la catégorie !");
+      return;
+    }
+    if (!Number.isInteger(price) || price <= 0) {
+      addToast("Le prix doit être un nombre entier de FCFA, supérieur à 0.");
       return;
     }
 
@@ -134,7 +140,7 @@ export default function EditAd() {
           brand: selectedBrand || null,
           size: selectedSize || null,
           condition: selectedCondition || null,
-          price: parseInt(price, 10),
+          price,
         })
         .eq('id', id)
         .select()
@@ -145,13 +151,12 @@ export default function EditAd() {
       // 2. Upload NEW photos
       const startingPosition = existingPhotos.length;
       for (let i = 0; i < photos.length; i++) {
-        const { file } = photos[i];
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${id}/${startingPosition + i}-${Date.now()}.${fileExt}`;
+        const { file, extension, contentType } = photos[i];
+        const fileName = `${id}/${startingPosition + i}-${Date.now()}.${extension}`;
         
         const { error: uploadError } = await supabase.storage
           .from('listing-images')
-          .upload(fileName, file);
+          .upload(fileName, file, { contentType });
 
         if (uploadError) throw uploadError;
 
@@ -159,13 +164,14 @@ export default function EditAd() {
           .from('listing-images')
           .getPublicUrl(fileName);
 
-        await supabase
+        const { error: imageError } = await supabase
           .from('listing_images')
           .insert({
             listing_id: id,
             url: publicUrl,
             position: startingPosition + i
           });
+        if (imageError) throw imageError;
       }
 
       setPublishedListing(listing);

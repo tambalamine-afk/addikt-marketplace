@@ -1,28 +1,45 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 
+// Pages réservées aux membres connectés, sous-pages comprises
+const PROTECTED_ROUTES = ['/messages', '/publish', '/profile', '/favorites', '/edit']
+
+function redirectToLogin(request) {
+  // Après connexion, le membre revient sur la page qu'il voulait ouvrir
+  const loginUrl = new URL('/login', request.url)
+  loginUrl.searchParams.set('next', request.nextUrl.pathname + request.nextUrl.search)
+  return NextResponse.redirect(loginUrl)
+}
+
 export async function middleware(request) {
+  const { pathname } = request.nextUrl
+  const isProtectedRoute = PROTECTED_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
+  )
+
   let supabaseResponse = NextResponse.next({
     request,
   })
 
-  // Si les clés Supabase ne sont pas encore configurées, on laisse passer la requête
-  // Cela permet de tester l'UI avec les données mockées avant la configuration complète.
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    return supabaseResponse;
+    // En local sans clés Supabase, on laisse passer pour tester l'UI avec les données mockées.
+    // En production, une configuration manquante ne doit jamais ouvrir les pages privées.
+    if (process.env.NODE_ENV === 'production' && isProtectedRoute) {
+      return redirectToLogin(request)
+    }
+    return supabaseResponse
   }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-
     {
       cookies: {
         getAll() {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({
             request,
           })
@@ -39,13 +56,8 @@ export async function middleware(request) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protection des routes privées
-  const protectedRoutes = ['/messages', '/publish', '/profile']
-  const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
-
   if (isProtectedRoute && !user) {
-    // Si l'utilisateur n'est pas connecté et essaie d'accéder à une route protégée
-    return NextResponse.redirect(new URL('/login', request.url))
+    return redirectToLogin(request)
   }
 
   return supabaseResponse

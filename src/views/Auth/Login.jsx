@@ -1,10 +1,11 @@
 "use client";
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense, useState } from 'react';
 import { createClient } from '../../lib/supabase/client';
+import { safeNextPath } from '../../lib/redirect';
 
-export default function Login() {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -12,6 +13,8 @@ export default function Login() {
   
   const router = useRouter();
   const supabase = createClient();
+  // Page demandée avant la redirection vers la connexion (ex. /messages/123)
+  const nextPath = safeNextPath(useSearchParams().get('next'));
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,7 +30,7 @@ export default function Login() {
       setErrorMsg(error.message);
       setIsLoading(false);
     } else {
-      router.push('/');
+      router.push(nextPath);
     }
   };
 
@@ -39,7 +42,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/`,
+        redirectTo: `${window.location.origin}${nextPath}`,
       }
     });
     
@@ -134,5 +137,14 @@ export default function Login() {
         </div>
       </main>
     </div>
+  );
+}
+
+// useSearchParams doit être sous une frontière Suspense pour le prérendu (Next 16)
+export default function Login() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

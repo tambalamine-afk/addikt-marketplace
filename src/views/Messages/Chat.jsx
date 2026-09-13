@@ -7,7 +7,7 @@ import { AppContext } from '../../components/Providers';
 export default function Chat() {
   const navigate = useRouter();
   const { id } = useParams();
-  const { user, supabase } = useContext(AppContext);
+  const { user, supabase, setUnreadMessagesCount } = useContext(AppContext);
   
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -27,6 +27,20 @@ export default function Chat() {
   useEffect(() => {
     if (!user || !id) return;
     
+    // Marque comme lus les messages reçus et met à jour le badge du header
+    async function markAsRead(messageIds) {
+      if (messageIds.length === 0) return;
+      const { data } = await supabase
+        .from('messages')
+        .update({ read_at: new Date().toISOString() })
+        .in('id', messageIds)
+        .is('read_at', null)
+        .select('id');
+      if (data?.length) {
+        setUnreadMessagesCount((count) => Math.max(0, count - data.length));
+      }
+    }
+
     async function loadChat() {
       setIsLoading(true);
       
@@ -61,11 +75,12 @@ export default function Chat() {
         
       if (!msgError && msgData) {
         setMessages(msgData);
+        markAsRead(msgData.filter(m => m.sender_id !== user.id && !m.read_at).map(m => m.id));
       }
       
       setIsLoading(false);
       
-      // 3. Mark messages as read (Optional, skip for now to keep simple)
+      // 3. Les messages reçus sont marqués comme lus juste au-dessus (markAsRead)
     }
     
     loadChat();
@@ -79,20 +94,42 @@ export default function Chat() {
         table: 'messages',
         filter: `conversation_id=eq.${id}`
       }, (payload) => {
-        // Ajouter le message reçu à la liste s'il ne vient pas de nous
-        // (S'il vient de nous, on l'ajoute déjà de façon optimiste à l'envoi)
+        // Nos propres messages sont déjà affichés de façon optimiste à l'envoi
+        if (payload.new.sender_id === user.id) return;
         setMessages((currentMessages) => {
           // Éviter les doublons
           if (currentMessages.find(m => m.id === payload.new.id)) return currentMessages;
           return [...currentMessages, payload.new];
         });
+        // La conversation est ouverte : le message reçu est lu immédiatement
+        markAsRead([payload.new.id]);
       })
       .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [id, user, supabase, navigate]);
+  }, [id, user, supabase, navigate, setUnreadMessagesCount]);
+
+  const handleRetry = async (failedMessage) => {
+    setMessages(prev => prev.map(m => m.id === failedMessage.id ? { ...m, failed: false } : m));
+
+    const { data, error } = await supabase
+      .from('messages')
+      .insert({
+        conversation_id: id,
+        sender_id: user.id,
+        content: failedMessage.content
+      })
+      .select()
+      .single();
+
+    if (error) console.error("Erreur envoi message:", error);
+    setMessages(prev => prev.map(m => {
+      if (m.id !== failedMessage.id) return m;
+      return error ? { ...m, failed: true } : data;
+    }));
+  };
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -125,7 +162,8 @@ export default function Chat() {
       
     if (error) {
       console.error("Erreur envoi message:", error);
-      // Ideally remove optimistic message on error, but for MVP it's fine
+      // Le message reste affiché avec un bouton pour réessayer
+      setMessages(prev => prev.map(m => m.id === tempMessage.id ? { ...m, failed: true } : m));
     } else {
       // Replace temp message with real one
       setMessages(prev => prev.map(m => m.id === tempMessage.id ? data : m));
@@ -216,7 +254,7 @@ export default function Chat() {
           
           return (
             <div key={msg.id} className={`flex flex-col gap-1 max-w-[85%] ${isMe ? 'items-end self-end' : 'items-start'}`}>
-              <div className={`px-4 py-3 shadow-sm relative group ${
+              <div className={`px-4 py-3 shadow-sm relative group ${msg.failed ? 'opacity-60 ' : ''}${
                 isMe 
                   ? 'bg-primary text-on-primary rounded-2xl rounded-tr-sm' 
                   : 'bg-surface-container-low text-on-surface rounded-2xl rounded-tl-sm border border-outline-variant'
@@ -228,6 +266,15 @@ export default function Chat() {
                   {time}
                 </span>
               </div>
+              {msg.failed && (
+                <button
+                  type="button"
+                  onClick={() => handleRetry(msg)}
+                  className="text-[12px] font-bold text-error hover:underline"
+                >
+                  Échec de l'envoi · Réessayer
+                </button>
+              )}
             </div>
           );
         })}

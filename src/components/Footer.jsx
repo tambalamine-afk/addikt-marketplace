@@ -111,7 +111,8 @@ export default function Footer() {
 
           <div className="mt-8 text-left md:text-right flex flex-col gap-2 text-xs opacity-70" style={{ fontFamily: '"Google Sans", sans-serif' }}>
             <p>© 2024. Tous droits réservés</p>
-            <p className="hover:text-accent-orange cursor-pointer transition-colors">Politique de confidentialité</p>
+            <Link href="/privacy" className="hover:text-accent-orange transition-colors">Politique de confidentialité</Link>
+            <Link href="/terms" className="hover:text-accent-orange transition-colors">Conditions d'utilisation</Link>
           </div>
         </div>
       </div>

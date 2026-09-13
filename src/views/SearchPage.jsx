@@ -48,6 +48,8 @@ export default function SearchPage() {
         return;
       }
 
+      const searchTerm = query.replace(/[%_*"\\]/g, ' ').trim();
+
       const { data, error } = await supabase
         .from('listings')
         .select(`
@@ -56,7 +58,11 @@ export default function SearchPage() {
           profiles(username, avatar_url)
         `)
         .eq('status', 'active')
-        .or(`title.ilike.%${query}%,brand.ilike.%${query}%`);
+        // Valeurs entre guillemets : virgules et parenthèses ne cassent plus le filtre.
+        // Les jokers (% _ *) et les caractères d'échappement (" \) saisis sont neutralisés.
+        .or(`title.ilike."%${searchTerm}%",brand.ilike."%${searchTerm}%"`)
+        .order('created_at', { ascending: false })
+        .limit(60);
 
       if (data) {
         const formatted = data.map(item => {
