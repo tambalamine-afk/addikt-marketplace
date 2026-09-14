@@ -7,7 +7,6 @@ export const revalidate = 3600;
 const STATIC_PAGES = [
   { path: '', changeFrequency: 'daily', priority: 1 },
   { path: '/fresh-drop', changeFrequency: 'daily', priority: 0.7 },
-  { path: '/promos', changeFrequency: 'weekly', priority: 0.5 },
   { path: '/top-seller', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.1 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.1 },

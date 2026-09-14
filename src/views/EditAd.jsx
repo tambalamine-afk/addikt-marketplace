@@ -96,7 +96,9 @@ export default function EditAd() {
     'Enfants': ['Bébé', 'Filles (2-14 ans)', 'Garçons (2-14 ans)', 'Chaussures', 'Jouets', 'Livres', 'Puériculture', 'Accessoires'],
     'Sneakers': ['Basses', 'Montantes', 'Running', 'Lifestyle', 'Vintage', 'Éditions limitées', 'Accessoires'],
     'Beauté': ['Maquillage', 'Soins visage', 'Soins corps', 'Parfums', 'Accessoires beauté'],
-    'Accessoires': ['Sacs', 'Bijoux', 'Montres', 'Lunettes', 'Ceintures', 'Chapeaux & casquettes', 'Autres accessoires']
+    'Accessoires': ['Sacs', 'Bijoux', 'Montres', 'Lunettes', 'Ceintures', 'Chapeaux & casquettes', 'Autres accessoires'],
+    'Marques': ['Nike', 'Adidas', 'Zara', 'H&M', "Levi's", 'Tongoro Studio', 'Puma', 'Mango', 'Autre marque'],
+    'Sports': ['Running', 'Fitness', 'Football', 'Basketball', 'Vêtements', 'Chaussures', 'Accessoires']
   };
 
   const handleUpdate = async (e) => {

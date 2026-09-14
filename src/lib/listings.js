@@ -47,6 +47,21 @@ export async function getRecentListings(limit) {
   return data || [];
 }
 
+// Photos de vrais membres (les plus récents avec une photo), pour l'accueil
+export async function getMemberAvatars(limit) {
+  const supabase = createPublicClient();
+  if (!supabase) return [];
+
+  const { data } = await supabase
+    .from('profiles')
+    .select('id, username, avatar_url')
+    .not('avatar_url', 'is', null)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  return data || [];
+}
+
 // Boutiques mises en avant sur l'accueil
 export async function getTopBoutiques() {
   const supabase = createPublicClient();

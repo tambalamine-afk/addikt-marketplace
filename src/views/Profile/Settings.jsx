@@ -2,6 +2,7 @@
 import { compressImage } from '../../lib/images';
 import React, { useState, useEffect, useContext, useRef, useSyncExternalStore } from 'react';
 import { AppContext } from '../../components/Providers';
+import SupportLink from '../../components/SupportLink';
 
 const Toggle = ({ checked, onChange }) => (
   <button 
@@ -220,7 +221,7 @@ export default function Settings() {
 
         <div className="px-4">
           <h3 className="font-bold text-black mb-2 text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Support</h3>
-          <a href="#" className="text-[#2A5AAB] hover:underline text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Need help?</a>
+          <SupportLink className="text-[#2A5AAB] hover:underline text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Besoin d'aide ?</SupportLink>
         </div>
       </aside>
 

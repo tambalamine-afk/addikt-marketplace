@@ -385,11 +385,6 @@ export default function Header() {
                   </Link>
                 </div>
               ))}
-              <div className="h-full" onMouseEnter={() => setHoveredCategory(null)}>
-                <Link href="/promos" className="h-full flex items-center px-6 text-error hover:bg-error hover:text-white transition-colors whitespace-nowrap" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700, fontSize: '15px' }}>
-                  Promos
-                </Link>
-              </div>
             </nav>
           </div>
 

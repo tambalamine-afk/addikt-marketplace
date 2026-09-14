@@ -21,10 +21,10 @@ const MOCK_BANNERS = [
   },
   {
     id: 3,
-    title: "Rejoins la communauté sur Instagram",
+    title: "Deviens Top Vendeur",
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=80",
-    link: "https://instagram.com",
-    alt: "Rejoins la communauté sur Instagram"
+    link: "/top-seller",
+    alt: "Deviens Top Vendeur sur Addikt"
   }
 ];
 

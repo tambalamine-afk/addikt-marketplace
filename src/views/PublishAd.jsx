@@ -51,7 +51,9 @@ export default function PublishAd() {
     'Enfants': ['Bébé', 'Filles (2-14 ans)', 'Garçons (2-14 ans)', 'Chaussures', 'Jouets', 'Livres', 'Puériculture', 'Accessoires'],
     'Sneakers': ['Basses', 'Montantes', 'Running', 'Lifestyle', 'Vintage', 'Éditions limitées', 'Accessoires'],
     'Beauté': ['Maquillage', 'Soins visage', 'Soins corps', 'Parfums', 'Accessoires beauté'],
-    'Accessoires': ['Sacs', 'Bijoux', 'Montres', 'Lunettes', 'Ceintures', 'Chapeaux & casquettes', 'Autres accessoires']
+    'Accessoires': ['Sacs', 'Bijoux', 'Montres', 'Lunettes', 'Ceintures', 'Chapeaux & casquettes', 'Autres accessoires'],
+    'Marques': ['Nike', 'Adidas', 'Zara', 'H&M', "Levi's", 'Tongoro Studio', 'Puma', 'Mango', 'Autre marque'],
+    'Sports': ['Running', 'Fitness', 'Football', 'Basketball', 'Vêtements', 'Chaussures', 'Accessoires']
   };
 
   const navigate = useRouter();
@@ -201,7 +203,7 @@ export default function PublishAd() {
 
   if (publishedListing) {
     const shareText = encodeURIComponent(`Découvre mon annonce sur Addikt : ${publishedListing.title} à ${publishedListing.price.toLocaleString('fr-FR')}F !`);
-    const whatsappUrl = `https://wa.me/?text=${shareText}%20https://addikt.com/product/${publishedListing.id}`;
+    const whatsappUrl = `https://wa.me/?text=${shareText}%20${encodeURIComponent(`${window.location.origin}/product/${publishedListing.id}`)}`;
 
     return (
       <div className="antialiased flex flex-col min-h-screen bg-background text-on-background font-body-sm overflow-x-hidden">

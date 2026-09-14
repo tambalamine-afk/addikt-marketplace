@@ -2,20 +2,40 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import AdCarousel from '../components/AdCarousel';
-import TopSellers, { TOP_SELLERS } from '../components/TopSellers';
+import TopSellers from '../components/TopSellers';
 import AppPromoBanner from '../components/AppPromoBanner';
 import { createClient } from '../lib/supabase/client';
 import Image from 'next/image';
 import { isOptimizableImage } from '../lib/imageUrl';
 
 const LISTING_PLACEHOLDER = 'https://placehold.co/300x400/eaeaea/a0a0a0?text=Pas+d%27image';
+
+// Arguments du bandeau d'accueil : uniquement ce que le site fait réellement
+const BUYER_ARGUMENTS = [
+  { icon: 'handshake', title: 'Main propre', text: 'Rencontre le vendeur' },
+  { icon: 'fact_check', title: 'Paie à la remise', text: "Après avoir vérifié l'article" },
+  { icon: 'forum', title: 'Messagerie', text: 'Pose tes questions avant' },
+];
+
+const SELLER_ARGUMENTS = [
+  { icon: 'money_off', title: '0 commission', text: 'Garde 100 % de tes ventes' },
+  { icon: 'timer', title: 'Publie en 2 min', text: 'Photos, prix, en ligne' },
+  { icon: 'location_on', title: "Pas d'envoi", text: 'Remise en main propre' },
+];
+
+// Déroulé réel d'une vente sur Addikt (remplace les témoignages inventés)
+const HOW_IT_WORKS = [
+  { title: 'Publie ton article', text: "Prends quelques photos, indique la taille, l'état et le prix : ton annonce est en ligne en deux minutes." },
+  { title: "Échange avec l'acheteur", text: 'Il te contacte par la messagerie Addikt ou sur WhatsApp, et vous fixez ensemble un lieu de rendez-vous.' },
+  { title: 'Remets et encaisse', text: "L'acheteur vérifie l'article et te paie en main propre. Il confirme la réception, puis vous vous laissez un avis." },
+];
 import { useContext } from 'react';
 import { AppContext } from '../components/Providers';
 
 const slideData = [
-  { title: "Vintage Vibes", subtitle: "Des pièces uniques, à ne pas laisser filer.", color: "#A8A29E", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxLgjMfUFExwuaqPvDCm-TZviw8WL3U4SHmcp7u3cvkhIIx1CpjzohYsejzpqx_abQIvviLLh-u45yYfgh_hvuQqGR_uNzEaNNknvcQYjk7yZzKeKCyqXCiJNsTTAWoIotGVgPFW8y0rXgsx3x_2aFs7ZFN9R9fC7JozICwJWPfycH1Wfvfw-gJ-RTdAU6GGl74MzC8MNCDCw1VhRymfJ91lUqOIXJ1YdwF_jIBxYLJEnSyT5OIvlK" },
-  { title: "Sneakers de la semaine", subtitle: "Les paires les plus recherchées, en stock maintenant.", color: "#22C55E", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDiU-4HGh-ATzQvfsVrhatuBF1hLHnmeIQ2HLQK6E4X2AoE0YD0DFIMGr3d8i4g3X_b_m76-KhO6mKWt766QPpy5NSW9xhZLMxfSopUmlMnaBlnT7uQwx-4o83wc7di0wGafvg0NNm8BeAruXw7pLXIzjx_CSukej7tuGFSuwbFFQUbk840X9qRhAWhOeD5nNWj_c7oyuPi5-OGurgzQynkq2qhre4GtniezzxUWr3wSmjWYZDBJnzO" },
-  { title: "Looks Wax", subtitle: "Le motif qui ne se démode jamais.", color: "#D946EF", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxbqGSfDWXUEhaRcbeghlO4wxcF03GpYPW6Mq9zajiz7Y__NxpPNqa4bqXDK_l0CK4fh0mq7Cfr9TgZi3f560BfaImqAYkYX-FSPCGwGE8Ma9Juz1YLhCPA3uHE4F14E1boQepHJBYIoCZYlhgTFalpfNT1FjK6gPEg0rFwPd_8NFkI56-YmRQ1v_BEjEj_G0e2-s8x0VGgO2UshLhrfcfszGcaO1Wukm6N0mxS6MPCQKDekzkq8WJ" }
+  { title: "Vintage Vibes", subtitle: "Des pièces uniques, à ne pas laisser filer.", color: "#A8A29E", link: "/search?q=vintage", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxLgjMfUFExwuaqPvDCm-TZviw8WL3U4SHmcp7u3cvkhIIx1CpjzohYsejzpqx_abQIvviLLh-u45yYfgh_hvuQqGR_uNzEaNNknvcQYjk7yZzKeKCyqXCiJNsTTAWoIotGVgPFW8y0rXgsx3x_2aFs7ZFN9R9fC7JozICwJWPfycH1Wfvfw-gJ-RTdAU6GGl74MzC8MNCDCw1VhRymfJ91lUqOIXJ1YdwF_jIBxYLJEnSyT5OIvlK" },
+  { title: "Sneakers de la semaine", subtitle: "Les paires les plus recherchées du moment.", color: "#22C55E", link: "/category/sneakers", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDiU-4HGh-ATzQvfsVrhatuBF1hLHnmeIQ2HLQK6E4X2AoE0YD0DFIMGr3d8i4g3X_b_m76-KhO6mKWt766QPpy5NSW9xhZLMxfSopUmlMnaBlnT7uQwx-4o83wc7di0wGafvg0NNm8BeAruXw7pLXIzjx_CSukej7tuGFSuwbFFQUbk840X9qRhAWhOeD5nNWj_c7oyuPi5-OGurgzQynkq2qhre4GtniezzxUWr3wSmjWYZDBJnzO" },
+  { title: "Looks Wax", subtitle: "Le motif qui ne se démode jamais.", color: "#D946EF", link: "/search?q=wax", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxbqGSfDWXUEhaRcbeghlO4wxcF03GpYPW6Mq9zajiz7Y__NxpPNqa4bqXDK_l0CK4fh0mq7Cfr9TgZi3f560BfaImqAYkYX-FSPCGwGE8Ma9Juz1YLhCPA3uHE4F14E1boQepHJBYIoCZYlhgTFalpfNT1FjK6gPEg0rFwPd_8NFkI56-YmRQ1v_BEjEj_G0e2-s8x0VGgO2UshLhrfcfszGcaO1Wukm6N0mxS6MPCQKDekzkq8WJ" }
 ];
 
 const PRODUCTS_GRID = [
@@ -134,7 +154,7 @@ const CATEGORIES = [
   { title: "Accessoires", subtitle: "Sacs, bijoux et plus", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD_gP-u7CegtOVZgGVsvsgo99hSykmyCqTimv1pG2obRfCuzj8nOCd6pf78d0wtxF-OmdffGIY04I3VCShIJeWQFFxf3jxuzxHsrWhvT25JQwNd3r2M52FM0AUkgSQNRFE_xRBhuYO3WSMxbrQoTDtGRx4JugpWGaAAblR-e-ITdYaVFXYZUwDkSEUphIk9VrY_brxBgpWQjKI3k7tZY6koCvUt-paJCWrrMCAiGthBfWp_yLJtK2Z-", link: "/category/accessoires" }
 ];
 
-export default function LandingPage({ initialRecentListings = [], initialTopBoutiques = [] }) {
+export default function LandingPage({ initialRecentListings = [], initialTopBoutiques = [], initialMemberAvatars = [] }) {
   const { user, likedItems, toggleFavorite } = useContext(AppContext);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [toggleState, setToggleState] = useState('acheter');
@@ -243,48 +263,20 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
               </Link>
             ) : (
               <Link href="/publish" className="inline-block bg-primary text-white px-8 py-3.5 rounded-full font-bold text-[16px] hover:opacity-90 transition-opacity mb-8" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
-                Sell now
+                Vendre maintenant
               </Link>
             )}
 
-            {/* 5. Stats Cards */}
-            {toggleState === 'acheter' ? (
-              <div className="flex gap-2 md:gap-4 w-full pb-2 justify-between">
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
-                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">checkroom</span>
-                  <span className="font-bold text-primary text-[14px] md:text-[16px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>1M+</span>
-                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Articles en vente</span>
+            {/* 5. Arguments clés : uniquement ce que le site fait réellement */}
+            <div className="flex gap-2 md:gap-4 w-full pb-2 justify-between">
+              {(toggleState === 'acheter' ? BUYER_ARGUMENTS : SELLER_ARGUMENTS).map((item) => (
+                <div key={item.title} className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
+                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">{item.icon}</span>
+                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{item.title}</span>
+                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">{item.text}</span>
                 </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
-                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">auto_awesome</span>
-                  <span className="font-bold text-primary text-[14px] md:text-[16px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>10K+</span>
-                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Nouveautés / jour</span>
-                </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
-                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">verified_user</span>
-                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Sécurité</span>
-                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 underline cursor-pointer leading-tight">Protection Addikt</span>
-                </div>
-              </div>
-            ) : (
-              <div className="flex gap-2 md:gap-4 w-full pb-2 justify-between">
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
-                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">verified_user</span>
-                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Sécurité</span>
-                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 underline cursor-pointer leading-tight">Protection Addikt</span>
-                </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
-                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">auto_awesome</span>
-                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Publie vite</span>
-                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Annonces intelligentes</span>
-                </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-4 flex flex-col items-center text-center shadow-sm flex-1 min-w-0">
-                  <span className="material-symbols-outlined text-primary mb-1 md:mb-2 text-[18px] md:text-[22px]">local_shipping</span>
-                  <span className="font-bold text-primary text-[13px] md:text-[15px]" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Expédie facile</span>
-                  <span className="text-on-surface-variant text-[10px] md:text-xs mt-0.5 leading-tight">Sans imprimante</span>
-                </div>
-              </div>
-            )}
+              ))}
+            </div>
           </div>
           <div className="relative h-[450px] flex justify-center items-center mt-2 md:mt-0">
             <div className="absolute w-56 h-[320px] transform -rotate-[15deg] -translate-x-36 overflow-hidden z-0" style={{ backgroundColor: 'rgb(249, 249, 249)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
@@ -313,7 +305,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
             </svg>
           </div>
           
-          <span className="relative z-20">LE TOP #1</span>
+          <span className="relative z-20">LA MARKETPLACE</span>
           
           {/* Orange shape - Top Right */}
           <div className="absolute -right-[5%] md:-right-[25%] -top-[15%] w-24 md:w-52 opacity-95 mix-blend-multiply pointer-events-none -z-10">
@@ -325,7 +317,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
 
         {/* LINE 2 */}
         <div className="relative inline-block text-[13vw] md:text-[13vw] z-10 whitespace-nowrap mt-[-2%] md:mt-0">
-          <span className="relative z-20">MARKETPLACE MODE</span>
+          <span className="relative z-20">MODE D'AFRIQUE</span>
         </div>
 
         {/* LINE 3 */}
@@ -337,7 +329,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
             </svg>
           </div>
           
-          <span className="relative z-20">WESTAF</span>
+          <span className="relative z-20">DE L'OUEST</span>
           
           {/* Blue shape - Bottom Right */}
           <div className="absolute -right-[10%] md:-right-[35%] -bottom-[10%] w-24 md:w-44 opacity-95 mix-blend-multiply pointer-events-none -z-10">
@@ -399,9 +391,9 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
           <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center items-center md:items-start text-center md:text-left text-white transition-colors duration-500 z-10 order-2 md:order-1 relative" style={{ backgroundColor: slideData[currentSlide].color }}>
             <h3 className="text-2xl md:text-3xl mb-2 font-bold leading-tight" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>{slideData[currentSlide].title}</h3>
             <p className="mb-6 opacity-90 text-sm md:text-base font-medium" style={{ fontFamily: '"Google Sans", sans-serif' }}>{slideData[currentSlide].subtitle}</p>
-            <button className="bg-white text-black px-6 py-2.5 rounded-full hover:opacity-90 transition-opacity font-bold text-sm mb-6 md:mb-0" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
-              Shop now
-            </button>
+            <Link href={slideData[currentSlide].link} className="bg-white text-black px-6 py-2.5 rounded-full hover:opacity-90 transition-opacity font-bold text-sm mb-6 md:mb-0" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}>
+              Découvrir
+            </Link>
             
             {/* Dots */}
             <div className="flex gap-2 z-10 md:absolute md:bottom-4 md:left-1/2 md:-translate-x-1/2 mt-2 md:mt-0">
@@ -493,7 +485,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
               <h2 className="font-headline-lg text-black" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600, fontSize: '24px' }}>Fresh DROP</h2>
               <svg className="text-black" fill="currentColor" height="40" viewBox="0 0 100 100" width="40"><path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z"></path></svg>
             </div>
-            <Link href="/fresh-drop" className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:flex items-center justify-center font-bold">Explore</Link>
+            <Link href="/fresh-drop" className="bg-primary text-on-primary font-button-text px-6 py-2.5 rounded-full hover:bg-accent-orange transition-colors hidden sm:flex items-center justify-center font-bold">Voir tout</Link>
           </div>
           
           {recentListings && recentListings.length > 0 ? (
@@ -558,9 +550,21 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
               <div className="flex justify-between items-start relative z-10">
                 <Link href="/register" className="bg-white text-black font-bold px-6 py-2.5 rounded-full text-sm shadow-sm hover:scale-105 transition-transform inline-block" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>S'inscrire</Link>
                 <div className="flex -space-x-3">
-                   <img className="w-12 h-12 rounded-full border-2 border-[#00a6fb] object-cover bg-white" src="https://i.pravatar.cc/100?img=1" alt="User 1" />
-                   <img className="w-12 h-12 rounded-full border-2 border-[#00a6fb] object-cover bg-white" src="https://i.pravatar.cc/100?img=2" alt="User 2" />
-                   <img className="w-12 h-12 rounded-full border-2 border-[#00a6fb] object-cover bg-white" src="https://i.pravatar.cc/100?img=3" alt="User 3" />
+                  {initialMemberAvatars.length > 0 ? initialMemberAvatars.map((member) => (
+                    <Image
+                      key={member.id}
+                      className="w-12 h-12 rounded-full border-2 border-[#00a6fb] object-cover bg-white"
+                      src={member.avatar_url}
+                      alt={`@${member.username}`}
+                      width={48}
+                      height={48}
+                      unoptimized={!isOptimizableImage(member.avatar_url)}
+                    />
+                  )) : (
+                    <span className="w-12 h-12 rounded-full border-2 border-white/60 bg-white/20 flex items-center justify-center text-white">
+                      <span className="material-symbols-outlined text-[22px]">group</span>
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="flex justify-between items-end mt-4 relative z-10">
@@ -595,7 +599,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
           </div>
         ) : (
           <div>
-            <VendreContent topBoutiques={topBoutiques} />
+            <VendreContent topBoutiques={topBoutiques} featuredListing={recentListings[0]} />
           </div>
         )}
       </div>
@@ -603,7 +607,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
   );
 }
 
-const VendreContent = ({ topBoutiques }) => (
+const VendreContent = ({ topBoutiques, featuredListing }) => (
   <div className="w-full mb-12">
     {/* SIMPLICITY SECTION */}
     <section className="bg-surface-container-lowest py-16 px-container-margin my-8">
@@ -612,22 +616,29 @@ const VendreContent = ({ topBoutiques }) => (
           <div className="relative w-[280px] md:w-[320px] mx-auto drop-shadow-2xl">
             <img 
               src="/iphone-mock-no-camera.webp" 
-              alt="iPhone Mockup" 
+              alt="" 
               className="relative w-full h-auto z-10 pointer-events-none" 
             />
-            {/* Ajustez les pourcentages top/bottom/left/right selon les bordures de votre image mockup */}
+            {/* Aperçu d'une vraie annonce en ligne */}
             <div className="absolute top-[2.5%] bottom-[2.5%] left-[5.5%] right-[5.5%] z-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-surface-container flex items-center justify-center">
-               <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline 
-                  className="w-full h-full object-cover"
-               >
-                 {/* Mettez le vrai nom de votre vidéo ici (par ex. src="/capture-ecran.mp4") */}
-                 <source src="/votre-video-demo.mp4" type="video/mp4" />
-                 <div className="p-4 text-center text-sm text-gray-500">Vidéo de démo ici</div>
-               </video>
+              {featuredListing ? (
+                <>
+                  <Image
+                    src={featuredListing.listing_images?.[0]?.url || LISTING_PLACEHOLDER}
+                    alt={featuredListing.title}
+                    fill
+                    sizes="320px"
+                    className="object-cover"
+                    unoptimized={!isOptimizableImage(featuredListing.listing_images?.[0]?.url)}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 px-6 pb-10 pt-16 bg-gradient-to-t from-black/80 to-transparent text-white" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                    <p className="text-sm font-bold truncate">{featuredListing.title}</p>
+                    <p className="text-lg font-bold">{featuredListing.price?.toLocaleString('fr-FR')} F</p>
+                  </div>
+                </>
+              ) : (
+                <span className="text-2xl font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>Addikt</span>
+              )}
             </div>
           </div>
         </div>
@@ -658,7 +669,7 @@ const VendreContent = ({ topBoutiques }) => (
             <span className="material-symbols-outlined text-4xl text-primary mt-1">verified_user</span>
             <div>
               <h3 className="font-headline-md text-primary mb-2" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Vends avec confiance</h3>
-              <p className="font-body-lg text-on-surface-variant" style={{ fontFamily: '"Google Sans", sans-serif' }}>Notre équipe de modération veille à ce que la communauté reste sûre et respectueuse.</p>
+              <p className="font-body-lg text-on-surface-variant" style={{ fontFamily: '"Google Sans", sans-serif' }}>Chaque annonce peut être signalée : nous examinons chaque signalement pour garder la communauté sûre.</p>
             </div>
           </div>
         </div>
@@ -669,28 +680,19 @@ const VendreContent = ({ topBoutiques }) => (
     
     <TopSellers topBoutiques={topBoutiques} />
 
-    {/* TESTIMONIALS SECTION */}
+    {/* COMMENT ÇA MARCHE */}
     <section className="py-16 px-container-margin bg-surface-container-low mb-12">
       <div className="max-w-7xl mx-auto">
-        <h2 className="font-headline-lg text-primary mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Ce que les vendeurs disent d'Addikt</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
-            <p className="font-bold mb-4 text-primary">@vintage_dakar</p>
-            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Addikt me permet de partager mon style, de donner une seconde vie aux vêtements, et surtout, m'aide à être financièrement indépendant."</p>
-          </div>
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
-            <p className="font-bold mb-4 text-primary">@style_retro</p>
-            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Je vends sur Addikt parce que j'adore la simplicité de l'interface et la facilité pour publier des articles. Cette année, je me rapproche des 500 ventes !"</p>
-          </div>
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
-            <p className="font-bold mb-4 text-primary">@dakar_chic</p>
-            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Nous vendons sur Addikt car le processus est fluide et facile. Tout est très simple, de la mise en ligne à la livraison."</p>
-          </div>
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant">
-            <p className="font-bold mb-4 text-primary">@pop_thrift</p>
-            <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Inter", sans-serif' }}>"Vendre sur Addikt est le meilleur complément de revenu possible. Pas de frais de vente et vous pouvez aller aussi loin que vous le souhaitez !"</p>
-          </div>
-        </div>
+        <h2 className="font-headline-lg text-primary mb-12" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 700 }}>Comment ça marche</h2>
+        <ol className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {HOW_IT_WORKS.map((step, index) => (
+            <li key={step.title} className="bg-white p-8 rounded-2xl shadow-sm border border-outline-variant flex flex-col gap-3">
+              <span className="text-3xl font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{index + 1}</span>
+              <h3 className="font-bold text-primary" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>{step.title}</h3>
+              <p className="text-on-surface-variant text-sm leading-relaxed" style={{ fontFamily: '"Google Sans", sans-serif' }}>{step.text}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
 
@@ -702,7 +704,7 @@ const VendreContent = ({ topBoutiques }) => (
           className="bg-primary text-white px-8 py-3 rounded-full uppercase tracking-wide hover:opacity-90 transition-opacity relative z-10"
           style={{ fontFamily: '"Zalando Sans Expanded", sans-serif', fontWeight: 600 }}
         >
-          Sell now
+          Vendre maintenant
         </button>
         <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden md:block opacity-50">
           <svg height="93" viewBox="0 0 241.67 225.99" width="100" xmlns="http://www.w3.org/2000/svg">
