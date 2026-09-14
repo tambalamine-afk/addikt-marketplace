@@ -1,10 +1,21 @@
 import './globals.css';
 import Providers from '../components/Providers';
 import LayoutWrapper from '../components/LayoutWrapper';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '../lib/site';
 
 export const metadata = {
-  title: 'Addikt Marketplace',
-  description: 'Achetez et vendez facilement',
+  // Base des liens absolus (images d'aperçu, adresse canonique)
+  metadataBase: new URL(SITE_URL),
+  title: 'Addikt · Mode de seconde main au Sénégal',
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    locale: 'fr_SN',
+    title: 'Addikt · Mode de seconde main au Sénégal',
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }) {

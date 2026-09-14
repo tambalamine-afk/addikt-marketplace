@@ -6,6 +6,8 @@ import { AppContext } from '../components/Providers';
 import ProductCard from '../components/ProductCard';
 import ReportListingButton from '../components/ReportListingButton';
 import { useConfirm } from '../components/ConfirmDialog';
+import Image from 'next/image';
+import { isOptimizableImage } from '../lib/imageUrl';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -256,10 +258,15 @@ export default function ProductPage() {
             {/* Main Image */}
             <div className="relative w-full aspect-[3/4] bg-surface-container rounded-2xl overflow-hidden group border border-outline-variant/30">
               {mainImage ? (
-                <img 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                  alt={product.title} 
-                  src={mainImage} 
+                <Image
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  alt={product.title}
+                  src={mainImage}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 55vw"
+                  loading="eager"
+                  fetchPriority="high"
+                  unoptimized={!isOptimizableImage(mainImage)}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100">Pas d'image</div>
@@ -317,9 +324,9 @@ export default function ProductPage() {
                   <button 
                     key={idx}
                     onClick={() => setMainImage(img)}
-                    className={`aspect-square rounded-2xl overflow-hidden border-2 transition-colors ${mainImage === img ? 'border-primary' : 'border-transparent hover:border-outline-variant'}`}
+                    className={`relative aspect-square rounded-2xl overflow-hidden border-2 transition-colors ${mainImage === img ? 'border-primary' : 'border-transparent hover:border-outline-variant'}`}
                   >
-                    <img className="w-full h-full object-cover" alt={`Thumb ${idx}`} src={img} />
+                    <Image className="object-cover" alt={`${product.title}, photo ${idx + 1}`} src={img} fill sizes="(max-width: 768px) 20vw, 11vw" unoptimized={!isOptimizableImage(img)} />
                   </button>
                 ))}
               </div>

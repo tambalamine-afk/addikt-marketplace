@@ -7,7 +7,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "test": "npm run test:unit && npm run test:db",
+    "test:unit": "node --test \"tests/unit/*.test.mjs\"",
+    "test:db": "node supabase/tests/rls.test.mjs",
+    "test:smoke": "node --test \"tests/smoke/*.test.mjs\""
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
@@ -21,6 +25,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.3.16",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^22.13.5",
     "@types/react": "^19.2.17",

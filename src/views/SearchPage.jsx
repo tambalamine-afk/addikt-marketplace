@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '../lib/supabase/client';
 import ProductCard from '../components/ProductCard';
+import { toSearchTerm } from '../lib/search';
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -48,7 +49,7 @@ export default function SearchPage() {
         return;
       }
 
-      const searchTerm = query.replace(/[%_*"\\]/g, ' ').trim();
+      const searchTerm = toSearchTerm(query);
 
       const { data, error } = await supabase
         .from('listings')

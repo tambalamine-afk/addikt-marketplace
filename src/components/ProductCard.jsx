@@ -1,7 +1,11 @@
 "use client";
 import React, { useContext } from 'react';
+import Image from 'next/image';
 import { Heart } from 'lucide-react';
 import { AppContext } from './Providers';
+import { isOptimizableImage } from '../lib/imageUrl';
+
+const PLACEHOLDER_IMAGE = 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image';
 
 export default function ProductCard({ product, onSelect, onToggleLike }) {
   const { user, likedItems, toggleFavorite } = useContext(AppContext);
@@ -12,11 +16,13 @@ export default function ProductCard({ product, onSelect, onToggleLike }) {
   return (
     <div className="flex flex-col cursor-pointer group w-full" onClick={() => onSelect(product)}>
       <div className="relative w-full aspect-[3/4] bg-surface-container-lowest overflow-hidden mb-2 rounded-sm border border-outline/10">
-        <img 
-          src={product.image} 
-          alt={product.title} 
-          loading="lazy" 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        <Image
+          src={product.image || PLACEHOLDER_IMAGE}
+          alt={product.title || ''}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          unoptimized={!isOptimizableImage(product.image)}
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <button
           className="absolute bottom-2 right-2 p-1.5 transition-transform hover:scale-110 z-20"
