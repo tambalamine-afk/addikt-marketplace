@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../components/Providers';
 import OrderStatusPill from '../../components/OrderStatusPill';
+import { useConfirm } from '../../components/ConfirmDialog';
 import {
   ORDER_STEPS,
   formatFcfa,
@@ -21,27 +22,47 @@ const ACTIONS = {
   deliver: {
     status: 'delivered',
     label: 'Confirmer la réception',
-    confirm: "Confirmes-tu avoir reçu l'article ?",
+    dialog: {
+      title: 'Confirmer la réception ?',
+      message: "Confirme seulement si tu as l'article en main. La commande sera terminée et l'article marqué comme vendu.",
+      confirmLabel: "Oui, je l'ai reçu",
+    },
     success: 'Réception confirmée. Merci !',
     primary: true,
   },
   ship: {
     status: 'shipped',
     label: "J'ai remis l'article",
-    confirm: "Confirmes-tu avoir remis l'article à l'acheteur ?",
+    dialog: {
+      title: "Article remis à l'acheteur ?",
+      message: "L'acheteur devra ensuite confirmer la réception pour terminer la vente.",
+      confirmLabel: "Oui, c'est remis",
+    },
     success: 'Remise enregistrée.',
     primary: true,
   },
   cancelPurchase: {
     status: 'cancelled',
     label: 'Annuler la commande',
-    confirm: "Annuler la commande ? L'article sera remis en vente.",
+    dialog: {
+      title: 'Annuler la commande ?',
+      message: "L'article sera remis en vente et tu perdras ta réservation.",
+      confirmLabel: 'Annuler la commande',
+      cancelLabel: 'Garder la commande',
+      tone: 'danger',
+    },
     success: 'Commande annulée.',
   },
   cancelSale: {
     status: 'cancelled',
     label: 'Annuler la vente',
-    confirm: "Annuler la vente ? L'article sera remis en vente.",
+    dialog: {
+      title: 'Annuler la vente ?',
+      message: "L'article sera remis en vente. Pense à prévenir l'acheteur.",
+      confirmLabel: 'Annuler la vente',
+      cancelLabel: 'Garder la vente',
+      tone: 'danger',
+    },
     success: 'Vente annulée.',
   },
 };
@@ -144,6 +165,7 @@ export default function OrderDetail() {
   const { id } = useParams();
   const router = useRouter();
   const { user, supabase, isLoadingAuth, addToast } = useContext(AppContext);
+  const confirm = useConfirm();
 
   const [order, setOrder] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -195,7 +217,7 @@ export default function OrderDetail() {
   }, [order, isBuyer, supabase]);
 
   const changeStatus = async (action) => {
-    if (!window.confirm(action.confirm)) return;
+    if (!(await confirm(action.dialog))) return;
     setPendingStatus(action.status);
     const { error } = await supabase.rpc('update_order_status', { p_order_id: order.id, p_status: action.status });
     setPendingStatus(null);

@@ -5,11 +5,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../components/Providers';
 import ProductCard from '../components/ProductCard';
 import ReportListingButton from '../components/ReportListingButton';
+import { useConfirm } from '../components/ConfirmDialog';
 
 export default function ProductPage() {
   const { id } = useParams();
   const navigate = useRouter();
   const { user, supabase, addToast, addToCart, likedItems, toggleFavorite } = useContext(AppContext);
+  const confirm = useConfirm();
 
   const [product, setProduct] = useState(null);
   const [seller, setSeller] = useState(null);
@@ -109,7 +111,13 @@ export default function ProductPage() {
   }, [user, id, supabase]);
 
   const handleDeleteListing = async () => {
-    if (window.confirm("Es-tu sûr de vouloir supprimer cette annonce ? Cette action est irréversible.")) {
+    const confirmed = await confirm({
+      title: 'Supprimer cette annonce ?',
+      message: "Elle ne sera plus visible sur Addikt et tu ne pourras pas la remettre en ligne. Les conversations liées restent consultables.",
+      confirmLabel: 'Supprimer',
+      tone: 'danger',
+    });
+    if (confirmed) {
       try {
         // Suppression logique : les conversations et commandes liées restent consultables
         const { data, error } = await supabase

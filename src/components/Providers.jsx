@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import AuthModal from './AuthModal';
+import { ConfirmProvider } from './ConfirmDialog';
 import { createClient } from '../lib/supabase/client';
 
 export const AppContext = React.createContext();
@@ -136,7 +137,7 @@ export default function Providers({ children }) {
       unreadMessagesCount, setUnreadMessagesCount,
       likedItems, toggleFavorite
     }}>
-      {children}
+      <ConfirmProvider>{children}</ConfirmProvider>
       <AuthModal />
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none w-full max-w-sm px-4">
         {toasts.map(t => (
