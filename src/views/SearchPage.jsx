@@ -1,20 +1,47 @@
 "use client";
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '../lib/supabase/client';
 import ProductCard from '../components/ProductCard';
 import { toSearchTerm } from '../lib/search';
 
-export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('q') || '';
+function formatSearchResults(data) {
+  return data.map(item => {
+    const sortedImages = [...(item.listing_images || [])].sort((a, b) => a.position - b.position);
+    return {
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      size: item.size,
+      brand: item.brand,
+      condition: item.condition,
+      created_at: item.created_at,
+      image: sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image',
+      seller: item.seller,
+      liked: false
+    };
+  });
+}
+
+function brandsOf(data) {
+  return Array.from(new Set(data.map(p => p.brand).filter(Boolean))).slice(0, 8);
+}
+
+export default function SearchPage({ initialQuery = null, initialResults = null }) {
+  // Recherche transmise par le serveur : lire l'adresse avec useSearchParams renverrait
+  // seulement l'écran de chargement dans le HTML (rendu repoussé au navigateur).
+  // Une nouvelle recherche recharge la page serveur, qui remonte ce composant (key).
+  const query = initialQuery ?? '';
   const router = useRouter();
   const supabase = createClient();
 
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [popularBrands, setPopularBrands] = useState([]);
+  // Résultats fournis par le serveur pour cette recherche : pas de spinner au premier affichage
+  const hasServerResults = initialResults !== null && initialQuery === query;
+  const [products, setProducts] = useState(hasServerResults ? formatSearchResults(initialResults) : []);
+  const [isLoading, setIsLoading] = useState(!hasServerResults);
+  const [popularBrands, setPopularBrands] = useState(hasServerResults ? brandsOf(initialResults) : []);
+  const skipInitialFetch = useRef(hasServerResults);
 
   // Filter states
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -41,6 +68,11 @@ export default function SearchPage() {
   }, []);
 
   useEffect(() => {
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+
     async function fetchSearchResults() {
       setIsLoading(true);
       if (!query) {
@@ -56,7 +88,7 @@ export default function SearchPage() {
         .select(`
           *,
           listing_images(url, position),
-          profiles(username, avatar_url)
+          seller:profiles!seller_id(username, avatar_url)
         `)
         .eq('status', 'active')
         // Valeurs entre guillemets : virgules et parenthèses ne cassent plus le filtre.
@@ -66,28 +98,9 @@ export default function SearchPage() {
         .limit(60);
 
       if (data) {
-        const formatted = data.map(item => {
-          const sortedImages = item.listing_images?.sort((a, b) => a.position - b.position) || [];
-          return {
-            id: item.id,
-            title: item.title,
-            price: item.price,
-            size: item.size,
-            brand: item.brand,
-            condition: item.condition,
-            created_at: item.created_at,
-            image: sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image',
-            seller: item.profiles,
-            liked: false
-          };
-        });
-        setProducts(formatted);
+        setProducts(formatSearchResults(data));
         
-        const brands = new Set();
-        data.forEach(p => {
-          if (p.brand) brands.add(p.brand);
-        });
-        setPopularBrands(Array.from(brands).slice(0, 8));
+        setPopularBrands(brandsOf(data));
       } else {
         console.error(error);
       }

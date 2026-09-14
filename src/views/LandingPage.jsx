@@ -130,12 +130,13 @@ const CATEGORIES = [
   { title: "Accessoires", subtitle: "Sacs, bijoux et plus", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD_gP-u7CegtOVZgGVsvsgo99hSykmyCqTimv1pG2obRfCuzj8nOCd6pf78d0wtxF-OmdffGIY04I3VCShIJeWQFFxf3jxuzxHsrWhvT25JQwNd3r2M52FM0AUkgSQNRFE_xRBhuYO3WSMxbrQoTDtGRx4JugpWGaAAblR-e-ITdYaVFXYZUwDkSEUphIk9VrY_brxBgpWQjKI3k7tZY6koCvUt-paJCWrrMCAiGthBfWp_yLJtK2Z-", link: "/category/accessoires" }
 ];
 
-export default function LandingPage() {
+export default function LandingPage({ initialRecentListings = [], initialTopBoutiques = [] }) {
   const { user, likedItems, toggleFavorite } = useContext(AppContext);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [toggleState, setToggleState] = useState('acheter');
-  const [recentListings, setRecentListings] = useState([]);
-  const [topBoutiques, setTopBoutiques] = useState([]);
+  // Données fournies par le serveur : affichées tout de suite, puis rafraîchies ci-dessous
+  const [recentListings, setRecentListings] = useState(initialRecentListings);
+  const [topBoutiques, setTopBoutiques] = useState(initialTopBoutiques);
   const supabase = createClient();
 
   useEffect(() => {

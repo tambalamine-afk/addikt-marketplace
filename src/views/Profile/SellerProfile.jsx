@@ -4,13 +4,14 @@ import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../../components/Providers';
 
-export default function SellerProfile({ sellerId }) {
+export default function SellerProfile({ sellerId, initialSeller = null, initialListings = [], initialFollowerCount = 0 }) {
   const router = useRouter();
-  const [seller, setSeller] = useState(null);
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-  const [followerCount, setFollowerCount] = useState(0);
+  // Profil, annonces et abonnés fournis par le serveur : affichés tout de suite
+  const [seller, setSeller] = useState(initialSeller);
+  const [listings, setListings] = useState(initialListings);
+  const [loading, setLoading] = useState(!initialSeller);
+
+  const [followerCount, setFollowerCount] = useState(initialFollowerCount);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isTogglingFollow, setIsTogglingFollow] = useState(false);
   
@@ -19,6 +20,20 @@ export default function SellerProfile({ sellerId }) {
   useEffect(() => {
     async function fetchSellerData() {
       if (!sellerId) return;
+
+      // Données publiques déjà fournies par le serveur : seul l'abonnement dépend du membre connecté
+      if (initialSeller) {
+        if (currentUser) {
+          const { data: followData } = await supabase
+            .from('followers')
+            .select('*')
+            .eq('follower_id', currentUser.id)
+            .eq('following_id', sellerId)
+            .maybeSingle();
+          setIsFollowing(Boolean(followData));
+        }
+        return;
+      }
 
       // Fetch profile
       const { data: profileData, error: profileError } = await supabase

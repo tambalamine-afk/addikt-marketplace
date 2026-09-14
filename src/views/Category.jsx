@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { createClient } from '../lib/supabase/client';
 
-export default function Category({ handleSelect }) {
+export default function Category({ handleSelect, initialProducts = null }) {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search');
@@ -63,7 +63,8 @@ export default function Category({ handleSelect }) {
   const [activeFilters, setActiveFilters] = useState([]);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [sortOrder, setSortOrder] = useState('recent');
-  const [products, setProducts] = useState([]);
+  // Annonces fournies par le serveur : affichées tout de suite, puis rafraîchies
+  const [products, setProducts] = useState(initialProducts || []);
   const [dbCategories, setDbCategories] = useState([]);
   const supabase = createClient();
 

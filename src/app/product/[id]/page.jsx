@@ -83,7 +83,7 @@ export default async function Page({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd).replace(/</g, '\\u003c') }}
         />
       )}
-      <ProductPage />
+      <ProductPage key={id} initialListing={listing} />
     </>
   );
 }

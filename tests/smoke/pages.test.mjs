@@ -51,6 +51,38 @@ test('robots.txt écarte les pages privées et annonce le sitemap', async () => 
   assert.match(text, /Sitemap: \S+\/sitemap\.xml/);
 });
 
+test('l\'accueil et Fresh DROP arrivent déjà remplis d\'annonces (rendu serveur)', async (t) => {
+  const sitemap = await (await get('/sitemap.xml')).text();
+  if (!/\/product\//.test(sitemap)) {
+    t.skip('aucune annonce en ligne');
+    return;
+  }
+  for (const path of ['/', '/fresh-drop']) {
+    const html = await (await get(path)).text();
+    assert.match(html, /href="\/product\/[0-9a-f-]{36}"/, `aucune annonce dans le HTML de ${path}`);
+  }
+});
+
+test('la recherche arrive déjà remplie de résultats (rendu serveur)', async (t) => {
+  const sitemap = await (await get('/sitemap.xml')).text();
+  const productUrl = sitemap.match(/<loc>([^<]*\/product\/[^<]+)<\/loc>/)?.[1];
+  if (!productUrl) {
+    t.skip('aucune annonce en ligne');
+    return;
+  }
+  const productHtml = await (await get(new URL(productUrl).pathname)).text();
+  const title = productHtml
+    .match(/<meta property="og:title" content="([^"]+?) · [^"]*FCFA"/)?.[1]
+    ?.replace(/&#x27;/g, '\'').replace(/&quot;/g, '"').trim();
+  const firstWord = title?.match(/[A-Za-zÀ-ÿ0-9]{3,}/)?.[0];
+  if (!title || !firstWord || /[&<>]/.test(title)) {
+    t.skip('titre d\'annonce inutilisable pour ce test');
+    return;
+  }
+  const html = await (await get(`/search?q=${encodeURIComponent(firstWord)}`)).text();
+  assert.ok(html.includes(title), `« ${title} » absent du HTML de la recherche « ${firstWord} »`);
+});
+
 test('une fiche produit expose titre, prix et données produit', async (t) => {
   const sitemap = await (await get('/sitemap.xml')).text();
   const productUrl = sitemap.match(/<loc>([^<]*\/product\/[^<]+)<\/loc>/)?.[1];

@@ -33,7 +33,7 @@ export default function FavoritesPage() {
         .select(`
           *,
           listing_images(url, position),
-          profiles(username, avatar_url)
+          seller:profiles!seller_id(username, avatar_url)
         `)
         .in('id', likedItems);
 
@@ -49,7 +49,7 @@ export default function FavoritesPage() {
             condition: item.condition,
             created_at: item.created_at,
             image: sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image',
-            seller: item.profiles,
+            seller: item.seller,
             liked: true
           };
         });

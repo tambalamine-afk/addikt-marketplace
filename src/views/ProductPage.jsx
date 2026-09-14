@@ -10,21 +10,25 @@ import Image from 'next/image';
 import { isOptimizableImage } from '../lib/imageUrl';
 import { userFacingError } from '../lib/orders';
 
-export default function ProductPage() {
+export default function ProductPage({ initialListing = null }) {
   const { id } = useParams();
+  // Annonce publique déjà lue par le serveur (null pour un brouillon consulté par son vendeur)
+  const initialImages = [...(initialListing?.listing_images || [])]
+    .sort((a, b) => a.position - b.position)
+    .map((img) => img.url);
   const navigate = useRouter();
   const { user, supabase, addToast, addToCart, likedItems, toggleFavorite } = useContext(AppContext);
   const confirm = useConfirm();
 
-  const [product, setProduct] = useState(null);
-  const [seller, setSeller] = useState(null);
-  const [images, setImages] = useState([]);
-  const [mainImage, setMainImage] = useState(null);
+  const [product, setProduct] = useState(initialListing);
+  const [seller, setSeller] = useState(initialListing?.seller ?? null);
+  const [images, setImages] = useState(initialImages);
+  const [mainImage, setMainImage] = useState(initialImages[0] ?? null);
   const isLiked = likedItems?.includes(id);
   const [sellerPhone, setSellerPhone] = useState(null);
   const [relatedSellerProducts, setRelatedSellerProducts] = useState([]);
   const [relatedCategoryProducts, setRelatedCategoryProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!initialListing);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
@@ -34,7 +38,36 @@ export default function ProductPage() {
   useEffect(() => {
     if (!id || !supabase) return;
 
+    // Suggestions : plus d'articles du vendeur et de la même catégorie
+    async function fetchRelated(listingData) {
+      const { data: sellerProducts } = await supabase
+        .from('listings')
+        .select(`*, listing_images(url, position)`)
+        .eq('seller_id', listingData.seller_id)
+        .eq('status', 'active')
+        .neq('id', id)
+        .limit(5);
+      if (sellerProducts) setRelatedSellerProducts(formatListings(sellerProducts));
+
+      if (listingData.category_id) {
+        const { data: categoryProducts } = await supabase
+          .from('listings')
+          .select(`*, listing_images(url, position)`)
+          .eq('category_id', listingData.category_id)
+          .eq('status', 'active')
+          .neq('id', id)
+          .limit(5);
+        if (categoryProducts) setRelatedCategoryProducts(formatListings(categoryProducts));
+      }
+    }
+
     async function fetchProduct() {
+      // Annonce déjà fournie par le serveur : seules les suggestions restent à charger
+      if (initialListing?.id === id) {
+        await fetchRelated(initialListing);
+        return;
+      }
+
       setIsLoading(true);
       try {
         // 1. Fetch Product with images and category
@@ -69,27 +102,9 @@ export default function ProductPage() {
         
         if (sellerData) setSeller(sellerData);
 
-        // 4. Fetch Related Seller Products (limit 5)
-        const { data: sellerProducts } = await supabase
-          .from('listings')
-          .select(`*, listing_images(url, position)`)
-          .eq('seller_id', listingData.seller_id)
-          .eq('status', 'active')
-          .neq('id', id)
-          .limit(5);
-        if (sellerProducts) setRelatedSellerProducts(formatListings(sellerProducts));
+        // 3. Suggestions
+        await fetchRelated(listingData);
 
-        // 5. Fetch Related Category Products (limit 5)
-        if (listingData.category_id) {
-          const { data: categoryProducts } = await supabase
-            .from('listings')
-            .select(`*, listing_images(url, position)`)
-            .eq('category_id', listingData.category_id)
-            .eq('status', 'active')
-            .neq('id', id)
-            .limit(5);
-          if (categoryProducts) setRelatedCategoryProducts(formatListings(categoryProducts));
-        }
 
       } catch (err) {
         console.error(err);
@@ -100,7 +115,7 @@ export default function ProductPage() {
     }
 
     fetchProduct();
-  }, [id, supabase]);
+  }, [id, supabase, initialListing]);
 
   // Le numéro du vendeur n'est plus public : il n'est révélé qu'aux membres connectés.
   useEffect(() => {

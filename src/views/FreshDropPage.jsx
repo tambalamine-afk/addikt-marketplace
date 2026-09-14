@@ -4,10 +4,11 @@ import { useState, useEffect, useContext } from 'react';
 import { createClient } from '../lib/supabase/client';
 import { AppContext } from '../components/Providers';
 
-export default function FreshDropPage() {
+export default function FreshDropPage({ initialListings = null }) {
   const { user, likedItems, toggleFavorite } = useContext(AppContext);
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Annonces fournies par le serveur : pas de spinner au premier affichage
+  const [listings, setListings] = useState(initialListings || []);
+  const [loading, setLoading] = useState(initialListings === null);
   const supabase = createClient();
 
   useEffect(() => {
