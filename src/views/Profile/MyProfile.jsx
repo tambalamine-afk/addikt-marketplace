@@ -55,7 +55,8 @@ export default function MyProfile() {
           .from('listings')
           .select(`*, listing_images (url, position)`)
           .eq('seller_id', user.id)
-          .eq('status', 'active');
+          // Les articles réservés restent affichés tant que la remise n'est pas terminée
+          .in('status', ['active', 'reserved']);
 
         if (activeData) {
           setListings(formatListings(activeData));

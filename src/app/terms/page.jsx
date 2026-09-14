@@ -48,6 +48,11 @@ export default function TermsPage() {
           <li>vérifie l'article avant de payer ;</li>
           <li>ne paie jamais d'avance via un lien ou un numéro envoyé par un inconnu.</li>
         </LegalList>
+        <p>
+          Quand tu réserves un article, il est retiré de la vente le temps de la remise. L'acheteur et le vendeur peuvent
+          annuler tant que l'article n'a pas été remis. Une fois l'article en main, l'acheteur confirme la réception, ce
+          qui termine la commande et permet à chacun de laisser un avis.
+        </p>
       </LegalSection>
 
       <LegalSection title="Messagerie et avis">

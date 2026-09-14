@@ -133,6 +133,9 @@ export default function MobileMenu({ isOpen, onClose }) {
           <Link href="/profile/me" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
             <span className="text-[#333] text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Espace vendeur</span>
           </Link>
+          <Link href="/orders" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
+            <span className="text-[#333] text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Mes commandes</span>
+          </Link>
           <Link href="/profile/settings" onClick={onClose} className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
             <span className="text-[#333] text-[15px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>Paramètres</span>
           </Link>

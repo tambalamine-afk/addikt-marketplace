@@ -2,6 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from './Providers';
 import { X, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, addToast } = useContext(AppContext);
@@ -83,9 +84,19 @@ export default function CartDrawer() {
                         {item.size && `Taille ${item.size}`} {item.brand && `• ${item.brand}`}
                       </p>
                     </div>
-                    <p className="font-bold text-primary text-[16px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
-                      {item.price?.toLocaleString('fr-FR')} FCFA
-                    </p>
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-bold text-primary text-[16px]" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                        {item.price?.toLocaleString('fr-FR')} FCFA
+                      </p>
+                      <Link
+                        href={`/checkout/${item.id}`}
+                        onClick={() => setIsCartOpen(false)}
+                        className="px-4 py-1.5 rounded-full bg-primary text-white text-[12px] font-bold uppercase tracking-wide hover:bg-black/80"
+                        style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
+                      >
+                        Acheter
+                      </Link>
+                    </div>
                   </div>
                 </div>
               );
@@ -102,7 +113,7 @@ export default function CartDrawer() {
               </span>
             </div>
             <button 
-              onClick={() => addToast("Le système de paiement arrive bientôt !")}
+              onClick={() => addToast("Sur Addikt, chaque article se réserve auprès de son vendeur : clique sur « Acheter » à côté de l'article.")}
               className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200 shadow-lg"
               style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
             >

@@ -4,6 +4,7 @@ import { useRouter, useParams } from 'next/navigation';
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../components/Providers';
 import ProductCard from '../components/ProductCard';
+import ReportListingButton from '../components/ReportListingButton';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -334,11 +335,29 @@ export default function ProductPage() {
             
             {/* Actions */}
             <div className="flex flex-col gap-3 mb-8">
-              {user?.id !== product.seller_id ? (
+              {user?.id !== product.seller_id && product.status !== 'active' ? (
+                <div className="w-full bg-surface-container-low border border-outline-variant/40 rounded-2xl p-5 text-center" style={{ fontFamily: '"Google Sans", sans-serif' }}>
+                  <p className="font-bold text-primary text-[16px] uppercase" style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}>
+                    {product.status === 'sold' ? 'Article vendu' : 'Article réservé'}
+                  </p>
+                  <p className="text-sm text-on-surface-variant mt-1">
+                    {product.status === 'sold'
+                      ? 'Cet article a trouvé preneur.'
+                      : "Un acheteur l'a réservé. Il sera remis en vente si la remise n'a pas lieu."}
+                  </p>
+                </div>
+              ) : user?.id !== product.seller_id ? (
                 <>
                   <button 
-                    onClick={() => addToCart(product)}
+                    onClick={() => navigate.push(`/checkout/${product.id}`)}
                     className="w-full bg-primary text-white font-bold text-[16px] uppercase tracking-wide py-4 rounded-full hover:bg-black/80 transition-all duration-200"
+                    style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
+                  >
+                    Acheter
+                  </button>
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="w-full text-primary font-bold text-[14px] uppercase tracking-wide py-2 hover:underline"
                     style={{ fontFamily: '"Zalando Sans Expanded", sans-serif' }}
                   >
                     Ajouter au panier
@@ -453,6 +472,12 @@ export default function ProductPage() {
               </div>
             </div>
             
+            {user?.id !== product.seller_id && (
+              <div className="mb-8">
+                <ReportListingButton listingId={product.id} />
+              </div>
+            )}
+
             {/* Seller CTA */}
             <div className="bg-surface-container-low p-6 rounded-2xl text-center border border-dashed border-outline/50 relative overflow-hidden group">
               <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>

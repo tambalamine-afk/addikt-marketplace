@@ -15,7 +15,8 @@ export default function PrivacyPage() {
           <li><b>Ton compte</b> : adresse email ou numéro de téléphone de connexion, pseudo, nom, ville ou quartier, photo de profil et de couverture, bio.</li>
           <li><b>Ton numéro WhatsApp</b>, si tu choisis de le renseigner dans ton profil.</li>
           <li><b>Ton activité</b> : annonces et photos publiées, messages, favoris, abonnements à d'autres boutiques, avis.</li>
-          <li><b>Tes commandes</b> et les adresses de remise que tu enregistres.</li>
+          <li><b>Tes commandes</b> et les informations de remise que tu indiques (lieu, ville, téléphone).</li>
+          <li><b>Tes signalements</b> d'annonces.</li>
           <li><b>Des données techniques</b> nécessaires à ta connexion (session sécurisée).</li>
         </LegalList>
       </LegalSection>
@@ -35,8 +36,8 @@ export default function PrivacyPage() {
           <li><b>Tout le monde</b> : ton pseudo, ta photo, ta bio, ta ville ou ton quartier, ta note, tes annonces en ligne et les avis reçus.</li>
           <li><b>Les membres connectés</b> : ton numéro WhatsApp, si tu l'as renseigné, uniquement depuis tes annonces en ligne.</li>
           <li><b>Toi et ton interlocuteur</b> : vos messages.</li>
-          <li><b>Toi et l'autre partie</b> : les commandes qui vous concernent.</li>
-          <li><b>Toi seul</b> : tes favoris et tes adresses enregistrées.</li>
+          <li><b>Toi et l'autre partie</b> : les commandes qui vous concernent. Le vendeur voit le lieu de remise et le téléphone que tu indiques pour sa commande.</li>
+          <li><b>Toi seul</b> : tes favoris, tes autres informations de remise et tes signalements (traités par l'équipe Addikt, jamais montrés au vendeur).</li>
         </LegalList>
       </LegalSection>
 
