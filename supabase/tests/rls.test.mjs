@@ -474,5 +474,29 @@ const veraContacts = await contactMany('vera');
 expectThat('compte de plus de 30 jours (vera) : 20 nouvelles conversations par 24 h', veraContacts.today === 20 && /beaucoup de vendeurs/.test(veraContacts.lastError || ''),
   `${veraContacts.today} conversations, dernière erreur : ${veraContacts.lastError}`);
 
+console.log('\nAccueil après l\'inscription');
+const onboardedAt = (userId) => as('postgres', `SELECT username, onboarded_at FROM profiles WHERE id = $1`, [userId]);
+expectThat('membres existants avec un vrai pseudo : accueil déjà fait', (await onboardedAt(id.bob)).rows[0].onboarded_at !== null, 'onboarded_at vide pour bob');
+expectThat('inscription par téléphone : accueil à faire', (await onboardedAt(id.phoneUser)).rows[0].onboarded_at === null, 'onboarded_at renseigné à tort');
+expectThat('inscription par email avec pseudo choisi : pas d\'accueil', (await onboardedAt(id.nina)).rows[0].onboarded_at !== null, 'onboarded_at vide pour nina');
+expectThat('inscription sans pseudo (ex. Google) : accueil à faire', (await onboardedAt(id.dupBob)).rows[0].onboarded_at === null, 'onboarded_at renseigné à tort');
+
+const onboard = `SELECT public.complete_onboarding($1, $2, $3, $4)`;
+await denied('un visiteur ne peut pas terminer un accueil', 'anon', onboard, ['awa', null, 'Dakar', null]);
+await denied('un membre ne se marque pas « accueilli » directement', 'phoneUser', `UPDATE profiles SET onboarded_at = now() WHERE id = $1`, [id.phoneUser]);
+await denied('pseudo trop court refusé', 'phoneUser', onboard, ['aw', null, 'Dakar', null]);
+await denied('pseudo avec accents ou espaces refusé', 'phoneUser', onboard, ['awa diopé', null, 'Dakar', null]);
+await denied('pseudo réservé refusé', 'phoneUser', onboard, ['admin', null, 'Dakar', null]);
+await denied('pseudo automatique refusé', 'phoneUser', onboard, ['membre_1a2b', null, 'Dakar', null]);
+await denied('pseudo déjà pris refusé', 'phoneUser', onboard, ['bob', null, 'Dakar', null]);
+await denied('ville manquante refusée', 'phoneUser', onboard, ['awa_vintage', null, '  ', null]);
+await allowed('accueil terminé (pseudo en majuscules nettoyé)', 'phoneUser', onboard, [' Awa_Vintage ', 'Awa Diop', 'Dakar, Médina', 'https://exemple.test/avatar.webp']);
+const awa = await as('postgres', `SELECT username, full_name, location, avatar_url, onboarded_at FROM profiles WHERE id = $1`, [id.phoneUser]);
+expectThat('… profil enregistré et marqué accueilli',
+  awa.rows[0].username === 'awa_vintage' && awa.rows[0].full_name === 'Awa Diop' && awa.rows[0].location === 'Dakar, Médina' && awa.rows[0].avatar_url === 'https://exemple.test/avatar.webp' && awa.rows[0].onboarded_at !== null,
+  JSON.stringify(awa.rows[0]));
+await allowed('garder son propre pseudo en refaisant l\'accueil est accepté', 'phoneUser', onboard, ['awa_vintage', null, 'Dakar', null]);
+await denied('dupBob ne peut pas prendre le pseudo d\'awa', 'dupBob', onboard, ['awa_vintage', null, 'Thiès', null]);
+
 console.log(`\n${passed} réussis, ${failures.length} échoués`);
 if (failures.length) { console.log('Échecs :\n - ' + failures.join('\n - ')); process.exit(1); }

@@ -6,7 +6,7 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
       // Pages privées : inutiles dans les résultats de recherche
-      disallow: ['/messages', '/publish', '/profile', '/favorites', '/edit', '/checkout', '/orders', '/reset-password'],
+      disallow: ['/messages', '/publish', '/profile', '/favorites', '/edit', '/checkout', '/orders', '/reset-password', '/onboarding'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

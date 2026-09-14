@@ -4,10 +4,11 @@ import Header from './Header';
 import Footer from './Footer';
 import CartDrawer from './CartDrawer';
 import AuthModal from './AuthModal';
+import OnboardingRedirect from './OnboardingRedirect';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
-  const isAuthPage = ['/login', '/register', '/phone-login', '/verify-sms', '/forgot-password', '/reset-password'].includes(pathname);
+  const isAuthPage = ['/login', '/register', '/phone-login', '/verify-sms', '/forgot-password', '/reset-password', '/onboarding'].includes(pathname);
   const noFooterPage = isAuthPage || pathname === '/publish';
 
   return (
@@ -19,6 +20,7 @@ export default function LayoutWrapper({ children }) {
       {!noFooterPage && <Footer />}
       <CartDrawer />
       <AuthModal />
+      <OnboardingRedirect />
     </div>
   );
 }

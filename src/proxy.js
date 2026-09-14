@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 
 // Pages réservées aux membres connectés, sous-pages comprises
-const PROTECTED_ROUTES = ['/messages', '/publish', '/profile', '/favorites', '/edit', '/checkout', '/orders']
+const PROTECTED_ROUTES = ['/messages', '/publish', '/profile', '/favorites', '/edit', '/checkout', '/orders', '/onboarding']
 
 function redirectToLogin(request) {
   // Après connexion, le membre revient sur la page qu'il voulait ouvrir

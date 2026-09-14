@@ -23,7 +23,7 @@ const PUBLIC_PAGES = [
   '/sitemap.xml',
 ];
 
-const PRIVATE_PAGES = ['/messages', '/publish', '/profile/me', '/favorites', '/edit/abc', '/checkout/abc', '/orders', '/orders/abc'];
+const PRIVATE_PAGES = ['/messages', '/publish', '/profile/me', '/favorites', '/edit/abc', '/checkout/abc', '/orders', '/orders/abc', '/onboarding'];
 
 for (const path of PUBLIC_PAGES) {
   test(`page publique ${path} : 200`, async () => {
