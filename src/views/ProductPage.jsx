@@ -8,6 +8,7 @@ import ReportListingButton from '../components/ReportListingButton';
 import { useConfirm } from '../components/ConfirmDialog';
 import Image from 'next/image';
 import { isOptimizableImage } from '../lib/imageUrl';
+import { userFacingError } from '../lib/orders';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -207,7 +208,7 @@ export default function ProductPage() {
       
     } catch (err) {
       console.error(err);
-      addToast("Erreur lors de la création de la conversation");
+      addToast(userFacingError(err, "La conversation n'a pas pu être ouverte. Réessaie."));
     }
   };
 

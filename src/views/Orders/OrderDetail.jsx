@@ -253,7 +253,7 @@ export default function OrderDetail() {
       .single();
     if (error) {
       console.error('Conversation :', error);
-      addToast("La conversation n'a pas pu être ouverte. Réessaie.");
+      addToast(userFacingError(error, "La conversation n'a pas pu être ouverte. Réessaie."));
       return;
     }
     router.push(`/messages/${created.id}`);

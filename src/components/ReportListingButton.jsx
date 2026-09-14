@@ -1,6 +1,7 @@
 "use client";
 import React, { useContext, useState } from 'react';
 import { AppContext } from './Providers';
+import { userFacingError } from '../lib/orders';
 
 const REASONS = [
   { value: 'counterfeit', label: 'Contrefaçon' },
@@ -51,7 +52,7 @@ export default function ReportListingButton({ listingId }) {
     }
     if (error) {
       console.error('Signalement :', error);
-      setErrorMsg("Le signalement n'a pas pu être envoyé. Réessaie.");
+      setErrorMsg(userFacingError(error, "Le signalement n'a pas pu être envoyé. Réessaie."));
       setState('open');
       return;
     }

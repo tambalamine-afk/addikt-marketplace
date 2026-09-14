@@ -55,8 +55,9 @@ const fail = (label, why) => { failures.push(label); console.log(`  FAIL ${label
 
 async function as(who, sql, params = []) {
   await db.exec('RESET ROLE');
+  // « postgres » simule le service Addikt : aucune session utilisateur
+  await db.query(`SELECT set_config('request.jwt.claim.sub', $1, false)`, [who === 'anon' || who === 'postgres' ? '' : id[who]]);
   if (who === 'postgres') return db.query(sql, params);
-  await db.query(`SELECT set_config('request.jwt.claim.sub', $1, false)`, [who === 'anon' ? '' : id[who]]);
   await db.exec(`SET ROLE ${who === 'anon' ? 'anon' : 'authenticated'}`);
   try { return await db.query(sql, params); } finally { await db.exec('RESET ROLE'); }
 }
@@ -352,6 +353,84 @@ await denied('… ni un message rattaché à une commande', 'eve',
   `INSERT INTO messages (conversation_id, sender_id, content, order_id) VALUES (${conversationL31}, $1, 'x', $2)`, [id.eve, O31]);
 await allowed('les messages ordinaires fonctionnent toujours (site et app)', 'eve',
   `INSERT INTO messages (conversation_id, sender_id, content) VALUES (${conversationL31}, $1, 'Merci quand même')`, [id.eve]);
+
+console.log('\nIndex et date de modification');
+const expectThat = (label, condition, detail) => (condition ? pass(label) : fail(label, detail));
+const indexCount = await as('postgres', `SELECT count(*)::int AS n FROM pg_indexes WHERE schemaname = 'public' AND indexname LIKE '%\\_idx' ESCAPE '\\'`);
+expectThat('20 index de performance créés', indexCount.rows[0].n >= 20, `${indexCount.rows[0].n} index`);
+await db.exec(`RESET ROLE; SET session_replication_role = replica; UPDATE listings SET updated_at = '2000-01-01' WHERE id = '${L30}'; SET session_replication_role = origin;`);
+await allowed('alice modifie son annonce', 'alice', `UPDATE listings SET title = 'Robe wax brodée' WHERE id = $1`, [L30], (r) => r.affectedRows === 1);
+await allowed('… sa date de modification est mise à jour', 'postgres', `SELECT updated_at > '2001-01-01' AS fresh FROM listings WHERE id = $1`, [L30], (r) => r.rows[0].fresh === true);
+
+console.log('\nLimites anti-abus');
+async function attempts(who, count, statementFor) {
+  let accepted = 0;
+  let lastError = null;
+  for (let i = 0; i < count; i++) {
+    try {
+      await as(who, ...statementFor(i));
+      accepted++;
+    } catch (e) {
+      lastError = e.message;
+    }
+  }
+  return { accepted, lastError };
+}
+const countOf = async (sql, params) => Number((await as('postgres', sql, params)).rows[0].n);
+
+// Annonces : 20 par 24 h
+const listingRun = await attempts('bob', 25, (i) => [`INSERT INTO listings (seller_id, title, price) VALUES ($1, $2, 1000)`, [id.bob, `Lot ${i}`]]);
+const bobListingsToday = await countOf(`SELECT count(*) AS n FROM listings WHERE seller_id = $1 AND created_at > now() - interval '24 hours'`, [id.bob]);
+expectThat('bob plafonné à 20 annonces par 24 h', bobListingsToday === 20 && /20 annonces/.test(listingRun.lastError || ''),
+  `${bobListingsToday} annonces, dernière erreur : ${listingRun.lastError}`);
+await denied('… même en antidatant l\'annonce', 'bob', `INSERT INTO listings (seller_id, title, price, created_at) VALUES ($1, 'Antidatée', 1000, '2000-01-01')`, [id.bob]);
+await allowed('le service Addikt n\'est pas plafonné', 'postgres', `INSERT INTO listings (seller_id, title, price) VALUES ($1, 'Import', 1000)`, [id.bob]);
+
+// Messages : 30 en 10 minutes
+const messageRun = await attempts('eve', 40, (i) => [`INSERT INTO messages (conversation_id, sender_id, content) VALUES (${conversationL31}, $1, $2)`, [id.eve, `Message ${i}`]]);
+const eveRecentMessages = await countOf(`SELECT count(*) AS n FROM messages WHERE sender_id = $1 AND kind = 'user' AND created_at > now() - interval '10 minutes'`, [id.eve]);
+expectThat('eve plafonnée à 30 messages en 10 minutes', eveRecentMessages === 30 && /beaucoup de messages/.test(messageRun.lastError || ''),
+  `${eveRecentMessages} messages, dernière erreur : ${messageRun.lastError}`);
+const L32 = 'aaaaaaaa-0000-0000-0000-000000000032';
+await db.exec(`RESET ROLE; INSERT INTO listings (id, seller_id, title, price, status) VALUES ('${L32}', '${id.alice}', 'Ceinture', 4000, 'active');`);
+await allowed('… sa réservation passe quand même', 'eve', rpcOrder, [L32, null, 'cod'], (r) => !!r.rows[0].order_id);
+await allowed('… avec son message automatique pour la vendeuse', 'alice', orderMessages(L32), [], (r) => r.rows.length === 1);
+
+// Réservations : 5 en cours, 15 créées par 24 h
+const reserveTargets = Array.from({ length: 6 }, (_, i) => `aaaaaaaa-0000-0000-0000-0000000000${40 + i}`);
+await db.exec(`RESET ROLE; INSERT INTO listings (id, seller_id, title, price, status) VALUES ${reserveTargets.map((lid, i) => `('${lid}', '${id.alice}', 'Article ${i}', 2000, 'active')`).join(', ')};`);
+const orderRun = await attempts('bob', reserveTargets.length, (i) => [rpcOrder, [reserveTargets[i], null, 'cod']]);
+expectThat('bob limité à 5 réservations en cours', orderRun.accepted === 5 && /5 réservations en cours/.test(orderRun.lastError || ''),
+  `${orderRun.accepted} réservations, dernière erreur : ${orderRun.lastError}`);
+let cycles = 0;
+let dailyOrderError = null;
+for (let i = 0; i < 12 && !dailyOrderError; i++) {
+  const open = await as('bob', `SELECT id, listing_id FROM orders WHERE buyer_id = $1 AND status = 'pending' ORDER BY created_at LIMIT 1`, [id.bob]);
+  await as('bob', rpcStatus, [open.rows[0].id, 'cancelled']);
+  try {
+    await as('bob', rpcOrder, [open.rows[0].listing_id, null, 'cod']);
+    cycles++;
+  } catch (e) {
+    dailyOrderError = e.message;
+  }
+}
+const bobOrdersToday = await countOf(`SELECT count(*) AS n FROM orders WHERE buyer_id = $1 AND created_at > now() - interval '24 hours'`, [id.bob]);
+expectThat('… et 15 réservations créées par 24 h (réserver puis annuler en boucle)', bobOrdersToday === 15 && /aujourd'hui/.test(dailyOrderError || ''),
+  `${bobOrdersToday} réservations sur 24 h après ${cycles} cycles, erreur : ${dailyOrderError}`);
+
+// Signalements : 10 par 24 h
+const reportTargets = [...reserveTargets, L20, L21, L30, L31, L32];
+const reportRun = await attempts('eve', reportTargets.length, (i) => [reportSql, [reportTargets[i], id.eve, 'other', null]]);
+expectThat('eve limitée à 10 signalements par 24 h', reportRun.accepted === 10 && /signalements/.test(reportRun.lastError || ''),
+  `${reportRun.accepted} signalements, dernière erreur : ${reportRun.lastError}`);
+
+// Nouvelles conversations : 20 par 24 h
+const contactTargets = Array.from({ length: 25 }, (_, i) => `aaaaaaaa-0000-0000-0000-0000000001${String(i).padStart(2, '0')}`);
+await db.exec(`RESET ROLE; INSERT INTO listings (id, seller_id, title, price, status) VALUES ${contactTargets.map((lid, i) => `('${lid}', '${id.alice}', 'Pièce ${i}', 1500, 'active')`).join(', ')};`);
+const contactRun = await attempts('eve', contactTargets.length, (i) => [`INSERT INTO conversations (listing_id, buyer_id, seller_id) VALUES ($1, $2, $3)`, [contactTargets[i], id.eve, id.alice]]);
+const eveConversationsToday = await countOf(`SELECT count(*) AS n FROM conversations WHERE buyer_id = $1 AND created_at > now() - interval '24 hours'`, [id.eve]);
+expectThat('eve limitée à 20 nouvelles conversations par 24 h', eveConversationsToday === 20 && /beaucoup de vendeurs/.test(contactRun.lastError || ''),
+  `${eveConversationsToday} conversations, dernière erreur : ${contactRun.lastError}`);
 
 console.log(`\n${passed} réussis, ${failures.length} échoués`);
 if (failures.length) { console.log('Échecs :\n - ' + failures.join('\n - ')); process.exit(1); }

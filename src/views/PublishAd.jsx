@@ -7,6 +7,7 @@ import ProductCard from '../components/ProductCard';
 import confetti from 'canvas-confetti';
 import { CheckCircle2 } from 'lucide-react';
 import { prepareSelectedPhotos } from '../lib/images';
+import { userFacingError } from '../lib/orders';
 
 export default function PublishAd() {
   const { user, supabase, addToast } = useContext(AppContext);
@@ -156,7 +157,8 @@ export default function PublishAd() {
     if (createdListingId) {
       await supabase.from('listings').update({ status: 'deleted' }).eq('id', createdListingId);
     }
-    addToast("La publication a échoué et rien n'a été mis en ligne. Vérifie ta connexion et réessaie.");
+    // Limites anti-abus (ex. 20 annonces par jour) : message rédigé par la base
+    addToast(userFacingError(err, "La publication a échoué et rien n'a été mis en ligne. Vérifie ta connexion et réessaie."));
   } finally {
     setIsPublishing(false);
   }

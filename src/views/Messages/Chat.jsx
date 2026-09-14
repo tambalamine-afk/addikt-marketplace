@@ -7,7 +7,7 @@ import { AppContext } from '../../components/Providers';
 export default function Chat() {
   const navigate = useRouter();
   const { id } = useParams();
-  const { user, supabase, setUnreadMessagesCount } = useContext(AppContext);
+  const { user, supabase, setUnreadMessagesCount, addToast } = useContext(AppContext);
   
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -124,7 +124,11 @@ export default function Chat() {
       .select()
       .single();
 
-    if (error) console.error("Erreur envoi message:", error);
+    if (error) {
+      console.error("Erreur envoi message:", error);
+      // Limite anti-abus atteinte : message rédigé par la base
+      if (error.code === 'P0001') addToast(error.message);
+    }
     setMessages(prev => prev.map(m => {
       if (m.id !== failedMessage.id) return m;
       return error ? { ...m, failed: true } : data;
@@ -162,6 +166,7 @@ export default function Chat() {
       
     if (error) {
       console.error("Erreur envoi message:", error);
+      if (error.code === 'P0001') addToast(error.message);
       // Le message reste affiché avec un bouton pour réessayer
       setMessages(prev => prev.map(m => m.id === tempMessage.id ? { ...m, failed: true } : m));
     } else {

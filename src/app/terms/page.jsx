@@ -68,6 +68,11 @@ export default function TermsPage() {
           Addikt peut retirer une annonce, un message ou un avis, et suspendre ou fermer un compte qui ne respecte pas
           ces conditions ou qui met en danger d'autres membres.
         </p>
+        <p>
+          Pour limiter le spam et les abus, le nombre d'annonces, de nouvelles conversations, de messages, de
+          réservations et de signalements est plafonné sur une période donnée. Un message t'indique quand une limite
+          est atteinte.
+        </p>
       </LegalSection>
 
       <LegalSection title="Responsabilité">
