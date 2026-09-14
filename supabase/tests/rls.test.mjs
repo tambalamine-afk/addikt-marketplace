@@ -378,12 +378,28 @@ async function attempts(who, count, statementFor) {
 }
 const countOf = async (sql, params) => Number((await as('postgres', sql, params)).rows[0].n);
 
-// Annonces : 20 par 24 h
-const listingRun = await attempts('bob', 25, (i) => [`INSERT INTO listings (seller_id, title, price) VALUES ($1, $2, 1000)`, [id.bob, `Lot ${i}`]]);
-const bobListingsToday = await countOf(`SELECT count(*) AS n FROM listings WHERE seller_id = $1 AND created_at > now() - interval '24 hours'`, [id.bob]);
-expectThat('bob plafonné à 20 annonces par 24 h', bobListingsToday === 20 && /20 annonces/.test(listingRun.lastError || ''),
-  `${bobListingsToday} annonces, dernière erreur : ${listingRun.lastError}`);
+// Deux paliers : nina a un compte récent, vera un compte de plus de 30 jours
+id.nina = '99999999-0000-0000-0000-000000000001';
+id.vera = '99999999-0000-0000-0000-000000000002';
+await db.exec(`RESET ROLE; SELECT set_config('request.jwt.claim.sub', '', false);
+  INSERT INTO auth.users (id, email, raw_user_meta_data) VALUES
+    ('${id.nina}', 'nina@example.com', '{"username":"nina"}'),
+    ('${id.vera}', 'vera@example.com', '{"username":"vera"}');
+  UPDATE profiles SET created_at = now() - interval '60 days' WHERE id = '${id.vera}';`);
+await denied('un membre ne peut pas vieillir son compte pour échapper aux limites', 'bob', `UPDATE profiles SET created_at = '2000-01-01' WHERE id = $1`, [id.bob]);
+
+// Annonces : 5 par 24 h pour un compte récent, 20 ensuite
+const listingsToday = (who) => countOf(`SELECT count(*) AS n FROM listings WHERE seller_id = $1 AND created_at > now() - interval '24 hours'`, [id[who]]);
+const publishMany = (who) => attempts(who, 25, (i) => [`INSERT INTO listings (seller_id, title, price) VALUES ($1, $2, 1000)`, [id[who], `Lot ${i}`]]);
+const bobPublish = await publishMany('bob');
+const bobListings = await listingsToday('bob');
+expectThat('compte récent (bob) : 5 annonces par 24 h', bobListings === 5 && /5 annonces/.test(bobPublish.lastError || ''),
+  `${bobListings} annonces, dernière erreur : ${bobPublish.lastError}`);
 await denied('… même en antidatant l\'annonce', 'bob', `INSERT INTO listings (seller_id, title, price, created_at) VALUES ($1, 'Antidatée', 1000, '2000-01-01')`, [id.bob]);
+const veraPublish = await publishMany('vera');
+const veraListings = await listingsToday('vera');
+expectThat('compte de plus de 30 jours (vera) : 20 annonces par 24 h', veraListings === 20 && /20 annonces/.test(veraPublish.lastError || ''),
+  `${veraListings} annonces, dernière erreur : ${veraPublish.lastError}`);
 await allowed('le service Addikt n\'est pas plafonné', 'postgres', `INSERT INTO listings (seller_id, title, price) VALUES ($1, 'Import', 1000)`, [id.bob]);
 
 // Messages : 30 en 10 minutes
@@ -396,41 +412,67 @@ await db.exec(`RESET ROLE; INSERT INTO listings (id, seller_id, title, price, st
 await allowed('… sa réservation passe quand même', 'eve', rpcOrder, [L32, null, 'cod'], (r) => !!r.rows[0].order_id);
 await allowed('… avec son message automatique pour la vendeuse', 'alice', orderMessages(L32), [], (r) => r.rows.length === 1);
 
-// Réservations : 5 en cours, 15 créées par 24 h
-const reserveTargets = Array.from({ length: 6 }, (_, i) => `aaaaaaaa-0000-0000-0000-0000000000${40 + i}`);
-await db.exec(`RESET ROLE; INSERT INTO listings (id, seller_id, title, price, status) VALUES ${reserveTargets.map((lid, i) => `('${lid}', '${id.alice}', 'Article ${i}', 2000, 'active')`).join(', ')};`);
-const orderRun = await attempts('bob', reserveTargets.length, (i) => [rpcOrder, [reserveTargets[i], null, 'cod']]);
-expectThat('bob limité à 5 réservations en cours', orderRun.accepted === 5 && /5 réservations en cours/.test(orderRun.lastError || ''),
-  `${orderRun.accepted} réservations, dernière erreur : ${orderRun.lastError}`);
-let cycles = 0;
-let dailyOrderError = null;
-for (let i = 0; i < 12 && !dailyOrderError; i++) {
-  const open = await as('bob', `SELECT id, listing_id FROM orders WHERE buyer_id = $1 AND status = 'pending' ORDER BY created_at LIMIT 1`, [id.bob]);
-  await as('bob', rpcStatus, [open.rows[0].id, 'cancelled']);
-  try {
-    await as('bob', rpcOrder, [open.rows[0].listing_id, null, 'cod']);
-    cycles++;
-  } catch (e) {
-    dailyOrderError = e.message;
+// Réservations : compte récent 3 en cours et 5 par 24 h ; ensuite 5 en cours et 15 par 24 h
+const createListingsFor = (ids, label) => db.exec(`RESET ROLE; SELECT set_config('request.jwt.claim.sub', '', false);
+  INSERT INTO listings (id, seller_id, title, price, status) VALUES ${ids.map((lid, i) => `('${lid}', '${id.alice}', '${label} ${i}', 2000, 'active')`).join(', ')};`);
+async function reserveUntilLimits(who, targets) {
+  const firstRun = await attempts(who, targets.length, (i) => [rpcOrder, [targets[i], null, 'cod']]);
+  // Réserver puis annuler en boucle jusqu'à la limite quotidienne
+  let dailyError = null;
+  for (let i = 0; i < 20 && !dailyError; i++) {
+    const open = await as(who, `SELECT id, listing_id FROM orders WHERE buyer_id = $1 AND status = 'pending' ORDER BY created_at LIMIT 1`, [id[who]]);
+    await as(who, rpcStatus, [open.rows[0].id, 'cancelled']);
+    try {
+      await as(who, rpcOrder, [open.rows[0].listing_id, null, 'cod']);
+    } catch (e) {
+      dailyError = e.message;
+    }
   }
+  const today = await countOf(`SELECT count(*) AS n FROM orders WHERE buyer_id = $1 AND created_at > now() - interval '24 hours'`, [id[who]]);
+  return { firstRun, dailyError, today };
 }
-const bobOrdersToday = await countOf(`SELECT count(*) AS n FROM orders WHERE buyer_id = $1 AND created_at > now() - interval '24 hours'`, [id.bob]);
-expectThat('… et 15 réservations créées par 24 h (réserver puis annuler en boucle)', bobOrdersToday === 15 && /aujourd'hui/.test(dailyOrderError || ''),
-  `${bobOrdersToday} réservations sur 24 h après ${cycles} cycles, erreur : ${dailyOrderError}`);
+const ninaTargets = Array.from({ length: 4 }, (_, i) => `aaaaaaaa-0000-0000-0000-0000000000${50 + i}`);
+const veraTargets = Array.from({ length: 6 }, (_, i) => `aaaaaaaa-0000-0000-0000-0000000000${40 + i}`);
+await createListingsFor(ninaTargets, 'Article nina');
+await createListingsFor(veraTargets, 'Article vera');
 
-// Signalements : 10 par 24 h
-const reportTargets = [...reserveTargets, L20, L21, L30, L31, L32];
-const reportRun = await attempts('eve', reportTargets.length, (i) => [reportSql, [reportTargets[i], id.eve, 'other', null]]);
-expectThat('eve limitée à 10 signalements par 24 h', reportRun.accepted === 10 && /signalements/.test(reportRun.lastError || ''),
-  `${reportRun.accepted} signalements, dernière erreur : ${reportRun.lastError}`);
+const ninaOrders = await reserveUntilLimits('nina', ninaTargets);
+expectThat('compte récent (nina) : 3 réservations en cours au maximum', ninaOrders.firstRun.accepted === 3 && /3 réservations en cours/.test(ninaOrders.firstRun.lastError || ''),
+  `${ninaOrders.firstRun.accepted} réservations, dernière erreur : ${ninaOrders.firstRun.lastError}`);
+expectThat('… et 5 réservations créées par 24 h', ninaOrders.today === 5 && /aujourd'hui/.test(ninaOrders.dailyError || ''),
+  `${ninaOrders.today} réservations sur 24 h, erreur : ${ninaOrders.dailyError}`);
 
-// Nouvelles conversations : 20 par 24 h
+const veraOrders = await reserveUntilLimits('vera', veraTargets);
+expectThat('compte de plus de 30 jours (vera) : 5 réservations en cours au maximum', veraOrders.firstRun.accepted === 5 && /5 réservations en cours/.test(veraOrders.firstRun.lastError || ''),
+  `${veraOrders.firstRun.accepted} réservations, dernière erreur : ${veraOrders.firstRun.lastError}`);
+expectThat('… et 15 réservations créées par 24 h', veraOrders.today === 15 && /aujourd'hui/.test(veraOrders.dailyError || ''),
+  `${veraOrders.today} réservations sur 24 h, erreur : ${veraOrders.dailyError}`);
+
+// Signalements : 3 par 24 h pour un compte récent, 10 ensuite
+const reportTargets = [...veraTargets, L20, L21, L30, L31, L32];
+const reportMany = (who) => attempts(who, reportTargets.length, (i) => [reportSql, [reportTargets[i], id[who], 'other', null]]);
+const eveReports = await reportMany('eve');
+expectThat('compte récent (eve) : 3 signalements par 24 h', eveReports.accepted === 3 && /signalements/.test(eveReports.lastError || ''),
+  `${eveReports.accepted} signalements, dernière erreur : ${eveReports.lastError}`);
+const veraReports = await reportMany('vera');
+expectThat('compte de plus de 30 jours (vera) : 10 signalements par 24 h', veraReports.accepted === 10 && /signalements/.test(veraReports.lastError || ''),
+  `${veraReports.accepted} signalements, dernière erreur : ${veraReports.lastError}`);
+
+// Nouvelles conversations : 10 par 24 h pour un compte récent, 20 ensuite
 const contactTargets = Array.from({ length: 25 }, (_, i) => `aaaaaaaa-0000-0000-0000-0000000001${String(i).padStart(2, '0')}`);
-await db.exec(`RESET ROLE; INSERT INTO listings (id, seller_id, title, price, status) VALUES ${contactTargets.map((lid, i) => `('${lid}', '${id.alice}', 'Pièce ${i}', 1500, 'active')`).join(', ')};`);
-const contactRun = await attempts('eve', contactTargets.length, (i) => [`INSERT INTO conversations (listing_id, buyer_id, seller_id) VALUES ($1, $2, $3)`, [contactTargets[i], id.eve, id.alice]]);
-const eveConversationsToday = await countOf(`SELECT count(*) AS n FROM conversations WHERE buyer_id = $1 AND created_at > now() - interval '24 hours'`, [id.eve]);
-expectThat('eve limitée à 20 nouvelles conversations par 24 h', eveConversationsToday === 20 && /beaucoup de vendeurs/.test(contactRun.lastError || ''),
-  `${eveConversationsToday} conversations, dernière erreur : ${contactRun.lastError}`);
+await db.exec(`RESET ROLE; SELECT set_config('request.jwt.claim.sub', '', false);
+  INSERT INTO listings (id, seller_id, title, price, status) VALUES ${contactTargets.map((lid, i) => `('${lid}', '${id.alice}', 'Pièce ${i}', 1500, 'active')`).join(', ')};`);
+async function contactMany(who) {
+  const run = await attempts(who, contactTargets.length, (i) => [`INSERT INTO conversations (listing_id, buyer_id, seller_id) VALUES ($1, $2, $3)`, [contactTargets[i], id[who], id.alice]]);
+  const today = await countOf(`SELECT count(*) AS n FROM conversations WHERE buyer_id = $1 AND created_at > now() - interval '24 hours'`, [id[who]]);
+  return { ...run, today };
+}
+const eveContacts = await contactMany('eve');
+expectThat('compte récent (eve) : 10 nouvelles conversations par 24 h', eveContacts.today === 10 && /beaucoup de vendeurs/.test(eveContacts.lastError || ''),
+  `${eveContacts.today} conversations, dernière erreur : ${eveContacts.lastError}`);
+const veraContacts = await contactMany('vera');
+expectThat('compte de plus de 30 jours (vera) : 20 nouvelles conversations par 24 h', veraContacts.today === 20 && /beaucoup de vendeurs/.test(veraContacts.lastError || ''),
+  `${veraContacts.today} conversations, dernière erreur : ${veraContacts.lastError}`);
 
 console.log(`\n${passed} réussis, ${failures.length} échoués`);
 if (failures.length) { console.log('Échecs :\n - ' + failures.join('\n - ')); process.exit(1); }

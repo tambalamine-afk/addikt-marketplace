@@ -70,8 +70,8 @@ export default function TermsPage() {
         </p>
         <p>
           Pour limiter le spam et les abus, le nombre d'annonces, de nouvelles conversations, de messages, de
-          réservations et de signalements est plafonné sur une période donnée. Un message t'indique quand une limite
-          est atteinte.
+          réservations et de signalements est plafonné sur une période donnée, plus strictement pendant les 30 premiers
+          jours d'un compte. Un message t'indique quand une limite est atteinte.
         </p>
       </LegalSection>
 

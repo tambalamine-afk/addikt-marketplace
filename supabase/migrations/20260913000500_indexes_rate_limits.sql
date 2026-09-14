@@ -52,11 +52,14 @@ CREATE TRIGGER set_orders_updated_at
 -- ------------------------------------------------------------------------------
 -- 3. Limites anti-abus, identiques sur le site et l'app mobile
 -- ------------------------------------------------------------------------------
---   Annonces publiées          20 par 24 h
---   Nouvelles conversations    20 par 24 h
---   Messages envoyés           30 par 10 minutes (hors messages automatiques)
---   Réservations en cours      5 à la fois, et 15 créées par 24 h
---   Signalements               10 par 24 h
+--                                Compte de moins de 30 jours   Ensuite
+--   Annonces publiées            5 par 24 h                    20 par 24 h
+--   Nouvelles conversations      10 par 24 h                   20 par 24 h
+--   Réservations en cours        3 à la fois                   5 à la fois
+--   Réservations créées          5 par 24 h                    15 par 24 h
+--   Signalements                 3 par 24 h                    10 par 24 h
+--   Messages envoyés             30 par 10 minutes pour tous (hors messages automatiques)
+-- Les faux comptes créés pour spammer sont récents : les limites sont plus strictes au début.
 -- Les messages d'erreur (SQLSTATE P0001) sont affichés tels quels à l'utilisateur.
 CREATE OR REPLACE FUNCTION public.enforce_rate_limits()
 RETURNS trigger
@@ -66,6 +69,8 @@ DECLARE
   v_user UUID := auth.uid();
   v_count INTEGER;
   v_open INTEGER;
+  v_limit INTEGER;
+  v_is_new BOOLEAN;
 BEGIN
   -- Pas de limite pour le service Addikt (tableau de bord, service role) ni pour
   -- les lignes créées par la base elle-même (ex. messages automatiques de commande).
@@ -77,17 +82,25 @@ BEGIN
   -- pour contourner les limites).
   NEW.created_at := now();
 
+  -- Ancienneté du compte : profiles.created_at n'est pas modifiable par le membre.
+  -- Sans profil trouvé, le compte est traité comme récent.
+  SELECT created_at > now() - interval '30 days' INTO v_is_new
+  FROM public.profiles WHERE id = v_user;
+  v_is_new := coalesce(v_is_new, true);
+
   IF TG_TABLE_NAME = 'listings' THEN
     SELECT count(*) INTO v_count FROM public.listings
     WHERE seller_id = v_user AND created_at > now() - interval '24 hours';
-    IF v_count >= 20 THEN
-      RAISE EXCEPTION 'Tu as déjà publié 20 annonces aujourd''hui. Tu pourras en publier d''autres demain.';
+    v_limit := CASE WHEN v_is_new THEN 5 ELSE 20 END;
+    IF v_count >= v_limit THEN
+      RAISE EXCEPTION 'Tu as déjà publié % annonces aujourd''hui. Tu pourras en publier d''autres demain.', v_limit;
     END IF;
 
   ELSIF TG_TABLE_NAME = 'conversations' THEN
     SELECT count(*) INTO v_count FROM public.conversations
     WHERE buyer_id = v_user AND created_at > now() - interval '24 hours';
-    IF v_count >= 20 THEN
+    v_limit := CASE WHEN v_is_new THEN 10 ELSE 20 END;
+    IF v_count >= v_limit THEN
       RAISE EXCEPTION 'Tu as contacté beaucoup de vendeurs aujourd''hui. Réessaie demain.';
     END IF;
 
@@ -107,17 +120,20 @@ BEGIN
     INTO v_open, v_count
     FROM public.orders
     WHERE buyer_id = v_user;
-    IF v_open >= 5 THEN
-      RAISE EXCEPTION 'Tu as déjà 5 réservations en cours. Termine ou annule-en une avant d''en faire une nouvelle.';
+    v_limit := CASE WHEN v_is_new THEN 3 ELSE 5 END;
+    IF v_open >= v_limit THEN
+      RAISE EXCEPTION 'Tu as déjà % réservations en cours. Termine ou annule-en une avant d''en faire une nouvelle.', v_limit;
     END IF;
-    IF v_count >= 15 THEN
+    v_limit := CASE WHEN v_is_new THEN 5 ELSE 15 END;
+    IF v_count >= v_limit THEN
       RAISE EXCEPTION 'Tu as fait beaucoup de réservations aujourd''hui. Réessaie demain.';
     END IF;
 
   ELSIF TG_TABLE_NAME = 'reports' THEN
     SELECT count(*) INTO v_count FROM public.reports
     WHERE reporter_id = v_user AND created_at > now() - interval '24 hours';
-    IF v_count >= 10 THEN
+    v_limit := CASE WHEN v_is_new THEN 3 ELSE 10 END;
+    IF v_count >= v_limit THEN
       RAISE EXCEPTION 'Tu as envoyé beaucoup de signalements aujourd''hui. Merci ! Tu pourras en envoyer d''autres demain.';
     END IF;
   END IF;
