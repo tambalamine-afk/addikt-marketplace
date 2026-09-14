@@ -309,5 +309,49 @@ await db.exec(`RESET ROLE; INSERT INTO payment_transactions (order_id, provider,
 await allowed('la vendeuse voit le paiement de sa commande', 'alice', `SELECT id FROM payment_transactions`, [], (r) => r.rows.length === 1);
 await allowed('eve ne le voit pas', 'eve', `SELECT id FROM payment_transactions`, [], (r) => r.rows.length === 0);
 
+console.log('\nNotifications de commande dans la messagerie');
+const L30 = 'aaaaaaaa-0000-0000-0000-000000000030';
+const L31 = 'aaaaaaaa-0000-0000-0000-000000000031';
+await db.exec(`RESET ROLE; INSERT INTO listings (id, seller_id, title, price, status) VALUES
+  ('${L30}', '${id.alice}', 'Robe wax', 12500, 'active'),
+  ('${L31}', '${id.alice}', 'Sandales', 6000, 'active');`);
+const orderMessages = (listingId) => `SELECT m.content, m.sender_id, m.order_id, m.read_at
+  FROM messages m JOIN conversations c ON c.id = m.conversation_id
+  WHERE c.listing_id = '${listingId}' AND m.kind = 'order'
+  ORDER BY m.created_at`;
+
+let O30 = null;
+await allowed('bob réserve la robe', 'bob', rpcOrder, [L30, id.A_bob, 'cod'], (r) => { O30 = r.rows[0]?.order_id; return !!O30; });
+await allowed('… la vendeuse reçoit un message de réservation, non lu, avec le prix', 'alice', orderMessages(L30), [],
+  (r) => r.rows.length === 1 && r.rows[0].sender_id === id.bob && r.rows[0].order_id === O30 && r.rows[0].read_at === null && r.rows[0].content.includes('12 500 FCFA'));
+await allowed('… une seule conversation pour cet article', 'postgres', `SELECT count(*)::int AS n FROM conversations WHERE listing_id = $1`, [L30], (r) => r.rows[0].n === 1);
+await allowed('… eve ne voit pas ce message', 'eve', orderMessages(L30), [], (r) => r.rows.length === 0);
+await allowed('alice indique la remise', 'alice', rpcStatus, [O30, 'shipped'], (r) => r.rows[0].s === 'shipped');
+await allowed('bob confirme la réception', 'bob', rpcStatus, [O30, 'delivered'], (r) => r.rows[0].s === 'delivered');
+await allowed('… 3 messages, chacun au nom de la personne qui a agi', 'bob', orderMessages(L30), [],
+  (r) => r.rows.length === 3
+    && r.rows[0].sender_id === id.bob
+    && r.rows[1].sender_id === id.alice && r.rows[1].content.includes('remis')
+    && r.rows[2].sender_id === id.bob && r.rows[2].content.includes('avis'));
+
+await allowed('eve écrit d\'abord à la vendeuse des sandales', 'eve', `INSERT INTO conversations (listing_id, buyer_id, seller_id) VALUES ($1, $2, $3)`, [L31, id.eve, id.alice]);
+const O31 = 'eeeeeeee-0000-0000-0000-000000000031';
+await allowed('eve réserve via l\'app mobile (insertion directe)', 'eve',
+  `INSERT INTO orders (id, buyer_id, seller_id, listing_id, status, total_amount, payment_method) VALUES ($1, $2, $3, $4, 'pending', 6000, 'cod')`, [O31, id.eve, id.alice, L31]);
+await allowed('… le message arrive dans la conversation existante', 'postgres',
+  `SELECT count(DISTINCT c.id)::int AS convs, count(m.id)::int AS msgs FROM conversations c LEFT JOIN messages m ON m.conversation_id = c.id AND m.kind = 'order' WHERE c.listing_id = $1`,
+  [L31], (r) => r.rows[0].convs === 1 && r.rows[0].msgs === 1);
+await allowed('la vendeuse annule la vente', 'alice', rpcStatus, [O31, 'cancelled'], (r) => r.rows[0].s === 'cancelled');
+await allowed('… eve reçoit le message d\'annulation de la vendeuse', 'eve', orderMessages(L31), [],
+  (r) => r.rows.length === 2 && r.rows[1].sender_id === id.alice && r.rows[1].content.includes('annulé la vente'));
+
+const conversationL31 = `(SELECT id FROM conversations WHERE listing_id = '${L31}')`;
+await denied('un membre ne fabrique pas de faux message de commande', 'eve',
+  `INSERT INTO messages (conversation_id, sender_id, content, kind) VALUES (${conversationL31}, $1, 'Commande payée', 'order')`, [id.eve]);
+await denied('… ni un message rattaché à une commande', 'eve',
+  `INSERT INTO messages (conversation_id, sender_id, content, order_id) VALUES (${conversationL31}, $1, 'x', $2)`, [id.eve, O31]);
+await allowed('les messages ordinaires fonctionnent toujours (site et app)', 'eve',
+  `INSERT INTO messages (conversation_id, sender_id, content) VALUES (${conversationL31}, $1, 'Merci quand même')`, [id.eve]);
+
 console.log(`\n${passed} réussis, ${failures.length} échoués`);
 if (failures.length) { console.log('Échecs :\n - ' + failures.join('\n - ')); process.exit(1); }

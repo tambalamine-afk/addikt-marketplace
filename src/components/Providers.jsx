@@ -117,6 +117,28 @@ export default function Providers({ children }) {
     setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3500);
   };
 
+  // Badge des messages non lus en direct, et alerte quand une commande avance
+  useEffect(() => {
+    if (!user || !supabase.channel) return;
+
+    const channel = supabase
+      .channel(`inbox-${user.id}`)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
+        // Les règles d'accès ne transmettent que les messages de ses propres conversations
+        if (payload.new.sender_id === user.id) return;
+        setUnreadMessagesCount((count) => count + 1);
+        if (payload.new.kind === 'order') {
+          addToast('Du nouveau sur une de tes commandes : ouvre tes messages.');
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- addToast ne dépend que de setToasts
+  }, [user, supabase]);
+
   const addToCart = (product) => {
     setCart(prev => {
       if (prev.find(item => item.id === product.id)) return prev;

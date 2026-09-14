@@ -251,6 +251,26 @@ export default function Chat() {
         {messages.map((msg, idx) => {
           const isMe = msg.sender_id === user?.id;
           const time = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+          // Message automatique publié à chaque étape d'une commande
+          if (msg.kind === 'order') {
+            return (
+              <div key={msg.id} className={`flex flex-col gap-1 max-w-[85%] ${isMe ? 'items-end self-end' : 'items-start'}`}>
+                <div className="flex items-start gap-3 px-4 py-3 rounded-2xl border-2 border-primary bg-surface-container-lowest">
+                  <span className="material-symbols-outlined text-[20px] shrink-0 mt-0.5" aria-hidden="true">local_mall</span>
+                  <div className="flex flex-col gap-1.5">
+                    <p className="font-body-sm text-sm leading-relaxed text-on-surface whitespace-pre-wrap break-words">{msg.content}</p>
+                    {msg.order_id && (
+                      <Link href={`/orders/${msg.order_id}`} className="text-[13px] font-bold text-primary underline underline-offset-2 w-fit">
+                        Voir la commande
+                      </Link>
+                    )}
+                  </div>
+                </div>
+                <span className="text-[10px] text-on-surface-variant px-1">{time}</span>
+              </div>
+            );
+          }
           
           return (
             <div key={msg.id} className={`flex flex-col gap-1 max-w-[85%] ${isMe ? 'items-end self-end' : 'items-start'}`}>
