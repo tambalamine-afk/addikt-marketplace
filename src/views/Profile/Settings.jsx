@@ -1,6 +1,6 @@
 "use client";
 import { compressImage } from '../../lib/images';
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef, useSyncExternalStore } from 'react';
 import { AppContext } from '../../components/Providers';
 
 const Toggle = ({ checked, onChange }) => (
@@ -15,6 +15,9 @@ const Toggle = ({ checked, onChange }) => (
   </button>
 );
 
+// L'adresse du site ne change pas pendant la visite : aucun abonnement nécessaire
+const subscribeToNothing = () => () => {};
+
 export default function Settings() {
   const { user, supabase, addToast } = useContext(AppContext);
   const [activeTab, setActiveTab] = useState('profile');
@@ -23,7 +26,8 @@ export default function Settings() {
   // Profile State
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [currentHost, setCurrentHost] = useState('');
+  // Adresse du site : vide côté serveur, lue dans le navigateur sans décalage à l'hydratation
+  const currentHost = useSyncExternalStore(subscribeToNothing, () => window.location.host, () => '');
   
   const [formData, setFormData] = useState({
     username: '',
@@ -66,9 +70,6 @@ export default function Settings() {
     }
     
     loadProfile();
-    if (typeof window !== 'undefined') {
-      setCurrentHost(window.location.host);
-    }
   }, [user, supabase]);
 
   const handleInputChange = (e) => {

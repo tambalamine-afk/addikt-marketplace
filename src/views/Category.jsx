@@ -126,11 +126,7 @@ export default function Category({ handleSelect, initialProducts = null }) {
     }
   }, [categoryId, title, dbCategories, supabase, searchQuery]);
 
-  // Réinitialiser le filtre actif quand on change de catégorie
-  useEffect(() => {
-    setActiveSubcategory(subcategories[0]);
-    setActiveFilters([]);
-  }, [categoryId]);
+  // Changement de catégorie : la page remonte ce composant (key), les filtres repartent de zéro
 
   const removeFilter = (id) => {
     setActiveFilters(prev => prev.filter(f => f.id !== id));

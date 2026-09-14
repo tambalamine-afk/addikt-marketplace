@@ -78,14 +78,17 @@ function TypewriterSearch() {
       if (charIndex > 0) {
         timer = setTimeout(() => setCharIndex(c => c - 1), 25);
       } else {
-        setIsDeleting(false);
-        setSuggestionIndex((prev) => (prev + 1) % SUGGESTIONS.length);
+        // Suggestion suivante, dans le même rythme que l'animation
+        timer = setTimeout(() => {
+          setIsDeleting(false);
+          setSuggestionIndex((prev) => (prev + 1) % SUGGESTIONS.length);
+        }, 25);
       }
     } else {
       if (charIndex < currentSuggestion.length) {
         timer = setTimeout(() => setCharIndex(c => c + 1), 50); // 50ms typing speed
       } else {
-        setIsPaused(true);
+        timer = setTimeout(() => setIsPaused(true), 50);
       }
     }
 

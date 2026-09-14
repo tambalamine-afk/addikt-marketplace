@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../../components/Providers';
+import Image from 'next/image';
+import { isOptimizableImage } from '../../lib/imageUrl';
 
 export default function SellerProfile({ sellerId, initialSeller = null, initialListings = [], initialFollowerCount = 0 }) {
   const router = useRouter();
@@ -89,7 +91,7 @@ export default function SellerProfile({ sellerId, initialSeller = null, initialL
       setLoading(false);
     }
     fetchSellerData();
-  }, [sellerId, supabase, currentUser]);
+  }, [sellerId, supabase, currentUser, initialSeller]);
 
   const handleToggleFollow = async () => {
     if (!currentUser) {
@@ -255,7 +257,14 @@ export default function SellerProfile({ sellerId, initialSeller = null, initialL
             {listings.map((item) => (
               <Link key={item.id} href={`/product/${item.id}`} className="group relative flex flex-col cursor-pointer">
                 <div className="relative aspect-[3/4] bg-surface-container rounded-lg overflow-hidden mb-3">
-                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={item.title} src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
+                  <Image
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    alt={item.title}
+                    src={item.listing_images?.[0]?.url || 'https://placehold.co/300x400/eaeaea/a0a0a0?text=Pas+d%27image'}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    unoptimized={!isOptimizableImage(item.listing_images?.[0]?.url)}
+                  />
                   <button 
                     onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(item.id); }}
                     className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110"

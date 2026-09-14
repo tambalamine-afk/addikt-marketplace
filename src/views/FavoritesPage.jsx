@@ -14,10 +14,8 @@ export default function FavoritesPage() {
   useEffect(() => {
     if (isLoadingAuth) return;
 
-    if (!user) {
-      setIsLoading(false);
-      return;
-    }
+    // Visiteur non connecté : rien à charger (voir l'état affiché plus bas)
+    if (!user) return;
     
     async function fetchFavorites() {
       setIsLoading(true);
@@ -73,7 +71,7 @@ export default function FavoritesPage() {
         Mes Favoris
       </h1>
 
-      {isLoading || isLoadingAuth ? (
+      {isLoadingAuth || (user && isLoading) ? (
         <div className="flex justify-center py-20">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
         </div>

@@ -20,6 +20,27 @@ export default function Providers({ children }) {
   const supabase = createClient();
 
   useEffect(() => {
+    // Favoris et messages non lus du membre connecté
+    const fetchFavorites = async (userId) => {
+      const { data, error } = await supabase.from('favorites').select('listing_id').eq('user_id', userId);
+      if (!error && data) {
+        setLikedItems(data.map(f => f.listing_id));
+      }
+    };
+
+    const fetchUnreadMessages = async (userId) => {
+      // Les règles d'accès limitent déjà « messages » aux conversations du membre
+      const { count, error } = await supabase
+        .from('messages')
+        .select('*', { count: 'exact', head: true })
+        .neq('sender_id', userId)
+        .is('read_at', null);
+
+      if (!error && count !== null) {
+        setUnreadMessagesCount(count);
+      }
+    };
+
     // Récupérer la session actuelle
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -55,6 +76,9 @@ export default function Providers({ children }) {
     try {
       const savedCart = localStorage.getItem('addikt_cart');
       if (savedCart) {
+        // Lecture après l'affichage, volontairement : lu pendant le rendu, le panier du
+        // serveur (vide) et celui du navigateur différeraient à l'hydratation.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCart(JSON.parse(savedCart));
       }
     } catch (e) {
@@ -66,13 +90,6 @@ export default function Providers({ children }) {
   useEffect(() => {
     localStorage.setItem('addikt_cart', JSON.stringify(cart));
   }, [cart]);
-
-  const fetchFavorites = async (userId) => {
-    const { data, error } = await supabase.from('favorites').select('listing_id').eq('user_id', userId);
-    if (!error && data) {
-      setLikedItems(data.map(f => f.listing_id));
-    }
-  };
 
   const toggleFavorite = async (listingId) => {
     if (!user) {
@@ -91,23 +108,6 @@ export default function Providers({ children }) {
       const { error } = await supabase.from('favorites').insert({ user_id: user.id, listing_id: listingId });
       if (error) console.error("Error adding favorite:", error);
       addToast("Ajouté aux favoris");
-    }
-  };
-
-  const fetchUnreadMessages = async (userId) => {
-    // We want messages where read_at is null, sender_id is not the current user
-    // To do this simply without complex joins in the client:
-    // Actually we need messages in conversations where the user is a participant.
-    // The policy already restricts 'messages' to conversations where the user is a participant.
-    // So we just count messages where sender_id != user.id and read_at is.null
-    const { count, error } = await supabase
-      .from('messages')
-      .select('*', { count: 'exact', head: true })
-      .neq('sender_id', userId)
-      .is('read_at', null);
-      
-    if (!error && count !== null) {
-      setUnreadMessagesCount(count);
     }
   };
 
@@ -136,7 +136,6 @@ export default function Providers({ children }) {
     return () => {
       supabase.removeChannel(channel);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- addToast ne dépend que de setToasts
   }, [user, supabase]);
 
   const addToCart = (product) => {

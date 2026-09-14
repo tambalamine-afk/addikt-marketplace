@@ -10,6 +10,23 @@ import Image from 'next/image';
 import { isOptimizableImage } from '../lib/imageUrl';
 import { userFacingError } from '../lib/orders';
 
+// Cartes des suggestions : photo de couverture = première photo par position
+function formatListings(data) {
+  return data.map(item => {
+    const sortedImages = [...(item.listing_images || [])].sort((a, b) => a.position - b.position);
+    const coverImage = sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image';
+    return {
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      size: item.size,
+      brand: item.brand,
+      image: coverImage,
+      liked: false
+    };
+  });
+}
+
 export default function ProductPage({ initialListing = null }) {
   const { id } = useParams();
   // Annonce publique déjà lue par le serveur (null pour un brouillon consulté par son vendeur)
@@ -119,10 +136,7 @@ export default function ProductPage({ initialListing = null }) {
 
   // Le numéro du vendeur n'est plus public : il n'est révélé qu'aux membres connectés.
   useEffect(() => {
-    if (!user || !id || !supabase?.rpc) {
-      setSellerPhone(null);
-      return;
-    }
+    if (!user || !id || !supabase?.rpc) return;
     supabase
       .rpc('get_seller_phone', { p_listing_id: id })
       .then(({ data }) => setSellerPhone(data || null));
@@ -154,21 +168,6 @@ export default function ProductPage({ initialListing = null }) {
     }
   };
 
-  const formatListings = (data) => {
-    return data.map(item => {
-      const sortedImages = item.listing_images?.sort((a, b) => a.position - b.position) || [];
-      const coverImage = sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image';
-      return {
-        id: item.id,
-        title: item.title,
-        price: item.price,
-        size: item.size,
-        brand: item.brand,
-        image: coverImage,
-        liked: false 
-      };
-    });
-  };
 
   const handleLike = (e) => {
     if (e) {
@@ -401,7 +400,7 @@ export default function ProductPage({ initialListing = null }) {
                     Envoyer un message
                   </button>
                   <a 
-                    href={sellerPhone ? `https://wa.me/${sellerPhone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}` : `https://wa.me/?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}`}
+                    href={user && sellerPhone ? `https://wa.me/${sellerPhone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}` : `https://wa.me/?text=${encodeURIComponent(`Bonjour, je suis intéressé(e) par votre article "${product.title}" à ${product.price?.toLocaleString('fr-FR')} FCFA sur Addikt. Est-il toujours disponible ?`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => {

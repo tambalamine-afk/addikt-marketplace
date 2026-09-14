@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { useState, useEffect, useContext } from 'react';
 import { createClient } from '../lib/supabase/client';
+import Image from 'next/image';
+import { isOptimizableImage } from '../lib/imageUrl';
 import { AppContext } from '../components/Providers';
 
 export default function FreshDropPage({ initialListings = null }) {
@@ -66,7 +68,7 @@ export default function FreshDropPage({ initialListings = null }) {
                   <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(item.id); }}>
                     <span className="material-symbols-outlined text-[24px] transition-colors cursor-pointer drop-shadow-md" style={{ color: likedItems?.includes(item.id) ? '#e20020' : 'white', fontVariationSettings: likedItems?.includes(item.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
                   </div>
-                  <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
+                  <Image alt={item.title} className="object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://placehold.co/300x400/eaeaea/a0a0a0?text=Pas+d%27image'} fill sizes="(max-width: 768px) 50vw, 20vw" unoptimized={!isOptimizableImage(item.listing_images?.[0]?.url)} />
                 </div>
                 <div className="flex flex-col mt-2">
                   <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>

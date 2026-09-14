@@ -47,9 +47,13 @@ export default function AdCarousel() {
 
   useEffect(() => {
     if (!emblaApi) return;
+    // État des flèches lu depuis le carrousel (système externe), puis suivi de ses événements
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect(emblaApi);
-    emblaApi.on('reInit', onSelect);
-    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect).on('select', onSelect);
+    return () => {
+      emblaApi.off('reInit', onSelect).off('select', onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   return (

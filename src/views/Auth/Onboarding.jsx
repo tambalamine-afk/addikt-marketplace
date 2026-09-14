@@ -18,29 +18,43 @@ function OnboardingForm() {
   const { user, profile, setProfile, supabase, isLoadingAuth } = useContext(AppContext);
   const router = useRouter();
   const nextPath = safeNextPath(useSearchParams().get('next'));
-  const fileInputRef = useRef(null);
-
-  const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [location, setLocation] = useState('');
-  const [avatar, setAvatar] = useState(null); // { blob, extension, contentType, preview }
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [isPrefilled, setIsPrefilled] = useState(false);
-
-  // Pré-remplit avec ce qui est déjà connu (Google fournit souvent le nom et la photo)
-  useEffect(() => {
-    if (!profile || isPrefilled) return;
-    setUsername(AUTOMATIC_USERNAME.test(profile.username || '') ? '' : profile.username || '');
-    setFullName(profile.full_name || '');
-    setLocation(profile.location || '');
-    setIsPrefilled(true);
-  }, [profile, isPrefilled]);
 
   // Accueil déjà terminé : on repart vers la page demandée
   useEffect(() => {
     if (profile?.onboarded_at) router.replace(nextPath);
   }, [profile, nextPath, router]);
+
+  if (isLoadingAuth || !profile) {
+    return (
+      <div className="w-full flex items-center justify-center min-h-[60vh]">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" aria-label="Chargement"></div>
+      </div>
+    );
+  }
+
+  // Les champs sont pré-remplis une seule fois, à partir du profil chargé
+  return (
+    <OnboardingFields
+      key={profile.id}
+      user={user}
+      profile={profile}
+      setProfile={setProfile}
+      supabase={supabase}
+      onDone={() => router.replace(nextPath)}
+    />
+  );
+}
+
+function OnboardingFields({ user, profile, setProfile, supabase, onDone }) {
+  const fileInputRef = useRef(null);
+
+  // Pré-remplit avec ce qui est déjà connu (Google fournit souvent le nom et la photo)
+  const [username, setUsername] = useState(AUTOMATIC_USERNAME.test(profile.username || '') ? '' : profile.username || '');
+  const [fullName, setFullName] = useState(profile.full_name || '');
+  const [location, setLocation] = useState(profile.location || '');
+  const [avatar, setAvatar] = useState(null); // { blob, extension, contentType, preview }
+  const [isSaving, setIsSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handlePhoto = async (e) => {
     const file = e.target.files?.[0];
@@ -97,21 +111,13 @@ function OnboardingForm() {
         avatar_url: avatarUrl || current?.avatar_url,
         onboarded_at: new Date().toISOString(),
       }));
-      router.replace(nextPath);
+      onDone();
     } catch (err) {
       console.error('Accueil :', err);
       setErrorMsg(userFacingError(err, "L'enregistrement a échoué. Vérifie ta connexion et réessaie."));
       setIsSaving(false);
     }
   };
-
-  if (isLoadingAuth || !profile) {
-    return (
-      <div className="w-full flex items-center justify-center min-h-[60vh]">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" aria-label="Chargement"></div>
-      </div>
-    );
-  }
 
   const avatarPreview = avatar?.preview || profile.avatar_url;
   const initial = (username || profile.full_name || '?').charAt(0).toUpperCase();
@@ -135,6 +141,8 @@ function OnboardingForm() {
               aria-label="Ajouter une photo de profil"
             >
               {avatarPreview ? (
+                // Aperçu local (blob:) ou photo existante : pas d'optimiseur d'images ici
+                // eslint-disable-next-line @next/next/no-img-element
                 <img src={avatarPreview} alt="" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-3xl font-bold text-on-surface-variant" style={display}>{initial}</span>

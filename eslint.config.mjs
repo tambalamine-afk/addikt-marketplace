@@ -3,6 +3,15 @@ import nextVitals from 'eslint-config-next/core-web-vitals'
 
 const eslintConfig = defineConfig([
   ...nextVitals,
+  {
+    rules: {
+      // Textes en français : les apostrophes dans le JSX (« l'article ») sont voulues
+      'react/no-unescaped-entities': 'off',
+      // Règle prévue pour pages/_document : avec l'App Router, la police chargée dans
+      // le layout racine s'applique déjà à toutes les pages
+      '@next/next/no-page-custom-font': 'off',
+    },
+  },
   globalIgnores([
     // Ignorés par défaut par eslint-config-next
     '.next/**',

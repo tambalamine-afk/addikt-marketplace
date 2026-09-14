@@ -161,6 +161,33 @@ function ReviewForm({ username, onSubmit }) {
   );
 }
 
+// Commande, annonce, participants, lieu de remise et avis ; null si introuvable ou non autorisée
+async function fetchOrderData(supabase, orderId) {
+  const { data, error } = await supabase
+    .from('orders')
+    .select(`
+      id, status, total_amount, payment_method, created_at, buyer_id, seller_id, listing_id,
+      listing:listings(id, title, size, brand, listing_images(url, position)),
+      buyer:profiles!buyer_id(username),
+      seller:profiles!seller_id(username),
+      address:addresses!delivery_address_id(address_line, city, phone)
+    `)
+    .eq('id', orderId)
+    .maybeSingle();
+
+  if (error || !data) {
+    if (error) console.error('Commande :', error);
+    return null;
+  }
+
+  const { data: reviewData } = await supabase
+    .from('reviews')
+    .select('id, reviewer_id, rating, comment')
+    .eq('order_id', orderId);
+
+  return { order: data, reviews: reviewData || [] };
+}
+
 export default function OrderDetail() {
   const { id } = useParams();
   const router = useRouter();
@@ -173,38 +200,31 @@ export default function OrderDetail() {
   const [loadState, setLoadState] = useState('loading');
   const [pendingStatus, setPendingStatus] = useState(null);
 
-  const loadOrder = useCallback(async () => {
-    const { data, error } = await supabase
-      .from('orders')
-      .select(`
-        id, status, total_amount, payment_method, created_at, buyer_id, seller_id, listing_id,
-        listing:listings(id, title, size, brand, listing_images(url, position)),
-        buyer:profiles!buyer_id(username),
-        seller:profiles!seller_id(username),
-        address:addresses!delivery_address_id(address_line, city, phone)
-      `)
-      .eq('id', id)
-      .maybeSingle();
-
-    if (error || !data) {
-      if (error) console.error('Commande :', error);
+  const applyOrderData = useCallback((result) => {
+    if (!result) {
       setLoadState('notfound');
       return;
     }
-
-    const { data: reviewData } = await supabase
-      .from('reviews')
-      .select('id, reviewer_id, rating, comment')
-      .eq('order_id', id);
-
-    setOrder(data);
-    setReviews(reviewData || []);
+    setOrder(result.order);
+    setReviews(result.reviews);
     setLoadState('ready');
-  }, [id, supabase]);
+  }, []);
+
+  // Rechargement après une action (changement d'étape, avis)
+  const loadOrder = useCallback(async () => {
+    applyOrderData(await fetchOrderData(supabase, id));
+  }, [applyOrderData, id, supabase]);
 
   useEffect(() => {
-    if (!isLoadingAuth && user && id) loadOrder();
-  }, [isLoadingAuth, user, id, loadOrder]);
+    if (isLoadingAuth || !user || !id) return;
+    let isActive = true;
+    fetchOrderData(supabase, id).then((result) => {
+      if (isActive) applyOrderData(result);
+    });
+    return () => {
+      isActive = false;
+    };
+  }, [isLoadingAuth, user, id, supabase, applyOrderData]);
 
   const isBuyer = order?.buyer_id === user?.id;
 

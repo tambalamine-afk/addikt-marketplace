@@ -5,6 +5,10 @@ import AdCarousel from '../components/AdCarousel';
 import TopSellers, { TOP_SELLERS } from '../components/TopSellers';
 import AppPromoBanner from '../components/AppPromoBanner';
 import { createClient } from '../lib/supabase/client';
+import Image from 'next/image';
+import { isOptimizableImage } from '../lib/imageUrl';
+
+const LISTING_PLACEHOLDER = 'https://placehold.co/300x400/eaeaea/a0a0a0?text=Pas+d%27image';
 import { useContext } from 'react';
 import { AppContext } from '../components/Providers';
 
@@ -284,13 +288,13 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
           </div>
           <div className="relative h-[450px] flex justify-center items-center mt-2 md:mt-0">
             <div className="absolute w-56 h-[320px] transform -rotate-[15deg] -translate-x-36 overflow-hidden z-0" style={{ backgroundColor: 'rgb(249, 249, 249)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
-              <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600" className="w-full h-full object-cover"/>
+              <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600" alt="" className="w-full h-full object-cover"/>
             </div>
             <div className="absolute w-56 h-[320px] transform rotate-0 z-10 translate-y-2 scale-105 overflow-hidden" style={{ backgroundColor: 'rgb(255, 206, 84)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}>
-              <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600" className="w-full h-full object-cover"/>
+              <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600" alt="" className="w-full h-full object-cover"/>
             </div>
             <div className="absolute w-56 h-[320px] transform rotate-[15deg] translate-x-36 -translate-y-2 overflow-hidden z-0" style={{ backgroundColor: 'rgb(239, 71, 111)', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
-              <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600" className="w-full h-full object-cover"/>
+              <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600" alt="" className="w-full h-full object-cover"/>
             </div>
           </div>
         </div>
@@ -368,7 +372,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
                 <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(item.id); }}>
                   <span className="material-symbols-outlined text-[24px] transition-colors cursor-pointer drop-shadow-md" style={{ color: likedItems?.includes(item.id) ? '#e20020' : 'white', fontVariationSettings: likedItems?.includes(item.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
                 </div>
-                <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
+                <Image alt={item.title} className="object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || LISTING_PLACEHOLDER} fill sizes="(max-width: 768px) 50vw, 20vw" unoptimized={!isOptimizableImage(item.listing_images?.[0]?.url)} />
               </div>
               <div className="flex flex-col mt-2">
                 <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>
@@ -447,9 +451,9 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
                 {[0, 1, 2, 3].map(idx => {
                   const imageSrc = seller.listings?.[idx]?.listing_images?.[0]?.url;
                   return (
-                    <div key={idx} className="aspect-square bg-surface-container rounded-lg overflow-hidden">
+                    <div key={idx} className="relative aspect-square bg-surface-container rounded-lg overflow-hidden">
                       {imageSrc ? (
-                        <img src={imageSrc} alt="Product" className="w-full h-full object-cover" />
+                        <Image src={imageSrc} alt="" className="object-cover" fill sizes="(max-width: 768px) 25vw, 8vw" unoptimized={!isOptimizableImage(imageSrc)} />
                       ) : (
                         <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-300">
                           <span className="material-symbols-outlined text-sm">inventory_2</span>
@@ -500,7 +504,7 @@ export default function LandingPage({ initialRecentListings = [], initialTopBout
                     <div className="absolute top-2 right-2 z-20 p-1.5 transition-transform hover:scale-110" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(item.id); }}>
                       <span className="material-symbols-outlined text-[24px] transition-colors cursor-pointer drop-shadow-md" style={{ color: likedItems?.includes(item.id) ? '#e20020' : 'white', fontVariationSettings: likedItems?.includes(item.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
                     </div>
-                    <img alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || 'https://via.placeholder.com/300x400?text=Pas+d%27image'} />
+                    <Image alt={item.title} className="object-cover group-hover:scale-105 transition-transform duration-500" src={item.listing_images?.[0]?.url || LISTING_PLACEHOLDER} fill sizes="(max-width: 768px) 50vw, 20vw" unoptimized={!isOptimizableImage(item.listing_images?.[0]?.url)} />
                   </div>
                   <div className="flex flex-col mt-2">
                     <span className="text-[15px] text-[#111] leading-tight" style={{ fontFamily: '"Google Sans", sans-serif' }}>{item.title}</span>

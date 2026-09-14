@@ -5,6 +5,26 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../../components/Providers';
 import ProductCard from '../../components/ProductCard';
 
+// Carte d'annonce : photo de couverture = première photo par position
+function formatListing(item) {
+  const sortedImages = [...(item.listing_images || [])].sort((a, b) => a.position - b.position);
+  const coverImage = sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image';
+
+  return {
+    id: item.id,
+    title: item.title,
+    price: item.price,
+    size: item.size,
+    brand: item.brand,
+    image: coverImage,
+    liked: false // Par défaut ; remplacé pour l'onglet favoris
+  };
+}
+
+function formatListings(data) {
+  return data.map(formatListing);
+}
+
 export default function MyProfile() {
   const { user, supabase, isLoadingAuth, addToast, likedItems } = useContext(AppContext);
   const router = useRouter();
@@ -23,10 +43,8 @@ export default function MyProfile() {
   useEffect(() => {
     if (isLoadingAuth) return;
     
-    if (!user) {
-      setIsLoading(false);
-      return;
-    }
+    // Visiteur non connecté : rien à charger (voir l'état affiché plus bas)
+    if (!user) return;
 
     async function fetchData() {
       setIsLoading(true);
@@ -98,27 +116,6 @@ export default function MyProfile() {
     fetchData();
   }, [user, isLoadingAuth, supabase, likedItems]);
 
-  // Format Helper
-  const formatListing = (item) => {
-    // Sort images by position to get the cover
-    const sortedImages = item.listing_images?.sort((a, b) => a.position - b.position) || [];
-    const coverImage = sortedImages.length > 0 ? sortedImages[0].url : 'https://placehold.co/400x500/eaeaea/a0a0a0?text=Pas+d%27image';
-    
-    return {
-      id: item.id,
-      title: item.title,
-      price: item.price,
-      size: item.size,
-      brand: item.brand,
-      image: coverImage,
-      liked: false // By default, overridden in favorites
-    };
-  };
-
-  const formatListings = (data) => {
-    return data.map(formatListing);
-  };
-
   const handleSelectProduct = (product) => {
     router.push(`/product/${product.id}`);
   };
@@ -183,7 +180,7 @@ export default function MyProfile() {
     return "Utilisateur";
   };
 
-  if (isLoading) {
+  if (isLoadingAuth || (user && isLoading)) {
     return (
       <main className="flex-1 w-full flex items-center justify-center min-h-[50vh]">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
